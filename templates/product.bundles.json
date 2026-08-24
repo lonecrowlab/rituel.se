@@ -522,6 +522,7 @@
         },
         "social_proof_accordion_RT_H05": {
           "type": "social_proof_accordion",
+          "disabled": true,
           "settings": {
             "question": "Tryggt att beställa 😍",
             "open_default": false,
