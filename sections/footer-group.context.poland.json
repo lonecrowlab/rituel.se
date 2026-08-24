@@ -1,0 +1,39 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "poland"
+  },
+  "parent": "footer-group.json",
+  "sections": {
+    "newsletter_new_hVVNrF": {
+      "settings": {
+        "heading_before": "Oszczędź na pierwszym zamówieniu!",
+        "subheading": "Dołącz do rodziny ritúel i odbierz sekretny rabat na pierwsze zamówienie. Kod wyślemy bezpośrednio na Twój e-mail.",
+        "input_placeholder": "Podaj swój adres e-mail",
+        "button_text": "Subskrybuj",
+        "success_message": "Dziękujemy za subskrypcję!"
+      },
+      "blocks": {}
+    },
+    "footer": {
+      "settings": {
+        "copyright_text": "Treści na tej stronie mają charakter wyłącznie informacyjny i nie zastępują porady medycznej. Indywidualne efekty mogą się różnić."
+      },
+      "blocks": {
+        "link_list_GCYKzC": {
+          "settings": {
+            "heading": "Regulamin"
+          }
+        }
+      }
+    }
+  }
+}

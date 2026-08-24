@@ -1,0 +1,43 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "norge"
+  },
+  "parent": "page.listicle-ingen-pris.json",
+  "sections": {
+    "image_with_blocks_eMGPgF": {
+      "settings": {},
+      "blocks": {
+        "custom_html_k6Xkyd": {
+          "settings": {
+            "custom_html": "<div class=\"trust-strip\">\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">60 DAGERS FORNØYDGARANTI</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">DERMATOLOGISK TESTET</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">PÅ LAGER NÅ</span>\n  </span>\n</div>\n\n<style>\n  .trust-strip {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-wrap: wrap;\n    gap: 24px;\n    padding: 16px 12px;\n    background: transparent;\n    font-family: inherit;\n  }\n\n  .trust-strip__item {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    color: #1a1a1a;\n    font-size: 12px;\n    font-weight: 400;\n    letter-spacing: 0.08em;\n    white-space: nowrap;\n  }\n\n  .trust-strip__check {\n    color: #d9879a;\n    font-weight: 700;\n    font-size: 13px;\n    line-height: 1;\n  }\n\n  .trust-strip__text {\n    line-height: 1;\n  }\n\n  @media (max-width: 480px) {\n    .trust-strip {\n      gap: 14px;\n      padding: 14px 8px;\n    }\n    .trust-strip__item {\n      font-size: 11px;\n      letter-spacing: 0.06em;\n    }\n  }\n</style>"
+          }
+        }
+      }
+    },
+    "image_with_blocks_3T38fW": {
+      "settings": {},
+      "blocks": {
+        "custom_html_FKkzw7": {
+          "settings": {
+            "custom_html": "<div class=\"trust-strip\">\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">60 DAGERS FORNØYDGARANTI\n\n</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">DERMATOLOGISK TESTET</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">SIKKER BETALING</span>\n  </span>\n</div>\n\n<style>\n  .trust-strip {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-wrap: wrap;\n    gap: 24px;\n    padding: 16px 12px;\n    background: transparent;\n    font-family: inherit;\n  }\n\n  .trust-strip__item {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    color: #1a1a1a;\n    font-size: 12px;\n    font-weight: 400;\n    letter-spacing: 0.08em;\n    white-space: nowrap;\n  }\n\n  .trust-strip__check {\n    color: #d9879a;\n    font-weight: 700;\n    font-size: 13px;\n    line-height: 1;\n  }\n\n  .trust-strip__text {\n    line-height: 1;\n  }\n\n  @media (max-width: 480px) {\n    .trust-strip {\n      gap: 14px;\n      padding: 14px 8px;\n    }\n    .trust-strip__item {\n      font-size: 11px;\n      letter-spacing: 0.06em;\n    }\n  }\n</style>"
+          }
+        }
+      }
+    },
+    "custom_liquid_FrQCtD": {
+      "settings": {
+        "custom_liquid": "<section class=\"testimonials\">\n  <div class=\"testimonials__inner\">\n    <p class=\"testimonials__eyebrow\">HVA KUNDENE VÅRE SIER</p>\n    <h2 class=\"testimonials__heading\">Ekte opplevelser fra ekte kvinner</h2>\n    <div class=\"testimonials__cards\">\n      <article class=\"testimonial-card\">\n        <div class=\"testimonial-card__stars\">★ ★ ★ ★ ★</div>\n        <p class=\"testimonial-card__quote\">\"Overgangsalderen forandret huden min på en måte jeg ikke var forberedt på. Etter at jeg fant PDRN Collagen Volume Balm vet jeg ikke hvordan jeg klarte meg uten den.\"</p>\n        <p class=\"testimonial-card__name\">LINNEA S., 47</p>\n      </article>\n      <article class=\"testimonial-card\">\n        <div class=\"testimonial-card__stars\">★ ★ ★ ★ ★</div>\n        <p class=\"testimonial-card__quote\">\"Jeg var skeptisk. Jeg har prøvd alt. Men etter en uke merket jeg en virkelig forskjell. Huden føles fastere og glansen er tilbake.\"</p>\n        <p class=\"testimonial-card__name\">EMMA K., 43</p>\n      </article>\n      <article class=\"testimonial-card\">\n        <div class=\"testimonial-card__stars\">★ ★ ★ ★ ★</div>\n        <p class=\"testimonial-card__quote\">\"Jeg hadde planlagt å bestille time på klinikk. Så glad jeg prøvde dette først. Huden ser mykere ut og føles fyldigere, helt naturlig.\"</p>\n        <p class=\"testimonial-card__name\">MAJA L., 51</p>\n      </article>\n    </div>\n  </div>\n</section>\n<style>\n  .testimonials {\n    background: #FDF8F5;\n    padding: 64px 16px;\n    font-family: inherit;\n  }\n  .testimonials__inner {\n    max-width: 520px;\n    margin: 0 auto;\n    text-align: center;\n  }\n  .testimonials__eyebrow {\n    color: #d9879a;\n    font-size: 11px;\n    font-weight: 500;\n    letter-spacing: 0.18em;\n    text-transform: uppercase;\n    margin: 0 0 14px 0;\n  }\n  .testimonials__heading {\n    font-family: 'Playfair Display', 'DM Serif Display', Georgia, serif;\n    font-size: 28px;\n    font-weight: 500;\n    color: #1a1a1a;\n    margin: 0 0 36px 0;\n    line-height: 1.25;\n  }\n  .testimonials__cards {\n    display: flex;\n    flex-direction: column;\n    gap: 16px;\n  }\n  .testimonial-card {\n    background: #ffffff;\n    border-radius: 12px;\n    padding: 24px 22px;\n    text-align: left;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);\n  }\n  .testimonial-card__stars {\n    color: #d9879a;\n    font-size: 14px;\n    letter-spacing: 0.05em;\n    margin-bottom: 14px;\n    line-height: 1;\n  }\n  .testimonial-card__quote {\n    color: #1a1a1a;\n    font-size: 14px;\n    font-style: italic;\n    line-height: 1.55;\n    margin: 0 0 18px 0;\n  }\n  .testimonial-card__name {\n    color: #1a1a1a;\n    font-size: 12px;\n    font-weight: 600;\n    letter-spacing: 0.1em;\n    margin: 0;\n  }\n  @media"
+      },
+      "blocks": {}
+    }
+  }
+}

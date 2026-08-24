@@ -1,0 +1,918 @@
+{% doc %}
+  Social Proof Accordion block.
+  Accordion with a poster image that opens a before/after slider, or the slider shown inline.
+
+  @param {object} block - The section block with social proof accordion settings
+{% enddoc %}
+
+{%- liquid
+  assign question = block.settings.question
+  assign open_default = block.settings.open_default
+  assign spa_id = block.id
+  assign display_mode = block.settings.display_mode | default: 'poster'
+  assign poster_image = block.settings.poster_image
+-%}
+
+{%- capture spa_slides -%}
+  {%- for i in (1..5) -%}
+    {%- liquid
+      assign before_key = 'review_' | append: i | append: '_before_image'
+      assign after_key = 'review_' | append: i | append: '_after_image'
+      assign before_day_key = 'review_' | append: i | append: '_before_day'
+      assign after_day_key = 'review_' | append: i | append: '_after_day'
+      assign stars_key = 'review_' | append: i | append: '_stars'
+      assign title_key = 'review_' | append: i | append: '_title'
+      assign review_key = 'review_' | append: i | append: '_review'
+      assign name_key = 'review_' | append: i | append: '_name'
+
+      assign before_image = block.settings[before_key]
+      assign after_image = block.settings[after_key]
+      assign before_day = block.settings[before_day_key]
+      assign after_day = block.settings[after_day_key]
+      assign stars = block.settings[stars_key] | default: 5
+      assign review_title = block.settings[title_key]
+      assign review_text = block.settings[review_key]
+      assign reviewer_name = block.settings[name_key]
+    -%}
+    {%- if before_image != blank or after_image != blank or review_text != blank or reviewer_name != blank or review_title != blank -%}
+      <article class="spa-dialog__slide" data-spa-slide>
+        <div class="spa-dialog__slider" data-spa-slider>
+          <div class="spa-dialog__image spa-dialog__image--before">
+            {%- if before_image != blank -%}
+              {{
+                before_image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  class: 'spa-dialog__img',
+                  widths: '480, 640, 800, 1000, 1200',
+                  sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
+              }}
+            {%- else -%}
+              <div class="spa-dialog__placeholder">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {%- endif -%}
+          </div>
+          <div class="spa-dialog__image spa-dialog__image--after">
+            {%- if after_image != blank -%}
+              {{
+                after_image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  class: 'spa-dialog__img',
+                  widths: '480, 640, 800, 1000, 1200',
+                  sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
+              }}
+            {%- else -%}
+              <div class="spa-dialog__placeholder">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {%- endif -%}
+          </div>
+          {%- if before_day != blank -%}
+            <span class="spa-dialog__day spa-dialog__day--before">{{ before_day }}</span>
+          {%- endif -%}
+          {%- if after_day != blank -%}
+            <span class="spa-dialog__day spa-dialog__day--after">{{ after_day }}</span>
+          {%- endif -%}
+          <div class="spa-dialog__control" data-spa-handle>
+            <div class="spa-dialog__handle" aria-hidden="true">
+              <svg class="spa-dialog__chevron spa-dialog__chevron--left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <svg class="spa-dialog__chevron spa-dialog__chevron--right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="spa-dialog__content">
+          {%- if stars > 0 -%}
+            <div class="spa-dialog__stars" role="img" aria-label="{{ stars }} out of 5 stars">
+              {%- for s in (1..5) -%}
+                <svg
+                  class="spa-dialog__star{% if s <= stars %} spa-dialog__star--filled{% endif %}"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 576 512"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                </svg>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+          {%- if review_title != blank -%}
+            <h3 class="spa-dialog__card-title">{{ review_title }}</h3>
+          {%- endif -%}
+          {%- if review_text != blank -%}
+            <p class="spa-dialog__review">“{{ review_text | escape | strip }}”</p>
+          {%- endif -%}
+          {%- if reviewer_name != blank -%}
+            <div class="spa-dialog__meta">
+              <p class="spa-dialog__reviewer">— {{ reviewer_name }}</p>
+              <div class="spa-dialog__verified">
+                <svg class="spa-dialog__verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.5924 3.20027C9.34888 3.4078 9.22711 3.51158 9.09706 3.59874C8.79896 3.79854 8.46417 3.93721 8.1121 4.00672C7.95851 4.03705 7.79903 4.04977 7.48008 4.07522C6.6787 4.13918 6.278 4.17115 5.94371 4.28923C5.17051 4.56233 4.56233 5.17051 4.28923 5.94371C4.17115 6.278 4.13918 6.6787 4.07522 7.48008C4.04977 7.79903 4.03705 7.95851 4.00672 8.1121C3.93721 8.46417 3.79854 8.79896 3.59874 9.09706C3.51158 9.22711 3.40781 9.34887 3.20027 9.5924C2.67883 10.2043 2.4181 10.5102 2.26522 10.8301C1.91159 11.57 1.91159 12.43 2.26522 13.1699C2.41811 13.4898 2.67883 13.7957 3.20027 14.4076C3.40778 14.6511 3.51158 14.7729 3.59874 14.9029C3.79854 15.201 3.93721 15.5358 4.00672 15.8879C4.03705 16.0415 4.04977 16.201 4.07522 16.5199C4.13918 17.3213 4.17115 17.722 4.28923 18.0563C4.56233 18.8295 5.17051 19.4377 5.94371 19.7108C6.278 19.8288 6.6787 19.8608 7.48008 19.9248C7.79903 19.9502 7.95851 19.963 8.1121 19.9933C8.46417 20.0628 8.79896 20.2015 9.09706 20.4013C9.22711 20.4884 9.34887 20.5922 9.5924 20.7997C10.2043 21.3212 10.5102 21.5819 10.8301 21.7348C11.57 22.0884 12.43 22.0884 13.1699 21.7348C13.4898 21.5819 13.7957 21.3212 14.4076 20.7997C14.6511 20.5922 14.7729 20.4884 14.9029 20.4013C15.201 20.2015 15.5358 20.0628 15.8879 19.9933C16.0415 19.963 16.201 19.9502 16.5199 19.9248C17.3213 19.8608 17.722 19.8288 18.0563 19.7108C18.8295 19.4377 19.4377 18.8295 19.7108 18.0563C19.8288 17.722 19.8608 17.3213 19.9248 16.5199C19.9502 16.201 19.963 16.0415 19.9933 15.8879C20.0628 15.5358 20.2015 15.201 20.4013 14.9029C20.4884 14.7729 20.5922 14.6511 20.7997 14.4076C21.3212 13.7957 21.5819 13.4898 21.7348 13.1699C22.0884 12.43 22.0884 11.57 21.7348 10.8301C21.5819 10.5102 21.3212 10.2043 20.7997 9.5924C20.5922 9.34887 20.4884 9.22711 20.4013 9.09706C20.2015 8.79896 20.0628 8.46417 19.9933 8.1121C19.963 7.95851 19.9502 7.79903 19.9248 7.48008C19.8608 6.6787 19.8288 6.278 19.7108 5.94371C19.4377 5.17051 18.8295 4.56233 18.0563 4.28923C17.722 4.17115 17.3213 4.13918 16.5199 4.07522C16.201 4.04977 16.0415 4.03705 15.8879 4.00672C15.5358 3.93721 15.201 3.79854 14.9029 3.59874C14.7729 3.51158 14.6511 3.40781 14.4076 3.20027C13.7957 2.67883 13.4898 2.41811 13.1699 2.26522C12.43 1.91159 11.57 1.91159 10.8301 2.26522C10.5102 2.4181 10.2043 2.67883 9.5924 3.20027ZM16.3735 9.86314C16.6913 9.5453 16.6913 9.03 16.3735 8.71216C16.0557 8.39433 15.5403 8.39433 15.2225 8.71216L10.3723 13.5624L8.77746 11.9676C8.45963 11.6498 7.94432 11.6498 7.62649 11.9676C7.30866 12.2854 7.30866 12.8007 7.62649 13.1186L9.79678 15.2889C10.1146 15.6067 10.6299 15.6067 10.9478 15.2889L16.3735 9.86314Z" fill="currentColor"/>
+                </svg>
+                <span class="spa-dialog__verified-text">Verifierad köpare</span>
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </article>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if question != blank and spa_slides != blank -%}
+<div
+  class="spa spa-{{ spa_id }}"
+  data-spa="{{ spa_id }}"
+  data-spa-mode="{{ display_mode }}"
+  {{ block.shopify_attributes }}
+  style="--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;"
+>
+  <div class="spa__items">
+    <div class="spa__item" data-accordion-item>
+      <button
+        class="spa__question"
+        type="button"
+        aria-expanded="{% if open_default %}true{% else %}false{% endif %}"
+        aria-controls="SpaAnswer-{{ spa_id }}"
+        data-accordion-trigger
+      >
+        <span class="spa__question-text">{{ question }}</span>
+        <span class="spa__icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </button>
+      <div class="spa__answer" id="SpaAnswer-{{ spa_id }}" data-accordion-content>
+        <div class="spa__answer-inner{% if display_mode == 'slider' %} spa__answer-inner--slider{% endif %}">
+          {%- if display_mode == 'slider' -%}
+            <div class="spa-slider-viewport" data-spa-viewport>
+              <div class="spa-slider-track">
+                {{ spa_slides }}
+              </div>
+            </div>
+          {%- else -%}
+            <button
+              type="button"
+              class="spa__poster"
+              data-spa-open
+              aria-label="{{ question | escape }}"
+            >
+              {%- if poster_image != blank -%}
+                {{
+                  poster_image
+                  | image_url: width: 1400
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'spa__poster-img',
+                    widths: '400, 600, 800, 1000, 1200, 1400',
+                    sizes: '(min-width: 990px) 420px, 92vw',
+                    alt: question
+                }}
+              {%- else -%}
+                <span class="spa__poster-placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </span>
+              {%- endif -%}
+            </button>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- if display_mode == 'poster' -%}
+<dialog class="spa-dialog spa-{{ spa_id }}" id="SpaDialog-{{ spa_id }}" aria-labelledby="SpaDialogTitle-{{ spa_id }}">
+  <h2 class="visually-hidden" id="SpaDialogTitle-{{ spa_id }}">{{ question }}</h2>
+  <button type="button" class="spa-dialog__close" data-spa-close aria-label="Stäng">
+    <svg width="18" height="18" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <div class="spa-dialog__viewport" data-spa-viewport>
+    <div class="spa-dialog__track">
+      {{ spa_slides }}
+    </div>
+  </div>
+</dialog>
+{%- endif -%}
+
+<style>
+  .spa-{{ spa_id }} {
+    width: 100%;
+    margin-top: var(--margin-top, 2rem);
+    margin-bottom: var(--margin-bottom, 2rem);
+  }
+
+  .spa-{{ spa_id }} .spa__items {
+    width: 100%;
+  }
+
+  .spa-{{ spa_id }} .spa__item {
+    {% if block.settings.border_width > 0 %}
+      border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    {% endif %}
+    border-radius: {{ block.settings.border_radius }}px;
+    overflow: hidden;
+  }
+
+  .spa-{{ spa_id }} .spa__question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background: {{ block.settings.question_bg_color }};
+    color: {{ block.settings.question_text_color }};
+    border: none;
+    text-align: left;
+    padding: {{ block.settings.question_padding_vertical_desktop }}px {{ block.settings.question_padding_horizontal_desktop }}px;
+    font-size: {{ block.settings.question_font_size }}px;
+    font-weight: {{ block.settings.question_font_weight }};
+    transition: all 0.3s ease;
+  }
+
+  .spa-{{ spa_id }} .spa__question:hover {
+    background: {{ block.settings.question_bg_color_hover }};
+  }
+
+  .spa-{{ spa_id }} .spa__question[aria-expanded="true"] {
+    background: {{ block.settings.question_bg_color_active }};
+    color: {{ block.settings.question_text_color_active }};
+  }
+
+  .spa-{{ spa_id }} .spa__question-text {
+    flex: 1;
+  }
+
+  .spa-{{ spa_id }} .spa__icon {
+    flex-shrink: 0;
+    margin-left: 1rem;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+
+  .spa-{{ spa_id }} .spa__question[aria-expanded="true"] .spa__icon {
+    transform: rotate(180deg);
+  }
+
+  .spa-{{ spa_id }} .spa__answer {
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+  }
+
+  .spa-{{ spa_id }} .spa__answer-inner {
+    padding: {{ block.settings.answer_padding_vertical_desktop }}px {{ block.settings.answer_padding_horizontal_desktop }}px;
+    background-color: {{ block.settings.answer_bg_color }};
+  }
+
+  .spa-{{ spa_id }} .spa__answer-inner--slider {
+    padding-right: 0;
+  }
+
+  .spa-{{ spa_id }} .spa__poster {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .spa-{{ spa_id }} .spa__poster:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .spa-{{ spa_id }} .spa__poster-img {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    display: block;
+  }
+
+  .spa-{{ spa_id }} .spa__poster-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: #ebe7e2;
+  }
+
+  .spa-{{ spa_id }} .spa__poster-placeholder svg {
+    width: 40%;
+    height: auto;
+  }
+
+  .spa-{{ spa_id }} .spa-slider-viewport {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+    padding-right: {{ block.settings.answer_padding_horizontal_desktop }}px;
+  }
+
+  .spa-{{ spa_id }} .spa-slider-viewport.is-dragging {
+    cursor: grabbing;
+  }
+
+  .spa-{{ spa_id }} .spa-slider-track {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    min-width: 100%;
+  }
+
+  .spa-{{ spa_id }} .spa-slider-track .spa-dialog__slide {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 70%;
+    width: 70%;
+    max-width: 70%;
+    min-width: 0;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #d4d4d4;
+    border-radius: 16px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .spa-{{ spa_id }} .spa__question {
+      font-size: {{ block.settings.question_font_size_mobile }}px;
+      padding: {{ block.settings.question_padding_vertical_mobile }}px {{ block.settings.question_padding_horizontal_mobile }}px;
+    }
+
+    .spa-{{ spa_id }} .spa__answer-inner {
+      padding: {{ block.settings.answer_padding_vertical_mobile }}px {{ block.settings.answer_padding_horizontal_mobile }}px;
+    }
+
+    .spa-{{ spa_id }} .spa__answer-inner--slider {
+      padding-right: 0;
+    }
+
+    .spa-{{ spa_id }} .spa-slider-viewport {
+      padding-right: {{ block.settings.answer_padding_horizontal_mobile }}px;
+    }
+
+    .spa-{{ spa_id }} .spa-slider-track .spa-dialog__slide {
+      flex: 0 0 85%;
+      width: 85%;
+      max-width: 85%;
+    }
+  }
+
+  #SpaDialog-{{ spa_id }} {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 56px 0 24px;
+    border: none;
+    background: rgba(10, 10, 10, 0.92);
+    color: inherit;
+    overflow: hidden;
+  }
+
+  #SpaDialog-{{ spa_id }}[open] {
+    display: flex;
+    align-items: center;
+  }
+
+  #SpaDialog-{{ spa_id }}::backdrop {
+    background: rgba(10, 10, 10, 0.92);
+  }
+
+  #SpaDialog-{{ spa_id }} .spa-dialog__close {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  #SpaDialog-{{ spa_id }} .spa-dialog__viewport {
+    width: 100%;
+    max-height: calc(100vh - 80px);
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  #SpaDialog-{{ spa_id }} .spa-dialog__viewport.is-dragging {
+    cursor: grabbing;
+  }
+
+  #SpaDialog-{{ spa_id }} .spa-dialog__viewport::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  #SpaDialog-{{ spa_id }} .spa-dialog__viewport::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+  }
+
+  #SpaDialog-{{ spa_id }} .spa-dialog__viewport::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 999px;
+  }
+
+  #SpaDialog-{{ spa_id }} .spa-dialog__track {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    min-width: 100%;
+    padding-right: 16px;
+    box-sizing: border-box;
+  }
+
+  #SpaDialog-{{ spa_id }} .spa-dialog__slide {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 22%;
+    width: 22%;
+    max-width: 22%;
+    min-width: 0;
+    max-height: 100%;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #d4d4d4;
+    border-radius: 16px;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__slider {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 16px 16px 0 0;
+    user-select: none;
+    touch-action: pan-y pinch-zoom;
+    cursor: ew-resize;
+    background: #e8e4df;
+    flex-shrink: 0;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__image--before { z-index: 1; }
+  .spa-{{ spa_id }} .spa-dialog__image--after {
+    z-index: 2;
+    clip-path: inset(0 0 0 50%);
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__img {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: cover;
+    display: block;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ebe7e2;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__placeholder svg {
+    width: 60%;
+    height: auto;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__day {
+    position: absolute;
+    bottom: 14px;
+    z-index: 4;
+    pointer-events: none;
+    padding: 6px 12px;
+    background: #c4b5a8;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 20px;
+    line-height: 1.2;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__day--before { left: 14px; }
+  .spa-{{ spa_id }} .spa-dialog__day--after { right: 14px; }
+
+  .spa-{{ spa_id }} .spa-dialog__control {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 3px;
+    height: 100%;
+    background: #f5f0e8;
+    transform: translateX(-50%);
+    z-index: 3;
+    cursor: ew-resize;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    width: 48px;
+    height: 36px;
+    min-width: 44px;
+    min-height: 28px;
+    padding: 0 8px;
+    box-sizing: border-box;
+    background: #f5f0e8;
+    border-radius: 999px;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+    color: #3a3a3a;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__chevron {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1 1 auto;
+    overflow: auto;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__stars {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__star {
+    width: 14px;
+    height: 14px;
+    fill: #e5e0d8;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__star--filled {
+    fill: #c9a227;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__card-title {
+    color: #1a1a1a;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__review {
+    color: #3a3a3a;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__reviewer {
+    color: #1a1a1a;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__verified {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__verified-icon {
+    width: 16px;
+    height: 16px;
+    color: #16b3c7;
+    flex-shrink: 0;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__verified-text {
+    color: #000000;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    #SpaDialog-{{ spa_id }} .spa-dialog__slide {
+      flex: 0 0 45%;
+      width: 45%;
+      max-width: 45%;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #SpaDialog-{{ spa_id }} {
+      padding: 52px 0 16px;
+    }
+
+    #SpaDialog-{{ spa_id }} .spa-dialog__viewport {
+      padding: 0 12px;
+    }
+
+    #SpaDialog-{{ spa_id }} .spa-dialog__slide {
+      flex: 0 0 85%;
+      width: 85%;
+      max-width: 85%;
+    }
+
+    .spa-{{ spa_id }} .spa-dialog__card-title {
+      font-size: 17px;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  class SpaSlider {
+    constructor(wrapper) {
+      this.wrapper = wrapper;
+      this.control = wrapper.querySelector('[data-spa-handle]');
+      this.afterImage = wrapper.querySelector('.spa-dialog__image--after');
+      this.isDragging = false;
+      this.touchStartX = 0;
+      this.touchStartY = 0;
+      this.isHorizontalSwipe = false;
+      this.init();
+    }
+
+    init() {
+      if (!this.control || !this.afterImage) return;
+      this.wrapper.addEventListener('mousedown', this.startDrag.bind(this));
+      document.addEventListener('mousemove', this.onDrag.bind(this));
+      document.addEventListener('mouseup', this.stopDrag.bind(this));
+      this.wrapper.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: true });
+      this.wrapper.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false });
+      this.wrapper.addEventListener('touchend', this.handleTouchEnd.bind(this));
+      this.wrapper.addEventListener('click', this.handleClick.bind(this));
+    }
+
+    handleClick(e) {
+      if (e.type === 'click' && e.detail === 0) return;
+      const rect = this.wrapper.getBoundingClientRect();
+      const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      this.updateSlider(percentage);
+    }
+
+    handleTouchStart(e) {
+      this.touchStartX = e.touches[0].clientX;
+      this.touchStartY = e.touches[0].clientY;
+      this.isHorizontalSwipe = false;
+    }
+
+    handleTouchMove(e) {
+      const touchX = e.touches[0].clientX;
+      const touchY = e.touches[0].clientY;
+      const deltaX = Math.abs(touchX - this.touchStartX);
+      const deltaY = Math.abs(touchY - this.touchStartY);
+      if (!this.isHorizontalSwipe && deltaX < 10 && deltaY < 10) return;
+      if (!this.isHorizontalSwipe) this.isHorizontalSwipe = deltaX > deltaY;
+      if (this.isHorizontalSwipe) {
+        e.preventDefault();
+        this.isDragging = true;
+        const rect = this.wrapper.getBoundingClientRect();
+        const percentage = Math.max(0, Math.min(100, ((touchX - rect.left) / rect.width) * 100));
+        this.updateSlider(percentage);
+      }
+    }
+
+    handleTouchEnd() {
+      this.isDragging = false;
+      this.isHorizontalSwipe = false;
+    }
+
+    startDrag(e) {
+      this.isDragging = true;
+      const rect = this.wrapper.getBoundingClientRect();
+      const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      this.updateSlider(percentage);
+    }
+
+    stopDrag() {
+      this.isDragging = false;
+    }
+
+    onDrag(e) {
+      if (!this.isDragging) return;
+      e.preventDefault();
+      const rect = this.wrapper.getBoundingClientRect();
+      const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      this.updateSlider(percentage);
+    }
+
+    updateSlider(percentage) {
+      this.control.style.left = percentage + '%';
+      this.afterImage.style.clipPath = 'inset(0 0 0 ' + percentage + '%)';
+    }
+
+    reset() {
+      this.updateSlider(50);
+    }
+  }
+
+  function initSocialProofAccordion(blockId) {
+    const accordion = document.querySelector('[data-spa="' + blockId + '"]');
+    if (!accordion || accordion.dataset.initialized === 'true') return;
+    accordion.dataset.initialized = 'true';
+
+    const trigger = accordion.querySelector('[data-accordion-trigger]');
+    const content = accordion.querySelector('[data-accordion-content]');
+    const inner = accordion.querySelector('.spa__answer-inner');
+
+    function setOpen(open) {
+      if (!trigger || !content) return;
+      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) {
+        content.style.maxHeight = content.scrollHeight + 'px';
+      } else {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        requestAnimationFrame(function() {
+          content.style.maxHeight = '0';
+        });
+      }
+    }
+
+    if (trigger && content) {
+      trigger.addEventListener('click', function() {
+        const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+        setOpen(!isOpen);
+      });
+
+      if (trigger.getAttribute('aria-expanded') === 'true') {
+        content.style.maxHeight = content.scrollHeight + 'px';
+      } else {
+        content.style.maxHeight = '0';
+      }
+
+      if (inner && typeof ResizeObserver !== 'undefined') {
+        const observer = new ResizeObserver(function() {
+          if (trigger.getAttribute('aria-expanded') === 'true') {
+            content.style.maxHeight = content.scrollHeight + 'px';
+          }
+        });
+        observer.observe(inner);
+      }
+    }
+
+    const dialog = document.getElementById('SpaDialog-' + blockId);
+    const mode = accordion.dataset.spaMode || 'poster';
+
+    function initNativeScrollDrag(scroller) {
+      if (!scroller || scroller.dataset.scrollDrag === 'true') return;
+      scroller.dataset.scrollDrag = 'true';
+
+      let isDown = false;
+      let startX = 0;
+      let startScrollLeft = 0;
+      let moved = false;
+
+      scroller.addEventListener('mousedown', function(e) {
+        if (e.button !== 0) return;
+        if (e.target.closest('[data-spa-slider]')) return;
+        isDown = true;
+        moved = false;
+        startX = e.pageX;
+        startScrollLeft = scroller.scrollLeft;
+        scroller.classList.add('is-dragging');
+      });
+
+      document.addEventListener('mousemove', function(e) {
+        if (!isDown) return;
+        e.preventDefault();
+        const walk = e.pageX - startX;
+        if (Math.abs(walk) > 3) moved = true;
+        scroller.scrollLeft = startScrollLeft - walk;
+      });
+
+      document.addEventListener('mouseup', function() {
+        if (!isDown) return;
+        isDown = false;
+        scroller.classList.remove('is-dragging');
+      });
+
+      scroller.addEventListener('click', function(e) {
+        if (!moved) return;
+        if (e.target.closest('[data-spa-slider]')) return;
+        e.preventDefault();
+        e.stopPropagation();
+        moved = false;
+      }, true);
+
+      scroller.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+      });
+    }
+
+    accordion.querySelectorAll('[data-spa-slider]').forEach(function(slider) {
+      new SpaSlider(slider);
+    });
+    accordion.querySelectorAll('[data-spa-viewport]').forEach(initNativeScrollDrag);
+
+    if (!dialog) return;
+
+    dialog.querySelectorAll('[data-spa-slider]').forEach(function(slider) {
+      new SpaSlider(slider);
+    });
+
+    const viewport = dialog.querySelector('[data-spa-viewport]');
+    const openBtn = accordion.querySelector('[data-spa-open]');
+    const closeBtn = dialog.querySelector('[data-spa-close]');
+
+    if (viewport) initNativeScrollDrag(viewport);
+
+    function openDialog() {
+      if (typeof dialog.showModal === 'function') {
+        dialog.showModal();
+      } else {
+        dialog.setAttribute('open', '');
+      }
+      if (viewport) viewport.scrollLeft = 0;
+    }
+
+    function closeDialog() {
+      if (typeof dialog.close === 'function' && dialog.open) {
+        dialog.close();
+      } else {
+        dialog.removeAttribute('open');
+      }
+    }
+
+    if (openBtn && mode === 'poster') {
+      openBtn.addEventListener('click', openDialog);
+    }
+    if (closeBtn) closeBtn.addEventListener('click', closeDialog);
+
+    dialog.addEventListener('click', function(e) {
+      if (e.target === dialog) closeDialog();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initSocialProofAccordion('{{ spa_id }}');
+    });
+  } else {
+    initSocialProofAccordion('{{ spa_id }}');
+  }
+})();
+</script>
+{%- endif -%}

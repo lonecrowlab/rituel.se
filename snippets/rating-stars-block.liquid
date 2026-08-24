@@ -1,0 +1,294 @@
+{% comment %}Updated by Elevate: 2026-01-02T23:29:59.021Z{% endcomment %}
+{%- liquid
+  if section_alignment != blank
+    if section_alignment == 'center'
+      assign final_alignment = 'center'
+    elsif section_alignment == 'right'
+      assign final_alignment = 'flex-end'
+    else
+      assign final_alignment = 'flex-start'
+    endif
+  elsif block.settings.alignment != blank
+    assign final_alignment = block.settings.alignment
+  else
+    assign final_alignment = 'flex-start'
+  endif
+
+  if section_mobile_alignment != blank
+    if section_mobile_alignment == 'center'
+      assign final_mobile_alignment = 'center'
+    elsif section_mobile_alignment == 'right'
+      assign final_mobile_alignment = 'flex-end'
+    else
+      assign final_mobile_alignment = 'flex-start'
+    endif
+  else
+    assign final_mobile_alignment = final_alignment
+  endif
+
+  assign stars_source = block.settings.stars_rating_source
+  if stars_source == blank
+    if block.settings.use_product_metafield_rating
+      assign stars_source = 'metafield'
+    else
+      assign stars_source = 'custom'
+    endif
+  endif
+
+  assign has_popup_rating = false
+  if section.blocks != blank
+    for section_block in section.blocks
+      if section_block.type == 'popup_rating'
+        assign has_popup_rating = true
+        break
+      endif
+    endfor
+  endif
+
+  assign rating_value = block.settings.rating
+  assign show_custom_stars = true
+  assign scroll_target = block.settings.scroll_id
+  assign rating_label = blank
+  assign rating_richtext = blank
+
+  case stars_source
+    when 'metafield'
+      assign review_stars = product.metafields.custom.review_stars_ave.value
+      if review_stars == blank
+        assign review_stars = product.metafields.custom.review_stars_ave
+      endif
+      if review_stars != blank
+        assign rating_value = review_stars
+      endif
+      if scroll_target == blank and has_popup_rating == false
+        assign scroll_target = '#reviews-head'
+      endif
+    when 'custom'
+      assign rating_value = block.settings.rating
+    when 'original'
+      assign show_custom_stars = true
+      assign rating_value = 0
+      if scroll_target == blank and has_popup_rating == false
+        assign scroll_target = '#reviews-head'
+      endif
+  endcase
+
+  assign show_rating_text = block.settings.show_rating_text
+  if show_rating_text == nil
+    assign show_rating_text = true
+  endif
+
+  assign use_metafield_count_text = true
+  if block.settings.show_metafield_rating_count == false
+    assign use_metafield_count_text = false
+  endif
+
+  assign rating_text_source = blank
+  if block.settings.rating_text != blank
+    assign rating_text_source = block.settings.rating_text
+  elsif stars_source != 'original' and use_metafield_count_text and block.settings.metafield_rating_count_text != blank
+    assign rating_text_source = block.settings.metafield_rating_count_text
+  elsif block.settings.richtext_content != blank
+    assign rating_text_source = block.settings.richtext_content
+  elsif block.settings.label != blank
+    assign rating_text_source = block.settings.label
+  endif
+
+  if stars_source == 'original' and rating_text_source == blank
+    assign rating_text_source = '[original.rating]/5 · [original.count] happy customers!'
+  endif
+
+  if stars_source == 'original' and show_rating_text == nil
+    assign show_rating_text = true
+  endif
+
+  assign needs_original_placeholders = false
+  if rating_text_source contains '[original.rating]' or rating_text_source contains '[original.count]'
+    assign needs_original_placeholders = true
+  endif
+
+  if show_rating_text and rating_text_source != blank and product != blank
+    capture rating_label
+      render 'replace-rating-text', template: rating_text_source, product: product
+    endcapture
+    assign rating_label = rating_label | strip
+    assign rating_richtext = blank
+  elsif show_rating_text and rating_text_source != blank
+    assign rating_label = rating_text_source
+    assign rating_richtext = blank
+  endif
+
+  assign show_chevron = block.settings.show_popup_chevron
+  if show_chevron == nil
+    assign show_chevron = has_popup_rating
+  endif
+
+  assign chevron_color = block.settings.chevron_color | default: '#343F20'
+
+  assign hide_until_ready = false
+  if stars_source == 'original' or needs_original_placeholders
+    assign hide_until_ready = true
+  endif
+-%}
+
+{% if hide_until_ready %}
+<style>
+  .rating-stars--pending:not(.rating-stars--loaded) {
+    display: none !important;
+  }
+  @media (max-width: 768px) {
+    .popup-rating-wrapper{
+      margin-top:20px;
+    }
+}
+</style>
+{% endif %}
+
+<div
+  class="rating-stars{% if stars_source == 'original' %} rating-stars--original{% endif %}{% if hide_until_ready %} rating-stars--pending{% endif %}{% if block.settings.overlay_on_image_mobile %} rating-stars--overlay-mobile{% endif %}{% if has_popup_rating %} rating-stars--popup-trigger{% endif %}"
+  data-rating-stars-block
+  data-rating-stars-id="{{ block.id }}"
+  data-stars-source="{{ stars_source }}"
+  data-mobile-position="{{ block.settings.mobile_vertical_position | default: 'top' }}"
+  data-mobile-offset="{{ block.settings.mobile_position_offset | default: 15 }}"
+  style="--rating:{{ rating_value }};--star-color:{{ block.settings.star_color }};--bg-star-color:{{ block.settings.bg_star_color }};--font-size:{{ block.settings.size | divided_by: 10.0 }}rem;--alignment:{{ final_alignment }};--mobile-alignment:{{ final_mobile_alignment }};{% if margins %}--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;{% endif %}"
+  {% if block_attributes %}{{ block.shopify_attributes }}{% endif %}
+>
+  {% if scroll_target != blank and has_popup_rating == false %}<a href="{{ scroll_target }}">{% endif %}
+    <div class="rating-stars-and-text font-size--desktop-auto flex-center">
+      {% if show_custom_stars %}
+        <div class="rating-stars__container rating-stars__container--underlay{% if settings.star_style == 'trustpilot' %} rating-stars--trustpilot{% endif %}">
+          {% if settings.star_style == 'trustpilot' %}
+            {% for i in (1..5) %}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><path d="M0 0h96v96H0z" fill="{{ settings.trustpilot_star_empty_color }}"/><path d="M48 64.7L62.6 61l6.1 18.8zm33.6-24.3H55.9L48 16.2l-7.9 24.2H14.4l20.8 15-7.9 24.2 20.8-15 12.8-9.2z" fill="{{ settings.star_symbol_color }}"/></svg>
+            {% endfor %}
+          {% elsif block.settings.bg_stars_style == 'outlined' %}
+            {% for i in (1..5) %}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor">
+                <path d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.6 23.5s-17.3 6-25.3 1.7l-137-73.2L151 509.1c-8.1 4.3-17.9 3.7-25.3-1.7s-11.2-14.5-9.7-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0zm0 79L235.4 187.2c-3.5 7.1-10.2 12.1-18.1 13.3L99 217.9 184.9 303c5.5 5.5 8.1 13.3 6.8 21L171.4 443.7l105.2-56.2c7.1-3.8 15.6-3.8 22.6 0l105.2 56.2L384.2 324.1c-1.3-7.7 1.2-15.5 6.8-21l85.9-85.1L358.6 200.5c-7.8-1.2-14.6-6.1-18.1-13.3L287.9 79z"/>
+              </svg>
+            {% endfor %}
+          {% else %}
+            {% for i in (1..5) %}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg>
+            {% endfor %}
+          {% endif %}
+          <div class="rating-stars__container rating-stars__container--overlay{% if settings.star_style == 'trustpilot' %} rating-stars--trustpilot{% endif %}">
+            {% if settings.star_style == 'trustpilot' %}
+              {% for i in (1..5) %}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><path d="M0 0h96v96H0z" fill="{{ settings.trustpilot_star_color }}"/><path d="M48 64.7L62.6 61l6.1 18.8zm33.6-24.3H55.9L48 16.2l-7.9 24.2H14.4l20.8 15-7.9 24.2 20.8-15 12.8-9.2z" fill="{{ settings.star_symbol_color }}"/></svg>
+              {% endfor %}
+            {% else %}
+              {% for i in (1..5) %}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg>
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if show_rating_text and rating_label != blank %}
+        <div
+          class="rating-stars__text"
+          data-rating-stars-text
+          style="font-size: {{ block.settings.text_font_size | default: block.settings.size }}px; color: {{ block.settings.text_color | default: '#000000' }}; font-weight: {{ block.settings.text_font_weight | default: '400' }}; margin-top: {{ block.settings.text_margin_top | default: 0 }}px;"
+        >
+          {{ rating_richtext | default: rating_label }}
+        </div>
+      {% endif %}
+
+      {% if show_chevron %}
+        <span class="rating-stars__chevron popup-rating-chevron" aria-hidden="true" style="color: {{ chevron_color }};">
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </span>
+      {% endif %}
+    </div>
+  {% if scroll_target != blank and has_popup_rating == false %}</a>{% endif %}
+</div>
+
+{% if needs_original_placeholders or stars_source == 'original' %}
+  <script src="{{ 'rating-stars.js' | asset_url }}" defer></script>
+{% endif %}
+
+<style>
+  .rating-stars {
+    display: flex;
+    justify-content: var(--alignment);
+  }
+
+  @media (max-width: 768px) {
+    .rating-stars {
+      justify-content: var(--mobile-alignment);
+    }
+  }
+
+  .rating-stars-and-text {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .rating-stars__text {
+    display: inline-block;
+    line-height: 1;
+  }
+
+  .rating-stars__text p {
+    margin: 0;
+    display: inline;
+  }
+
+  .rating-stars__text strong,
+  .rating-stars__text b {
+    margin: 0 0.25em;
+  }
+
+  .rating-stars__chevron {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    line-height: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .rating-stars__chevron svg {
+    display: block;
+  }
+
+  .popup-rating-wrapper.is-open .rating-stars__chevron,
+  .popup-rating-wrapper.is-open .popup-rating-chevron {
+    transform: rotate(180deg);
+  }
+
+  .rating-stars--pending.rating-stars--loaded {
+    display: flex !important;
+    animation: rating-stars-fade-in 0.25s ease;
+  }
+
+  @keyframes rating-stars-fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .rating-stars--popup-trigger {
+    cursor: pointer;
+  }
+
+  .rating-stars--trustpilot {
+    gap: {{ settings.trustpilot_star_gap }}px;
+  }
+
+  .rating-stars--trustpilot svg {
+    width: {{ settings.trustpilot_star_size }}px;
+    height: {{ settings.trustpilot_star_size }}px;
+  }
+</style>

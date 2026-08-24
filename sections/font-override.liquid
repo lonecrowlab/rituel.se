@@ -1,0 +1,45 @@
+{% liquid
+  assign custom_font = section.settings.custom_font
+%}
+
+{% style %}
+
+/* Load selected Shopify font */
+{{ custom_font | font_face }}
+
+/* Apply only on this template/page */
+body .shopify-section-group-main h1,
+body .shopify-section-group-main h2,
+body .shopify-section-group-main h3,
+body .shopify-section-group-main h4,
+body .shopify-section-group-main h5,
+body .shopify-section-group-main h6,
+body .shopify-section-group-main .h0,
+body .shopify-section-group-main .h1,
+body .shopify-section-group-main .h2,
+body .shopify-section-group-main .h3,
+body .shopify-section-group-main .h4,
+body .shopify-section-group-main .h5 {
+  font-family: {{ custom_font.family }}, {{ custom_font.fallback_families }} !important;
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Page Font Override",
+  "settings": [
+    {
+      "type": "font_picker",
+      "id": "custom_font",
+      "label": "Heading Font",
+      "default": "helvetica_n4"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page Font Override"
+    }
+  ]
+}
+{% endschema %}

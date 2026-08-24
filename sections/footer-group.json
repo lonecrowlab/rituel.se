@@ -1,0 +1,345 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "vso_footer_07_zDHWK7": {
+      "type": "vso-footer-07",
+      "blocks": {
+        "benefits_hxRxbE": {
+          "type": "benefits",
+          "settings": {
+            "benefit_1_heading": "FREE SHIPPING",
+            "benefit_1_text": "On orders more than $50",
+            "benefit_2_heading": "SIMPLE RETURN POLICY",
+            "benefit_2_text": "Try it for 30 days risk-free",
+            "benefit_3_heading": "12 MONTHS WARRANTY",
+            "benefit_3_text": "Free replacement for any product issues",
+            "benefits_wrapper_bg_mobile": "#ffffff",
+            "wrapper_padding_mobile": 0,
+            "bg_color": "#faf7f5",
+            "border_radius_desktop": 16,
+            "border_width": 1,
+            "border_color": "#000000",
+            "icon_size_desktop": 40,
+            "icon_size_mobile": 32,
+            "heading_color": "#111111",
+            "heading_custom_font": false,
+            "heading_as": "p",
+            "heading_font": "poppins_n4",
+            "heading_size_desktop": 13,
+            "heading_size_mobile": 12,
+            "heading_line_height": 140,
+            "heading_font_weight": 600,
+            "heading_letter_spacing": 2,
+            "text_color": "#2e2e2e",
+            "text_custom_font": false,
+            "text_as": "p",
+            "text_font": "poppins_n4",
+            "text_size_desktop": 14,
+            "text_size_mobile": 12,
+            "text_line_height": 150,
+            "text_font_weight": 400,
+            "text_letter_spacing": 0,
+            "overlap_desktop": 60,
+            "overlap_mobile": 40,
+            "margin_horizontal_desktop": 0,
+            "padding_desktop": 32,
+            "padding_horizontal_desktop": 48,
+            "padding_mobile": 24,
+            "gap_desktop": 24,
+            "gap_mobile": 16,
+            "benefit_gap": 12
+          }
+        },
+        "menu_g6rHcK": {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop by Collection",
+            "menu": ""
+          }
+        },
+        "menu_7HrfVx": {
+          "type": "menu",
+          "settings": {
+            "heading": "Explore",
+            "menu": ""
+          }
+        },
+        "menu_dUTb7X": {
+          "type": "menu",
+          "settings": {
+            "heading": "Help",
+            "menu": ""
+          }
+        },
+        "menu_7REFwN": {
+          "type": "menu",
+          "settings": {
+            "heading": "More",
+            "menu": ""
+          }
+        },
+        "logo_J4mCk4": {
+          "type": "logo",
+          "settings": {
+            "logo_full_width": true,
+            "max_width_desktop": 800,
+            "max_width_mobile": 300,
+            "alignment": "center",
+            "margin_top_desktop": 60,
+            "margin_bottom_desktop": 60,
+            "margin_top_mobile": 20,
+            "margin_bottom_mobile": 20
+          }
+        },
+        "links_4kz894": {
+          "type": "links",
+          "settings": {
+            "menu": "",
+            "link_color": "#ffffff",
+            "font_size_desktop": 14,
+            "font_size_mobile": 12,
+            "font_weight": 400,
+            "gap_desktop": 24,
+            "gap_mobile": 16,
+            "margin_top_desktop": 32,
+            "margin_bottom_desktop": 32,
+            "margin_top_mobile": 24,
+            "margin_bottom_mobile": 24
+          }
+        },
+        "bottom_bar_p8E7pw": {
+          "type": "bottom_bar",
+          "settings": {
+            "show_shop_name": true,
+            "shop_name_text": "",
+            "rights_text": "All Rights Reserved",
+            "show_payment_icons": true,
+            "payment_icon_height": 24,
+            "show_social_icons": true,
+            "social_facebook": "#",
+            "social_twitter": "#",
+            "social_instagram": "#",
+            "social_pinterest": "#",
+            "social_tiktok": "#",
+            "social_icon_size": 24,
+            "social_gap": 16,
+            "social_icon_color": "#ffffff",
+            "bg_color": "rgba(0,0,0,0)",
+            "gap_desktop": 24,
+            "gap_mobile": 20,
+            "padding_vertical_desktop": 24,
+            "padding_horizontal_desktop": 0,
+            "padding_vertical_mobile": 24,
+            "padding_horizontal_mobile": 0,
+            "margin_top_desktop": 0,
+            "margin_top_mobile": 0,
+            "payment_gap": 8,
+            "copyright_color": "#ffffff",
+            "copyright_custom_font": false,
+            "copyright_as": "p",
+            "copyright_font": "poppins_n4",
+            "copyright_size_desktop": 12,
+            "copyright_size_mobile": 11,
+            "copyright_line_height": 140,
+            "copyright_font_weight": 400,
+            "copyright_letter_spacing": 1
+          }
+        }
+      },
+      "block_order": [
+        "benefits_hxRxbE",
+        "menu_g6rHcK",
+        "menu_7HrfVx",
+        "menu_dUTb7X",
+        "menu_7REFwN",
+        "logo_J4mCk4",
+        "links_4kz894",
+        "bottom_bar_p8E7pw"
+      ],
+      "disabled": true,
+      "name": "VSO - Footer 07",
+      "settings": {
+        "enable_advanced_settings": false,
+        "section_full_width": false,
+        "section_max_width": 120,
+        "nav_columns_desktop": 4,
+        "inner_padding_horizontal": 0,
+        "inner_padding_horizontal_mobile": 0,
+        "section_bg_color": "#2d1f2a",
+        "bg_full_width": true,
+        "bg_full_width_mobile": true,
+        "section_border_radius": 0,
+        "section_border_radius_mobile": 0,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "inner_padding_top": 120,
+        "inner_padding_bottom": 48,
+        "inner_padding_top_mobile": 60,
+        "inner_padding_bottom_mobile": 32,
+        "columns_gap": 40,
+        "menu_items_gap": 10,
+        "text_color": "#ffffff",
+        "link_color": "#ffffff",
+        "menu_heading_text_color": "#ffffff",
+        "menu_heading_custom_font": false,
+        "menu_heading_as": "h5",
+        "menu_heading_font": "poppins_n4",
+        "menu_heading_size_desktop": 16,
+        "menu_heading_size_mobile": 14,
+        "menu_heading_line_height": 140,
+        "menu_heading_font_weight": 600,
+        "menu_heading_letter_spacing": 0,
+        "menu_item_size_desktop": 14,
+        "menu_item_size_mobile": 13
+      }
+    },
+    "newsletter_new_hVVNrF": {
+      "type": "newsletter-new",
+      "name": "Newsletter",
+      "settings": {
+        "use_theme_colors": false,
+        "use_section_gradient": false,
+        "background_color": "#f5f5f5",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(240, 240, 240, 1) 100%)",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
+        "heading_before": "Spara på din första order!",
+        "highlighted_text": "",
+        "heading_after": "",
+        "highlight_position": "inline_second",
+        "heading_tag": "h2",
+        "heading_text_align": "left",
+        "heading_color": "#000000",
+        "heading_font_size_desktop": 48,
+        "heading_font_size_mobile": 22,
+        "heading_font_weight": "600",
+        "heading_margin_bottom": 0,
+        "header_spacing": 12,
+        "highlighted_gradient_enabled": false,
+        "highlighted_color": "#000000",
+        "highlighted_gradient": "linear-gradient(95deg, rgba(0, 0, 0, 1), rgba(161, 161, 161, 1) 100%)",
+        "highlighted_font_size_desktop": 48,
+        "highlighted_font_size_mobile": 30,
+        "highlighted_font_weight": "600",
+        "highlighted_spacing": 14,
+        "subheading": "Gå med i ritúel-familjen och få din hemliga rabatt på din första order. Koden skickas direkt till din mail.",
+        "subheading_color": "#000000",
+        "subheading_font_size_desktop": 16,
+        "subheading_font_size_mobile": 14,
+        "subheading_max_width": 600,
+        "subheading_margin_bottom": 12,
+        "form_max_width": 600,
+        "form_layout": "row",
+        "form_gap": 12,
+        "input_placeholder": "Ange din e-postadress.",
+        "input_background_color": "#ffffff",
+        "input_text_color": "#000000",
+        "input_border_color": "#cccccc",
+        "input_border_width": 1,
+        "input_border_radius": 8,
+        "input_padding_vertical": 14,
+        "input_padding_horizontal": 20,
+        "input_font_size": 13,
+        "button_text": "Prenumerera",
+        "button_background_color": "#ffffff",
+        "button_text_color": "#000000",
+        "button_border_radius": 12,
+        "button_padding_vertical": 14,
+        "button_padding_horizontal": 32,
+        "button_font_size": 16,
+        "button_font_weight": "600",
+        "success_message": "Tack för att du prenumererar!"
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "text_column_WEgCJP": {
+          "type": "text_column",
+          "settings": {
+            "heading": "60 dagars nöjdhetsgaranti",
+            "text": "<p>Prova i lugn och ro. Fungerar den inte för dig får du pengarna tillbaka inga frågor, inga krångliga returer.</p>",
+            "width_desktop": 3,
+            "width_mobile": "2"
+          }
+        },
+        "link_list_GCYKzC": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Villkor",
+            "menu": "footer",
+            "width_desktop": 3,
+            "width_mobile": "1"
+          }
+        },
+        "text_column_rcf8nr": {
+          "type": "text_column",
+          "settings": {
+            "heading": "",
+            "text": "<p>Innehållet på denna webbplats är endast avsett för informationsändamål och ersätter inte medicinsk rådgivning. Individuella resultat kan variera.</p>",
+            "width_desktop": 3,
+            "width_mobile": "2"
+          }
+        }
+      },
+      "block_order": [
+        "text_column_WEgCJP",
+        "link_list_GCYKzC",
+        "text_column_rcf8nr"
+      ],
+      "settings": {
+        "show_brand_column": true,
+        "logo": "shopify://shop_images/LOGOS-35.png",
+        "logo_width": 300,
+        "brand_name": "",
+        "logo_description": "",
+        "brand_description": "",
+        "show_footer_bottom": true,
+        "show_copyright": true,
+        "copyright_text": "LYNVO LIMITED Organisationsnummer: 79413436 Adress: RM H18, 4/F, Century Ind Ctr, 33–35 Au Pui Wan St, Fotan, Shatin, Hongkong",
+        "show_payment_icons": true,
+        "show_localization": false,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "show_social": true,
+        "footer_bg_color": "#000000",
+        "footer_text_color": "#b0b0b0",
+        "footer_heading_color": "#ffffff",
+        "footer_border_color": "#333333",
+        "footer_menu_color": "#b0b0b0",
+        "footer_menu_hover_color": "#ffffff",
+        "footer_divider_color": "#666666",
+        "localization_label_color": "#b0b0b0",
+        "footer_heading_size": 18,
+        "footer_text_size": 14,
+        "copyright_text_size": 8,
+        "localization_label_size": 14,
+        "margin_top": 0
+      }
+    }
+  },
+  "order": [
+    "vso_footer_07_zDHWK7",
+    "newsletter_new_hVVNrF",
+    "footer"
+  ]
+}

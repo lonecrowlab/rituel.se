@@ -1,0 +1,28 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "denmark"
+  },
+  "parent": "product.triple-collagen-2.json",
+  "sections": {
+    "main": {
+      "settings": {},
+      "blocks": {
+        "product_flag_qn3MLq": {
+          "disabled": false,
+          "settings": {
+            "icon_1_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 370 280\" width=\"370\" height=\"280\">\n  <rect width=\"370\" height=\"280\" fill=\"#C8102E\"></rect>\n  <rect x=\"120\" width=\"40\" height=\"280\" fill=\"#FFFFFF\"></rect>\n  <rect y=\"120\" width=\"370\" height=\"40\" fill=\"#FFFFFF\"></rect>\n</svg>"
+          }
+        }
+      }
+    }
+  }
+}

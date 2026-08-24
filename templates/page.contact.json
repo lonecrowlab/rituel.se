@@ -1,0 +1,101 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "contact_form_new_YfdJm8": {
+      "type": "contact-form-new",
+      "name": "Contact Form",
+      "settings": {
+        "use_theme_colors": false,
+        "use_section_gradient": false,
+        "background_color": "#ffffff",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(240, 240, 240, 1) 100%)",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
+        "heading_before": "Kontakta Oss",
+        "highlighted_text": "",
+        "heading_after": "",
+        "highlight_position": "inline_second",
+        "heading_tag": "h2",
+        "heading_text_align": "center",
+        "heading_color": "#000000",
+        "heading_font_size_desktop": 48,
+        "heading_font_size_mobile": 32,
+        "heading_font_weight": "600",
+        "heading_margin_bottom": 0,
+        "header_spacing": 28,
+        "highlighted_gradient_enabled": false,
+        "highlighted_color": "#eb8fa2",
+        "highlighted_gradient": "linear-gradient(95deg, rgba(0, 0, 0, 1), rgba(161, 161, 161, 1) 100%)",
+        "highlighted_font_size_desktop": 58,
+        "highlighted_font_size_mobile": 40,
+        "highlighted_font_weight": "600",
+        "highlighted_spacing": 14,
+        "subheading": "Har du en fråga eller behöver du hjälp? Vi hör gärna från dig – kontakta oss på info@getrituel.com",
+        "subheading_color": "#666666",
+        "subheading_font_size_desktop": 16,
+        "subheading_font_size_mobile": 14,
+        "subheading_max_width": 600,
+        "subheading_margin_bottom": 32,
+        "form_max_width": 700,
+        "field_spacing": 20,
+        "label_color": "#000000",
+        "label_font_size": 14,
+        "label_font_weight": "500",
+        "input_background_color": "#ffffff",
+        "input_text_color": "#000000",
+        "input_border_color": "#cccccc",
+        "input_border_width": 1,
+        "input_border_radius": 8,
+        "input_padding_vertical": 12,
+        "input_padding_horizontal": 16,
+        "input_font_size": 16,
+        "textarea_height": 120,
+        "name_label": "Namn",
+        "name_placeholder": "Ange ditt namn",
+        "name_required": true,
+        "email_label": "E-post",
+        "email_placeholder": "Ange din e-post",
+        "show_phone": false,
+        "phone_label": "Phone",
+        "phone_placeholder": "Enter your phone number",
+        "phone_required": false,
+        "message_label": "Meddelande",
+        "message_placeholder": "Skriv ditt meddelande",
+        "message_required": true,
+        "button_text": "Skicka meddelande",
+        "button_full_width": false,
+        "button_background_color": "#eb8fa2",
+        "button_text_color": "#ffffff",
+        "button_border_radius": 8,
+        "button_padding_vertical": 14,
+        "button_padding_horizontal": 40,
+        "button_font_size": 16,
+        "button_font_weight": "600",
+        "success_message": "Tack för att du kontaktar oss! Vi återkommer till dig så snart som möjligt."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "contact_form_new_YfdJm8"
+  ]
+}

@@ -1,0 +1,1254 @@
+{%- liquid
+  assign sid = section.id
+-%}
+
+<section
+  id="ScrollingTimeline-{{ sid }}"
+  class="scrolling-timeline section-{{ sid }}"
+  data-scrolling-timeline="{{ sid }}"
+  style="
+    --st-bg: {{ section.settings.background_color }};
+    --st-accent: {{ section.settings.accent_color }};
+    --st-base: {{ section.settings.base_color }};
+    --st-title-color: {{ section.settings.title_color }};
+    --st-title-em-color: {{ section.settings.title_em_color }};
+    --st-title-size: {{ section.settings.title_size_mobile }}px;
+    --st-title-weight: {{ section.settings.title_weight }};
+    --st-title-line-height: {{ section.settings.title_line_height }};
+    --st-desc-color: {{ section.settings.description_color }};
+    --st-desc-size: {{ section.settings.description_size_mobile }}px;
+    --st-desc-weight: {{ section.settings.description_weight }};
+    --st-desc-line-height: {{ section.settings.description_line_height }};
+    --st-guarantee-color: {{ section.settings.guarantee_color }};
+    --st-guarantee-size: {{ section.settings.guarantee_size_mobile }}px;
+    --st-guarantee-icon-size: {{ section.settings.guarantee_icon_size }}px;
+    --st-guarantee-icon-color: {{ section.settings.guarantee_icon_color }};
+    --st-block-title-size: {{ section.settings.block_title_size_mobile }}px;
+    --st-block-title-weight: {{ section.settings.block_title_weight }};
+    --st-block-title-color: {{ section.settings.block_title_color }};
+    --st-block-title-active-color: {{ section.settings.block_title_active_color }};
+    --st-block-title-bg: {{ section.settings.block_title_bg }};
+    --st-block-title-active-bg: {{ section.settings.block_title_active_bg }};
+    --st-block-title-radius: {{ section.settings.block_title_radius }}px;
+    --st-block-title-pad-y: {{ section.settings.block_title_pad_y }}px;
+    --st-block-title-pad-x: {{ section.settings.block_title_pad_x }}px;
+    --st-list-color: {{ section.settings.list_color }};
+    --st-list-size: {{ section.settings.list_size_mobile }}px;
+    --st-list-weight: {{ section.settings.list_weight }};
+    --st-list-gap: {{ section.settings.list_gap }}px;
+    --st-check-color: {{ section.settings.check_color }};
+    --st-check-size: {{ section.settings.check_size }}px;
+    --st-cta-bg: {{ section.settings.cta_bg }};
+    --st-cta-color: {{ section.settings.cta_color }};
+    --st-cta-hover-bg: {{ section.settings.cta_hover_bg }};
+    --st-cta-hover-color: {{ section.settings.cta_hover_color }};
+    --st-cta-size: {{ section.settings.cta_size_mobile }}px;
+    --st-cta-weight: {{ section.settings.cta_weight }};
+    --st-cta-radius: {{ section.settings.cta_radius }}px;
+    --st-cta-pad-y: {{ section.settings.cta_pad_y }}px;
+    --st-cta-pad-x: {{ section.settings.cta_pad_x }}px;
+    --st-image-radius: {{ section.settings.image_radius }}px;
+    --st-marker-size: {{ section.settings.marker_size }}px;
+    --st-line-width: {{ section.settings.line_width }}px;
+    --st-item-gap: {{ section.settings.item_gap_mobile }}px;
+    --st-column-gap: {{ section.settings.column_gap }}px;
+    --st-sticky-top: {{ section.settings.sticky_top }}px;
+    --st-pad-top: {{ section.settings.padding_top_mobile }}px;
+    --st-pad-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    --st-content-align: {{ section.settings.content_align }};
+    --st-max-width: {{ section.settings.max_width }}px;
+  "
+>
+  <div class="st__inner page-width">
+    <div class="st__layout">
+      <div class="st__sticky">
+        {% if section.settings.image != blank %}
+          <div class="st__media">
+            {%- liquid
+              assign st_alt = section.settings.image.alt | default: section.settings.title | strip_html
+            -%}
+            {{
+              section.settings.image
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'lazy',
+                widths: '400, 600, 800, 1000, 1200',
+                sizes: '(min-width: 990px) 40vw, 100vw',
+                class: 'st__image',
+                alt: st_alt
+            }}
+          </div>
+        {% else %}
+          
+        {% endif %}
+
+        {% if section.settings.title != blank %}
+          <h2 class="st__title">{{ section.settings.title }}</h2>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <div class="st__description">{{ section.settings.description }}</div>
+        {% endif %}
+
+        {% if section.settings.guarantee_text != blank %}
+          <div class="st__guarantee">
+            {% if section.settings.guarantee_icon != blank and section.settings.guarantee_icon != 'none' %}
+              <span class="st__guarantee-icon" aria-hidden="true">
+                {% render 'icons', icon: section.settings.guarantee_icon %}
+              </span>
+            {% endif %}
+            <span class="st__guarantee-text">{{ section.settings.guarantee_text }}</span>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="st__timeline">
+        {% if section.blocks.size > 0 %}
+          <div class="st__steps">
+            <div class="st__track" aria-hidden="true" data-st-track>
+              <span class="st__track-base"></span>
+              <span class="st__track-fill" data-st-fill></span>
+            </div>
+
+            <div class="st__items" data-st-items>
+              {% for block in section.blocks %}
+                <article class="st__item" data-st-item {{ block.shopify_attributes }}>
+                  <span class="st__marker" data-st-marker aria-hidden="true"></span>
+                  <div class="st__item-body">
+                    {% if block.settings.title != blank %}
+                      <h3 class="st__block-title">{{ block.settings.title }}</h3>
+                    {% endif %}
+                    <ul class="st__list">
+                      {% if block.settings.list_1 != blank %}
+                        <li class="st__list-item">
+                          <span class="st__check" aria-hidden="true">{% render 'icons', icon: 'checkmark_icon' %}</span>
+                          <span>{{ block.settings.list_1 }}</span>
+                        </li>
+                      {% endif %}
+                      {% if block.settings.list_2 != blank %}
+                        <li class="st__list-item">
+                          <span class="st__check" aria-hidden="true">{% render 'icons', icon: 'checkmark_icon' %}</span>
+                          <span>{{ block.settings.list_2 }}</span>
+                        </li>
+                      {% endif %}
+                      {% if block.settings.list_3 != blank %}
+                        <li class="st__list-item">
+                          <span class="st__check" aria-hidden="true">{% render 'icons', icon: 'checkmark_icon' %}</span>
+                          <span>{{ block.settings.list_3 }}</span>
+                        </li>
+                      {% endif %}
+                      {% if block.settings.list_4 != blank %}
+                        <li class="st__list-item">
+                          <span class="st__check" aria-hidden="true">{% render 'icons', icon: 'checkmark_icon' %}</span>
+                          <span>{{ block.settings.list_4 }}</span>
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+                </article>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if section.settings.cta_text != blank %}
+          <div class="st__cta-wrap">
+            <a
+              class="st__cta"
+              href="{{ section.settings.cta_link | default: '#' }}"
+              {% if section.settings.cta_open_new_tab %}target="_blank" rel="noopener"{% endif %}
+            >
+              {{ section.settings.cta_text }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #ScrollingTimeline-{{ sid }} {
+    background: var(--st-bg);
+    padding-top: var(--st-pad-top);
+    padding-bottom: var(--st-pad-bottom);
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__inner {
+    max-width: var(--st-max-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__layout {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__sticky {
+    text-align: var(--st-content-align);
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__media {
+    overflow: hidden;
+    border-radius: var(--st-image-radius);
+    margin-bottom: 24px;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__image,
+  #ScrollingTimeline-{{ sid }} .st__placeholder {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__media--placeholder {
+    background: #f3f3f3;
+    aspect-ratio: 16 / 10;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__title {
+    margin: 0 0 12px;
+    font-size: var(--st-title-size);
+    font-weight: var(--st-title-weight);
+    line-height: var(--st-title-line-height);
+    color: var(--st-title-color);
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__title em,
+  #ScrollingTimeline-{{ sid }} .st__title i {
+    font-style: normal;
+    color: var(--st-title-em-color);
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__description {
+    margin: 0 0 16px;
+    font-size: var(--st-desc-size);
+    font-weight: var(--st-desc-weight);
+    line-height: var(--st-desc-line-height);
+    color: var(--st-desc-color);
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__description p {
+    margin: 0;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__guarantee {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--st-guarantee-color);
+    font-size: var(--st-guarantee-size);
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__guarantee-icon {
+    display: inline-flex;
+    width: var(--st-guarantee-icon-size);
+    height: var(--st-guarantee-icon-size);
+    color: var(--st-guarantee-icon-color);
+    flex-shrink: 0;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__guarantee-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__timeline {
+    position: relative;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__steps {
+    position: relative;
+    padding-left: calc(var(--st-marker-size) + 24px);
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__track {
+    position: absolute;
+    left: calc(var(--st-marker-size) / 2);
+    top: 0;
+    bottom: 0;
+    width: var(--st-line-width);
+    transform: translateX(-50%);
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__track-base,
+  #ScrollingTimeline-{{ sid }} .st__track-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    display: block;
+    border-radius: 999px;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__track-base {
+    height: 100%;
+    background-color: var(--st-base);
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__track-fill {
+    height: 0%;
+    background-color: var(--st-accent);
+    will-change: height;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--st-item-gap);
+    position: relative;
+    z-index: 2;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__item {
+    position: relative;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__marker {
+    position: absolute;
+    left: calc(-1 * (var(--st-marker-size) + 24px));
+    top: 0.15em;
+    width: var(--st-marker-size);
+    height: var(--st-marker-size);
+    border-radius: 50%;
+    background-color: var(--st-base);
+    /* box-shadow: 0 0 0 3px var(--st-bg); */
+    transition: background-color 0.3s ease;
+    z-index: 3;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__item.is-active .st__marker {
+    background-color: var(--st-accent);
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__block-title {
+    display: inline-block;
+    margin: 0 0 14px;
+    padding: var(--st-block-title-pad-y) var(--st-block-title-pad-x);
+    border-radius: var(--st-block-title-radius);
+    font-size: var(--st-block-title-size);
+    font-weight: var(--st-block-title-weight);
+    line-height: 1.3;
+    color: var(--st-block-title-color);
+    background-color: var(--st-block-title-bg);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__item.is-active .st__block-title {
+    color: var(--st-block-title-active-color);
+    background-color: var(--st-block-title-active-bg);
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--st-list-gap);
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: var(--st-list-size);
+    font-weight: var(--st-list-weight);
+    line-height: 1.45;
+    color: var(--st-list-color);
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__check {
+    display: inline-flex;
+    width: var(--st-check-size);
+    height: var(--st-check-size);
+    color: var(--st-check-color);
+    flex-shrink: 0;
+    margin-top: 0.15em;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__check svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__cta-wrap {
+    margin-top: 32px;
+    padding-left: calc(var(--st-marker-size) + 24px);
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: var(--st-cta-pad-y) var(--st-cta-pad-x);
+    border-radius: var(--st-cta-radius);
+    background: var(--st-cta-bg);
+    color: var(--st-cta-color);
+    font-size: var(--st-cta-size);
+    font-weight: var(--st-cta-weight);
+    line-height: 1.2;
+    text-decoration: none;
+    text-align: center;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+  }
+
+  #ScrollingTimeline-{{ sid }} .st__cta:hover {
+    background: var(--st-cta-hover-bg);
+    color: var(--st-cta-hover-color);
+  }
+
+  @media screen and (min-width: 990px) {
+    #ScrollingTimeline-{{ sid }} {
+      --st-title-size: {{ section.settings.title_size_desktop }}px;
+      --st-desc-size: {{ section.settings.description_size_desktop }}px;
+      --st-guarantee-size: {{ section.settings.guarantee_size_desktop }}px;
+      --st-block-title-size: {{ section.settings.block_title_size_desktop }}px;
+      --st-list-size: {{ section.settings.list_size_desktop }}px;
+      --st-cta-size: {{ section.settings.cta_size_desktop }}px;
+      --st-item-gap: {{ section.settings.item_gap_desktop }}px;
+      --st-pad-top: {{ section.settings.padding_top_desktop }}px;
+      --st-pad-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    #ScrollingTimeline-{{ sid }} .st__layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: var(--st-column-gap);
+      align-items: start;
+    }
+
+    #ScrollingTimeline-{{ sid }} .st__sticky {
+      position: sticky;
+      top: var(--st-sticky-top);
+    }
+
+    #ScrollingTimeline-{{ sid }} .st__cta {
+      width: auto;
+      min-width: 260px;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    const section = document.getElementById('ScrollingTimeline-{{ sid }}');
+    if (!section) return;
+
+    const fill = section.querySelector('[data-st-fill]');
+    const track = section.querySelector('[data-st-track]');
+    const items = Array.from(section.querySelectorAll('[data-st-item]'));
+    if (!fill || !track || !items.length) return;
+
+    let ticking = false;
+    const triggerRatio = {{ section.settings.scroll_trigger | divided_by: 100.0 }};
+
+    function update() {
+      const markers = items.map(function (item) {
+        return item.querySelector('[data-st-marker]');
+      }).filter(Boolean);
+
+      if (!markers.length) return;
+
+      const triggerY = window.innerHeight * triggerRatio;
+      const steps = track.parentElement;
+      const stepsRect = steps.getBoundingClientRect();
+      const firstRect = markers[0].getBoundingClientRect();
+      const lastRect = markers[markers.length - 1].getBoundingClientRect();
+
+      const topOffset = firstRect.top + firstRect.height / 2 - stepsRect.top;
+      const bottomOffset = stepsRect.bottom - (lastRect.top + lastRect.height / 2);
+
+      track.style.top = Math.max(0, topOffset) + 'px';
+      track.style.bottom = Math.max(0, bottomOffset) + 'px';
+
+      const trackRect = track.getBoundingClientRect();
+      const trackHeight = track.offsetHeight || 1;
+      let fillHeight = triggerY - trackRect.top;
+      fillHeight = Math.max(0, Math.min(trackHeight, fillHeight));
+      fill.style.height = (fillHeight / trackHeight) * 100 + '%';
+
+      items.forEach(function (item, index) {
+        const marker = markers[index];
+        if (!marker) return;
+        const markerCenter = marker.getBoundingClientRect().top + marker.offsetHeight / 2;
+        item.classList.toggle('is-active', markerCenter <= triggerY);
+      });
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        update();
+        ticking = false;
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(onScroll);
+    }
+    update();
+
+    document.addEventListener('shopify:section:load', function (event) {
+      if (event.detail && event.detail.sectionId === '{{ sid }}') update();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Scrolling Timeline",
+  "tag": "section",
+  "class": "section-scrolling-timeline",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Main image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "Your Comfort <em>Journey with Bare®</em>",
+      "info": "Use italic for accent-colored text"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Bare is built for daily wear, not a one-day fix. Here’s how things tend to shift once they’re in your shoes."
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee text",
+      "default": "30-day money-back guarantee"
+    },
+    {
+      "type": "select",
+      "id": "guarantee_icon",
+      "label": "Guarantee icon",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "shield_check", "label": "Shield check" },
+        { "value": "shield_icon", "label": "Shield" },
+        { "value": "guarantee_icon", "label": "Guarantee" },
+        { "value": "checkmark_icon", "label": "Checkmark" },
+        { "value": "check-2", "label": "Check circle" },
+        { "value": "star__icon", "label": "Star" },
+        { "value": "heart_icon", "label": "Heart" },
+        { "value": "lightning_icon", "label": "Lightning" },
+        { "value": "customers", "label": "Customers" },
+        { "value": "side_wreath", "label": "Side wreath" }
+      ],
+      "default": "shield_check"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Try Risk-Free Today"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    },
+    {
+      "type": "checkbox",
+      "id": "cta_open_new_tab",
+      "label": "Open CTA in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "base_color",
+      "label": "Timeline base color",
+      "default": "#8b4252",
+      "info": "Inactive line, circles, and block titles"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Timeline accent color",
+      "default": "#cc667c",
+      "info": "Active fill for line, circles, and block titles on scroll"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "title_em_color",
+      "label": "Title accent (italic)",
+      "default": "#cc667c"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#6b6b6b"
+    },
+    {
+      "type": "color",
+      "id": "guarantee_color",
+      "label": "Guarantee text color",
+      "default": "#6b6b6b"
+    },
+    {
+      "type": "color",
+      "id": "guarantee_icon_color",
+      "label": "Guarantee icon color",
+      "default": "#8b4252"
+    },
+    {
+      "type": "color",
+      "id": "block_title_color",
+      "label": "Block title color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "block_title_bg",
+      "label": "Block title background",
+      "default": "#8b4252",
+      "info": "Starts as this color; switches to active color when in view"
+    },
+    {
+      "type": "color",
+      "id": "block_title_active_color",
+      "label": "Block title active color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "block_title_active_bg",
+      "label": "Block title active background",
+      "default": "#cc667c",
+      "info": "Applied when the step reaches the scroll activation point"
+    },
+    {
+      "type": "color",
+      "id": "list_color",
+      "label": "List text color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "check_color",
+      "label": "Checkmark color",
+      "default": "#cc667c"
+    },
+    {
+      "type": "color",
+      "id": "cta_bg",
+      "label": "CTA background",
+      "default": "#8b4252"
+    },
+    {
+      "type": "color",
+      "id": "cta_color",
+      "label": "CTA text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Hover"
+    },
+    {
+      "type": "color",
+      "id": "cta_hover_bg",
+      "label": "CTA hover background",
+      "default": "#cc667c"
+    },
+    {
+      "type": "color",
+      "id": "cta_hover_color",
+      "label": "CTA hover text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Title typography"
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "min": 18,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Title size (mobile)",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "min": 20,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "label": "Title size (desktop)",
+      "default": 36
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Title weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "min": 1,
+      "max": 1.8,
+      "step": 0.1,
+      "label": "Title line height",
+      "default": 1.2
+    },
+    {
+      "type": "header",
+      "content": "Description typography"
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size (mobile)",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "description_size_desktop",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size (desktop)",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "description_weight",
+      "label": "Description weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "description_line_height",
+      "min": 1.2,
+      "max": 2,
+      "step": 0.1,
+      "label": "Description line height",
+      "default": 1.5
+    },
+    {
+      "type": "header",
+      "content": "Guarantee"
+    },
+    {
+      "type": "range",
+      "id": "guarantee_size_mobile",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Guarantee size (mobile)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "guarantee_size_desktop",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Guarantee size (desktop)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "guarantee_icon_size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Guarantee icon size",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Block title"
+    },
+    {
+      "type": "range",
+      "id": "block_title_size_mobile",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Block title size (mobile)",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "block_title_size_desktop",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Block title size (desktop)",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "block_title_weight",
+      "label": "Block title weight",
+      "options": [
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "block_title_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Block title radius",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "block_title_pad_y",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Block title padding Y",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "block_title_pad_x",
+      "min": 8,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "label": "Block title padding X",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "List typography"
+    },
+    {
+      "type": "range",
+      "id": "list_size_mobile",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "List size (mobile)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "list_size_desktop",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "List size (desktop)",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "list_weight",
+      "label": "List weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "list_gap",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "List item gap",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "check_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Checkmark size",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "CTA"
+    },
+    {
+      "type": "range",
+      "id": "cta_size_mobile",
+      "min": 13,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "CTA size (mobile)",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "cta_size_desktop",
+      "min": 13,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "CTA size (desktop)",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "cta_weight",
+      "label": "CTA weight",
+      "options": [
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "cta_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "CTA radius",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "cta_pad_y",
+      "min": 8,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "CTA padding Y",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "cta_pad_x",
+      "min": 16,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "CTA padding X",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "content_align",
+      "label": "Left content alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 900,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "label": "Section max width",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "min": 24,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Column gap (desktop)",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "item_gap_mobile",
+      "min": 24,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Timeline item gap (mobile)",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "item_gap_desktop",
+      "min": 32,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Timeline item gap (desktop)",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "sticky_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Sticky top offset",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Image radius",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "marker_size",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Circle size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "line_width",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "label": "Line width",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "scroll_trigger",
+      "min": 20,
+      "max": 70,
+      "step": 5,
+      "unit": "%",
+      "label": "Scroll activation point",
+      "default": 45,
+      "info": "Viewport height % where the timeline fills and activates"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Timeline step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Week 1: First Steps"
+        },
+        {
+          "type": "text",
+          "id": "list_1",
+          "label": "List item 1",
+          "default": "Arch support you feel from the very first step"
+        },
+        {
+          "type": "text",
+          "id": "list_2",
+          "label": "List item 2",
+          "default": "Your feet adjust to having real support under them"
+        },
+        {
+          "type": "text",
+          "id": "list_3",
+          "label": "List item 3",
+          "default": "End-of-day soreness starts to ease"
+        },
+        {
+          "type": "text",
+          "id": "list_4",
+          "label": "List item 4"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrolling Timeline",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Week 1: First Steps",
+            "list_1": "Arch support you feel from the very first step",
+            "list_2": "Your feet adjust to having real support under them",
+            "list_3": "End-of-day soreness starts to ease",
+            "list_4": "You notice how different real support feels"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Week 2: Pressure Lifts",
+            "list_1": "Heel and forefoot pressure noticeably eases",
+            "list_2": "Fatigue shows up later in the day, not at lunch",
+            "list_3": "Standing and walking feel steadier",
+            "list_4": "Longer days feel more manageable"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Week 3: Full-Body Relief",
+            "list_1": "Knees, hips, and lower back feel easier",
+            "list_2": "More balanced, upright posture",
+            "list_3": "Longer on your feet without the ache",
+            "list_4": "Daily movement feels lighter overall"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Week 4+: Your New Normal",
+            "list_1": "All-day comfort becomes your baseline",
+            "list_2": "Going back to flat insoles feels wrong",
+            "list_3": "You stop thinking about your feet entirely",
+            "list_4": "Support becomes part of how you move"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Ongoing: Daily Ritual",
+            "list_1": "Slip them into every pair you wear",
+            "list_2": "Keep a spare pair ready by the door",
+            "list_3": "Maintain comfort through long weeks",
+            "list_4": "Make support a habit, not a fix"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

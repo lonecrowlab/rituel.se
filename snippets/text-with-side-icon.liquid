@@ -1,0 +1,100 @@
+{% comment %}
+  Text with Side Icon Snippet
+  Centered highlight text with wreath icons on each side and optional description below.
+
+  Usage:
+  {% render 'text-with-side-icon', block: block %}
+{% endcomment %}
+
+{%- liquid
+  assign left_scale_x = 1
+  assign left_scale_y = 1
+  assign right_scale_x = 1
+  assign right_scale_y = 1
+
+  if block.settings.icon_left_flip_horizontal
+    assign left_scale_x = -1
+  endif
+  if block.settings.icon_left_flip_vertical
+    assign left_scale_y = -1
+  endif
+  if block.settings.icon_right_flip_horizontal
+    assign right_scale_x = -1
+  endif
+  if block.settings.icon_right_flip_vertical
+    assign right_scale_y = -1
+  endif
+
+  assign icon_size = block.settings.icon_size | default: 18
+-%}
+
+<div class="text-with-side-icon text-with-side-icon--{{ block.id }}" {{ block.shopify_attributes }}>
+  <style>
+    .text-with-side-icon--{{ block.id }} {
+      background-color: {{ block.settings.background_color }};
+      padding: {{ block.settings.padding_vertical }}px {{ block.settings.padding_horizontal }}px;
+      border-radius: {{ block.settings.border_radius | default: 4 }}px;
+      text-align: center;
+    }
+
+    .text-with-side-icon--{{ block.id }} .text-with-side-icon__highlight {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .text-with-side-icon--{{ block.id }} .text-with-side-icon__icon {
+      display: inline-flex;
+      flex-shrink: 0;
+      color: {{ block.settings.icon_color }};
+    }
+
+    .text-with-side-icon--{{ block.id }} .text-with-side-icon__icon--left {
+      transform: scale({{ left_scale_x }}, {{ left_scale_y }});
+    }
+
+    .text-with-side-icon--{{ block.id }} .text-with-side-icon__icon--right {
+      transform: scale({{ right_scale_x }}, {{ right_scale_y }});
+    }
+
+    .text-with-side-icon--{{ block.id }} .text-with-side-icon__icon svg {
+      display: block;
+      height: {{ icon_size }}px;
+      width: auto;
+    }
+
+    .text-with-side-icon--{{ block.id }} .text-with-side-icon__highlight-text {
+      font-size: {{ block.settings.highlight_font_size }}px;
+      color: {{ block.settings.highlight_color }};
+      line-height: 1.3;
+    }
+
+    .text-with-side-icon--{{ block.id }} .text-with-side-icon__description {
+      margin-top: 6px;
+      font-size: {{ block.settings.description_font_size }}px;
+      color: {{ block.settings.description_color }};
+      line-height: 1.4;
+    }
+  </style>
+
+  {% if block.settings.highlight_text != blank %}
+    <div class="text-with-side-icon__highlight">
+      <span class="text-with-side-icon__icon text-with-side-icon__icon--left">
+        {% render 'icons', icon: 'side_wreath' %}
+      </span>
+      <div class="text-with-side-icon__highlight-text">
+        {{ block.settings.highlight_text }}
+      </div>
+      <span class="text-with-side-icon__icon text-with-side-icon__icon--right">
+        {% render 'icons', icon: 'side_wreath' %}
+      </span>
+    </div>
+  {% endif %}
+
+  {% if block.settings.description != blank %}
+    <div class="text-with-side-icon__description">
+      {{ block.settings.description }}
+    </div>
+  {% endif %}
+</div>

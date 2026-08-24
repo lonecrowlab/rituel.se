@@ -1,0 +1,1333 @@
+{%- comment -%}
+  WARNING: UNAUTHORIZED MODIFICATION PROHIBITED
+  This code is proprietary property of Versio Studio. Any unauthorized tampering,
+  alteration, or distribution of this file is strictly forbidden and will be prosecuted to the maximum extent permitted by law.
+  All modifications are logged.
+
+  If you require assistance or have questions regarding this code, please contact support@versio.studio.
+{%- endcomment -%}
+
+{%- assign benefits_block = section.blocks | where: 'type', 'benefits' | first -%}
+{%- style -%}
+  .vd-l { display: none !important; }
+  #shopify-section-{{ section.id }} {
+    --section-border-radius: {{ section.settings.section_border_radius_mobile }}px;
+    --section-horizontal-padding: var(--page-margin, 16px);
+    --inner-padding-top: {{ section.settings.inner_padding_top }}px;
+    --inner-padding-bottom: {{ section.settings.inner_padding_bottom }}px;
+    --inner-padding-top-mobile: {{ section.settings.inner_padding_top_mobile }}px;
+    --inner-padding-bottom-mobile: {{ section.settings.inner_padding_bottom_mobile }}px;
+    --inner-padding-horizontal: {{ section.settings.inner_padding_horizontal }}px;
+    --inner-padding-horizontal-mobile: {{ section.settings.inner_padding_horizontal_mobile }}px;
+    --columns-gap: {{ section.settings.columns_gap }}px;
+    --menu-heading-size-desktop: {{ section.settings.menu_heading_size_desktop }}px;
+    --menu-heading-size-mobile: {{ section.settings.menu_heading_size_mobile }}px;
+    --menu-item-size-desktop: {{ section.settings.menu_item_size_desktop }}px;
+    --menu-item-size-mobile: {{ section.settings.menu_item_size_mobile }}px;
+    {% if benefits_block %}
+      --benefits-overlap-mobile: {{ benefits_block.settings.overlap_mobile | default: benefits_block.settings.overlap_desktop | default: 60 }}px;
+      --benefits-overlap-desktop: {{ benefits_block.settings.overlap_desktop | default: 60 }}px;
+    {% else %}
+      --benefits-overlap-mobile: 0px;
+      --benefits-overlap-desktop: 0px;
+    {% endif %}
+    border-radius: var(--section-border-radius);
+    overflow-x: clip;
+    overflow-y: visible;
+    padding: 0;
+    margin-top: {{ section.settings.margin_top_mobile }}px;
+    margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+  }
+
+  {% if section.settings.enable_advanced_settings %}
+    #shopify-section-{{ section.id }} {
+      --section-horizontal-padding: {{ section.settings.inner_padding_horizontal_mobile }}px;
+    }
+  {% endif %}
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} {
+      background-color: {{ section.settings.section_bg_color }};
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} {
+      --section-border-radius: {% if section.settings.bg_full_width %}0px{% else %}{{ section.settings.section_border_radius }}px{% endif %};
+      --section-horizontal-padding: 0px;
+      margin-top: {{ section.settings.margin_top }}px;
+      margin-bottom: {{ section.settings.margin_bottom }}px;
+      background: transparent;
+    }
+  }
+
+  {% if section.settings.enable_advanced_settings == false and section.settings.bg_full_width == false %}
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} {
+        --section-horizontal-padding: 40px;
+      }
+    }
+  {% endif %}
+
+  {% if section.settings.enable_advanced_settings == false and section.settings.bg_full_width %}
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} {
+        --section-container-max-width: var(--page-content-width, var(--page-width, 1440px));
+        --section-outer-gutter: max(0px, calc((100vw - var(--section-container-max-width)) / 2));
+        --section-horizontal-padding: max(0px, calc(var(--page-margin, 40px) - var(--section-outer-gutter)));
+      }
+    }
+  {% endif %}
+
+  {% if section.settings.enable_advanced_settings %}
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} {
+        --section-horizontal-padding: {{ section.settings.inner_padding_horizontal }}px;
+      }
+    }
+  {% endif %}
+
+  .vso-node { display: none; }
+  .vso-node--v2 { display: block; }
+
+  #shopify-section-{{ section.id }} > .vso-footer-07__background {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: var(--page-content-width, var(--page-width, 1440px));
+    {% if section.settings.enable_advanced_settings %}
+      {% if section.settings.section_full_width %}max-width: 100%;{% else %}max-width: {{ section.settings.section_max_width }}rem;{% endif %}
+    {% endif %}
+    border-radius: var(--section-border-radius);
+    overflow: hidden;
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    padding-left: var(--section-horizontal-padding);
+    padding-right: var(--section-horizontal-padding);
+    position: relative;
+  }
+
+  {% if section.settings.bg_full_width == false %}
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} > .vso-footer-07__background {
+        width: calc(100% - (2 * var(--page-margin, 40px)));
+      }
+    }
+  {% endif %}
+
+  @media screen and (max-width: 749px) {
+    #shopify-section-{{ section.id }} > .vso-footer-07__background {
+      background: transparent;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} > .vso-footer-07__background {
+      background-color: {{ section.settings.section_bg_color }};
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+      {% if section.settings.bg_full_width %}
+        overflow: visible;
+      {% endif %}
+    }
+  }
+
+  {% if section.settings.bg_full_width %}
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} > .vso-footer-07__background::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100vw;
+        background-color: {{ section.settings.section_bg_color }};
+        z-index: -1;
+      }
+    }
+  {% endif %}
+
+  #shopify-section-{{ section.id }} .vso-footer-07__background > .vso-footer-07__container {
+    width: 100%;
+    padding-top: var(--inner-padding-top-mobile);
+    padding-bottom: var(--inner-padding-bottom-mobile);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__background > .vso-footer-07__container {
+      padding-top: var(--inner-padding-top);
+      padding-bottom: var(--inner-padding-bottom);
+    }
+  }
+
+  {% if benefits_block %}
+    #shopify-section-{{ section.id }} .vso-footer-07__benefits-wrapper {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      margin-right: 0;
+      padding-left: {{ benefits_block.settings.wrapper_padding_mobile | default: 0 }}px;
+      padding-right: {{ benefits_block.settings.wrapper_padding_mobile | default: 0 }}px;
+      padding-top: {{ benefits_block.settings.wrapper_padding_mobile | default: 0 }}px;
+      padding-bottom: {{ benefits_block.settings.wrapper_padding_mobile | default: 0 }}px;
+      margin-bottom: calc(-1 * {{ benefits_block.settings.overlap_mobile | default: benefits_block.settings.overlap_desktop | default: 60 }}px);
+      background-color: {{ benefits_block.settings.benefits_wrapper_bg_mobile | default: benefits_block.settings.bg_color | default: '#ffffff' }};
+    }
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} .vso-footer-07__benefits-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        {% if section.settings.bg_full_width %}
+          width: 100vw;
+          margin-left: calc(-50vw + 50%);
+          margin-right: 0;
+        {% else %}
+          width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+          {% if section.settings.enable_advanced_settings %}
+            {% if section.settings.section_full_width %}max-width: 100%;{% else %}max-width: {{ section.settings.section_max_width }}rem;{% endif %}
+          {% endif %}
+        {% endif %}
+        padding-left: var(--inner-padding-horizontal);
+        padding-right: var(--inner-padding-horizontal);
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: calc(-1 * {{ benefits_block.settings.overlap_desktop | default: 60 }}px);
+        background-color: transparent;
+      }
+    }
+
+    #shopify-section-{{ section.id }} .vso-footer-07__benefits {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: {{ benefits_block.settings.gap_mobile | default: 16 }}px;
+      background-color: {{ benefits_block.settings.bg_color | default: '#ffffff' }};
+      border-radius: 0;
+      padding: {{ benefits_block.settings.padding_mobile | default: 24 }}px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      border: none;
+      width: 100%;
+    }
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} .vso-footer-07__benefits {
+        width: fit-content;
+        max-width: 100%;
+        grid-template-columns: repeat(3, 1fr);
+        gap: {{ benefits_block.settings.gap_desktop | default: 24 }}px;
+        border-radius: {{ benefits_block.settings.border_radius_desktop | default: 16 }}px;
+        padding: {{ benefits_block.settings.padding_desktop | default: 32 }}px {{ benefits_block.settings.padding_horizontal_desktop | default: 48 }}px;
+        margin-left: {{ benefits_block.settings.margin_horizontal_desktop | default: 0 }}px;
+        margin-right: {{ benefits_block.settings.margin_horizontal_desktop | default: 0 }}px;
+        border: {{ benefits_block.settings.border_width | default: 0 }}px solid {{ benefits_block.settings.border_color | default: 'transparent' }};
+      }
+    }
+
+    #shopify-section-{{ section.id }} .vso-footer-07__benefit {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      text-align: left;
+      gap: {{ benefits_block.settings.benefit_gap | default: 12 }}px;
+    }
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} .vso-footer-07__benefit {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+    }
+
+    #shopify-section-{{ section.id }} .vso-footer-07__benefit-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} .vso-footer-07__benefit-content {
+        align-items: center;
+      }
+    }
+
+    #shopify-section-{{ section.id }} .vso-footer-07__benefit-icon {
+      width: {{ benefits_block.settings.icon_size_mobile | default: 32 }}px;
+      height: {{ benefits_block.settings.icon_size_mobile | default: 32 }}px;
+      object-fit: contain;
+    }
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} .vso-footer-07__benefit-icon {
+        width: {{ benefits_block.settings.icon_size_desktop | default: 40 }}px;
+        height: {{ benefits_block.settings.icon_size_desktop | default: 40 }}px;
+      }
+    }
+
+    #shopify-section-{{ section.id }} .vso-footer-07__benefit-heading {
+      margin: 0;
+      font-weight: 600;
+      color: {{ benefits_block.settings.heading_color | default: '#111111' }};
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    {% if benefits_block.settings.heading_custom_font %}
+      #shopify-section-{{ section.id }} .vso-footer-07__benefit-heading {
+        font-size: {{ benefits_block.settings.heading_size_mobile | default: 12 }}px;
+        font-family: {{ benefits_block.settings.heading_font.family }}, {{ benefits_block.settings.heading_font.fallback_families }};
+        font-style: {{ benefits_block.settings.heading_font.style }};
+        line-height: {{ benefits_block.settings.heading_line_height }}%;
+      }
+      @media screen and (min-width: 750px) {
+        #shopify-section-{{ section.id }} .vso-footer-07__benefit-heading {
+          font-size: {{ benefits_block.settings.heading_size_desktop | default: 13 }}px;
+        }
+      }
+    {% endif %}
+    {% if benefits_block.settings.heading_custom_font and section.settings.enable_advanced_settings %}
+      #shopify-section-{{ section.id }} .vso-footer-07__benefit-heading {
+        font-weight: {{ benefits_block.settings.heading_font_weight | default: 600 }};
+        letter-spacing: {{ benefits_block.settings.heading_letter_spacing | default: 2 }}px;
+      }
+    {% endif %}
+
+    #shopify-section-{{ section.id }} .vso-footer-07__benefit-text {
+      margin: 0;
+      color: {{ benefits_block.settings.text_color | default: '#666666' }};
+      line-height: 1.5;
+    }
+    {% if benefits_block.settings.text_custom_font %}
+      #shopify-section-{{ section.id }} .vso-footer-07__benefit-text {
+        font-size: {{ benefits_block.settings.text_size_mobile | default: 12 }}px;
+        font-family: {{ benefits_block.settings.text_font.family }}, {{ benefits_block.settings.text_font.fallback_families }};
+        font-style: {{ benefits_block.settings.text_font.style }};
+        line-height: {{ benefits_block.settings.text_line_height }}%;
+      }
+      @media screen and (min-width: 750px) {
+        #shopify-section-{{ section.id }} .vso-footer-07__benefit-text {
+          font-size: {{ benefits_block.settings.text_size_desktop | default: 14 }}px;
+        }
+      }
+    {% endif %}
+    {% if benefits_block.settings.text_custom_font and section.settings.enable_advanced_settings %}
+      #shopify-section-{{ section.id }} .vso-footer-07__benefit-text {
+        font-weight: {{ benefits_block.settings.text_font_weight | default: 400 }};
+        letter-spacing: {{ benefits_block.settings.text_letter_spacing | default: 0 }}px;
+      }
+    {% endif %}
+  {% endif %}
+
+  #shopify-section-{{ section.id }} .vso-footer-07__nav-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    order: 2;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__nav-grid {
+      display: grid;
+      grid-template-columns: repeat({{ section.settings.nav_columns_desktop | default: 4 }}, 1fr);
+      gap: var(--columns-gap);
+      order: unset;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .vso-footer-07__menu {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__menu {
+      border-bottom: none;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .vso-footer-07__menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__menu-toggle {
+      display: none;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .vso-footer-07__menu-icon {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+  #shopify-section-{{ section.id }} .vso-footer-07__menu-icon::before,
+  #shopify-section-{{ section.id }} .vso-footer-07__menu-icon::after {
+    content: '';
+    position: absolute;
+    background-color: {{ section.settings.text_color }};
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  #shopify-section-{{ section.id }} .vso-footer-07__menu-icon::before {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: translateY(-50%);
+  }
+  #shopify-section-{{ section.id }} .vso-footer-07__menu-icon::after {
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+  #shopify-section-{{ section.id }} .vso-footer-07__menu.is-open .vso-footer-07__menu-icon::after {
+    transform: translateX(-50%) rotate(90deg);
+    opacity: 0;
+  }
+
+  #shopify-section-{{ section.id }} .vso-footer-07__menu-heading {
+    margin: 0;
+    font-weight: 600;
+    color: {{ section.settings.menu_heading_text_color }};
+    letter-spacing: 1px;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__menu-heading {
+      margin: 0 0 16px 0;
+    }
+  }
+  {% if section.settings.menu_heading_custom_font %}
+    #shopify-section-{{ section.id }} .vso-footer-07__menu-heading {
+      font-size: var(--menu-heading-size-mobile);
+      font-family: {{ section.settings.menu_heading_font.family }}, {{ section.settings.menu_heading_font.fallback_families }};
+      font-style: {{ section.settings.menu_heading_font.style }};
+      line-height: {{ section.settings.menu_heading_line_height }}%;
+    }
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} .vso-footer-07__menu-heading {
+        font-size: var(--menu-heading-size-desktop);
+      }
+    }
+  {% endif %}
+  {% if section.settings.menu_heading_custom_font and section.settings.enable_advanced_settings %}
+    #shopify-section-{{ section.id }} .vso-footer-07__menu-heading {
+      font-weight: {{ section.settings.menu_heading_font_weight }};
+      letter-spacing: {{ section.settings.menu_heading_letter_spacing }}px;
+    }
+  {% endif %}
+
+  #shopify-section-{{ section.id }} .vso-footer-07__menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: none;
+    flex-direction: column;
+    gap: {{ section.settings.menu_items_gap | default: 10 }}px;
+    padding-bottom: 16px;
+    overflow: hidden;
+  }
+  #shopify-section-{{ section.id }} .vso-footer-07__menu.is-open .vso-footer-07__menu-list {
+    display: flex;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__menu-list {
+      display: flex;
+      padding-bottom: 0;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .vso-footer-07__menu-heading-desktop {
+    display: none;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__menu-heading-desktop {
+      display: block;
+      margin: 0 0 16px 0;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .vso-footer-07__menu-link {
+    color: {{ section.settings.link_color }};
+    text-decoration: none;
+    font-size: var(--menu-item-size-mobile);
+    transition: opacity 0.2s ease;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__menu-link {
+      font-size: var(--menu-item-size-desktop);
+    }
+  }
+  #shopify-section-{{ section.id }} .vso-footer-07__menu-link:hover {
+    opacity: 0.7;
+  }
+
+  {%- assign logo_block = section.blocks | where: 'type', 'logo' | first -%}
+  #shopify-section-{{ section.id }} .vso-footer-07__logo-wrapper {
+    display: flex;
+    justify-content: {{ logo_block.settings.alignment | default: 'center' }};
+    margin-top: {{ logo_block.settings.margin_top_mobile | default: 40 }}px;
+    margin-bottom: {{ logo_block.settings.margin_bottom_mobile | default: 40 }}px;
+    order: 1;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__logo-wrapper {
+      margin-top: {{ logo_block.settings.margin_top_desktop | default: 60 }}px;
+      margin-bottom: {{ logo_block.settings.margin_bottom_desktop | default: 60 }}px;
+      order: unset;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .vso-footer-07__logo {
+    width: 100%;
+    {% if logo_block.settings.logo_full_width %}
+      max-width: 100%;
+    {% else %}
+      max-width: {{ logo_block.settings.max_width_mobile | default: 300 }}px;
+    {% endif %}
+    height: auto;
+    object-fit: contain;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__logo {
+      {% if logo_block.settings.logo_full_width %}
+        max-width: 100%;
+      {% else %}
+        max-width: {{ logo_block.settings.max_width_desktop | default: 800 }}px;
+      {% endif %}
+    }
+  }
+
+  {%- assign links_block = section.blocks | where: 'type', 'links' | first -%}
+  #shopify-section-{{ section.id }} .vso-footer-07__links-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: {{ links_block.settings.gap_mobile | default: 16 }}px;
+    margin-top: {{ links_block.settings.margin_top_mobile | default: 24 }}px;
+    margin-bottom: {{ links_block.settings.margin_bottom_mobile | default: 24 }}px;
+    order: 3;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__links-wrapper {
+      order: unset;
+    }
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__links-wrapper {
+      gap: {{ links_block.settings.gap_desktop | default: 24 }}px;
+      margin-top: {{ links_block.settings.margin_top_desktop | default: 32 }}px;
+      margin-bottom: {{ links_block.settings.margin_bottom_desktop | default: 32 }}px;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .vso-footer-07__link {
+    color: {{ links_block.settings.link_color | default: section.settings.link_color }};
+    text-decoration: none;
+    font-size: {{ links_block.settings.font_size_mobile | default: 12 }}px;
+    font-weight: {{ links_block.settings.font_weight | default: 400 }};
+    transition: opacity 0.2s ease;
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__link {
+      font-size: {{ links_block.settings.font_size_desktop | default: 14 }}px;
+    }
+  }
+  #shopify-section-{{ section.id }} .vso-footer-07__link:hover {
+    opacity: 0.7;
+  }
+
+  {%- assign bottom_block = section.blocks | where: 'type', 'bottom_bar' | first -%}
+  #shopify-section-{{ section.id }} .vso-footer-07__bottom-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: {{ bottom_block.settings.gap_mobile | default: 20 }}px;
+    padding: {{ bottom_block.settings.padding_vertical_mobile | default: 24 }}px {{ bottom_block.settings.padding_horizontal_mobile | default: 16 }}px;
+    background-color: {{ bottom_block.settings.bg_color | default: 'transparent' }};
+    margin-top: {{ bottom_block.settings.margin_top_mobile | default: 0 }}px;
+    order: 4;
+  }
+  #shopify-section-{{ section.id }} .vso-footer-07__bottom-bar > * {
+    width: 100%;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__bottom-bar {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: {{ bottom_block.settings.gap_desktop | default: 24 }}px;
+      padding: {{ bottom_block.settings.padding_vertical_desktop | default: 24 }}px {{ bottom_block.settings.padding_horizontal_desktop | default: 40 }}px;
+      margin-top: {{ bottom_block.settings.margin_top_desktop | default: 0 }}px;
+      order: unset;
+    }
+    #shopify-section-{{ section.id }} .vso-footer-07__bottom-bar > * {
+      width: auto;
+      flex: 1 1 0%;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .vso-footer-07__copyright {
+    margin: 0;
+    color: {{ bottom_block.settings.copyright_color | default: section.settings.text_color }};
+    text-transform: uppercase;
+    text-align: center;
+    order: 2;
+    letter-spacing: 1px;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__copyright {
+      text-align: left;
+      order: 1;
+    }
+  }
+  {% if bottom_block.settings.copyright_custom_font %}
+    #shopify-section-{{ section.id }} .vso-footer-07__copyright {
+      font-size: {{ bottom_block.settings.copyright_size_mobile | default: 11 }}px;
+      font-family: {{ bottom_block.settings.copyright_font.family }}, {{ bottom_block.settings.copyright_font.fallback_families }};
+      font-style: {{ bottom_block.settings.copyright_font.style }};
+      line-height: {{ bottom_block.settings.copyright_line_height }}%;
+    }
+    @media screen and (min-width: 990px) {
+      #shopify-section-{{ section.id }} .vso-footer-07__copyright {
+        font-size: {{ bottom_block.settings.copyright_size_desktop | default: 12 }}px;
+      }
+    }
+  {% endif %}
+  {% if bottom_block.settings.copyright_custom_font and section.settings.enable_advanced_settings %}
+    #shopify-section-{{ section.id }} .vso-footer-07__copyright {
+      font-weight: {{ bottom_block.settings.copyright_font_weight | default: 400 }};
+      letter-spacing: {{ bottom_block.settings.copyright_letter_spacing | default: 1 }}px;
+    }
+  {% endif %}
+
+  #shopify-section-{{ section.id }} .vso-footer-07__payments {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: {{ bottom_block.settings.payment_gap | default: 8 }}px;
+    order: 3;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__payments {
+      justify-content: flex-end;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .vso-footer-07__payment-icon {
+    height: {{ bottom_block.settings.payment_icon_height | default: 24 }}px;
+    width: auto;
+  }
+  #shopify-section-{{ section.id }} .vso-footer-07__payment-icon svg {
+    height: 100%;
+    width: auto;
+  }
+
+  #shopify-section-{{ section.id }} .vso-footer-07__social {
+    display: flex;
+    gap: {{ bottom_block.settings.social_gap | default: 16 }}px;
+    flex-wrap: wrap;
+    justify-content: center;
+    order: 1;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .vso-footer-07__social {
+      order: 2;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .vso-footer-07__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: {{ bottom_block.settings.social_icon_size | default: 24 }}px;
+    height: {{ bottom_block.settings.social_icon_size | default: 24 }}px;
+    color: {{ bottom_block.settings.social_icon_color | default: section.settings.text_color }};
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+  #shopify-section-{{ section.id }} .vso-footer-07__social-link:hover {
+    opacity: 0.7;
+  }
+  #shopify-section-{{ section.id }} .vso-footer-07__social-link svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+{%- endstyle -%}
+
+{%- if request.design_mode -%}
+  <div class="vso-require-script">
+    <div class="vso-warning">
+      <div class="vso-warning__left">
+        <div class="vso-warning__badge">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+            <path d="M10 6.75a.75.75 0 0 1 .75.75v3.5a.75.75 0 1 1-1.5 0v-3.5a.75.75 0 0 1 .75-.75Z" fill="currentColor"/>
+            <path d="M11 13.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" fill="currentColor"/>
+            <path fill-rule="evenodd" d="M10 3.5c-1.045 0-1.784.702-2.152 1.447a449.26 449.26 0 0 1-2.005 3.847l-.028.052a403.426 403.426 0 0 0-2.008 3.856c-.372.752-.478 1.75.093 2.614.57.863 1.542 1.184 2.464 1.184h7.272c.922 0 1.895-.32 2.464-1.184.57-.864.465-1.862.093-2.614-.21-.424-1.113-2.147-2.004-3.847l-.032-.061a429.497 429.497 0 0 1-2.005-3.847c-.368-.745-1.107-1.447-2.152-1.447Zm-.808 2.112c.404-.816 1.212-.816 1.616 0 .202.409 1.112 2.145 2.022 3.88a418.904 418.904 0 0 1 2.018 3.875c.404.817 0 1.633-1.212 1.633h-7.272c-1.212 0-1.617-.816-1.212-1.633.202-.408 1.113-2.147 2.023-3.883a421.932 421.932 0 0 0 2.017-3.872Z" fill="currentColor"/>
+          </svg>
+          <span>Action Required</span>
+        </div>
+        <h2 class="vso-warning__title">App Embeds Are Disabled</h2>
+        <p class="vso-warning__subtitle">Enable the Versio Sections app embed in your theme editor to use this section.</p>
+        <div class="vso-warning__steps">
+          <div class="vso-warning__step">
+            <span class="vso-warning__step-number">1</span>
+            <span>Click the <strong>App embeds</strong> icon (puzzle piece) at the top of the left sidebar</span>
+          </div>
+          <div class="vso-warning__step">
+            <span class="vso-warning__step-number">2</span>
+            <span>Toggle on <strong>Versio Sections</strong></span>
+          </div>
+          <div class="vso-warning__step">
+            <span class="vso-warning__step-number">3</span>
+            <span>Click <strong>Save</strong> in the top right</span>
+          </div>
+        </div>
+      </div>
+      <div class="vso-warning__image">
+        <img src="https://cdn.shopify.com/s/files/1/0970/2880/0861/files/1.png?v=1773296966" alt="How to enable app embeds" loading="lazy" width="640" height="880" />
+      </div>
+    </div>
+  </div>
+  <style>
+    .vso-hidden {
+      display: none !important;
+      height: 0 !important;
+      overflow: hidden !important;
+      visibility: hidden !important;
+      width: 0 !important;
+      opacity: 0 !important;
+    }
+    .vso-require-script .vso-warning {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 900px;
+      margin: 24px auto;
+      background: #ffffff;
+      border: 1px solid #e2e2e2;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .vso-warning__left {
+      flex: 1;
+      min-width: 0;
+    }
+    .vso-warning__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fef2f2;
+      color: #dc2626;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 5px 12px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+      border: 1px solid #fecaca;
+    }
+    .vso-warning__badge svg {
+      flex-shrink: 0;
+    }
+    .vso-warning__title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 0 0 6px 0;
+      line-height: 1.3;
+    }
+    .vso-warning__subtitle {
+      font-size: 13px;
+      color: #777;
+      margin: 0 0 20px 0;
+      line-height: 1.5;
+      max-width: 340px;
+    }
+    .vso-warning__steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .vso-warning__step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.4;
+    }
+    .vso-warning__step strong {
+      color: #1a1a1a;
+    }
+    .vso-warning__step-number {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      background: #f3f3f3;
+      color: #555;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e0e0e0;
+    }
+    .vso-warning__image {
+      flex: 1;
+      min-width: 0;
+    }
+    .vso-warning__image img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    @media screen and (max-width: 749px) {
+      .vso-require-script .vso-warning {
+        margin: 16px;
+        padding: 24px 20px;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .vso-warning__title {
+        font-size: 18px;
+      }
+      .vso-warning__subtitle {
+        max-width: none;
+      }
+      .vso-warning__image {
+        flex: none;
+        max-width: 100%;
+      }
+    }
+  </style>
+{%- endif -%}
+
+{% if benefits_block %}
+  <div class="vso-footer-07__benefits-wrapper">
+    <div class="vso-footer-07__benefits" {{ benefits_block.shopify_attributes }}>
+      {% if benefits_block.settings.benefit_1_heading != blank or benefits_block.settings.benefit_1_image != blank %}
+        <div class="vso-footer-07__benefit">
+          {% if benefits_block.settings.benefit_1_image != blank %}
+            {{ benefits_block.settings.benefit_1_image | image_url: width: 100 | image_tag: loading: 'lazy', class: 'vso-footer-07__benefit-icon', widths: '40,60,80,100' }}
+          {% endif %}
+          <div class="vso-footer-07__benefit-content">
+            {% if benefits_block.settings.benefit_1_heading != blank %}
+              {% if benefits_block.settings.heading_custom_font %}
+                <span class="vso-footer-07__benefit-heading">{{ benefits_block.settings.benefit_1_heading }}</span>
+              {% else %}
+                {% assign bh_tag = benefits_block.settings.heading_as | default: 'p' %}
+                <{{ bh_tag }} class="vso-footer-07__benefit-heading">{{ benefits_block.settings.benefit_1_heading }}</{{ bh_tag }}>
+              {% endif %}
+            {% endif %}
+            {% if benefits_block.settings.benefit_1_text != blank %}
+              {% if benefits_block.settings.text_custom_font %}
+                <span class="vso-footer-07__benefit-text">{{ benefits_block.settings.benefit_1_text }}</span>
+              {% else %}
+                {% assign bt_tag = benefits_block.settings.text_as | default: 'p' %}
+                <{{ bt_tag }} class="vso-footer-07__benefit-text">{{ benefits_block.settings.benefit_1_text }}</{{ bt_tag }}>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if benefits_block.settings.benefit_2_heading != blank or benefits_block.settings.benefit_2_image != blank %}
+        <div class="vso-footer-07__benefit">
+          {% if benefits_block.settings.benefit_2_image != blank %}
+            {{ benefits_block.settings.benefit_2_image | image_url: width: 100 | image_tag: loading: 'lazy', class: 'vso-footer-07__benefit-icon', widths: '40,60,80,100' }}
+          {% endif %}
+          <div class="vso-footer-07__benefit-content">
+            {% if benefits_block.settings.benefit_2_heading != blank %}
+              {% if benefits_block.settings.heading_custom_font %}
+                <span class="vso-footer-07__benefit-heading">{{ benefits_block.settings.benefit_2_heading }}</span>
+              {% else %}
+                {% assign bh_tag = benefits_block.settings.heading_as | default: 'p' %}
+                <{{ bh_tag }} class="vso-footer-07__benefit-heading">{{ benefits_block.settings.benefit_2_heading }}</{{ bh_tag }}>
+              {% endif %}
+            {% endif %}
+            {% if benefits_block.settings.benefit_2_text != blank %}
+              {% if benefits_block.settings.text_custom_font %}
+                <span class="vso-footer-07__benefit-text">{{ benefits_block.settings.benefit_2_text }}</span>
+              {% else %}
+                {% assign bt_tag = benefits_block.settings.text_as | default: 'p' %}
+                <{{ bt_tag }} class="vso-footer-07__benefit-text">{{ benefits_block.settings.benefit_2_text }}</{{ bt_tag }}>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if benefits_block.settings.benefit_3_heading != blank or benefits_block.settings.benefit_3_image != blank %}
+        <div class="vso-footer-07__benefit">
+          {% if benefits_block.settings.benefit_3_image != blank %}
+            {{ benefits_block.settings.benefit_3_image | image_url: width: 100 | image_tag: loading: 'lazy', class: 'vso-footer-07__benefit-icon', widths: '40,60,80,100' }}
+          {% endif %}
+          <div class="vso-footer-07__benefit-content">
+            {% if benefits_block.settings.benefit_3_heading != blank %}
+              {% if benefits_block.settings.heading_custom_font %}
+                <span class="vso-footer-07__benefit-heading">{{ benefits_block.settings.benefit_3_heading }}</span>
+              {% else %}
+                {% assign bh_tag = benefits_block.settings.heading_as | default: 'p' %}
+                <{{ bh_tag }} class="vso-footer-07__benefit-heading">{{ benefits_block.settings.benefit_3_heading }}</{{ bh_tag }}>
+              {% endif %}
+            {% endif %}
+            {% if benefits_block.settings.benefit_3_text != blank %}
+              {% if benefits_block.settings.text_custom_font %}
+                <span class="vso-footer-07__benefit-text">{{ benefits_block.settings.benefit_3_text }}</span>
+              {% else %}
+                {% assign bt_tag = benefits_block.settings.text_as | default: 'p' %}
+                <{{ bt_tag }} class="vso-footer-07__benefit-text">{{ benefits_block.settings.benefit_3_text }}</{{ bt_tag }}>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+<div class="vso-footer-07__background vso-node vd-l vso-hidden">
+  <div class="vso-footer-07__container">
+  {%- assign menu_blocks = section.blocks | where: 'type', 'menu' -%}
+  {% if menu_blocks.size > 0 %}
+    <div class="vso-footer-07__nav-grid">
+      {%- for block in menu_blocks -%}
+        <div class="vso-footer-07__menu" {{ block.shopify_attributes }}>
+          {% if block.settings.heading != blank %}
+            <button type="button" class="vso-footer-07__menu-toggle" aria-expanded="false">
+              {% if section.settings.menu_heading_custom_font %}
+                <span class="vso-footer-07__menu-heading">{{ block.settings.heading }}</span>
+              {% else %}
+                {% assign mh_tag = section.settings.menu_heading_as | default: 'h5' %}
+                <{{ mh_tag }} class="vso-footer-07__menu-heading">{{ block.settings.heading }}</{{ mh_tag }}>
+              {% endif %}
+              <span class="vso-footer-07__menu-icon" aria-hidden="true"></span>
+            </button>
+            {% if section.settings.menu_heading_custom_font %}
+              <span class="vso-footer-07__menu-heading vso-footer-07__menu-heading-desktop">{{ block.settings.heading }}</span>
+            {% else %}
+              {% assign mh_tag = section.settings.menu_heading_as | default: 'h5' %}
+              <{{ mh_tag }} class="vso-footer-07__menu-heading vso-footer-07__menu-heading-desktop">{{ block.settings.heading }}</{{ mh_tag }}>
+            {% endif %}
+          {% endif %}
+          {% if block.settings.menu != blank %}
+            <ul class="vso-footer-07__menu-list">
+              {% for link in block.settings.menu.links %}
+                <li><a class="vso-footer-07__menu-link" href="{{ link.url }}" {% if link.target %}target="{{ link.target }}"{% endif %}>{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {%- endfor -%}
+    </div>
+  {% endif %}
+
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+
+      {%- when 'logo' -%}
+        <div class="vso-footer-07__logo-wrapper" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            {{ block.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', class: 'vso-footer-07__logo', widths: '400,600,800,1000,1200,1600' }}
+          {% endif %}
+        </div>
+
+      {%- when 'links' -%}
+        {% if block.settings.menu != blank %}
+          <div class="vso-footer-07__links-wrapper" {{ block.shopify_attributes }}>
+            {% for link in block.settings.menu.links %}
+              <a class="vso-footer-07__link" href="{{ link.url }}" {% if link.target %}target="{{ link.target }}"{% endif %}>{{ link.title }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+      {%- when 'bottom_bar' -%}
+        <div class="vso-footer-07__bottom-bar" {{ block.shopify_attributes }}>
+          {% if block.settings.copyright_custom_font %}
+            <span class="vso-footer-07__copyright">
+              &copy; {% if block.settings.show_shop_name %}{% if block.settings.shop_name_text != blank %}{{ block.settings.shop_name_text }}{% else %}{{ shop.name }}{% endif %}{% endif %} {{ 'now' | date: '%Y' }}{% if block.settings.rights_text != blank %} &bull; {{ block.settings.rights_text }}{% endif %}
+            </span>
+          {% else %}
+            {% assign cp_tag = block.settings.copyright_as | default: 'p' %}
+            <{{ cp_tag }} class="vso-footer-07__copyright">
+              &copy; {% if block.settings.show_shop_name %}{% if block.settings.shop_name_text != blank %}{{ block.settings.shop_name_text }}{% else %}{{ shop.name }}{% endif %}{% endif %} {{ 'now' | date: '%Y' }}{% if block.settings.rights_text != blank %} &bull; {{ block.settings.rights_text }}{% endif %}
+            </{{ cp_tag }}>
+          {% endif %}
+
+          {% if block.settings.show_social_icons %}
+            <div class="vso-footer-07__social">
+              {% if block.settings.social_facebook != blank %}
+                <a href="{{ block.settings.social_facebook }}" class="vso-footer-07__social-link" aria-label="Facebook" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+              {% endif %}
+              {% if block.settings.social_twitter != blank %}
+                <a href="{{ block.settings.social_twitter }}" class="vso-footer-07__social-link" aria-label="X (Twitter)" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+              {% endif %}
+              {% if block.settings.social_instagram != blank %}
+                <a href="{{ block.settings.social_instagram }}" class="vso-footer-07__social-link" aria-label="Instagram" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+                </a>
+              {% endif %}
+              {% if block.settings.social_pinterest != blank %}
+                <a href="{{ block.settings.social_pinterest }}" class="vso-footer-07__social-link" aria-label="Pinterest" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+                </a>
+              {% endif %}
+              {% if block.settings.social_tiktok != blank %}
+                <a href="{{ block.settings.social_tiktok }}" class="vso-footer-07__social-link" aria-label="TikTok" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if block.settings.show_payment_icons %}
+            <div class="vso-footer-07__payments">
+              {% for type in shop.enabled_payment_types %}
+                <span class="vso-footer-07__payment-icon">{{ type | payment_type_svg_tag }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+    {%- endcase -%}
+  {%- endfor -%}
+  </div>
+</div>
+
+<script>
+  (function() {
+    const section = document.getElementById('shopify-section-{{ section.id }}');
+    if (!section) return;
+
+    const toggleButtons = section.querySelectorAll('.vso-footer-07__menu-toggle');
+
+    toggleButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        const menu = this.closest('.vso-footer-07__menu');
+        const isOpen = menu.classList.contains('is-open');
+
+        menu.classList.toggle('is-open');
+
+        this.setAttribute('aria-expanded', !isOpen);
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "VSO - Footer 07",
+  "tag": "section",
+  "class": "section vso-node vso-node--v2 vso-footer-07",
+  "enabled_on": { "groups": ["footer"] },
+  "settings": [
+    { "type": "header", "content": "Section Settings" },
+    { "type": "checkbox", "id": "enable_advanced_settings", "label": "Enable advanced settings", "default": false, "info": "Shows additional settings for spacing, layout, and typography." },
+    { "type": "checkbox", "id": "section_full_width", "label": "Full width", "default": false, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+    { "type": "range", "id": "section_max_width", "label": "Content max width", "min": 30, "max": 220, "step": 2, "unit": "rem", "default": 120, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+    { "type": "range", "id": "nav_columns_desktop", "label": "Navigation columns on desktop", "min": 2, "max": 6, "step": 1, "default": 4 },
+    { "type": "range", "id": "inner_padding_horizontal", "label": "Desktop side spacing", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+    { "type": "range", "id": "inner_padding_horizontal_mobile", "label": "Mobile side spacing", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+
+    { "type": "header", "content": "Section Background" },
+    { "type": "color", "id": "section_bg_color", "label": "Background", "default": "#2D1F2A" },
+    { "type": "checkbox", "id": "bg_full_width", "label": "Full width on desktop", "default": true },
+    { "type": "checkbox", "id": "bg_full_width_mobile", "label": "Full width on mobile", "default": true, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+    { "type": "range", "id": "section_border_radius", "label": "Desktop border radius", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 0, "visible_if": "{{ section.settings.bg_full_width == false }}" },
+    { "type": "range", "id": "section_border_radius_mobile", "label": "Mobile border radius", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 0, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+
+    { "type": "header", "content": "Section Padding" },
+    { "type": "range", "id": "padding_top", "label": "Desktop padding top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "label": "Desktop padding bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+
+    { "type": "header", "content": "Section Margin" },
+    { "type": "range", "id": "margin_top", "label": "Desktop margin top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_bottom", "label": "Desktop margin bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile margin bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0 },
+
+    { "type": "header", "content": "Inner Padding", "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+    { "type": "range", "id": "inner_padding_top", "label": "Desktop inner padding top", "min": 0, "max": 200, "step": 2, "unit": "px", "default": 120, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+    { "type": "range", "id": "inner_padding_bottom", "label": "Desktop inner padding bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 48, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+    { "type": "range", "id": "inner_padding_top_mobile", "label": "Mobile inner padding top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 60, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+    { "type": "range", "id": "inner_padding_bottom_mobile", "label": "Mobile inner padding bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 32, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+
+    { "type": "header", "content": "Layout Settings", "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+    { "type": "range", "id": "columns_gap", "label": "Desktop gap between columns", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 40, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+    { "type": "range", "id": "menu_items_gap", "label": "Gap between menu items", "min": 4, "max": 24, "step": 2, "unit": "px", "default": 10, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#ffffff" },
+    { "type": "color", "id": "link_color", "label": "Link color", "default": "#ffffff" },
+
+    { "type": "header", "content": "Menu Heading Typography" },
+    { "type": "color", "id": "menu_heading_text_color", "label": "Menu heading text color", "default": "#ffffff" },
+    { "type": "checkbox", "id": "menu_heading_custom_font", "label": "Enable custom font settings", "default": false },
+    { "type": "select", "id": "menu_heading_as", "label": "Menu heading render as", "options": [
+      { "value": "h3", "label": "H3" },
+      { "value": "h4", "label": "H4" },
+      { "value": "h5", "label": "H5" },
+      { "value": "p", "label": "Paragraph (p)" }
+    ], "default": "h5", "visible_if": "{{ section.settings.menu_heading_custom_font == false }}" },
+    { "type": "font_picker", "id": "menu_heading_font", "label": "Menu heading font family", "default": "poppins_n4", "visible_if": "{{ section.settings.menu_heading_custom_font }}" },
+    { "type": "range", "id": "menu_heading_size_desktop", "label": "Desktop heading size", "min": 10, "max": 28, "step": 1, "unit": "px", "default": 16, "visible_if": "{{ section.settings.menu_heading_custom_font }}" },
+    { "type": "range", "id": "menu_heading_size_mobile", "label": "Mobile heading size", "min": 10, "max": 24, "step": 1, "unit": "px", "default": 14, "visible_if": "{{ section.settings.menu_heading_custom_font }}" },
+    { "type": "range", "id": "menu_heading_line_height", "label": "Line height", "min": 100, "max": 200, "step": 5, "unit": "%", "default": 140, "visible_if": "{{ section.settings.menu_heading_custom_font }}" },
+    { "type": "range", "id": "menu_heading_font_weight", "label": "Menu heading font weight", "min": 100, "max": 900, "step": 100, "default": 600, "visible_if": "{{ section.settings.menu_heading_custom_font and section.settings.enable_advanced_settings == true }}" },
+    { "type": "range", "id": "menu_heading_letter_spacing", "label": "Letter spacing", "min": -10, "max": 40, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.menu_heading_custom_font and section.settings.enable_advanced_settings == true }}" },
+
+    { "type": "header", "content": "Menu Items" },
+    { "type": "range", "id": "menu_item_size_desktop", "label": "Desktop text size", "min": 10, "max": 22, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "menu_item_size_mobile", "label": "Mobile text size", "min": 10, "max": 22, "step": 1, "unit": "px", "default": 13 }
+  ],
+
+  "blocks": [
+    {
+      "type": "benefits",
+      "name": "Benefits bar",
+      "limit": 1,
+      "settings": [
+        { "type": "header", "content": "Benefit 1" },
+        { "type": "image_picker", "id": "benefit_1_image", "label": "Icon image" },
+        { "type": "inline_richtext", "id": "benefit_1_heading", "label": "Heading", "default": "FREE SHIPPING" },
+        { "type": "inline_richtext", "id": "benefit_1_text", "label": "Description", "default": "On orders more than $50" },
+
+        { "type": "header", "content": "Benefit 2" },
+        { "type": "image_picker", "id": "benefit_2_image", "label": "Icon image" },
+        { "type": "inline_richtext", "id": "benefit_2_heading", "label": "Heading", "default": "SIMPLE RETURN POLICY" },
+        { "type": "inline_richtext", "id": "benefit_2_text", "label": "Description", "default": "Try it for 30 days risk-free" },
+
+        { "type": "header", "content": "Benefit 3" },
+        { "type": "image_picker", "id": "benefit_3_image", "label": "Icon image" },
+        { "type": "inline_richtext", "id": "benefit_3_heading", "label": "Heading", "default": "12 MONTHS WARRANTY" },
+        { "type": "inline_richtext", "id": "benefit_3_text", "label": "Description", "default": "Free replacement for any product issues" },
+
+        { "type": "header", "content": "Mobile Wrapper Background" },
+        { "type": "color", "id": "benefits_wrapper_bg_mobile", "label": "Mobile wrapper background", "default": "#ffffff", "info": "Background color behind the benefits bar on mobile (typically matches your page background)" },
+        { "type": "range", "id": "wrapper_padding_mobile", "label": "Mobile wrapper padding", "min": 0, "max": 40, "step": 4, "unit": "px", "default": 0, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+
+        { "type": "header", "content": "Style" },
+        { "type": "color", "id": "bg_color", "label": "Background color", "default": "#FAF7F5" },
+        { "type": "range", "id": "border_radius_desktop", "label": "Desktop border radius", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 16 },
+        { "type": "range", "id": "border_width", "label": "Border width", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 1 },
+        { "type": "color", "id": "border_color", "label": "Border color", "default": "#000000" },
+
+        { "type": "header", "content": "Icon style" },
+        { "type": "range", "id": "icon_size_desktop", "label": "Desktop icon size", "min": 20, "max": 80, "step": 4, "unit": "px", "default": 40 },
+        { "type": "range", "id": "icon_size_mobile", "label": "Mobile icon size", "min": 20, "max": 60, "step": 4, "unit": "px", "default": 32 },
+
+        { "type": "header", "content": "Heading Typography" },
+        { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#111111" },
+        { "type": "checkbox", "id": "heading_custom_font", "label": "Enable custom font settings", "default": false },
+        { "type": "select", "id": "heading_as", "label": "Render as", "options": [
+          { "value": "h2", "label": "H2" },
+          { "value": "h3", "label": "H3" },
+          { "value": "h4", "label": "H4" },
+          { "value": "h5", "label": "H5" },
+          { "value": "p", "label": "Paragraph (p)" }
+        ], "default": "p", "visible_if": "{{ block.settings.heading_custom_font == false }}" },
+        { "type": "font_picker", "id": "heading_font", "label": "Font family", "default": "poppins_n4", "visible_if": "{{ block.settings.heading_custom_font }}" },
+        { "type": "range", "id": "heading_size_desktop", "label": "Desktop heading size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 13, "visible_if": "{{ block.settings.heading_custom_font }}" },
+        { "type": "range", "id": "heading_size_mobile", "label": "Mobile heading size", "min": 10, "max": 18, "step": 1, "unit": "px", "default": 12, "visible_if": "{{ block.settings.heading_custom_font }}" },
+        { "type": "range", "id": "heading_line_height", "label": "Line height", "min": 100, "max": 200, "step": 5, "unit": "%", "default": 140, "visible_if": "{{ block.settings.heading_custom_font }}" },
+        { "type": "range", "id": "heading_font_weight", "label": "Font weight", "min": 400, "max": 800, "step": 100, "default": 600, "visible_if": "{{ block.settings.heading_custom_font and section.settings.enable_advanced_settings == true }}" },
+        { "type": "range", "id": "heading_letter_spacing", "label": "Letter spacing", "min": 0, "max": 4, "step": 0.5, "unit": "px", "default": 2, "visible_if": "{{ block.settings.heading_custom_font and section.settings.enable_advanced_settings == true }}" },
+
+        { "type": "header", "content": "Description Typography" },
+        { "type": "color", "id": "text_color", "label": "Text color", "default": "#2E2E2E" },
+        { "type": "checkbox", "id": "text_custom_font", "label": "Enable custom font settings", "default": false },
+        { "type": "select", "id": "text_as", "label": "Render as", "options": [
+          { "value": "h2", "label": "H2" },
+          { "value": "h3", "label": "H3" },
+          { "value": "h4", "label": "H4" },
+          { "value": "h5", "label": "H5" },
+          { "value": "p", "label": "Paragraph (p)" }
+        ], "default": "p", "visible_if": "{{ block.settings.text_custom_font == false }}" },
+        { "type": "font_picker", "id": "text_font", "label": "Font family", "default": "poppins_n4", "visible_if": "{{ block.settings.text_custom_font }}" },
+        { "type": "range", "id": "text_size_desktop", "label": "Desktop text size", "min": 10, "max": 18, "step": 1, "unit": "px", "default": 14, "visible_if": "{{ block.settings.text_custom_font }}" },
+        { "type": "range", "id": "text_size_mobile", "label": "Mobile text size", "min": 10, "max": 16, "step": 1, "unit": "px", "default": 12, "visible_if": "{{ block.settings.text_custom_font }}" },
+        { "type": "range", "id": "text_line_height", "label": "Line height", "min": 100, "max": 200, "step": 5, "unit": "%", "default": 150, "visible_if": "{{ block.settings.text_custom_font }}" },
+        { "type": "range", "id": "text_font_weight", "label": "Font weight", "min": 100, "max": 900, "step": 100, "default": 400, "visible_if": "{{ block.settings.text_custom_font and section.settings.enable_advanced_settings == true }}" },
+        { "type": "range", "id": "text_letter_spacing", "label": "Letter spacing", "min": -10, "max": 40, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ block.settings.text_custom_font and section.settings.enable_advanced_settings == true }}" },
+
+        { "type": "header", "content": "Layout", "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "overlap_desktop", "label": "Desktop overlap amount", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 60, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "overlap_mobile", "label": "Mobile overlap amount", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "margin_horizontal_desktop", "label": "Desktop horizontal margin", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 0, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+
+        { "type": "header", "content": "Spacing", "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "padding_desktop", "label": "Desktop vertical padding", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 32, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "padding_horizontal_desktop", "label": "Desktop horizontal padding", "min": 16, "max": 100, "step": 4, "unit": "px", "default": 48, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "padding_mobile", "label": "Mobile padding", "min": 12, "max": 60, "step": 4, "unit": "px", "default": 24, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "gap_desktop", "label": "Desktop gap between benefits", "min": 8, "max": 60, "step": 4, "unit": "px", "default": 24, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "gap_mobile", "label": "Mobile gap between benefits", "min": 8, "max": 40, "step": 4, "unit": "px", "default": 16, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "benefit_gap", "label": "Gap within each benefit", "min": 4, "max": 24, "step": 2, "unit": "px", "default": 12, "visible_if": "{{ section.settings.enable_advanced_settings }}" }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "Navigation menu",
+      "settings": [
+        { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Quick Links" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    },
+    {
+      "type": "logo",
+      "name": "Logo image",
+      "limit": 1,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Logo image" },
+
+        { "type": "header", "content": "Max width" },
+        { "type": "checkbox", "id": "logo_full_width", "label": "Make logo full width", "default": true, "info": "When enabled, the logo spans the full container width" },
+        { "type": "range", "id": "max_width_desktop", "label": "Desktop max width", "min": 200, "max": 1400, "step": 50, "unit": "px", "default": 800, "info": "Used when full width is disabled", "visible_if": "{{ block.settings.logo_full_width == false }}" },
+        { "type": "range", "id": "max_width_mobile", "label": "Mobile max width", "min": 150, "max": 600, "step": 25, "unit": "px", "default": 300, "info": "Used when full width is disabled", "visible_if": "{{ block.settings.logo_full_width == false }}" },
+
+        { "type": "header", "content": "Alignment" },
+        { "type": "select", "id": "alignment", "label": "Alignment", "options": [
+          { "value": "flex-start", "label": "Left" },
+          { "value": "center", "label": "Center" },
+          { "value": "flex-end", "label": "Right" }
+        ], "default": "center" },
+
+        { "type": "header", "content": "Spacing" },
+        { "type": "range", "id": "margin_top_desktop", "label": "Desktop margin top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 60 },
+        { "type": "range", "id": "margin_bottom_desktop", "label": "Desktop margin bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 60 },
+        { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 20 },
+        { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile margin bottom", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 20 }
+      ]
+    },
+    {
+      "type": "links",
+      "name": "Links row",
+      "limit": 1,
+      "settings": [
+        { "type": "link_list", "id": "menu", "label": "Menu" },
+
+        { "type": "header", "content": "Style" },
+        { "type": "color", "id": "link_color", "label": "Link color", "default": "#ffffff" },
+        { "type": "range", "id": "font_size_desktop", "label": "Desktop font size", "min": 10, "max": 18, "step": 1, "unit": "px", "default": 14 },
+        { "type": "range", "id": "font_size_mobile", "label": "Mobile font size", "min": 10, "max": 16, "step": 1, "unit": "px", "default": 12 },
+        { "type": "range", "id": "font_weight", "label": "Font weight", "min": 400, "max": 800, "step": 100, "default": 400 },
+
+        { "type": "header", "content": "Spacing" },
+        { "type": "range", "id": "gap_desktop", "label": "Desktop gap between links", "min": 8, "max": 48, "step": 4, "unit": "px", "default": 24 },
+        { "type": "range", "id": "gap_mobile", "label": "Mobile gap between links", "min": 8, "max": 32, "step": 4, "unit": "px", "default": 16 },
+        { "type": "range", "id": "margin_top_desktop", "label": "Desktop margin top", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 32 },
+        { "type": "range", "id": "margin_bottom_desktop", "label": "Desktop margin bottom", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 32 },
+        { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 24 },
+        { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile margin bottom", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 24 }
+      ]
+    },
+    {
+      "type": "bottom_bar",
+      "name": "Bottom bar",
+      "limit": 1,
+      "settings": [
+        { "type": "header", "content": "Copyright" },
+        { "type": "checkbox", "id": "show_shop_name", "label": "Show shop name", "default": true },
+        { "type": "text", "id": "shop_name_text", "label": "Custom shop name", "info": "Leave blank to use your store name", "visible_if": "{{ block.settings.show_shop_name }}" },
+        { "type": "text", "id": "rights_text", "label": "Rights text", "default": "All Rights Reserved" },
+
+        { "type": "header", "content": "Payment icons" },
+        { "type": "checkbox", "id": "show_payment_icons", "label": "Show payment icons", "default": true },
+        { "type": "range", "id": "payment_icon_height", "label": "Payment icon height", "min": 16, "max": 40, "step": 2, "unit": "px", "default": 24 },
+
+        { "type": "header", "content": "Social media icons" },
+        { "type": "checkbox", "id": "show_social_icons", "label": "Show social icons", "default": true },
+        { "type": "url", "id": "social_facebook", "label": "Facebook URL", "visible_if": "{{ block.settings.show_social_icons }}" },
+        { "type": "url", "id": "social_twitter", "label": "X (Twitter) URL", "visible_if": "{{ block.settings.show_social_icons }}" },
+        { "type": "url", "id": "social_instagram", "label": "Instagram URL", "visible_if": "{{ block.settings.show_social_icons }}" },
+        { "type": "url", "id": "social_pinterest", "label": "Pinterest URL", "visible_if": "{{ block.settings.show_social_icons }}" },
+        { "type": "url", "id": "social_tiktok", "label": "TikTok URL", "visible_if": "{{ block.settings.show_social_icons }}" },
+
+        { "type": "header", "content": "Social icon style" },
+        { "type": "range", "id": "social_icon_size", "label": "Social icon size", "min": 16, "max": 40, "step": 2, "unit": "px", "default": 24, "visible_if": "{{ block.settings.show_social_icons }}" },
+        { "type": "range", "id": "social_gap", "label": "Gap between social icons", "min": 8, "max": 32, "step": 4, "unit": "px", "default": 16, "visible_if": "{{ block.settings.show_social_icons and section.settings.enable_advanced_settings == true }}" },
+        { "type": "color", "id": "social_icon_color", "label": "Social icon color", "default": "#ffffff", "visible_if": "{{ block.settings.show_social_icons }}" },
+
+        { "type": "header", "content": "Background" },
+        { "type": "color", "id": "bg_color", "label": "Background color", "default": "rgba(0,0,0,0)" },
+
+        { "type": "header", "content": "Layout & Spacing", "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "gap_desktop", "label": "Desktop gap between elements", "min": 8, "max": 60, "step": 1, "unit": "px", "default": 24, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "gap_mobile", "label": "Mobile gap between elements", "min": 8, "max": 40, "step": 1, "unit": "px", "default": 20, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "padding_vertical_desktop", "label": "Desktop vertical padding", "min": 0, "max": 60, "step": 1, "unit": "px", "default": 24, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "padding_horizontal_desktop", "label": "Desktop horizontal padding", "min": 0, "max": 80, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "padding_vertical_mobile", "label": "Mobile vertical padding", "min": 0, "max": 60, "step": 1, "unit": "px", "default": 24, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "padding_horizontal_mobile", "label": "Mobile horizontal padding", "min": 0, "max": 60, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "margin_top_desktop", "label": "Desktop margin top", "min": 0, "max": 60, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+        { "type": "range", "id": "payment_gap", "label": "Gap between payment icons", "min": 4, "max": 20, "step": 2, "unit": "px", "default": 8, "visible_if": "{{ section.settings.enable_advanced_settings }}" },
+
+        { "type": "header", "content": "Copyright Typography" },
+        { "type": "color", "id": "copyright_color", "label": "Copyright text color", "default": "#ffffff" },
+        { "type": "checkbox", "id": "copyright_custom_font", "label": "Enable custom font settings", "default": false },
+        { "type": "select", "id": "copyright_as", "label": "Render as", "options": [
+          { "value": "h2", "label": "H2" },
+          { "value": "h3", "label": "H3" },
+          { "value": "h4", "label": "H4" },
+          { "value": "h5", "label": "H5" },
+          { "value": "p", "label": "Paragraph (p)" }
+        ], "default": "p", "visible_if": "{{ block.settings.copyright_custom_font == false }}" },
+        { "type": "font_picker", "id": "copyright_font", "label": "Font family", "default": "poppins_n4", "visible_if": "{{ block.settings.copyright_custom_font }}" },
+        { "type": "range", "id": "copyright_size_desktop", "label": "Desktop text size", "min": 10, "max": 16, "step": 1, "unit": "px", "default": 12, "visible_if": "{{ block.settings.copyright_custom_font }}" },
+        { "type": "range", "id": "copyright_size_mobile", "label": "Mobile text size", "min": 10, "max": 14, "step": 1, "unit": "px", "default": 11, "visible_if": "{{ block.settings.copyright_custom_font }}" },
+        { "type": "range", "id": "copyright_line_height", "label": "Line height", "min": 100, "max": 200, "step": 5, "unit": "%", "default": 140, "visible_if": "{{ block.settings.copyright_custom_font }}" },
+        { "type": "range", "id": "copyright_font_weight", "label": "Font weight", "min": 100, "max": 900, "step": 100, "default": 400, "visible_if": "{{ block.settings.copyright_custom_font and section.settings.enable_advanced_settings == true }}" },
+        { "type": "range", "id": "copyright_letter_spacing", "label": "Letter spacing", "min": 0, "max": 3, "step": 0.5, "unit": "px", "default": 1, "visible_if": "{{ block.settings.copyright_custom_font and section.settings.enable_advanced_settings == true }}" }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "VSO - Footer 07",
+      "blocks": [
+        { "type": "benefits" },
+        { "type": "menu", "settings": { "heading": "Shop by Collection" } },
+        { "type": "menu", "settings": { "heading": "Explore" } },
+        { "type": "menu", "settings": { "heading": "Help" } },
+        { "type": "menu", "settings": { "heading": "More" } },
+        { "type": "logo" },
+        { "type": "links" },
+        { "type": "bottom_bar", "settings": {
+          "social_facebook": "#",
+          "social_twitter": "#",
+          "social_instagram": "#",
+          "social_pinterest": "#",
+          "social_tiktok": "#"
+        } }
+      ]
+    }
+  ]
+}
+{% endschema %}

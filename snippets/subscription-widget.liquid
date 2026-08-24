@@ -1,0 +1,1766 @@
+{% comment %} Shopify Subscription Widget Snippet {% endcomment %}
+{% comment %} Auto-detect selling plans from product, with theme settings fallback {% endcomment %}
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign price = current_variant.price %}
+
+{% comment %} Step 1: Auto-detect selling plans from product {% endcomment %}
+{% assign selling_plans_available = false %}
+{% assign first_selling_plan_id = '' %}
+{% assign first_plan_price = price %}
+{% assign theme_settings_discount = 0 %}
+{% for group in product.selling_plan_groups %}
+  {% for plan in group.selling_plans %}
+    {% unless selling_plans_available %}
+      {% assign selling_plans_available = true %}
+      {% assign first_selling_plan_id = plan.id %}
+      {% for allocation in current_variant.selling_plan_allocations %}
+        {% if allocation.selling_plan.id == plan.id %}
+          {% assign first_plan_price = allocation.price %}
+        {% endif %}
+      {% endfor %}
+    {% endunless %}
+  {% endfor %}
+{% endfor %}
+
+{% comment %} Step 2: Fallback to theme settings subscription mappings {% endcomment %}
+{% unless selling_plans_available %}
+  {% assign product_handle = product.handle %}
+  {% for i in (1..10) %}
+    {% assign product_key = 'subscription_product_' | append: i %}
+    {% assign id_key = 'subscription_product_' | append: i | append: '_id' %}
+    {% assign discount_key = 'subscription_product_' | append: i | append: '_discount' %}
+    {% assign mapped_product = settings[product_key] %}
+    {% if mapped_product and mapped_product.handle == product_handle %}
+      {% assign theme_selling_plan_id = settings[id_key] %}
+      {% if theme_selling_plan_id != blank %}
+        {% assign selling_plans_available = true %}
+        {% assign first_selling_plan_id = theme_selling_plan_id %}
+        {% assign theme_settings_discount = settings[discount_key] | plus: 0 %}
+        {% if theme_settings_discount > 0 %}
+          {% assign discount_multiplier = 100 | minus: theme_settings_discount | times: 1.0 | divided_by: 100.0 %}
+          {% assign first_plan_price = price | times: discount_multiplier | round %}
+        {% endif %}
+        {% break %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endunless %}
+
+<!-- Store variant data for subscription widget -->
+<script type="application/json" class="subscription-widget__variants-json">
+  {{ product.variants | json }}
+</script>
+
+<!-- Store selling plans data for price calculations -->
+<script type="application/json" class="subscription-widget__plans-json">
+  [
+    {% if selling_plans_available %}
+      {% for group in product.selling_plan_groups %}
+        {% for plan in group.selling_plans %}
+          {
+            "id": {{ plan.id | json }},
+            "name": {{ plan.name | json }},
+            "value_type": {% for adj in plan.price_adjustments %}"{{ adj.value_type }}"{% endfor %},
+            "value": {% for adj in plan.price_adjustments %}{{ adj.value }}{% endfor %},
+            "order_index": {{ forloop.index0 }},
+            "options": {{ plan.options | json }},
+            "recurring_deliveries": {{ plan.recurring_deliveries | json }}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+        {% unless forloop.last %},{% endunless %}
+      {% endfor %}
+      {% if theme_settings_discount > 0 and product.selling_plan_groups.size == 0 %}
+        {
+          "id": {{ first_selling_plan_id | json }},
+          "name": "Subscription",
+          "value_type": "percentage",
+          "value": {{ theme_settings_discount }},
+          "order_index": 0,
+          "options": [],
+          "recurring_deliveries": null
+        }
+      {% endif %}
+    {% endif %}
+  ]
+</script>
+
+<style>
+
+.subscription-widget {
+  margin-top: {{ block.settings.sub_widget_section_margin_top | default: 0 }}px;
+  margin-bottom: {{ block.settings.sub_widget_section_margin_bottom | default: 0 }}px;
+  width: 100%;
+  font-family: inherit;
+  display: flex;
+  flex-direction: {% if block.settings.sub_widget_sub_first %}column-reverse{% else %}column{% endif %};
+  gap: {{ block.settings.sub_widget_buttons_gap }}px;
+}
+
+  .price-per {
+      font-size: 12px;
+      gap: 5px;
+      display: flex;
+      line-height: 18px;
+      align-items: center;
+  }
+
+  .plan-option {
+      border: {{ block.settings.sub_widget_button_border_width }}px solid {{ block.settings.sub_widget_button_border_color }};
+      border-radius: {{ block.settings.sub_widget_button_border_radius }}px;
+      cursor: pointer;
+      position: relative;
+      background: {{ block.settings.sub_widget_button_bg_color }};
+      padding: {{ block.settings.sub_widget_button_padding_y | default: 12 }}px {{ block.settings.sub_widget_button_padding_x | default: 16 }}px;
+      transition: border-color 0.15s ease, background-color 0.15s ease, border-width 0.15s ease;
+      contain: layout style;
+  }
+
+  /* Add margin-top when badge is enabled to create space (non-compact mode only, NOT for full-width badges) */
+  .subscription-widget:not(.subscription-widget--compact) .plan-option.has-badge:not(:has(.badge-full-width)) {
+      margin-top: 8px;
+  }
+
+  /* First plan should not have margin-top even with badge */
+  .subscription-widget:not(.subscription-widget--compact) .plan-option:first-child.has-badge {
+      margin-top: 0;
+  }
+
+  /* Full-width badges in non-compact mode should have NO negative margin-top */
+  .subscription-widget:not(.subscription-widget--compact) .plan-option.has-badge:has(.badge-full-width) {
+      margin-top: 0 !important;
+  }
+
+  .plan-option:hover,
+  .plan-option:focus,
+  .plan-option:active {
+      outline: none;
+      box-shadow: none;
+      transform: none;
+  }
+
+  .plan-option:last-child {
+      margin-bottom: 0;
+  }
+
+  .plan-option.selected {
+      border-color: {{ block.settings.sub_widget_button_border_color_selected }};
+      border-width: {{ block.settings.sub_widget_button_border_width_selected }}px;
+      background: {{ block.settings.sub_widget_button_bg_color_selected }};
+      -webkit-tap-highlight-color: transparent;
+  }
+
+  .plan-option.selected .plan-title {
+      color: {{ block.settings.sub_widget_active_title_color }}!important;
+      font-weight: {{ block.settings.sub_widget_selected_title_weight | default: 'bold' }}!important;
+  }
+
+  .plan-option.selected .one-time-html,
+  .plan-option.selected .plan-details {
+      color: {{ block.settings.sub_widget_active_text_color }}!important;
+  }
+
+  .one-time-html {
+      font-size: 14px;
+      line-height: 1.4;
+      min-height: 0;
+  }
+
+  .one-time-html:not(:empty) {
+      margin-top: 4px;
+  }
+
+  .one-time-html:empty {
+      display: none;
+      margin: 0;
+      padding: 0;
+  }
+
+  .plan-option.selected .current-price {
+      color: {{ block.settings.sub_widget_active_price_color }}!important;
+  }
+
+  .plan-option.selected .original-price {
+      color: {{ block.settings.sub_widget_active_compare_price_color }}!important;
+  }
+
+  .plan-option input[type="radio"] {
+      {% if block.settings.sub_widget_use_radio_selectors %}
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      width: 0;
+      height: 0;
+      {% else %}
+      display: none;
+      {% endif %}
+  }
+
+  .plan-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+  }
+
+  .plan-title {
+      font-size: {{ block.settings.sub_widget_subscription_title_font_size }}px ;
+      font-weight: {{ block.settings.sub_widget_subscription_title_weight }};
+      color: {{ block.settings.sub_widget_subscription_title_color }}!important;
+      line-height: 1.5;
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      min-height: 20px;
+  }
+
+  .plan-title p {
+      margin: 0;
+      padding: 0;
+  }
+
+  /* Subscription Badge */
+  .subscription-badge {
+      position: absolute;
+      z-index: 1;
+      white-space: nowrap;
+      line-height: 1;
+  }
+
+  /* One Time Badge */
+  .onetime-badge {
+      position: absolute;
+      z-index: 1;
+      white-space: nowrap;
+      line-height: 1;
+  }
+
+  /* Badge Position Classes */
+  .badge-top-left {
+      top: 8px;
+      left: 8px;
+  }
+
+  .badge-top-center:not(.badge-full-width) {
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+  }
+
+  .badge-top-right {
+      top: 8px;
+      right: 8px;
+  }
+
+  .plan-discount {
+      background: linear-gradient(135deg, #1b9999 0%, #158a8a 100%);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 4px rgba(27, 153, 153, 0.3);
+  }
+
+  .plan-details {
+      color: #6c757d;
+      font-size: 14px;
+      line-height: 1.5;
+  }
+
+  .price-cont {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+  }
+
+  .plan-quantity {
+      margin-top: 8px;
+      font-weight: 600;
+      color: #495057;
+  }
+
+  .plan-pricing {
+      display: flex;
+      align-items: {% if block.settings.sub_widget_price_layout_row %}center{% else %}flex-end{% endif %};
+      {% if block.settings.sub_widget_price_layout_row %}
+        {% if block.settings.sub_widget_main_price_first %}
+          flex-direction: row-reverse;
+        {% else %}
+          flex-direction: row;
+        {% endif %}
+        gap: 8px;
+      {% else %}
+        flex-direction: {% if block.settings.sub_widget_main_price_first %}column-reverse{% else %}column{% endif %};
+        gap: 4px;
+      {% endif %}
+      flex-wrap: wrap;
+      justify-content: flex-end;
+  }
+
+  .current-price {
+    font-size: {{ block.settings.sub_widget_main_price_font_size }}px;
+    font-weight: {{ block.settings.sub_widget_main_price_weight }};
+    color: {{ block.settings.sub_widget_main_price_color }};
+  }
+
+  .original-price {
+    font-size: {{ block.settings.sub_widget_compare_price_font_size }}px;
+    font-weight: {{ block.settings.sub_widget_compare_price_weight }};
+    color: {{ block.settings.sub_widget_compare_price_color }};
+    text-decoration: line-through;
+  }
+
+  .savings {
+      background: #fff3cd;
+      color: #856404;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+  }
+
+  .price-per-unit {
+      font-size: 11px;
+      color: #1b9999;
+      font-weight: 600;
+      background: rgba(27, 153, 153, 0.1);
+      border: 1px solid rgba(27, 153, 153, 0.3);
+      padding: 2px 8px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+  }
+
+  .tick-list {
+      display: none;
+      opacity: 0;
+      transform: translate3d(0, -5px, 0);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      will-change: opacity, transform;
+      contain: layout style;
+  }
+
+  .plan-option.selected .tick-list {
+      display: flex;
+      flex-direction: {% if block.settings.sub_widget_frequency_above %}column-reverse{% else %}column{% endif %};
+      margin-top: 16px;
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+  }
+
+  /* Expandable layout options for regular mode */
+  .plan-option.selected .tick-list.expandable-row {
+      flex-direction: row !important;
+      gap: 16px;
+      align-items: flex-start;
+  }
+
+  .plan-option.selected .tick-list.expandable-row .subscription-frequency {
+      flex: 0 0 {{ block.settings.sub_widget_subscription_frequency_width }}%;
+      min-width: 0;
+      width: {{ block.settings.sub_widget_subscription_frequency_width }}%;
+      margin-bottom: 0;
+  }
+
+  .plan-option.selected .tick-list.expandable-row .one-time-html {
+      flex: 1 1 0%;
+      min-width: 0;
+      width: auto;
+      margin-bottom: 0;
+  }
+
+  .tick-item {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      color: #495057;
+      margin-bottom: 8px;
+  }
+
+  .tick-item:last-child {
+      margin-bottom: 0;
+  }
+
+  .tick-circle {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid #1b9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1b9999;
+      background-color: white;
+      font-size: 10px;
+      margin-right: 12px;
+      flex-shrink: 0;
+  }
+
+  .plan-option {
+      position: relative;
+  }
+
+  .subscription-frequency label {
+      display: block;
+      font-size: {{ block.settings.sub_widget_frequency_font_size }}px;
+      font-weight: {{ block.settings.sub_widget_frequency_title_weight }};
+      color: {{ block.settings.sub_widget_subscription_frequency_color }};
+      margin-bottom: {{ block.settings.sub_widget_frequency_gap }}px;
+  }
+    .subscription-frequency {
+      margin-bottom: {{ block.settings.sub_widget_frequency_bottom }}px;
+  }
+
+  .frequency-select {
+      width: 100%;
+      {% assign vertical_padding = block.settings.sub_widget_subscription_input_padding_y | default: 12 %}
+      {% assign horizontal_padding = block.settings.sub_widget_subscription_input_padding_x | default: 16 %}
+      {% assign icon_spacing = horizontal_padding | minus: 4 %}
+      {% assign right_padding = horizontal_padding | plus: 24 %}
+      padding: {{ vertical_padding }}px {{ horizontal_padding }}px;
+      border: {{ block.settings.sub_widget_subscription_input_border_width }}px solid {{ block.settings.sub_widget_subscription_input_border_color }};
+      border-radius: {{ block.settings.sub_widget_subscription_input_border_radius }}px !important;
+      font-size: {{ block.settings.sub_widget_subscription_input_font_size }}px;
+      color: {{ block.settings.sub_widget_subscription_input_text_color }};
+      background: {{ block.settings.sub_widget_subscription_input_bg_color }};
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23354e4d' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right {{ icon_spacing }}px center;
+      background-repeat: no-repeat;
+      background-size: 16px;
+      padding-right: {{ right_padding }}px;
+  }
+
+  .frequency-select:focus,
+  .frequency-select:hover,
+  .frequency-select:active {
+      outline: none;
+      box-shadow: none;
+      border-color: {{ block.settings.sub_widget_subscription_input_border_color }};
+  }
+
+  .plan-cont {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex: 1;
+  }
+
+  /* Radio button custom styling */
+  {% if block.settings.sub_widget_use_radio_selectors %}
+  .plan-header {
+      position: relative;
+      padding-left: 30px;
+  }
+
+  .plan-header::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid {{ block.settings.sub_widget_radio_unchecked_color }};
+      border-radius: 50%;
+      background: #fff;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      margin-top: 0;
+  }
+
+  .plan-option.selected .plan-header::before {
+      {% if block.settings.sub_widget_radio_inverse %}
+      border-color: {{ block.settings.sub_widget_radio_checked_color }};
+      background: {{ block.settings.sub_widget_radio_checked_color }};
+      box-shadow: inset 0 0 0 3px {{ block.settings.sub_widget_button_bg_color_selected }};
+      {% else %}
+      border-color: {{ block.settings.sub_widget_radio_checked_color }};
+      background: transparent;
+      box-shadow: inset 0 0 0 3px {{ block.settings.sub_widget_radio_checked_color }};
+      {% endif %}
+  }
+  {% endif %}
+
+
+
+  /* Smooth animation for plan selection */
+  .plan-option {
+      transform: translateY(0);
+  }
+
+  /* Loading state for dropdown */
+  .frequency-select:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+  }
+
+  /* Compact Mode Styles */
+  .subscription-widget--compact {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.sub_widget_buttons_gap }}px;
+    overflow: visible;
+  }
+
+  .subscription-widget--compact .compact-buttons-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: {{ block.settings.sub_widget_buttons_gap }}px;
+    overflow: visible;
+  }
+
+  .subscription-widget--compact .plan-option {
+    margin-bottom: 0;
+  }
+
+  /* Hide radio buttons in compact mode */
+  .subscription-widget--compact .plan-option input[type="radio"] {
+    display: none;
+  }
+
+  .subscription-widget--compact .plan-header::before {
+    display: none !important;
+  }
+
+  .subscription-widget--compact .plan-header {
+    padding-left: 0 !important;
+  }
+
+  /* Center align title in compact mode */
+  .subscription-widget--compact .plan-title {
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .subscription-widget--compact .plan-cont {
+    width: 100%;
+  }
+
+  /* Frequency wrapper - full width below buttons */
+  .subscription-widget--compact .compact-frequency-wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .subscription-widget--compact .subscription-frequency {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: none;
+  }
+
+  .subscription-widget--compact .subscription-frequency label {
+    display: block;
+  }
+
+  .subscription-widget--compact .frequency-select {
+    width: 100%;
+  }
+
+  /* Expandable layout options */
+  .compact-expandable-column {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .compact-expandable-row {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 12px;
+    align-items: center !important;
+    margin-top: 12px;
+  }
+
+  /* Ensure compact-frequency-wrapper respects the row layout */
+  .subscription-widget--compact .compact-frequency-wrapper.compact-expandable-row {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+
+  .subscription-widget--compact .compact-expandable-row .subscription-frequency {
+    flex: 0 0 {{ block.settings.sub_widget_subscription_frequency_width }}%;
+    min-width: 0;
+    width: {{ block.settings.sub_widget_subscription_frequency_width }}% !important;
+    margin: 0;
+  }
+
+  .subscription-widget--compact .compact-expandable-row .compact-subscription-html {
+    flex: 1 1 0%;
+    min-width: 0;
+    width: auto !important;
+    margin: 0;
+  }
+
+  /* Compact mode expandable content padding */
+  .subscription-widget--compact .compact-frequency-wrapper {
+    padding-top: {{ block.settings.sub_widget_compact_expandable_padding_top | default: 12 }}px;
+    padding-bottom: {{ block.settings.sub_widget_compact_expandable_padding_bottom | default: 12 }}px;
+    padding-left: {{ block.settings.sub_widget_compact_expandable_padding_left | default: 0 }}px;
+    padding-right: {{ block.settings.sub_widget_compact_expandable_padding_right | default: 0 }}px;
+  }
+
+  /* Expandable content background color - full width with bottom radius */
+  {% if block.settings.sub_widget_expandable_bg_color != blank %}
+    {% assign _btn_pad_x = block.settings.sub_widget_button_padding_x | default: 16 %}
+    {% assign _btn_pad_y = block.settings.sub_widget_button_padding_y | default: 12 %}
+    {% assign _btn_bw = block.settings.sub_widget_button_border_width | default: 1 %}
+    {% assign _btn_bw_sel = block.settings.sub_widget_button_border_width_selected | default: 2 %}
+    {% assign _btn_br = block.settings.sub_widget_button_border_radius | default: 8 %}
+    {% assign _inner_br = _btn_br | minus: _btn_bw_sel %}
+
+    .plan-option.selected .tick-list,
+    .subscription-widget--compact .plan-option.selected .compact-frequency-wrapper {
+      background-color: {{ block.settings.sub_widget_expandable_bg_color }};
+      margin-left: -{{ _btn_pad_x }}px;
+      margin-right: -{{ _btn_pad_x }}px;
+      margin-bottom: -{{ _btn_pad_y }}px;
+      padding-left: {{ _btn_pad_x }}px;
+      padding-right: {{ _btn_pad_x }}px;
+      padding-bottom: {{ _btn_pad_y }}px;
+      border-radius: 0 0 {% if _inner_br > 0 %}{{ _inner_br }}{% else %}0{% endif %}px {% if _inner_br > 0 %}{{ _inner_br }}{% else %}0{% endif %}px;
+    }
+  {% endif %}
+</style>
+
+{% if block.settings.sub_widget_compact_mode %}
+  {%- comment -%} COMPACT MODE STRUCTURE {%- endcomment -%}
+  <div class="subscription-widget subscription-widget--compact" {{ block.shopify_attributes }}>
+    <div class="compact-buttons-wrapper">
+      {%- liquid
+        assign button_padding_y = block.settings.sub_widget_button_padding_y | default: 12
+        assign button_border_radius = block.settings.sub_widget_button_border_radius | default: 4
+        assign button_border_width = block.settings.sub_widget_button_border_width | default: 1
+      -%}
+      {% unless block.settings.sub_widget_sub_only %}
+      {%- liquid
+        assign onetime_badge_full_width = block.settings.onetime_badge_full_width | default: false
+      -%}
+      {% if block.settings.onetime_badge_enable %}
+        {%- liquid
+          assign badge_height = block.settings.onetime_badge_font_size | plus: block.settings.onetime_badge_padding_top | plus: block.settings.onetime_badge_padding_bottom | plus: block.settings.onetime_badge_border_width | plus: block.settings.onetime_badge_border_width
+          assign container_border = block.settings.sub_widget_button_border_width | default: 1
+          assign badge_top_offset = badge_height | divided_by: 2 | plus: container_border
+          assign badge_top_position = badge_top_offset | times: -1
+        -%}
+      {% endif %}
+      <div
+        class="plan-option {% unless block.settings.sub_widget_sub_auto_selected %}selected{% endunless %}{% if block.settings.onetime_badge_enable %} has-badge{% endif %}"
+        onclick="selectThisPlan(this)"
+        data-plan="onetime-single"
+        data-selling-plan=""
+        style="{% if onetime_badge_full_width == true and block.settings.onetime_badge_enable %}padding-top: calc({{ button_padding_y }}px + {{ badge_height }}px);{% if block.settings.sub_widget_compact_mode %}margin-top: -{{ badge_height }}px;{% endif %}{% endif %}"
+      >
+        {% if block.settings.onetime_badge_enable %}
+          <span class="onetime-badge badge-{{ block.settings.onetime_badge_position }}{% if onetime_badge_full_width == true %} badge-full-width{% endif %}"
+                style="
+                  color: {{ block.settings.onetime_badge_text_color }};
+                  font-size: {{ block.settings.onetime_badge_font_size }}px;
+                  font-weight: {{ block.settings.onetime_badge_font_weight }};
+                  border: {{ block.settings.onetime_badge_border_width }}px solid {{ block.settings.onetime_badge_border_color }};
+                  padding: {{ block.settings.onetime_badge_padding_top }}px {{ block.settings.onetime_badge_padding_right }}px {{ block.settings.onetime_badge_padding_bottom }}px {{ block.settings.onetime_badge_padding_left }}px;
+                  z-index: 1;
+                  white-space: nowrap;
+                  {% if onetime_badge_full_width == true %}
+                    position: absolute !important;
+                    top: 0 !important;
+                    left: 0 !important;
+                    right: 0 !important;
+                    width: 100% !important;
+                    margin: 0 !important;
+                    text-align: center !important;
+                    border-radius: calc({{ button_border_radius }}px - {{ button_border_width }}px) calc({{ button_border_radius }}px - {{ button_border_width }}px) 0 0 !important;
+                  {% else %}
+                    position: absolute;
+                    top: {{ badge_top_position }}px;
+                    border-radius: {{ block.settings.onetime_badge_border_radius }}px;
+                  {% endif %}
+                  {% if block.settings.onetime_badge_enable_gradient %}
+                    background: {{ block.settings.onetime_badge_gradient }};
+                  {% else %}
+                    background-color: {{ block.settings.onetime_badge_bg_color }};
+                  {% endif %}
+                ">
+            {{ block.settings.onetime_badge_text }}
+          </span>
+        {% endif %}
+        <input type="radio" name="purchase-plan" value="onetime-single" checked>
+        <div class="plan-header">
+          <div class="plan-cont">
+            <span class="plan-title">{{ block.settings.sub_widget_onetime_payment_text }}</span>
+          </div>
+        </div>
+      </div>
+      {% endunless %}
+
+      {%- liquid
+        assign sub_badge_full_width = block.settings.sub_badge_full_width | default: false
+      -%}
+      {% if block.settings.sub_badge_enable %}
+        {%- liquid
+          assign badge_height = block.settings.sub_badge_font_size | plus: block.settings.sub_badge_padding_top | plus: block.settings.sub_badge_padding_bottom | plus: block.settings.sub_badge_border_width | plus: block.settings.sub_badge_border_width
+          assign container_border = block.settings.sub_widget_button_border_width | default: 1
+          assign badge_top_offset = badge_height | divided_by: 2 | plus: container_border
+          assign badge_top_position = badge_top_offset | times: -1
+        -%}
+      {% endif %}
+      <div
+        class="plan-option {% if block.settings.sub_widget_sub_auto_selected %}selected{% endif %}{% if block.settings.sub_badge_enable %} has-badge{% endif %}"
+        onclick="selectThisPlan(this)"
+        data-plan="subscription"
+        data-selling-plan="{{ first_selling_plan_id }}"
+        style="{% if sub_badge_full_width == true and block.settings.sub_badge_enable %}padding-top: calc({{ button_padding_y }}px + {{ badge_height }}px);{% if block.settings.sub_widget_compact_mode %}margin-top: -{{ badge_height }}px;{% endif %}{% endif %}"
+      >
+        {% if block.settings.sub_badge_enable %}
+          <span class="subscription-badge badge-{{ block.settings.sub_badge_position }}{% if sub_badge_full_width == true %} badge-full-width{% endif %}"
+                style="
+                  color: {{ block.settings.sub_badge_text_color }};
+                  font-size: {{ block.settings.sub_badge_font_size }}px;
+                  font-weight: {{ block.settings.sub_badge_font_weight }};
+                  border: {{ block.settings.sub_badge_border_width }}px solid {{ block.settings.sub_badge_border_color }};
+                  padding: {{ block.settings.sub_badge_padding_top }}px {{ block.settings.sub_badge_padding_right }}px {{ block.settings.sub_badge_padding_bottom }}px {{ block.settings.sub_badge_padding_left }}px;
+                  z-index: 1;
+                  white-space: nowrap;
+                  {% if sub_badge_full_width == true %}
+                    position: absolute !important;
+                    top: 0 !important;
+                    left: 0 !important;
+                    right: 0 !important;
+                    width: 100% !important;
+                    margin: 0 !important;
+                    text-align: center !important;
+                    border-radius: calc({{ button_border_radius }}px - {{ button_border_width }}px) calc({{ button_border_radius }}px - {{ button_border_width }}px) 0 0 !important;
+                  {% else %}
+                    position: absolute;
+                    top: {{ badge_top_position }}px;
+                    border-radius: {{ block.settings.sub_badge_border_radius }}px;
+                  {% endif %}
+                  {% if block.settings.sub_badge_enable_gradient %}
+                    background: {{ block.settings.sub_badge_gradient }};
+                  {% else %}
+                    background-color: {{ block.settings.sub_badge_bg_color }};
+                  {% endif %}
+                ">
+            {{ block.settings.sub_badge_text }}
+          </span>
+        {% endif %}
+        <input type="radio" name="purchase-plan" value="subscription">
+        <div class="plan-header">
+          <div class="plan-cont">
+            <span class="plan-title">{{ block.settings.sub_widget_subscription_payment_text }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} One-time expandable HTML - show when one-time is selected {%- endcomment -%}
+    {% if block.settings.sub_widget_enable_expandable_content and block.settings.sub_widget_html_onetime_expanded != blank %}
+      <div class="compact-onetime-html" style="margin-top: 12px; {% if block.settings.sub_widget_sub_auto_selected %}display: none !important;{% else %}display: block !important;{% endif %}">
+        {{ block.settings.sub_widget_html_onetime_expanded }}
+      </div>
+    {% endif %}
+
+    {% assign has_frequency = false %}
+    {% assign frequency_count = 0 %}
+    {% for group in product.selling_plan_groups %}
+      {% for plan in group.selling_plans %}
+        {% assign frequency_count = frequency_count | plus: 1 %}
+      {% endfor %}
+    {% endfor %}
+    {% if frequency_count > 1 %}
+      {% assign has_frequency = true %}
+    {% endif %}
+
+    {% comment %} Check if expandable content exists {% endcomment %}
+    {% assign has_expandable = false %}
+    {% if block.settings.sub_widget_enable_expandable_content and block.settings.sub_widget_html_subscription_expanded != blank %}
+      {% assign has_expandable = true %}
+    {% endif %}
+
+    {% if has_frequency or has_expandable %}
+      <div class="compact-frequency-wrapper compact-expandable-{{ block.settings.sub_widget_subscription_expandable_layout }}" style="{% if block.settings.sub_widget_sub_auto_selected %}display: flex !important;{% else %}display: none !important;{% endif %}">
+        {% if block.settings.sub_widget_subscription_html_position == 'before' and block.settings.sub_widget_enable_expandable_content and block.settings.sub_widget_html_subscription_expanded != blank %}
+          <div class="compact-subscription-html">
+            {{ block.settings.sub_widget_html_subscription_expanded }}
+          </div>
+        {% endif %}
+
+        {% if has_frequency %}
+          <div class="subscription-frequency">
+            <label for="frequency-select">{{ block.settings.sub_widget_frequency_title }}</label>
+            <select
+              id="frequency-select"
+              name="subscription-frequency"
+              class="frequency-select"
+              onchange="updateSubscriptionPlan(this)"
+              onclick="event.stopPropagation()"
+            >
+              {% for group in product.selling_plan_groups %}
+                {% for plan in group.selling_plans %}
+                  <option value="{{ plan.id }}" data-plan-name="{{ plan.name | escape }}"{% if plan.id == first_selling_plan_id %} selected{% endif %}>
+                    {{ plan.name }}
+                  </option>
+                {% endfor %}
+              {% endfor %}
+            </select>
+          </div>
+        {% endif %}
+
+        {% if block.settings.sub_widget_subscription_html_position == 'after' and block.settings.sub_widget_enable_expandable_content and block.settings.sub_widget_html_subscription_expanded != blank %}
+          <div class="compact-subscription-html">
+            {{ block.settings.sub_widget_html_subscription_expanded }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+{% else %}
+  {%- comment -%} REGULAR MODE STRUCTURE {%- endcomment -%}
+  <div class="subscription-widget" {{ block.shopify_attributes }}>
+    {%- liquid
+      assign button_padding_y = block.settings.sub_widget_button_padding_y | default: 12
+      assign button_border_radius = block.settings.sub_widget_button_border_radius | default: 4
+      assign button_border_width = block.settings.sub_widget_button_border_width | default: 1
+    -%}
+    {% unless block.settings.sub_widget_sub_only %}
+    {%- liquid
+      assign onetime_badge_full_width = block.settings.onetime_badge_full_width | default: false
+    -%}
+    {% if block.settings.onetime_badge_enable %}
+      {%- liquid
+        assign badge_height = block.settings.onetime_badge_font_size | plus: block.settings.onetime_badge_padding_top | plus: block.settings.onetime_badge_padding_bottom | plus: block.settings.onetime_badge_border_width | plus: block.settings.onetime_badge_border_width
+        assign container_border = block.settings.sub_widget_button_border_width | default: 1
+        assign badge_top_offset = badge_height | divided_by: 2 | plus: container_border
+        assign badge_top_position = badge_top_offset | times: -1
+      -%}
+    {% endif %}
+    <div
+      class="plan-option {% unless block.settings.sub_widget_sub_auto_selected %}selected{% endunless %}{% if block.settings.onetime_badge_enable %} has-badge{% endif %}"
+      onclick="selectThisPlan(this)"
+      data-plan="onetime-single"
+      data-selling-plan=""
+      style="{% if onetime_badge_full_width == true and block.settings.onetime_badge_enable %}margin-top: -{{ badge_height }}px; padding-top: calc({{ button_padding_y }}px + {{ badge_height }}px);{% endif %}"
+    >
+      {% if block.settings.onetime_badge_enable %}
+        <span class="onetime-badge badge-{{ block.settings.onetime_badge_position }}{% if onetime_badge_full_width == true %} badge-full-width{% endif %}"
+              style="
+                color: {{ block.settings.onetime_badge_text_color }};
+                font-size: {{ block.settings.onetime_badge_font_size }}px;
+                font-weight: {{ block.settings.onetime_badge_font_weight }};
+                border: {{ block.settings.onetime_badge_border_width }}px solid {{ block.settings.onetime_badge_border_color }};
+                padding: {{ block.settings.onetime_badge_padding_top }}px {{ block.settings.onetime_badge_padding_right }}px {{ block.settings.onetime_badge_padding_bottom }}px {{ block.settings.onetime_badge_padding_left }}px;
+                z-index: 1;
+                white-space: nowrap;
+                {% if onetime_badge_full_width == true %}
+                  position: absolute !important;
+                  top: 0 !important;
+                  left: 0 !important;
+                  right: 0 !important;
+                  width: 100% !important;
+                  margin: 0 !important;
+                  text-align: center !important;
+                  border-radius: calc({{ button_border_radius }}px - {{ button_border_width }}px) calc({{ button_border_radius }}px - {{ button_border_width }}px) 0 0 !important;
+                {% else %}
+                  position: absolute;
+                  top: {{ badge_top_position }}px;
+                  border-radius: {{ block.settings.onetime_badge_border_radius }}px;
+                {% endif %}
+                {% if block.settings.onetime_badge_enable_gradient %}
+                  background: {{ block.settings.onetime_badge_gradient }};
+                {% else %}
+                  background-color: {{ block.settings.onetime_badge_bg_color }};
+                {% endif %}
+              ">
+          {{ block.settings.onetime_badge_text }}
+        </span>
+      {% endif %}
+      <div class="plan-header">
+       <input type="radio" name="purchase-plan" value="onetime-single" checked>
+        <div class="plan-cont">
+          <span class="plan-title">{{ block.settings.sub_widget_onetime_payment_text }}</span>
+              {% if block.settings.sub_widget_html_one_time_title != blank %}
+              <div class="one-time-html">
+               {{ block.settings.sub_widget_html_one_time_title }}
+               </div>
+              {% endif %}
+        </div>
+        <div class="price-cont">
+          <div class="plan-pricing">
+            <span class="original-price" style="display: none;">{{ current_variant.compare_at_price | money }}</span>
+            <span class="current-price">{{ price | money }}</span>
+          </div>
+        </div>
+      </div>
+
+  {% if block.settings.sub_widget_enable_expandable_content and block.settings.sub_widget_html_onetime_expanded != blank %}
+    <div class="tick-list">
+      <div class="one-time-html">
+        {{ block.settings.sub_widget_html_onetime_expanded }}
+      </div>
+    </div>
+  {% endif %}
+
+    </div>
+    {% endunless %}
+
+    <!-- Subscription -->
+    {%- liquid
+      assign sub_badge_full_width = block.settings.sub_badge_full_width | default: false
+    -%}
+    {% if block.settings.sub_badge_enable %}
+      {%- liquid
+        assign badge_height = block.settings.sub_badge_font_size | plus: block.settings.sub_badge_padding_top | plus: block.settings.sub_badge_padding_bottom | plus: block.settings.sub_badge_border_width | plus: block.settings.sub_badge_border_width
+        assign container_border = block.settings.sub_widget_button_border_width | default: 1
+        assign badge_top_offset = badge_height | divided_by: 2 | plus: container_border
+        assign badge_top_position = badge_top_offset | times: -1
+      -%}
+    {% endif %}
+    <div
+      class="plan-option {% if block.settings.sub_widget_sub_auto_selected %} selected {% endif %}{% if block.settings.sub_badge_enable %} has-badge{% endif %}"
+      onclick="selectThisPlan(this)"
+      data-plan="subscription"
+      data-selling-plan="{{ first_selling_plan_id }}"
+      style="{% if sub_badge_full_width == true and block.settings.sub_badge_enable %}margin-top: -{{ badge_height }}px; padding-top: calc({{ button_padding_y }}px + {{ badge_height }}px);{% endif %}"
+    >
+    {% if block.settings.sub_badge_enable %}
+      <span class="subscription-badge badge-{{ block.settings.sub_badge_position }}{% if sub_badge_full_width == true %} badge-full-width{% endif %}"
+            style="
+              color: {{ block.settings.sub_badge_text_color }};
+              font-size: {{ block.settings.sub_badge_font_size }}px;
+              font-weight: {{ block.settings.sub_badge_font_weight }};
+              border: {{ block.settings.sub_badge_border_width }}px solid {{ block.settings.sub_badge_border_color }};
+              padding: {{ block.settings.sub_badge_padding_top }}px {{ block.settings.sub_badge_padding_right }}px {{ block.settings.sub_badge_padding_bottom }}px {{ block.settings.sub_badge_padding_left }}px;
+              z-index: 1;
+              white-space: nowrap;
+              {% if sub_badge_full_width == true %}
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
+                margin: 0 !important;
+                text-align: center !important;
+                border-radius: calc({{ button_border_radius }}px - {{ button_border_width }}px) calc({{ button_border_radius }}px - {{ button_border_width }}px) 0 0 !important;
+              {% else %}
+                position: absolute;
+                top: {{ badge_top_position }}px;
+                border-radius: {{ block.settings.sub_badge_border_radius }}px;
+              {% endif %}
+              {% if block.settings.sub_badge_enable_gradient %}
+                background: {{ block.settings.sub_badge_gradient }};
+              {% else %}
+                background-color: {{ block.settings.sub_badge_bg_color }};
+              {% endif %}
+            ">
+        {{ block.settings.sub_badge_text }}
+      </span>
+    {% endif %}
+    <div class="plan-header">
+      <input type="radio" name="purchase-plan" value="subscription">
+      <div class="plan-cont">
+        <span class="plan-title">{{ block.settings.sub_widget_subscription_payment_text }}</span>
+            {% if block.settings.sub_widget_html_subscription_title != blank %}
+            <div class="one-time-html">
+             {{ block.settings.sub_widget_html_subscription_title }}
+             </div>
+            {% endif %}
+      </div>
+      <div class="price-cont">
+        <div class="plan-pricing">
+          <span class="original-price">{{ price | money }}</span>
+          <span class="current-price">{{ first_plan_price | money }}</span>
+        </div>
+      </div>
+    </div>
+
+{% assign has_expandable_content = false %}
+{% if block.settings.sub_widget_enable_expandable_content and block.settings.sub_widget_html_subscription_expanded != blank %}
+  {% assign has_expandable_content = true %}
+{% endif %}
+
+{% assign has_frequency = false %}
+{% assign frequency_count = 0 %}
+{% for group in product.selling_plan_groups %}
+  {% for plan in group.selling_plans %}
+    {% assign frequency_count = frequency_count | plus: 1 %}
+  {% endfor %}
+{% endfor %}
+{% if frequency_count > 1 %}
+  {% assign has_frequency = true %}
+{% endif %}
+
+{% if has_expandable_content or has_frequency %}
+  <div class="tick-list expandable-{{ block.settings.sub_widget_subscription_expandable_layout }}">
+    {% if block.settings.sub_widget_subscription_html_position == 'before' and has_expandable_content %}
+      <div class="one-time-html">
+        {{ block.settings.sub_widget_html_subscription_expanded }}
+      </div>
+    {% endif %}
+
+    {% if has_frequency %}
+      <div class="subscription-frequency">
+        <label for="frequency-select">{{ block.settings.sub_widget_frequency_title }}</label>
+        <select
+          id="frequency-select"
+          name="subscription-frequency"
+          class="frequency-select"
+          onchange="updateSubscriptionPlan(this)"
+          onclick="event.stopPropagation()"
+        >
+              {% for group in product.selling_plan_groups %}
+                {% for plan in group.selling_plans %}
+                  <option value="{{ plan.id }}" data-plan-name="{{ plan.name | escape }}"{% if plan.id == first_selling_plan_id %} selected{% endif %}>
+                    {{ plan.name }}
+                  </option>
+                {% endfor %}
+              {% endfor %}
+        </select>
+      </div>
+    {% endif %}
+
+    {% if block.settings.sub_widget_subscription_html_position == 'after' and has_expandable_content %}
+      <div class="one-time-html">
+        {{ block.settings.sub_widget_html_subscription_expanded }}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
+  </div>
+  </div>
+{% endif %}
+
+<script>
+  // SUBSCRIPTION WIDGET: Enhanced with better dropdown integration
+  window.SubscriptionWidget = (function () {
+    'use strict';
+
+    let currentSellingPlan = ''; // Default to one-time
+    let initialized = false;
+
+    // Get variant data like the simple variant picker does
+    const variantData = JSON.parse(document.querySelector('.subscription-widget__variants-json').textContent);
+
+    const DEBUG = false;
+
+    function log(message, data = '') {
+      if (DEBUG) {}
+    }
+
+    function error(message, data = '') {
+    }
+
+    // Find the product form - same logic as variant selector
+    function findForm() {
+      const productForm =
+        document.getElementById('{{ product_form_id }}') ||
+        document.querySelector('form[action*="/cart/add"]') ||
+        document.querySelector('form[action="/cart/add"]') ||
+        document.querySelector('form[action*="cart/add"]') ||
+        document.querySelector('.product-form form') ||
+        document.querySelector('#product-form') ||
+        document.querySelector('form.product-form');
+      return productForm;
+    }
+
+    // Get current variant ID from the form - same logic as variant selector
+    function getCurrentVariantId() {
+      const form = findForm();
+      if (!form) return null;
+
+      const variantInput = form.querySelector('input[name="id"]') || form.querySelector('input[name="product-id"]');
+
+      let variantId = variantInput ? variantInput.value : null;
+
+      // If no variant is selected, auto-select the best available one
+      if (!variantId && window.PriceManager) {
+        variantId = window.PriceManager.ensureVariant();
+      }
+
+      return variantId;
+    }
+
+    // Force update URL
+    function updateURL() {
+      try {
+        const currentVariant = getCurrentVariantId();
+        if (!currentVariant) return;
+
+        const url = new URL(window.location);
+        url.searchParams.set('variant', currentVariant);
+
+        if (currentSellingPlan && currentSellingPlan !== '') {
+          url.searchParams.set('selling_plan', currentSellingPlan);
+        } else {
+          url.searchParams.delete('selling_plan');
+        }
+
+        window.history.replaceState({}, '', url.toString());
+      } catch (e) {
+        // Silent fail
+      }
+    }
+
+    // Override form submission completely
+    function interceptAllFormSubmissions() {
+      log('Setting up form submission interception...');
+
+      // Override XMLHttpRequest for AJAX forms
+      const originalXHR = window.XMLHttpRequest;
+      window.XMLHttpRequest = function () {
+        const xhr = new originalXHR();
+        const originalSend = xhr.send;
+
+        xhr.send = function (data) {
+          // Check if this is a cart add request
+          if (xhr.open && xhr._url && xhr._url.includes('/cart/add')) {
+            log('Intercepting XHR cart add');
+
+            const currentVariant = getCurrentVariantId();
+            if (!currentVariant) return originalSend.call(this, data);
+
+            // Modify the data to include our selling plan
+            if (typeof data === 'string') {
+              // Try to parse as JSON first (for items array)
+              try {
+                const jsonData = JSON.parse(data);
+
+                // Check if this is a QB items array request
+                if (jsonData.items && Array.isArray(jsonData.items)) {
+                  // Check if this is a free gift
+                  const isFreeGift = jsonData.items.some(item =>
+                    item.properties && item.properties._free_gift === 'true'
+                  );
+
+                  if (isFreeGift) {
+                    // Don't modify free gifts
+                    log('Free gift detected, skipping subscription modification');
+                    return originalSend.call(this, data);
+                  }
+
+                  // For QB bundles and regular items, just add selling_plan
+                  if (currentSellingPlan && currentSellingPlan !== '') {
+                    jsonData.items = jsonData.items.map(item => ({
+                      ...item,
+                      selling_plan: currentSellingPlan
+                    }));
+                  }
+                  log('Modified XHR items array with selling plan:', jsonData.items);
+                  data = JSON.stringify(jsonData);
+                } else {
+                  // Single item add
+                  jsonData.id = currentVariant;
+                  if (currentSellingPlan && currentSellingPlan !== '') {
+                    jsonData.selling_plan = currentSellingPlan;
+                  }
+                  jsonData.quantity = jsonData.quantity || 1;
+                  data = JSON.stringify(jsonData);
+                  log('Modified XHR single item:', jsonData);
+                }
+              } catch (e) {
+                // Not JSON, try as URLSearchParams
+                const params = new URLSearchParams(data);
+                params.set('id', currentVariant);
+                if (currentSellingPlan && currentSellingPlan !== '') {
+                  params.set('selling_plan', currentSellingPlan);
+                }
+                if (!params.has('quantity')) {
+                  params.set('quantity', '1');
+                }
+                data = params.toString();
+                log('Modified XHR data:', data);
+              }
+            } else if (data instanceof FormData) {
+              data.set('id', currentVariant);
+              if (currentSellingPlan && currentSellingPlan !== '') {
+                data.set('selling_plan', currentSellingPlan);
+              }
+              if (!data.has('quantity')) {
+                data.set('quantity', '1');
+              }
+              log('Modified FormData');
+            }
+          }
+
+          return originalSend.call(this, data);
+        };
+
+        const originalOpen = xhr.open;
+        xhr.open = function (method, url, ...args) {
+          xhr._url = url;
+          return originalOpen.call(this, method, url, ...args);
+        };
+
+        return xhr;
+      };
+
+      // Override fetch for modern AJAX
+      const originalFetch = window.fetch;
+      window.fetch = function (url, options = {}) {
+        if (typeof url === 'string' && url.includes('/cart/add')) {
+          // Skip if this is an upsell add
+          if (options.headers && options.headers['X-Upsell-Add'] === 'true') {
+            log('Skipping upsell cart add - no subscription modification');
+            return originalFetch(url, options);
+          }
+
+          // Skip if this is a free gift bundle (already has selling_plan if needed)
+          if (options.headers && options.headers['X-Free-Gift-Bundle'] === 'true') {
+            log('Skipping free gift bundle - already has selling_plan');
+            return originalFetch(url, options);
+          }
+
+          // Skip if this is a bundle add (bundle handles selling_plan itself)
+          if (options.headers && options.headers['X-Bundle-Add'] === 'true') {
+            log('Skipping bundle cart add - bundle handles selling_plan');
+            return originalFetch(url, options);
+          }
+
+          log('Intercepting fetch cart add');
+
+          const currentVariant = getCurrentVariantId();
+          if (!currentVariant) return originalFetch(url, options);
+
+          if (options.body) {
+            if (typeof options.body === 'string') {
+              try {
+                const data = JSON.parse(options.body);
+
+                // Check if this is a QB items array request
+                if (data.items && Array.isArray(data.items)) {
+                  // QB bundles send items arrays - just add selling_plan, don't modify variants/quantities
+                  // Free gifts have _free_gift property - skip those
+                  const isFreeGift = data.items.some(item =>
+                    item.properties && item.properties._free_gift === 'true'
+                  );
+
+                  if (isFreeGift) {
+                    // Don't modify free gifts at all
+                    log('Free gift detected, skipping subscription modification');
+                    return originalFetch(url, options);
+                  }
+
+                  // For QB bundles and regular item arrays, add selling_plan only to
+                  // items that belong to the current product (skip upsells / other products)
+                  if (currentSellingPlan && currentSellingPlan !== '') {
+                    // Get all variant IDs for the current product
+                    var productVariantIds = [];
+                    {% for variant in product.variants %}
+                      productVariantIds.push({{ variant.id }});
+                    {% endfor %}
+
+                    data.items = data.items.map(item => {
+                      var itemId = parseInt(item.id);
+                      // Only apply selling_plan if this variant belongs to the current product
+                      // and doesn't have _skip_subscription
+                      if (productVariantIds.indexOf(itemId) !== -1 &&
+                          !(item.properties && item.properties._skip_subscription === 'true')) {
+                        return { ...item, id: itemId, selling_plan: currentSellingPlan };
+                      }
+                      // Remove _skip_subscription before sending (allows cart stacking)
+                      if (item.properties && item.properties._skip_subscription) {
+                        var cleanProps = Object.assign({}, item.properties);
+                        delete cleanProps._skip_subscription;
+                        return { ...item, id: itemId, properties: Object.keys(cleanProps).length > 0 ? cleanProps : undefined };
+                      }
+                      return { ...item, id: itemId };
+                    });
+                  }
+                  log('Modified items array with selling plan:', data.items);
+                } else {
+                  // Single item add - use current variant and quantity
+                  data.id = currentVariant;
+                  if (currentSellingPlan && currentSellingPlan !== '') {
+                    data.selling_plan = currentSellingPlan;
+                  }
+                  data.quantity = data.quantity || 1;
+                  log('Modified single item:', data);
+                }
+
+                options.body = JSON.stringify(data);
+              } catch (e) {
+                // Try as URLSearchParams
+                const params = new URLSearchParams(options.body);
+                params.set('id', currentVariant);
+                if (currentSellingPlan && currentSellingPlan !== '') {
+                  params.set('selling_plan', currentSellingPlan);
+                }
+                options.body = params.toString();
+              }
+            } else if (options.body instanceof FormData) {
+              options.body.set('id', currentVariant);
+              if (currentSellingPlan && currentSellingPlan !== '') {
+                options.body.set('selling_plan', currentSellingPlan);
+              }
+            }
+          }
+
+          return originalFetch(url, options).then((response) => {
+            if (response.ok) {
+              updateCartUI();
+            }
+            return response;
+          });
+        }
+
+        return originalFetch(url, options);
+      };
+
+      // Handle regular form submissions
+      document.addEventListener(
+        'submit',
+        function (e) {
+          const form = e.target;
+
+          if (form.action && form.action.includes('/cart/add')) {
+            // Check if coordinator is already handling this
+            if (window.ProductCoordinator && window.ProductCoordinator.state.isProcessing) {
+              return; // Let coordinator handle it
+            }
+
+            // Check if another handler already processed this
+            if (e.defaultPrevented) {
+              return;
+            }
+
+            log('Intercepting form submission');
+
+            const currentVariant = getCurrentVariantId();
+            if (!currentVariant) return;
+
+            // Remove existing selling plan inputs (but keep variant ID as is)
+            form.querySelectorAll('input[name="selling_plan"]').forEach((input) => {
+              input.remove();
+            });
+
+            // Add our selling plan if we have one
+            if (currentSellingPlan && currentSellingPlan !== '') {
+              const sellingPlanInput = document.createElement('input');
+              sellingPlanInput.type = 'hidden';
+              sellingPlanInput.name = 'selling_plan';
+              sellingPlanInput.value = currentSellingPlan;
+              form.appendChild(sellingPlanInput);
+            }
+
+            // Ensure quantity
+            if (!form.querySelector('input[name="quantity"]')) {
+              const qtyInput = document.createElement('input');
+              qtyInput.type = 'hidden';
+              qtyInput.name = 'quantity';
+              qtyInput.value = '1';
+              form.appendChild(qtyInput);
+            }
+
+            log('Form modified for submission', {
+              variant: currentVariant,
+              selling_plan: currentSellingPlan,
+            });
+
+            // For non-AJAX forms, just update cart UI after page loads
+            if (!form.hasAttribute('data-ajax') && !form.classList.contains('ajax')) {
+              setTimeout(() => {
+                updateCartUI();
+              }, 100);
+            }
+          }
+        },
+        true
+      );
+
+      log('Form interception setup complete');
+    }
+
+    // Update cart UI
+    function updateCartUI() {
+      fetch('/cart.js')
+        .then((r) => r.json())
+        .then((cart) => {
+          // Update cart count
+          document.querySelectorAll('[data-cart-count], .cart-count, #cart-count').forEach((el) => {
+            el.textContent = cart.item_count;
+          });
+
+          // Try to open cart drawer
+          setTimeout(() => {
+            const triggers = [
+              () => window.theme?.openCartDrawer?.(),
+              () => document.querySelector('[data-cart-drawer]')?.classList.add('open'),
+              () => document.querySelector('.cart-drawer')?.classList.add('active'),
+              () => document.body.classList.add('cart-open'),
+            ];
+
+            triggers.forEach((trigger) => {
+              try {
+                trigger();
+              } catch (e) {}
+            });
+          }, 100);
+        })
+        .catch((e) => {});
+    }
+
+    // Update current selling plan selection
+    function updateSellingPlan(sellingPlan) {
+      currentSellingPlan = sellingPlan || '';
+      updateURL();
+
+      // Notify PriceManager of subscription state change
+      const isSubscription = currentSellingPlan && currentSellingPlan !== '';
+      document.dispatchEvent(new CustomEvent('subscription:state-changed', {
+        detail: {
+          subscriptionActive: isSubscription,
+          sellingPlanId: currentSellingPlan
+        },
+        bubbles: true
+      }));
+
+      // Also update form inputs for immediate reference
+      const form = findForm();
+      if (form) {
+        // Clear existing selling plan inputs
+        form.querySelectorAll('input[name="selling_plan"]').forEach((input) => {
+          input.remove();
+        });
+
+        // Add current selling plan
+        if (currentSellingPlan) {
+          const sellingPlanInput = document.createElement('input');
+          sellingPlanInput.type = 'hidden';
+          sellingPlanInput.name = 'selling_plan';
+          sellingPlanInput.value = currentSellingPlan;
+          form.appendChild(sellingPlanInput);
+        }
+      }
+    }
+
+    // Plan selection with enhanced dropdown integration
+    function selectPlan(element) {
+      const planName = element.getAttribute('data-plan');
+      const sellingPlan = element.getAttribute('data-selling-plan') || '';
+
+      // Batch DOM updates in requestAnimationFrame for better performance
+      requestAnimationFrame(() => {
+        // Update visual selection
+        const allPlans = document.querySelectorAll('.plan-option');
+        allPlans.forEach((plan) => {
+          if (plan === element) {
+            plan.classList.add('selected');
+            const radio = plan.querySelector('input[type="radio"]');
+            if (radio) radio.checked = true;
+          } else {
+            plan.classList.remove('selected');
+            const radio = plan.querySelector('input[type="radio"]');
+            if (radio) radio.checked = false;
+          }
+        });
+
+        // If this is a subscription plan, ensure the dropdown value matches
+        if (planName === 'subscription') {
+          const dropdown = element.querySelector('.frequency-select');
+          if (dropdown && dropdown.value !== sellingPlan) {
+            dropdown.value = sellingPlan;
+          }
+        }
+
+        // Toggle frequency wrapper in compact mode (subscription HTML is inside wrapper)
+        const frequencyWrapper = document.querySelector('.compact-frequency-wrapper');
+        if (frequencyWrapper) {
+          if (planName === 'subscription') {
+            frequencyWrapper.style.setProperty('display', 'flex', 'important');
+          } else {
+            frequencyWrapper.style.setProperty('display', 'none', 'important');
+          }
+        }
+
+        // Toggle one-time HTML in compact mode
+        const onetimeHtml = document.querySelector('.compact-onetime-html');
+        if (onetimeHtml) {
+          if (planName === 'onetime-single') {
+            onetimeHtml.style.setProperty('display', 'block', 'important');
+          } else {
+            onetimeHtml.style.setProperty('display', 'none', 'important');
+          }
+        }
+      });
+
+      // Update selling plan (non-visual) - this dispatches the subscription:state-changed event
+      updateSellingPlan(sellingPlan);
+
+      log('Plan selected:', { plan: planName, selling_plan: sellingPlan });
+    }
+
+    // Enhanced dropdown handler
+    function handleDropdownChange(selectElement, event) {
+      event.stopPropagation();
+
+      const newSellingPlan = selectElement.value;
+      const subscriptionPlan = selectElement.closest('.plan-option');
+
+      // Update the data-selling-plan attribute (only if element exists)
+      if (subscriptionPlan) {
+        subscriptionPlan.setAttribute('data-selling-plan', newSellingPlan);
+      }
+
+      // Update the selling plan immediately since this plan is selected
+      // This dispatches the subscription:state-changed event
+      updateSellingPlan(newSellingPlan);
+
+      // Add visual feedback to dropdown
+      selectElement.style.backgroundColor = '#f0fffe';
+      setTimeout(() => {
+        selectElement.style.backgroundColor = '';
+      }, 300);
+
+      // Update hidden input in form
+      const form = findForm();
+      if (form) {
+        form.querySelectorAll('input[name="selling_plan"]').forEach((input) => {
+          input.remove();
+        });
+
+        if (newSellingPlan) {
+          const sellingPlanInput = document.createElement('input');
+          sellingPlanInput.type = 'hidden';
+          sellingPlanInput.name = 'selling_plan';
+          sellingPlanInput.value = newSellingPlan;
+          form.appendChild(sellingPlanInput);
+        }
+      }
+
+      log('Dropdown changed:', { new_plan: newSellingPlan });
+    }
+
+    // Listen for variant changes from the variant selector
+    function listenForVariantChanges() {
+      // Variant changes are handled by PriceManager in buy-buttons.liquid
+      // We just need to update the URL when variant changes
+      const form = findForm();
+      if (form) {
+        const variantInput = form.querySelector('input[name="id"]');
+        if (variantInput) {
+          const observer = new MutationObserver(function() {
+            updateURL();
+          });
+          observer.observe(variantInput, { attributes: true, attributeFilter: ['value'] });
+        }
+      }
+    }
+
+    // Initialize with enhanced setup
+    function init() {
+      if (initialized) return;
+
+      // Ensure a variant is selected before doing anything else
+      const selectedVariantId = getCurrentVariantId();
+      if (!selectedVariantId) {
+        log('No variant selected, attempting to auto-select...');
+        if (window.PriceManager) {
+          window.PriceManager.ensureVariant();
+        }
+      }
+
+      // Set up form interception
+      interceptAllFormSubmissions();
+
+      // Set up variant change listening
+      listenForVariantChanges();
+
+      // Initialize with default selection (one-time purchase)
+      const defaultElement = document.querySelector('.plan-option.selected');
+      if (defaultElement) {
+        const sellingPlan = defaultElement.getAttribute('data-selling-plan') || '';
+        updateSellingPlan(sellingPlan);
+      }
+
+      // Restore from URL if present
+      const url = new URL(window.location);
+      const urlSellingPlan = url.searchParams.get('selling_plan');
+
+      if (urlSellingPlan) {
+        // Find matching plan
+        const allPlans = document.querySelectorAll('.plan-option');
+        for (const plan of allPlans) {
+          const planSellingPlan = plan.getAttribute('data-selling-plan') || '';
+
+          if (planSellingPlan === urlSellingPlan) {
+            selectPlan(plan);
+            break;
+          }
+        }
+      }
+
+      // Set up keyboard navigation for accessibility
+      document.querySelectorAll('.plan-option').forEach((plan) => {
+        plan.setAttribute('tabindex', '0');
+        plan.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            selectPlan(this);
+          }
+        });
+      });
+
+      initialized = true;
+      log('Widget initialized successfully');
+    }
+
+    // Public API
+    return {
+      init: init,
+      selectPlan: selectPlan,
+      handleDropdownChange: handleDropdownChange,
+      getCurrentSelection: () => ({
+        variant: getCurrentVariantId(),
+        selling_plan: currentSellingPlan,
+      }),
+      debug: () => ({
+        currentVariant: getCurrentVariantId(),
+        currentSellingPlan,
+        initialized,
+        form: findForm(),
+      }),
+    };
+  })();
+
+  // Global functions for onclick handlers with enhanced functionality
+  window.selectThisPlan = function (element) {
+    window.SubscriptionWidget.selectPlan(element);
+  };
+
+  window.updateSubscriptionPlan = function (selectElement, event) {
+    // Enhanced dropdown handler
+    window.SubscriptionWidget.handleDropdownChange(selectElement, event || window.event);
+  };
+
+  // Initialize widget with proper timing
+  function initializeWidget() {
+    window.SubscriptionWidget.init();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeWidget);
+  } else {
+    initializeWidget();
+  }
+
+  // Backup initialization
+  setTimeout(initializeWidget, 1000);
+
+  // Enhanced debug functions
+  window.debugSubWidget = function () {
+    const debug = window.SubscriptionWidget.debug();
+
+    const form = debug.form;
+    if (form) {
+      const formData = new FormData(form);
+      for (let [key, value] of formData.entries()) {
+      }
+
+      const inputs = form.querySelectorAll('input');
+      inputs.forEach((input) => {
+      });
+    }
+
+    const url = new URL(window.location);
+
+    // Check dropdown state
+    const dropdown = document.querySelector('.frequency-select');
+    if (dropdown) {
+    }
+  };
+
+  window.testDirectCartAdd = function (variantId, sellingPlanId = null) {
+    const body = { id: variantId, quantity: 1 };
+    if (sellingPlanId) body.selling_plan = sellingPlanId;
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (data.selling_plan_allocation) {
+        } else if (sellingPlanId) {
+        }
+      })
+      .catch((error) => {
+      });
+  };
+
+  // Auto-select variant on page load if none selected
+  window.autoSelectVariant = function () {
+    if (window.PriceManager) {
+      return window.PriceManager.ensureVariant();
+    }
+    return null;
+  };
+
+  /* ── Frequency auto-sort (shortest → longest) ──────────────────
+     Parses interval from the plan name (works with any subscription app)
+     Supports: day(s), week(s), month(s), year(s) in multiple languages
+     e.g. "Deliver every 2 weeks", "Every 30 days", "Monthly", "2 Wochen"
+  ────────────────────────────────────────────────────────────────── */
+  (function sortFrequencyDropdowns() {
+    var UNIT_TO_DAYS = {
+      day: 1, days: 1, daily: 1, jour: 1, jours: 1, tag: 1, tage: 1, dia: 1, dias: 1, giorno: 1, giorni: 1,
+      week: 7, weeks: 7, weekly: 7, semaine: 7, semaines: 7, woche: 7, wochen: 7, semana: 7, semanas: 7, settimana: 7, settimane: 7,
+      month: 30, months: 30, monthly: 30, mois: 30, monat: 30, monate: 30, mes: 30, meses: 30, mese: 30, mesi: 30,
+      year: 365, years: 365, yearly: 365, an: 365, ans: 365, jahr: 365, jahre: 365, anno: 365, anni: 365, año: 365, años: 365
+    };
+
+    function parseDays(name) {
+      if (!name) return 9999;
+      var lower = name.toLowerCase().trim();
+
+      // Try "number + unit" pattern: "every 2 weeks", "2 Wochen", "30 days"
+      var match = lower.match(/(\d+)\s*(day|days|daily|week|weeks|weekly|month|months|monthly|year|years|yearly|jour|jours|semaine|semaines|woche|wochen|tag|tage|mois|monat|monate|dia|dias|semana|semanas|giorno|giorni|settimana|settimane|mese|mesi|an|ans|jahr|jahre|anno|anni|año|años)/i);
+      if (match) {
+        var num = parseInt(match[1], 10);
+        var unit = match[2].toLowerCase();
+        return num * (UNIT_TO_DAYS[unit] || 30);
+      }
+
+      // Try "unit" only with no number (implies 1): "weekly", "monthly", "daily"
+      var words = lower.split(/[\s,\-\/]+/);
+      for (var i = 0; i < words.length; i++) {
+        var w = words[i];
+        if (UNIT_TO_DAYS[w]) {
+          var prev = i > 0 ? parseInt(words[i - 1], 10) : NaN;
+          var count = isNaN(prev) ? 1 : prev;
+          return count * UNIT_TO_DAYS[w];
+        }
+      }
+
+      return 9999;
+    }
+
+    document.querySelectorAll('.frequency-select').forEach(function(select) {
+      var options = Array.from(select.options);
+      if (options.length < 2) return;
+
+      var selectedVal = select.value;
+
+      // Always sort shortest duration first
+      options.sort(function(a, b) {
+        var daysA = parseDays(a.getAttribute('data-plan-name') || a.textContent);
+        var daysB = parseDays(b.getAttribute('data-plan-name') || b.textContent);
+        return daysA - daysB;
+      });
+
+      options.forEach(function(opt) { select.appendChild(opt); });
+      select.value = selectedVal;
+    });
+  })();
+
+</script>

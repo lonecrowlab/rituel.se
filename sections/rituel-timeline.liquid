@@ -1,0 +1,767 @@
+{% comment %}
+  Skin Transformation Timeline
+  Vertical timeline with alternating left/right cards
+{% endcomment %}
+
+<section
+  class="stl section-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  style="
+    --stl-line-color: {{ section.settings.line_color }};
+    --stl-line-thickness: {{ section.settings.line_thickness }}px;
+    --stl-bg-color: {{ section.settings.background_color }};
+    --stl-bg-size: {{ section.settings.background_size }};
+    --stl-bg-position: {{ section.settings.background_position }};
+    --stl-heading-size: {{ section.settings.heading_size }}px;
+    --stl-heading-color: {{ section.settings.heading_color }};
+    --stl-heading-weight: {{ section.settings.heading_weight }};
+    --stl-timeline-heading-size: {{ section.settings.timeline_heading_size }}px;
+    --stl-timeline-heading-color: {{ section.settings.timeline_heading_color }};
+    --stl-timeline-heading-weight: {{ section.settings.timeline_heading_weight }};
+    --stl-subtitle-size: {{ section.settings.subtitle_size }}px;
+    --stl-subtitle-color: {{ section.settings.subtitle_color }};
+    --stl-subtitle-weight: {{ section.settings.subtitle_weight }};
+    --stl-description-size: {{ section.settings.description_size }}px;
+    --stl-description-color: {{ section.settings.description_color }};
+    --stl-description-weight: {{ section.settings.description_weight }};
+    --stl-dot-size: {{ section.settings.dot_image_size }}px;
+    --stl-card-icon-size: {{ section.settings.timeline_image_size }}px;
+    --stl-desc-icon-size: {{ section.settings.description_icon_size }}px;
+    {% if section.settings.background_image != blank %}
+      --stl-bg-image: url({{ section.settings.background_image | image_url: width: 2400 }});
+    {% endif %}
+  "
+>
+  <div class="stl__bg" aria-hidden="true"></div>
+
+  <div class="stl__inner page-width">
+    {% if section.settings.heading != blank %}
+      <h2 class="stl__title">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="stl__timeline">
+        <div class="stl__line" aria-hidden="true">
+        </div>
+
+        {% for block in section.blocks %}
+          {% if block.type == 'timeline' %}
+            {%- liquid
+              assign is_right = forloop.index | modulo: 2
+              if is_right == 1
+                assign side_class = 'stl__item--right'
+              else
+                assign side_class = 'stl__item--left'
+              endif
+            -%}
+
+            <article
+              class="stl__item {{ side_class }}"
+              {{ block.shopify_attributes }}
+            >
+              <div class="stl__item-marker" aria-hidden="true">
+                {% if section.settings.timeline_dot_icon != blank %}
+                  <img
+                    src="{{ section.settings.timeline_dot_icon | image_url: width: 120 }}"
+                    alt=""
+                    width="{{ section.settings.dot_image_size }}"
+                    height="{{ section.settings.dot_image_size }}"
+                    loading="lazy"
+                    class="stl__marker-img"
+                  >
+                {% else %}
+                  <span class="stl__marker-fallback"></span>
+                {% endif %}
+              </div>
+
+              <div class="stl__card">
+                <header class="stl__card-header">
+                  {% if block.settings.timeline_image != blank %}
+                    <span class="stl__card-icon">
+                      <img
+                        src="{{ block.settings.timeline_image | image_url: width: 128 }}"
+                        alt=""
+                        width="{{ section.settings.timeline_image_size }}"
+                        height="{{ section.settings.timeline_image_size }}"
+                        loading="lazy"
+                      >
+                    </span>
+                  {% endif %}
+                  {% if block.settings.heading != blank %}
+                    <h3 class="stl__card-heading">{{ block.settings.heading }}</h3>
+                  {% endif %}
+                </header>
+
+                {% if block.settings.subtitle != blank %}
+                  <p class="stl__card-subtitle">{{ block.settings.subtitle }}</p>
+                {% endif %}
+
+                <hr class="stl__card-divider" aria-hidden="true">
+
+                <ul class="stl__descriptions">
+                  {% for i in (1..3) %}
+                    {%- liquid
+                      case i
+                        when 1
+                          assign desc_text = block.settings.description_1
+                          assign desc_icon = block.settings.description_1_icon
+                        when 2
+                          assign desc_text = block.settings.description_2
+                          assign desc_icon = block.settings.description_2_icon
+                        when 3
+                          assign desc_text = block.settings.description_3
+                          assign desc_icon = block.settings.description_3_icon
+                      endcase
+                    -%}
+                    {% if desc_text != blank %}
+                      <li class="stl__description">
+                        {% if desc_icon != blank %}
+                          <span class="stl__description-icon">
+                            <img
+                              src="{{ desc_icon | image_url: width: 80 }}"
+                              alt=""
+                              width="{{ section.settings.description_icon_size }}"
+                              height="{{ section.settings.description_icon_size }}"
+                              loading="lazy"
+                            >
+                          </span>
+                        {% endif %}
+                        <span class="stl__description-text">{{ desc_text }}</span>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .stl {
+    position: relative;
+    overflow: hidden;
+    padding: 56px 0 72px;
+
+      background-color: var(--stl-bg-color, #fce8ef);
+    background-image: var(--stl-bg-image, none);
+    background-size: var(--stl-bg-size, cover);
+    background-position: var(--stl-bg-position, center);
+  }
+
+  .stl__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-color: var(--stl-bg-color, #fce8ef);
+    background-image: var(--stl-bg-image, none);
+    background-size: var(--stl-bg-size, cover);
+    background-position: var(--stl-bg-position, center);
+    background-repeat: no-repeat;
+    pointer-events: none;
+  }
+
+  .stl__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .stl__title {
+    margin: 0 0 48px;
+    text-align: center;
+    font-size: var(--stl-heading-size, 40px);
+    color: var(--stl-heading-color, #000);
+    font-weight: var(--stl-heading-weight, 700);
+    line-height: 1.2;
+  }
+
+  .stl__timeline {
+    position: relative;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .stl__line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: var(--stl-line-thickness, 2px);
+    transform: translateX(-50%);
+    background-color: var(--stl-line-color, #cb6387);
+    z-index: 0;
+    display: none;
+  }
+
+  .stl__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-bottom: 32px;
+    z-index: 1;
+  }
+
+  .stl__item:last-child {
+    margin-bottom: 0;
+  }
+
+  .stl__item-marker {
+    display: none;
+  }
+
+  .stl__marker-fallback {
+    display: block;
+    width: var(--stl-dot-size, 30px);
+    height: var(--stl-dot-size, 30px);
+    border-radius: 50%;
+    background: #cb6387;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px #cb6387;
+  }
+
+  .stl__card {
+    background: rgba(255, 255, 255, 0.47);
+    border-radius: 16px;
+    padding: 24px 28px;
+    box-shadow: 0 8px 32px rgba(203, 99, 135, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+  }
+
+  .stl__card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .stl__card-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--stl-card-icon-size, 32px);
+    height: var(--stl-card-icon-size, 32px);
+  }
+
+  .stl__card-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .stl__card-heading {
+    margin: 0;
+    font-size: var(--stl-timeline-heading-size, 24px);
+    color: var(--stl-timeline-heading-color, #000);
+    font-weight: var(--stl-timeline-heading-weight, 700);
+    line-height: 1.25;
+  }
+
+  .stl__card-subtitle {
+    margin: 8px 0 0;
+    font-size: var(--stl-subtitle-size, 16px);
+    color: var(--stl-subtitle-color, #cb6387);
+    font-weight: var(--stl-subtitle-weight, 700);
+    line-height: 1.3;
+  }
+
+  .stl__card-divider {
+    margin: 16px 0;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .stl__descriptions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .stl__description {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .stl__description-icon {
+    flex-shrink: 0;
+    width: var(--stl-desc-icon-size, 25px);
+    height: var(--stl-desc-icon-size, 25px);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stl__description-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .stl__description-text {
+    font-size: var(--stl-description-size, 18px);
+    color: var(--stl-description-color, #000);
+    font-weight: var(--stl-description-weight, 400);
+    line-height: 1.45;
+  }
+    .stl__item-marker {
+        border: 4px solid #fff;
+        border-radius: 50%;
+        box-sizing: content-box;
+    }
+  @media screen and (min-width: 750px) {
+    .stl {
+      padding: 72px 0 96px;
+    }
+
+    .stl__title {
+      margin-bottom: 64px;
+    }
+
+    .stl__line {
+      display: block;
+    }
+
+    .stl__item {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      margin-bottom: 48px;
+      min-height: 120px;
+    }
+
+    .stl__item-marker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      grid-column: 2;
+      grid-row: 1;
+      z-index: 2;
+      width: var(--stl-dot-size, 30px);
+      height: var(--stl-dot-size, 30px);
+    }
+
+    .stl__marker-img {
+      width: var(--stl-dot-size, 30px);
+      height: var(--stl-dot-size, 30px);
+      object-fit: contain;
+    }
+
+    .stl__item--right .stl__card {
+      grid-column: 3;
+      grid-row: 1;
+      margin-left: 28px;
+      width: 320px;
+    }
+
+    .stl__item--left .stl__card {
+      grid-column: 1;
+      grid-row: 1;
+      margin-right: 28px;
+      justify-self: end;
+      width: 320px;
+    }
+
+    .stl__item--right .stl__item-marker,
+    .stl__item--left .stl__item-marker {
+      position: relative;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .stl__timeline {
+      padding-left: 40px;
+      padding-right:0px;
+    }
+
+    .stl__timeline::before {
+      content: '';
+      position: absolute;
+      left: 14px;
+      top: 0;
+      bottom: 0;
+      width: var(--stl-line-thickness, 2px);
+      background-color: var(--stl-line-color, #cb6387);
+    }
+
+    .stl__item {
+      position: relative;
+    }
+
+    .stl__item-marker {
+        display: flex;
+        position: absolute;
+        left: -26px;
+        top: 50%;
+        width: var(--stl-dot-size, 30px);
+        height: var(--stl-dot-size, 30px);
+        align-items: center;
+        justify-content: center;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+    }
+
+    .stl__marker-img {
+      width: var(--stl-dot-size, 30px);
+      height: var(--stl-dot-size, 30px);
+      object-fit: contain;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Rituel tidslinje",
+  "tag": "section",
+  "class": "section-skin-transformation-timeline",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Rubrik",
+      "default": "Din tidslinje för hudförvandling"
+    },
+    {
+      "type": "header",
+      "content": "Tidslinjelinje"
+    },
+    {
+      "type": "image_picker",
+      "id": "timeline_dot_icon",
+      "label": "Tidslinje-prickikon",
+      "info": "Bock eller prick på mittlinjen"
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Linjefärg",
+      "default": "#cb6387"
+    },
+    {
+      "type": "range",
+      "id": "line_thickness",
+      "label": "Linjetjocklek",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Bakgrund"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Bakgrundsfärg",
+      "default": "#fce8ef"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Bakgrundsbild"
+    },
+    {
+      "type": "select",
+      "id": "background_size",
+      "label": "Bakgrundsstorlek",
+      "options": [
+        { "value": "cover", "label": "Täck" },
+        { "value": "contain", "label": "Innehåll" },
+        { "value": "auto", "label": "Auto" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "background_position",
+      "label": "Bakgrundsposition",
+      "options": [
+        { "value": "center center", "label": "Centrerad" },
+        { "value": "top center", "label": "Överst i mitten" },
+        { "value": "bottom center", "label": "Nederst i mitten" },
+        { "value": "left center", "label": "Vänster i mitten" },
+        { "value": "right center", "label": "Höger i mitten" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "header",
+      "content": "Typografi"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Rubrikstorlek",
+      "min": 20,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Rubrikfärg",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "heading_weight",
+      "label": "Rubrikvikt",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "paragraph",
+      "content": "Tidslinjerubrik (korttitlar, t.ex. Efter 2 timmar)"
+    },
+    {
+      "type": "range",
+      "id": "timeline_heading_size",
+      "label": "Tidslinjerubrik storlek",
+      "min": 14,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "timeline_heading_color",
+      "label": "Tidslinjerubrik färg",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "timeline_heading_weight",
+      "label": "Tidslinjerubrik vikt",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "paragraph",
+      "content": "Underrubrik"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Underrubrik storlek",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Underrubrik färg",
+      "default": "#cb6387"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_weight",
+      "label": "Underrubrik vikt",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "paragraph",
+      "content": "Tidslinjebeskrivning"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Beskrivning storlek",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Beskrivning färg",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "description_weight",
+      "label": "Beskrivning vikt",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Bildstorlekar"
+    },
+    {
+      "type": "range",
+      "id": "dot_image_size",
+      "label": "Tidslinje-prick",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "timeline_image_size",
+      "label": "Tidslinje kortikon",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "description_icon_size",
+      "label": "Beskrivningsikon",
+      "min": 14,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 25
+    }
+  ],
+  "blocks": [
+    {
+      "type": "timeline",
+      "name": "Tidslinje",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Rubrik",
+          "default": "Efter 2 timmar"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Underrubrik",
+          "default": "Omedelbar uppfräschning"
+        },
+        {
+          "type": "image_picker",
+          "id": "timeline_image",
+          "label": "Tidslinjebild",
+          "info": "Kalender- eller stegikon bredvid rubriken"
+        },
+        {
+          "type": "header",
+          "content": "Beskrivning 1"
+        },
+        {
+          "type": "text",
+          "id": "description_1",
+          "label": "Text",
+          "default": "Slätare, fräschare hud"
+        },
+        {
+          "type": "image_picker",
+          "id": "description_1_icon",
+          "label": "Ikon"
+        },
+        {
+          "type": "header",
+          "content": "Beskrivning 2"
+        },
+        {
+          "type": "text",
+          "id": "description_2",
+          "label": "Text",
+          "default": "Stramare porer"
+        },
+        {
+          "type": "image_picker",
+          "id": "description_2_icon",
+          "label": "Ikon"
+        },
+        {
+          "type": "header",
+          "content": "Beskrivning 3"
+        },
+        {
+          "type": "text",
+          "id": "description_3",
+          "label": "Text",
+          "default": "Djup återfuktning"
+        },
+        {
+          "type": "image_picker",
+          "id": "description_3_icon",
+          "label": "Ikon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rituel tidslinje",
+      "blocks": [
+        {
+          "type": "timeline",
+          "settings": {
+            "heading": "Efter 2 timmar",
+            "subtitle": "Omedelbar uppfräschning",
+            "description_1": "Slätare, fräschare hud",
+            "description_2": "Stramare porer",
+            "description_3": "Djup återfuktning"
+          }
+        },
+        {
+          "type": "timeline",
+          "settings": {
+            "heading": "Efter 2 veckor",
+            "subtitle": "Tidig lyft-effekt",
+            "description_1": "Mjukare linjer",
+            "description_2": "Fastare känsla",
+            "description_3": "Jämnare hudton"
+          }
+        },
+        {
+          "type": "timeline",
+          "settings": {
+            "heading": "Efter 4 veckor",
+            "subtitle": "Synlig förändring",
+            "description_1": "Bättre elasticitet",
+            "description_2": "Förfinade porer",
+            "description_3": "Lugnare, mindre röd hud"
+          }
+        },
+        {
+          "type": "timeline",
+          "settings": {
+            "heading": "Efter 4+ veckor",
+            "subtitle": "Ett nytt du",
+            "description_1": "Starkare, lyft utseende",
+            "description_2": "Slätare hudstruktur",
+            "description_3": "Yngre, friskare hud"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

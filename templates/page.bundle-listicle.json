@@ -1,0 +1,1312 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "font_override_BC6cBh": {
+      "type": "font-override",
+      "name": "Page Font Override",
+      "settings": {
+        "custom_font": "serif"
+      }
+    },
+    "custom_liquid_JycJL3": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "custom_liquid": "<style>\n:root {\n        --font-heading-family: \"New York\", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol!important;\n}\n.h0, .h1, .h2, .h3, .h4, .h5, h1, h2, h3, h4, h5{\n       font-family: \"New York\", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol!important;\n}\n\nsticky-header, .shopify-section-group-footer-group{\ndisplay:none!important;\n}\n</style>",
+        "color_scheme": "background-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_with_blocks_RWNk7B": {
+      "type": "image-with-blocks",
+      "blocks": {
+        "review_jGRibc": {
+          "type": "review",
+          "settings": {
+            "show_stars": true,
+            "star_rating": 5,
+            "star_size": 16,
+            "star_color": "#cc667c",
+            "star_spacing": 0,
+            "review_count": "<p>Älskad av 15 422 kvinnor</p>",
+            "font_size": 13,
+            "font_weight": "400",
+            "text_color": "#5c5c5c",
+            "bg_color": "#fdf8f5",
+            "padding": 4,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 4,
+            "mobile_alignment": "left",
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "heading_k3aVKe": {
+          "type": "heading",
+          "settings": {
+            "heading_before": "6 anledningar till att kvinnor över 40 avbokar fillertiden, och inte ångrar sig",
+            "highlighted_text": "",
+            "heading_after": "",
+            "highlight_position": "inline_second",
+            "heading_tag": "h2",
+            "text_align": "left",
+            "heading_color": "#1f2937",
+            "heading_font_size_desktop": 40,
+            "heading_font_size_mobile": 32,
+            "heading_font_weight": "500",
+            "heading_line_height": 1.2,
+            "heading_margin_top": 0,
+            "heading_margin_bottom": 2,
+            "highlighted_gradient_enabled": false,
+            "highlighted_solid_color": "#000000",
+            "highlighted_gradient": "linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)",
+            "highlight_font_size_desktop": 40,
+            "highlight_font_size_mobile": 34,
+            "highlight_font_weight": "600",
+            "highlight_margin_top": 0,
+            "highlight_margin_bottom": 6,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 8
+          }
+        },
+        "body_text_AHAAzF": {
+          "type": "body_text",
+          "settings": {
+            "body_text": "<p>De flesta hudvårdsprodukter löser ett problem i taget. Din hud har flera torrhet, förlorad fyllighet, trötta ögon och tappad spänst, allt samtidigt.</p>",
+            "font_weight": "400",
+            "text_color": "#000000",
+            "bg_color": "rgba(0,0,0,0)",
+            "padding": 0,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 0,
+            "font_size_mobile": 15,
+            "mobile_alignment": "left",
+            "font_size_desktop": 16,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 12
+          }
+        },
+        "review_gGTXnz": {
+          "type": "review",
+          "disabled": true,
+          "settings": {
+            "show_stars": true,
+            "star_rating": 5,
+            "star_size": 16,
+            "star_color": "#ffffff",
+            "star_spacing": 0,
+            "review_count": "<p>Över 4 000 kvinnor har redan gjort bytet</p>",
+            "font_size": 13,
+            "font_weight": "400",
+            "text_color": "#ffffff",
+            "bg_color": "#eb8fa2",
+            "padding": 8,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 4,
+            "mobile_alignment": "center",
+            "desktop_alignment": "center",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "button_iqinH8": {
+          "type": "button",
+          "settings": {
+            "button_text": "PROVA RISKFRITT I 60 DAGAR",
+            "button_link": "shopify://products/5-step-bundle",
+            "scroll_to_section": "",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false,
+            "button_icon": "",
+            "button_icon_filled": false,
+            "button_custom_icon": "",
+            "icon_position": "right",
+            "button_icon_size": 20,
+            "button_icon_gap": 8,
+            "button_icon_color": "#ffffff",
+            "alignment_desktop": "left",
+            "alignment_mobile": "center",
+            "use_custom_styles": true,
+            "button_text_color": "#ffffff",
+            "button_bg_color": "#000000",
+            "use_gradient": false,
+            "button_gradient": "",
+            "button_text_color_hover": "#ffffff",
+            "button_bg_color_hover": "#cc667c",
+            "border_width": 0,
+            "border_color": "#000000",
+            "border_radius": 6,
+            "font_size_desktop": 16,
+            "font_size_mobile": 14,
+            "font_weight": "600",
+            "text_transform": "uppercase",
+            "letter_spacing": 2.5,
+            "padding_vertical": 14,
+            "padding_horizontal": 26,
+            "full_width": false,
+            "full_width_mobile_only": true,
+            "use_custom_width": false,
+            "custom_width_desktop": 300,
+            "custom_width_mobile": 230,
+            "margin_top": 0,
+            "margin_bottom": 4
+          }
+        },
+        "image_RxM8iD": {
+          "type": "image",
+          "settings": {
+            "image_desktop": "shopify://shop_images/Rituel_Product_photo_1958cacf-0ec4-425f-ba96-85adaac4cbd3.png",
+            "aspect_ratio_desktop": "auto",
+            "image_mobile": "shopify://shop_images/Rituel_Product_photo_1958cacf-0ec4-425f-ba96-85adaac4cbd3.png",
+            "aspect_ratio_mobile": "auto",
+            "border_radius": 0,
+            "max_width": 100,
+            "margin_top": 4,
+            "margin_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "review_jGRibc",
+        "heading_k3aVKe",
+        "body_text_AHAAzF",
+        "review_gGTXnz",
+        "button_iqinH8",
+        "image_RxM8iD"
+      ],
+      "name": "Image with Blocks",
+      "settings": {
+        "use_theme_colors": false,
+        "image_position": "right",
+        "image_width_desktop": 30,
+        "content_gap_desktop": 45,
+        "heading_position": "top-content",
+        "vertical_alignment": "flex-start",
+        "background_color": "#fdf8f5",
+        "section_padding_top": 25,
+        "section_padding_bottom": 30,
+        "block_spacing_mobile": 20,
+        "block_spacing_desktop": 0,
+        "content_block_spacing_mobile": 12,
+        "content_block_spacing_desktop": 4
+      }
+    },
+    "announcement_bar_gTkgM4": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement_3iWxKy": {
+          "type": "announcement",
+          "settings": {
+            "text": "60 DAGARS GARANTI • DERMATOLOGISKT TESTAD",
+            "text_alignment": "center",
+            "icon_type": "google",
+            "icon": "",
+            "filled_icon": false,
+            "icon_svg": "",
+            "desktop_layout": "horizontal",
+            "mobile_layout": "horizontal",
+            "hidden_products": "",
+            "enable_specific_display": false,
+            "displayed_products": ""
+          }
+        }
+      },
+      "block_order": [
+        "announcement_3iWxKy"
+      ],
+      "name": "t:sections.announcement-bar.name",
+      "settings": {
+        "columns_desktop": 1,
+        "columns_mobile": 1,
+        "desktop_spacing": 28,
+        "mobile_spacing": 16,
+        "show_separator": false,
+        "background_color": "#cc667c",
+        "gradient_background": "",
+        "text_color": "#ffffff",
+        "mobile_text_size": 12,
+        "desktop_text_size": 16,
+        "mobile_icon_size": 20,
+        "desktop_icon_size": 26,
+        "icon_color": "#ffffff",
+        "enable_infinite_scroll": false,
+        "scroll_speed": 60,
+        "infinite_scroll_spacing_desktop": 40,
+        "infinite_scroll_spacing_mobile": 24,
+        "slider_mobile": false,
+        "slider_desktop": false,
+        "type": "loop",
+        "autoplay": false,
+        "autoplay_speed": 3,
+        "hidden_products": "",
+        "enable_specific_display": false,
+        "displayed_products": "",
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "image_with_blocks_AjTcWU": {
+      "type": "image-with-blocks",
+      "blocks": {
+        "heading_9RbYNt": {
+          "type": "heading",
+          "settings": {
+            "heading_before": "",
+            "highlighted_text": "1.",
+            "heading_after": "PDRN Collagen Volume Balm fylligheten filler ger, utan nålen",
+            "highlight_position": "above",
+            "heading_tag": "h2",
+            "text_align": "left",
+            "heading_color": "#1f2937",
+            "heading_font_size_desktop": 40,
+            "heading_font_size_mobile": 28,
+            "heading_font_weight": "600",
+            "heading_line_height": 1.2,
+            "heading_margin_top": 0,
+            "heading_margin_bottom": 0,
+            "highlighted_gradient_enabled": false,
+            "highlighted_solid_color": "#cc667c",
+            "highlighted_gradient": "linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)",
+            "highlight_font_size_desktop": 48,
+            "highlight_font_size_mobile": 40,
+            "highlight_font_weight": "700",
+            "highlight_margin_top": 0,
+            "highlight_margin_bottom": 10,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "body_text_eTHJ3U": {
+          "type": "body_text",
+          "settings": {
+            "body_text": "<p>Det här är produkten kvinnor kommer tillbaka för.</p><p>Med åren tappar huden den underliggande fyllighet som håller kinderna friska och fina linjer utjämnade. <strong>Volufiline 5% </strong>och koreansk <strong>PDRN</strong> jobbar för att bygga upp den känslan igen, huden ser mer \"utfylld\", slät och vilad ut.</p><p>Den glider på som en dröm, känns lyxig mot huden och ger synlig skillnad redan efter första gången. För många är det här alternativet till fillertiden de funderat på i månader, men aldrig vågat boka.</p><p><em>Ett svep morgon och kväll. Trettio sekunder. Klart.</em></p>",
+            "font_weight": "400",
+            "text_color": "#555555",
+            "bg_color": "rgba(0,0,0,0)",
+            "padding": 0,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 0,
+            "font_size_mobile": 16,
+            "mobile_alignment": "left",
+            "font_size_desktop": 16,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "image_ywY8KV": {
+          "type": "image",
+          "settings": {
+            "image_desktop": "shopify://shop_images/rituel_product_photos-16_9ca7b47b-9753-4b61-b616-32226421243f.png",
+            "aspect_ratio_desktop": "1 / 1",
+            "image_mobile": "shopify://shop_images/rituel_product_photos-16_9ca7b47b-9753-4b61-b616-32226421243f.png",
+            "aspect_ratio_mobile": "1 / 1",
+            "border_radius": 0,
+            "max_width": 100,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_9RbYNt",
+        "body_text_eTHJ3U",
+        "image_ywY8KV"
+      ],
+      "name": "Image with Blocks",
+      "settings": {
+        "use_theme_colors": false,
+        "image_position": "left",
+        "image_width_desktop": 50,
+        "content_gap_desktop": 45,
+        "heading_position": "top-content",
+        "vertical_alignment": "center",
+        "background_color": "#ffffff",
+        "section_padding_top": 20,
+        "section_padding_bottom": 20,
+        "block_spacing_mobile": 20,
+        "block_spacing_desktop": 12,
+        "content_block_spacing_mobile": 12,
+        "content_block_spacing_desktop": 20
+      }
+    },
+    "image_with_blocks_3ipMPx": {
+      "type": "image-with-blocks",
+      "blocks": {
+        "heading_znha4a": {
+          "type": "heading",
+          "settings": {
+            "heading_before": "",
+            "highlighted_text": "2.",
+            "heading_after": "NAD+ EGF Serum motorn som får allt annat att verka",
+            "highlight_position": "above",
+            "heading_tag": "h2",
+            "text_align": "left",
+            "heading_color": "#1f2937",
+            "heading_font_size_desktop": 40,
+            "heading_font_size_mobile": 28,
+            "heading_font_weight": "600",
+            "heading_line_height": 1.2,
+            "heading_margin_top": 0,
+            "heading_margin_bottom": 0,
+            "highlighted_gradient_enabled": false,
+            "highlighted_solid_color": "#cc667c",
+            "highlighted_gradient": "linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)",
+            "highlight_font_size_desktop": 48,
+            "highlight_font_size_mobile": 40,
+            "highlight_font_weight": "700",
+            "highlight_margin_top": 0,
+            "highlight_margin_bottom": 10,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "body_text_AbGcA8": {
+          "type": "body_text",
+          "settings": {
+            "body_text": "<p>Om balmen är hjälten, är det här kraften bakom den.</p><p><strong>NAD+</strong> är molekylen dina hudceller använder för att skapa energi, nivåerna faller kraftigt efter 40, och trött, glåmig hud är ofta celler som helt enkelt fått slut på bränsle. <strong>EGF (Epidermal tillväxtfaktor)</strong> signalerar till huden att förnya sig som den gjorde när du var yngre.</p><p>Tillsammans väcker de huden på cellnivå: mer lyster, jämnare ton och en fasthet du känner innan du hinner se den. Det här är steget som gör att resten av rutinen faktiskt levererar.</p>",
+            "font_weight": "400",
+            "text_color": "#555555",
+            "bg_color": "rgba(0,0,0,0)",
+            "padding": 0,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 0,
+            "font_size_mobile": 16,
+            "mobile_alignment": "left",
+            "font_size_desktop": 16,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "image_KNGghG": {
+          "type": "image",
+          "settings": {
+            "image_desktop": "shopify://shop_images/magnific_realistic-natural-product_l7saFd5gv9.jpg",
+            "aspect_ratio_desktop": "1 / 1",
+            "image_mobile": "shopify://shop_images/magnific_realistic-natural-product_l7saFd5gv9.jpg",
+            "aspect_ratio_mobile": "1 / 1",
+            "border_radius": 0,
+            "max_width": 100,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_znha4a",
+        "body_text_AbGcA8",
+        "image_KNGghG"
+      ],
+      "name": "Image with Blocks",
+      "settings": {
+        "use_theme_colors": false,
+        "image_position": "left",
+        "image_width_desktop": 50,
+        "content_gap_desktop": 45,
+        "heading_position": "top-content",
+        "vertical_alignment": "center",
+        "background_color": "#fdf8f5",
+        "section_padding_top": 20,
+        "section_padding_bottom": 20,
+        "block_spacing_mobile": 20,
+        "block_spacing_desktop": 12,
+        "content_block_spacing_mobile": 12,
+        "content_block_spacing_desktop": 20
+      }
+    },
+    "image_with_blocks_FyEWzC": {
+      "type": "image-with-blocks",
+      "blocks": {
+        "heading_yCGAgJ": {
+          "type": "heading",
+          "settings": {
+            "heading_before": "",
+            "highlighted_text": "3.",
+            "heading_after": "PDRN Koffein Ögonlappar, 10 minuter mot trött blick",
+            "highlight_position": "above",
+            "heading_tag": "h2",
+            "text_align": "left",
+            "heading_color": "#1f2937",
+            "heading_font_size_desktop": 40,
+            "heading_font_size_mobile": 28,
+            "heading_font_weight": "600",
+            "heading_line_height": 1.2,
+            "heading_margin_top": 0,
+            "heading_margin_bottom": 0,
+            "highlighted_gradient_enabled": false,
+            "highlighted_solid_color": "#cc667c",
+            "highlighted_gradient": "linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)",
+            "highlight_font_size_desktop": 48,
+            "highlight_font_size_mobile": 40,
+            "highlight_font_weight": "700",
+            "highlight_margin_top": 0,
+            "highlight_margin_bottom": 10,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "body_text_HeegRk": {
+          "type": "body_text",
+          "settings": {
+            "body_text": "<p>Ögonen avslöjar åldern först. Sena kvällar, för lite sömn, timmar framför skärmen, allt samlas precis där huden är som tunnast.</p><p><strong>PDRN</strong> (lax-DNA-fragment) reparerar och bygger upp, medan <strong>koffein</strong> drar samman och minskar svullnad och påsar. Lägg på dem medan du dricker morgonkaffet. Efter tio minuter är blicken piggare, slätare och mindre svullen.</p><p>Det är den snabbaste, mest synliga vinsten i hela rutinen, perfekt inför en viktig dag, eller bara för din egen skull.</p>",
+            "font_weight": "400",
+            "text_color": "#555555",
+            "bg_color": "rgba(0,0,0,0)",
+            "padding": 0,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 0,
+            "font_size_mobile": 16,
+            "mobile_alignment": "left",
+            "font_size_desktop": 16,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "image_eEdedU": {
+          "type": "image",
+          "settings": {
+            "image_desktop": "shopify://shop_images/Copy_of_PRODUCT_IMAGE_22_b6a056a5-017c-476e-bccb-5fa234e0d7bf.png",
+            "aspect_ratio_desktop": "1 / 1",
+            "image_mobile": "shopify://shop_images/Copy_of_PRODUCT_IMAGE_22_b6a056a5-017c-476e-bccb-5fa234e0d7bf.png",
+            "aspect_ratio_mobile": "1 / 1",
+            "border_radius": 0,
+            "max_width": 100,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_yCGAgJ",
+        "body_text_HeegRk",
+        "image_eEdedU"
+      ],
+      "name": "Image with Blocks",
+      "settings": {
+        "use_theme_colors": false,
+        "image_position": "left",
+        "image_width_desktop": 50,
+        "content_gap_desktop": 45,
+        "heading_position": "top-content",
+        "vertical_alignment": "center",
+        "background_color": "#ffffff",
+        "section_padding_top": 20,
+        "section_padding_bottom": 20,
+        "block_spacing_mobile": 20,
+        "block_spacing_desktop": 12,
+        "content_block_spacing_mobile": 12,
+        "content_block_spacing_desktop": 20
+      }
+    },
+    "image_with_blocks_F8WkWH": {
+      "type": "image-with-blocks",
+      "blocks": {
+        "heading_QnLAg8": {
+          "type": "heading",
+          "settings": {
+            "heading_before": "",
+            "highlighted_text": "4.",
+            "heading_after": "Och för att allt detta ska hålla, ritualet är komplett",
+            "highlight_position": "above",
+            "heading_tag": "h2",
+            "text_align": "left",
+            "heading_color": "#1f2937",
+            "heading_font_size_desktop": 40,
+            "heading_font_size_mobile": 28,
+            "heading_font_weight": "600",
+            "heading_line_height": 1.2,
+            "heading_margin_top": 0,
+            "heading_margin_bottom": 0,
+            "highlighted_gradient_enabled": false,
+            "highlighted_solid_color": "#cc667c",
+            "highlighted_gradient": "linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)",
+            "highlight_font_size_desktop": 48,
+            "highlight_font_size_mobile": 40,
+            "highlight_font_weight": "700",
+            "highlight_margin_top": 0,
+            "highlight_margin_bottom": 10,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "body_text_mxydFK": {
+          "type": "body_text",
+          "settings": {
+            "body_text": "<p>Två steg till gör skillnaden mellan resultat som håller och resultat som försvinner:</p><p><strong>Triple Collagen Toner</strong> förbereder huden efter rengöring, så att serum och balm faktiskt sjunker in istället för att lägga sig ovanpå. <strong>Triple Collagen Cream</strong> låser sedan in fukt och aktiva ämnen över natten, medan huden reparerar sig som mest.</p><p>Det är därför settet fungerar som en helhet: varje steg gör nästa bättre. Du vaknar till hud som känns genomfuktad, fast och utvilad, inte stram och törstig.</p>",
+            "font_weight": "400",
+            "text_color": "#555555",
+            "bg_color": "rgba(0,0,0,0)",
+            "padding": 0,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 0,
+            "font_size_mobile": 16,
+            "mobile_alignment": "left",
+            "font_size_desktop": 16,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "image_Hzj86t": {
+          "type": "image",
+          "settings": {
+            "image_desktop": "shopify://shop_images/magnific_make-her-4550-years-old.-_2979885091.png",
+            "aspect_ratio_desktop": "1 / 1",
+            "image_mobile": "shopify://shop_images/magnific_make-her-4550-years-old.-_2979885091.png",
+            "aspect_ratio_mobile": "1 / 1",
+            "border_radius": 0,
+            "max_width": 100,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_QnLAg8",
+        "body_text_mxydFK",
+        "image_Hzj86t"
+      ],
+      "name": "Image with Blocks",
+      "settings": {
+        "use_theme_colors": false,
+        "image_position": "left",
+        "image_width_desktop": 50,
+        "content_gap_desktop": 45,
+        "heading_position": "top-content",
+        "vertical_alignment": "center",
+        "background_color": "#fdf8f5",
+        "section_padding_top": 20,
+        "section_padding_bottom": 20,
+        "block_spacing_mobile": 20,
+        "block_spacing_desktop": 12,
+        "content_block_spacing_mobile": 12,
+        "content_block_spacing_desktop": 20
+      }
+    },
+    "image_with_blocks_DTGeEy": {
+      "type": "image-with-blocks",
+      "blocks": {
+        "heading_7aT7Wj": {
+          "type": "heading",
+          "settings": {
+            "heading_before": "",
+            "highlighted_text": "5.",
+            "heading_after": "Vad som händer efter 2 veckor",
+            "highlight_position": "above",
+            "heading_tag": "h2",
+            "text_align": "left",
+            "heading_color": "#1f2937",
+            "heading_font_size_desktop": 40,
+            "heading_font_size_mobile": 28,
+            "heading_font_weight": "600",
+            "heading_line_height": 1.2,
+            "heading_margin_top": 0,
+            "heading_margin_bottom": 0,
+            "highlighted_gradient_enabled": false,
+            "highlighted_solid_color": "#cc667c",
+            "highlighted_gradient": "linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)",
+            "highlight_font_size_desktop": 48,
+            "highlight_font_size_mobile": 40,
+            "highlight_font_weight": "700",
+            "highlight_margin_top": 0,
+            "highlight_margin_bottom": 10,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "body_text_TbfBGY": {
+          "type": "body_text",
+          "settings": {
+            "body_text": "<p>Över 15 000 kvinnor har redan testat, och 4,6 av 5 är nöjda.</p><p>Det vi hör mest:</p><p>• \"Mannen min trodde jag hade tagit botox\"</p><p>• \"Mina vänner frågar vad jag gjort\"</p><p>• \"Avbokade min filler-tid efter en vecka\"</p><p>• \"Skrattrynkorna är mjukare redan\"</p><p>Resultatet kommer inte över en natt. Det är subtilt, naturligt och bygger sig upp över veckor, utan att någon ser att du gjort något.</p>",
+            "font_weight": "400",
+            "text_color": "#555555",
+            "bg_color": "rgba(0,0,0,0)",
+            "padding": 0,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 0,
+            "font_size_mobile": 16,
+            "mobile_alignment": "left",
+            "font_size_desktop": 16,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "image_RBjLwx": {
+          "type": "image",
+          "settings": {
+            "image_desktop": "shopify://shop_images/43_f8fc6b45-23d5-4dea-8e48-167c53712ab2.png",
+            "aspect_ratio_desktop": "1 / 1",
+            "image_mobile": "shopify://shop_images/43_f8fc6b45-23d5-4dea-8e48-167c53712ab2.png",
+            "aspect_ratio_mobile": "1 / 1",
+            "border_radius": 0,
+            "max_width": 100,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_7aT7Wj",
+        "body_text_TbfBGY",
+        "image_RBjLwx"
+      ],
+      "name": "Image with Blocks",
+      "settings": {
+        "use_theme_colors": false,
+        "image_position": "left",
+        "image_width_desktop": 50,
+        "content_gap_desktop": 45,
+        "heading_position": "top-content",
+        "vertical_alignment": "center",
+        "background_color": "#ffffff",
+        "section_padding_top": 20,
+        "section_padding_bottom": 20,
+        "block_spacing_mobile": 20,
+        "block_spacing_desktop": 12,
+        "content_block_spacing_mobile": 12,
+        "content_block_spacing_desktop": 20
+      }
+    },
+    "image_with_blocks_jamDnN": {
+      "type": "image-with-blocks",
+      "blocks": {
+        "heading_Qr3Q6w": {
+          "type": "heading",
+          "settings": {
+            "heading_before": "",
+            "highlighted_text": "6.",
+            "heading_after": "Därför väljer över 15000+ kvinnor ritúel framför nålar",
+            "highlight_position": "above",
+            "heading_tag": "h2",
+            "text_align": "left",
+            "heading_color": "#1f2937",
+            "heading_font_size_desktop": 40,
+            "heading_font_size_mobile": 28,
+            "heading_font_weight": "600",
+            "heading_line_height": 1.2,
+            "heading_margin_top": 0,
+            "heading_margin_bottom": 0,
+            "highlighted_gradient_enabled": false,
+            "highlighted_solid_color": "#cc667c",
+            "highlighted_gradient": "linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)",
+            "highlight_font_size_desktop": 48,
+            "highlight_font_size_mobile": 40,
+            "highlight_font_weight": "700",
+            "highlight_margin_top": 0,
+            "highlight_margin_bottom": 10,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "body_text_7NrTb6": {
+          "type": "body_text",
+          "settings": {
+            "body_text": "<p>Kliniken fungerar. Ingen påstår något annat.</p><p>Men den kostar tid du inte har, pengar du hellre lägger på annat, och ett beslut du måste ta om var tredje månad. Med en nål, varje gång.</p><p>Du riskerar hängande ögonlock. Stelhet. Ett ansikte som inte längre rör sig som ditt.</p><p>PDRN Collagen Volume Balm applicerar du hemma. En 1/10 del av kostnaden, utan att det syns på något annat än hyn. Ingen klinik. Inga nålar. Ingen som behöver veta.</p><p>Samma ingrediens som tidigare bara fanns på franska estetiska kliniker, nu i en stick för ansiktet.</p>",
+            "font_weight": "400",
+            "text_color": "#555555",
+            "bg_color": "rgba(0,0,0,0)",
+            "padding": 0,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 0,
+            "font_size_mobile": 16,
+            "mobile_alignment": "left",
+            "font_size_desktop": 16,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "image_WYB3g6": {
+          "type": "image",
+          "settings": {
+            "image_desktop": "shopify://shop_images/Rituel_Product_photo-68_c2784606-403c-484e-9d28-7a640699b62a.png",
+            "aspect_ratio_desktop": "1 / 1",
+            "image_mobile": "shopify://shop_images/Rituel_Product_photo-68_c2784606-403c-484e-9d28-7a640699b62a.png",
+            "aspect_ratio_mobile": "1 / 1",
+            "border_radius": 0,
+            "max_width": 100,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_Qr3Q6w",
+        "body_text_7NrTb6",
+        "image_WYB3g6"
+      ],
+      "name": "Image with Blocks",
+      "settings": {
+        "use_theme_colors": false,
+        "image_position": "left",
+        "image_width_desktop": 50,
+        "content_gap_desktop": 45,
+        "heading_position": "top-content",
+        "vertical_alignment": "center",
+        "background_color": "#fdf8f5",
+        "section_padding_top": 20,
+        "section_padding_bottom": 20,
+        "block_spacing_mobile": 20,
+        "block_spacing_desktop": 12,
+        "content_block_spacing_mobile": 12,
+        "content_block_spacing_desktop": 20
+      }
+    },
+    "image_with_blocks_eMGPgF": {
+      "type": "image-with-blocks",
+      "blocks": {
+        "heading_XwGiWg": {
+          "type": "heading",
+          "settings": {
+            "heading_before": "",
+            "highlighted_text": "",
+            "heading_after": "Så får du tag på hela rituél-ritualet",
+            "highlight_position": "above",
+            "heading_tag": "h2",
+            "text_align": "left",
+            "heading_color": "#1f2937",
+            "heading_font_size_desktop": 40,
+            "heading_font_size_mobile": 28,
+            "heading_font_weight": "600",
+            "heading_line_height": 1.2,
+            "heading_margin_top": 0,
+            "heading_margin_bottom": 0,
+            "highlighted_gradient_enabled": false,
+            "highlighted_solid_color": "#cc667c",
+            "highlighted_gradient": "linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)",
+            "highlight_font_size_desktop": 48,
+            "highlight_font_size_mobile": 40,
+            "highlight_font_weight": "700",
+            "highlight_margin_top": 0,
+            "highlight_margin_bottom": 10,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "image_GnAfWP": {
+          "type": "image",
+          "settings": {
+            "image_desktop": "shopify://shop_images/magnific_superrealistic-natural-ph_LUjv3TtswO.png",
+            "aspect_ratio_desktop": "auto",
+            "image_mobile": "shopify://shop_images/magnific_superrealistic-natural-ph_LUjv3TtswO.png",
+            "aspect_ratio_mobile": "auto",
+            "border_radius": 0,
+            "max_width": 100,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "body_text_PyqN9A": {
+          "type": "body_text",
+          "settings": {
+            "body_text": "<p>En av de vanligaste frågorna är var man köper det. Svaret är enkelt: hela settet säljs bara via rituéls officiella hemsida, och skickas direkt hem till dig.</p><p><strong>OBS:</strong> Varje batch tillverkas i begränsad mängd. Det förra settet sålde slut på bara 11 dagar, och det dröjde 3 veckor innan nästa fanns i lager igen.</p><p>Just nu får nya kunder hela ritualet serum, PDRN volume balm, ögonlappar, toner och kräm med <strong>34% rabatt</strong>, långt under vad produkterna kostar var för sig.</p><p>Och på köpet ingår <strong>Zero Pore Pads helt GRATIS</strong>, vår bästsäljande porförfinande behandling.</p><p>Det är hela ritualet, en gåva på köpet och 34% rabatt, men bara så länge lagret räcker.</p>",
+            "font_weight": "400",
+            "text_color": "#555555",
+            "bg_color": "rgba(0,0,0,0)",
+            "padding": 0,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 0,
+            "font_size_mobile": 16,
+            "mobile_alignment": "left",
+            "font_size_desktop": 16,
+            "desktop_alignment": "left",
+            "margin_top": 8,
+            "margin_bottom": 0
+          }
+        },
+        "button_mzwWUW": {
+          "type": "button",
+          "settings": {
+            "button_text": "PROVA RISKFRITT I 60 DAGAR",
+            "button_link": "shopify://products/5-step-bundle",
+            "scroll_to_section": "",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false,
+            "button_icon": "",
+            "button_icon_filled": false,
+            "button_custom_icon": "",
+            "icon_position": "right",
+            "button_icon_size": 20,
+            "button_icon_gap": 8,
+            "button_icon_color": "#ffffff",
+            "alignment_desktop": "center",
+            "alignment_mobile": "center",
+            "use_custom_styles": true,
+            "button_text_color": "#ffffff",
+            "button_bg_color": "#000000",
+            "use_gradient": false,
+            "button_gradient": "",
+            "button_text_color_hover": "#ffffff",
+            "button_bg_color_hover": "#eb8fa2",
+            "border_width": 0,
+            "border_color": "#000000",
+            "border_radius": 6,
+            "font_size_desktop": 16,
+            "font_size_mobile": 14,
+            "font_weight": "600",
+            "text_transform": "uppercase",
+            "letter_spacing": 2.5,
+            "padding_vertical": 14,
+            "padding_horizontal": 32,
+            "full_width": false,
+            "full_width_mobile_only": true,
+            "use_custom_width": false,
+            "custom_width_desktop": 300,
+            "custom_width_mobile": 280,
+            "margin_top": 10,
+            "margin_bottom": -8
+          }
+        },
+        "custom_html_k6Xkyd": {
+          "type": "custom_html",
+          "settings": {
+            "custom_html": "<div class=\"trust-strip\">\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">60-DAGARS NÖJDHETSGARANTI</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">DERMATOLOGISKT TESTAD</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">I LAGER JUST NU</span>\n  </span>\n</div>\n\n<style>\n  .trust-strip {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-wrap: wrap;\n    gap: 24px;\n    padding: 16px 12px;\n    background: transparent;\n    font-family: inherit;\n  }\n\n  .trust-strip__item {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    color: #1a1a1a;\n    font-size: 12px;\n    font-weight: 400;\n    letter-spacing: 0.08em;\n    white-space: nowrap;\n  }\n\n  .trust-strip__check {\n    color: #d9879a;\n    font-weight: 700;\n    font-size: 13px;\n    line-height: 1;\n  }\n\n  .trust-strip__text {\n    line-height: 1;\n  }\n\n  @media (max-width: 480px) {\n    .trust-strip {\n      gap: 14px;\n      padding: 14px 8px;\n    }\n    .trust-strip__item {\n      font-size: 11px;\n      letter-spacing: 0.06em;\n    }\n  }\n</style>",
+            "padding": 0,
+            "bg_color": "rgba(0,0,0,0)",
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 0,
+            "desktop_alignment": "center"
+          }
+        },
+        "custom_html_BEADBf": {
+          "type": "custom_html",
+          "disabled": true,
+          "settings": {
+            "custom_html": "<div class=\"trust-strip\">\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">FRI FRAKT</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">60-DAGARS GARANTI</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">SÄKER BETALNING</span>\n  </span>\n</div>\n\n<style>\n  .trust-strip {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-wrap: wrap;\n    gap: 24px;\n    padding: 16px 12px;\n    background: transparent;\n    font-family: inherit;\n  }\n\n  .trust-strip__item {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    color: #1a1a1a;\n    font-size: 12px;\n    font-weight: 400;\n    letter-spacing: 0.08em;\n    white-space: nowrap;\n  }\n\n  .trust-strip__check {\n    color: #d9879a;\n    font-weight: 700;\n    font-size: 13px;\n    line-height: 1;\n  }\n\n  .trust-strip__text {\n    line-height: 1;\n  }\n\n  @media (max-width: 480px) {\n    .trust-strip {\n      gap: 14px;\n      padding: 14px 8px;\n    }\n    .trust-strip__item {\n      font-size: 11px;\n      letter-spacing: 0.06em;\n    }\n  }\n</style>",
+            "padding": 0,
+            "bg_color": "rgba(0,0,0,0)",
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 0,
+            "desktop_alignment": "center"
+          }
+        }
+      },
+      "block_order": [
+        "heading_XwGiWg",
+        "image_GnAfWP",
+        "body_text_PyqN9A",
+        "button_mzwWUW",
+        "custom_html_k6Xkyd",
+        "custom_html_BEADBf"
+      ],
+      "name": "Image with Blocks",
+      "settings": {
+        "use_theme_colors": false,
+        "image_position": "left",
+        "image_width_desktop": 50,
+        "content_gap_desktop": 45,
+        "heading_position": "top-content",
+        "vertical_alignment": "center",
+        "background_color": "#ffffff",
+        "section_padding_top": 30,
+        "section_padding_bottom": 30,
+        "block_spacing_mobile": 20,
+        "block_spacing_desktop": 12,
+        "content_block_spacing_mobile": 12,
+        "content_block_spacing_desktop": 20
+      }
+    },
+    "custom_liquid_FrQCtD": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "custom_liquid": "<section class=\"testimonials\">\n  <div class=\"testimonials__inner\">\n    <p class=\"testimonials__eyebrow\">VAD VÅRA KUNDER SÄGER</p>\n    <h2 class=\"testimonials__heading\">Riktiga resultat från riktiga kvinnor</h2>\n\n    <div class=\"testimonials__cards\">\n      <article class=\"testimonial-card\">\n        <div class=\"testimonial-card__stars\">★ ★ ★ ★ ★</div>\n        <p class=\"testimonial-card__quote\">\"Klimakteriet förändrade min hud på ett sätt jag inte var beredd på. Sedan jag hittade PDRN Collagen Volume Balm vet jag inte hur jag klarade mig utan den.\"</p>\n        <p class=\"testimonial-card__name\">LINNEA S., 47</p>\n      </article>\n\n      <article class=\"testimonial-card\">\n        <div class=\"testimonial-card__stars\">★ ★ ★ ★ ★</div>\n        <p class=\"testimonial-card__quote\">\"Jag var skeptisk. Jag har testat allt. Men efter en vecka märkte jag en verklig skillnad. Huden är fastare och lystret är tillbaka.\"</p>\n        <p class=\"testimonial-card__name\">EMMA K., 43</p>\n      </article>\n\n      <article class=\"testimonial-card\">\n        <div class=\"testimonial-card__stars\">★ ★ ★ ★ ★</div>\n        <p class=\"testimonial-card__quote\">\"Jag hade planerat att boka botox. Så glad att jag testade detta först. Rynkorna har minskat och huden känns fylligare, helt naturligt.\"</p>\n        <p class=\"testimonial-card__name\">MAJA L., 51</p>\n      </article>\n    </div>\n  </div>\n</section>\n\n<style>\n  .testimonials {\n    background: #FDF8F5;\n    padding: 64px 16px;\n    font-family: inherit;\n  }\n\n  .testimonials__inner {\n    max-width: 520px;\n    margin: 0 auto;\n    text-align: center;\n  }\n\n  .testimonials__eyebrow {\n    color: #d9879a;\n    font-size: 11px;\n    font-weight: 500;\n    letter-spacing: 0.18em;\n    text-transform: uppercase;\n    margin: 0 0 14px 0;\n  }\n\n  .testimonials__heading {\n    font-family: 'Playfair Display', 'DM Serif Display', Georgia, serif;\n    font-size: 28px;\n    font-weight: 500;\n    color: #1a1a1a;\n    margin: 0 0 36px 0;\n    line-height: 1.25;\n  }\n\n  .testimonials__cards {\n    display: flex;\n    flex-direction: column;\n    gap: 16px;\n  }\n\n  .testimonial-card {\n    background: #ffffff;\n    border-radius: 12px;\n    padding: 24px 22px;\n    text-align: left;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);\n  }\n\n  .testimonial-card__stars {\n    color: #d9879a;\n    font-size: 14px;\n    letter-spacing: 0.05em;\n    margin-bottom: 14px;\n    line-height: 1;\n  }\n\n  .testimonial-card__quote {\n    color: #1a1a1a;\n    font-size: 14px;\n    font-style: italic;\n    line-height: 1.55;\n    margin: 0 0 18px 0;\n  }\n\n  .testimonial-card__name {\n    color: #1a1a1a;\n    font-size: 12px;\n    font-weight: 600;\n    letter-spacing: 0.1em;\n    margin: 0;\n  }\n\n  @media (max-width: 480px) {\n    .testimonials {\n      padding: 48px 16px;\n    }\n    .testimonials__heading {\n      font-size: 24px;\n    }\n    .testimonial-card {\n      padding: 20px 18px;\n    }\n  }\n</style>",
+        "color_scheme": "background-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "faq_accordion_4_qREhxY": {
+      "type": "faq-accordion-4",
+      "blocks": {
+        "faq_item_JGhpc3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Passar den alla hudtyper?",
+            "answer": "<p>Ja, PDRN Collagen Volume Balm är formulerad för alla hudtyper, inklusive känslig och mogen hud. Vi rekommenderar ett patchtest om du har särskilt reaktiv hud.</p>",
+            "custom_html": "",
+            "open_by_default": true,
+            "badge_text": "",
+            "badge_override_section": false,
+            "badge_bg_color": "#000000",
+            "badge_text_color": "#ffffff",
+            "badge_font_size": 12,
+            "badge_font_weight": "600",
+            "badge_border_color": "#000000",
+            "badge_border_width": 0,
+            "badge_border_radius": 4,
+            "badge_padding_vertical": 4,
+            "badge_padding_horizontal": 12,
+            "badge_margin_bottom": 8,
+            "icon_material": "",
+            "icon_material_filled": false,
+            "icon_svg": ""
+          }
+        },
+        "faq_item_Y9Ewaa": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Hur snabbt ser jag resultat?",
+            "answer": "<p>De flesta märker en skillnad redan efter en vecka. För bästa resultat rekommenderar vi daglig användning morgon och kväll. Tydligast resultat efter 3 till 4 veckor.</p>",
+            "custom_html": "",
+            "open_by_default": true,
+            "badge_text": "",
+            "badge_override_section": false,
+            "badge_bg_color": "#000000",
+            "badge_text_color": "#ffffff",
+            "badge_font_size": 12,
+            "badge_font_weight": "600",
+            "badge_border_color": "#000000",
+            "badge_border_width": 0,
+            "badge_border_radius": 4,
+            "badge_padding_vertical": 4,
+            "badge_padding_horizontal": 12,
+            "badge_margin_bottom": 8,
+            "icon_material": "",
+            "icon_material_filled": false,
+            "icon_svg": ""
+          }
+        },
+        "faq_item_iK87Ct": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Vad är PDRN och varför är det effektivt?",
+            "answer": "<p>PDRN är en ingrediens som används inom klinisk hudvård för att stimulera cellförnyelse och kollagenproduktion. Det är samma teknologi som används vid klinikbehandlingar, nu tillgänglig hemma.</p>",
+            "custom_html": "",
+            "open_by_default": true,
+            "badge_text": "",
+            "badge_override_section": false,
+            "badge_bg_color": "#000000",
+            "badge_text_color": "#ffffff",
+            "badge_font_size": 12,
+            "badge_font_weight": "600",
+            "badge_border_color": "#000000",
+            "badge_border_width": 0,
+            "badge_border_radius": 4,
+            "badge_padding_vertical": 4,
+            "badge_padding_horizontal": 12,
+            "badge_margin_bottom": 8,
+            "icon_material": "",
+            "icon_material_filled": false,
+            "icon_svg": ""
+          }
+        },
+        "faq_item_zWLdqJ": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Vad händer om jag inte är nöjd?",
+            "answer": "<p>Du har 60 dagars nöjdhetsgaranti. Om du inte är nöjd kontaktar du oss och vi återbetalar hela summan. Inga krångliga returer, inga frågor.</p>",
+            "custom_html": "",
+            "open_by_default": true,
+            "badge_text": "",
+            "badge_override_section": false,
+            "badge_bg_color": "#000000",
+            "badge_text_color": "#ffffff",
+            "badge_font_size": 12,
+            "badge_font_weight": "600",
+            "badge_border_color": "#000000",
+            "badge_border_width": 0,
+            "badge_border_radius": 4,
+            "badge_padding_vertical": 4,
+            "badge_padding_horizontal": 12,
+            "badge_margin_bottom": 8,
+            "icon_material": "",
+            "icon_material_filled": false,
+            "icon_svg": ""
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_JGhpc3",
+        "faq_item_Y9Ewaa",
+        "faq_item_iK87Ct",
+        "faq_item_zWLdqJ"
+      ],
+      "name": "Accordion",
+      "settings": {
+        "use_theme_colors": false,
+        "background_color": "#ffffff",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(9, 138, 203, 1), rgba(4, 75, 111, 1) 100%)",
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "heading_before": "Allt du behöver veta",
+        "highlighted_text": "VANLIGA FRÅGOR",
+        "heading_after": "",
+        "highlight_position": "above",
+        "heading_tag": "h2",
+        "heading_text_align": "center",
+        "heading_color": "#000000",
+        "heading_font_size_desktop": 40,
+        "heading_font_size_mobile": 32,
+        "heading_font_weight": "500",
+        "heading_margin_top": 0,
+        "heading_margin_bottom": 16,
+        "highlighted_gradient_enabled": false,
+        "highlighted_color": "#eb8fa2",
+        "highlighted_gradient": "linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)",
+        "highlighted_font_size_desktop": 22,
+        "highlighted_font_size_mobile": 16,
+        "highlighted_font_weight": "400",
+        "highlighted_spacing": 12,
+        "intro_text": "",
+        "intro_text_color": "#eb8fa2",
+        "intro_font_size_desktop": 16,
+        "intro_font_size_mobile": 14,
+        "intro_font_weight": "400",
+        "intro_max_width": 80,
+        "intro_margin_bottom": 24,
+        "layout": "image-left",
+        "layout_gap": 40,
+        "show_image": false,
+        "image_width": 45,
+        "image_border_radius": 4,
+        "hide_image_on_mobile": false,
+        "accordion_gap": 12,
+        "accordion_border_width": 1,
+        "accordion_border_color": "#e0e0e0",
+        "accordion_border_radius": 12,
+        "border_bottom_only": true,
+        "border_bottom_color": "#e0e0e0",
+        "border_bottom_width": 1,
+        "badge_bg_color": "#ffffff",
+        "badge_text_color": "#ffffff",
+        "badge_font_size": 12,
+        "badge_font_weight": "600",
+        "badge_border_color": "#ffffff",
+        "badge_border_width": 0,
+        "badge_border_radius": 4,
+        "badge_padding_vertical": 4,
+        "badge_padding_horizontal": 12,
+        "badge_margin_bottom": 8,
+        "icon_size": 24,
+        "icon_color": "#ffffff",
+        "icon_color_active": "#ffffff",
+        "icon_bg_color": "rgba(0,0,0,0)",
+        "icon_bg_color_active": "rgba(0,0,0,0)",
+        "icon_border_width": 0,
+        "icon_border_color": "#000000",
+        "icon_border_color_active": "#000000",
+        "icon_border_radius": 0,
+        "icon_padding": 0,
+        "question_bg_color": "#fefefe",
+        "question_bg_color_hover": "#f5f5f5",
+        "question_bg_color_active": "#ffffff",
+        "question_text_color": "#000000",
+        "question_text_color_active": "#000000",
+        "question_font_size_desktop": 18,
+        "question_font_size_mobile": 18,
+        "question_font_weight": "600",
+        "question_padding_vertical": 16,
+        "question_padding_horizontal": 20,
+        "answer_bg_color": "#ffffff",
+        "answer_text_color": "#000000",
+        "answer_font_size_desktop": 16,
+        "answer_font_size_mobile": 15,
+        "answer_font_weight": "400",
+        "answer_padding_vertical": 20,
+        "answer_padding_horizontal": 20
+      }
+    },
+    "image_with_blocks_3T38fW": {
+      "type": "image-with-blocks",
+      "blocks": {
+        "heading_XH6yjm": {
+          "type": "heading",
+          "settings": {
+            "heading_before": "Redo för",
+            "highlighted_text": "synliga",
+            "heading_after": "resultat?",
+            "highlight_position": "inline_second",
+            "heading_tag": "h2",
+            "text_align": "center",
+            "heading_color": "#1f2937",
+            "heading_font_size_desktop": 48,
+            "heading_font_size_mobile": 34,
+            "heading_font_weight": "500",
+            "heading_line_height": 1.2,
+            "heading_margin_top": 0,
+            "heading_margin_bottom": 0,
+            "highlighted_gradient_enabled": false,
+            "highlighted_solid_color": "#eb8fa2",
+            "highlighted_gradient": "linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)",
+            "highlight_font_size_desktop": 48,
+            "highlight_font_size_mobile": 38,
+            "highlight_font_weight": "500",
+            "highlight_margin_top": 0,
+            "highlight_margin_bottom": 10,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "body_text_8TJdpb": {
+          "type": "body_text",
+          "settings": {
+            "body_text": "<p>Gå med i tusentals kvinnor som redan har valt ett naturligt, smärtfritt alternativ till klinikbehandlingar. Prova riskfritt i 60 dagar.</p>",
+            "font_weight": "400",
+            "text_color": "#555555",
+            "bg_color": "rgba(0,0,0,0)",
+            "padding": 0,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 0,
+            "font_size_mobile": 16,
+            "mobile_alignment": "center",
+            "font_size_desktop": 16,
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "button_xecnAG": {
+          "type": "button",
+          "settings": {
+            "button_text": "PROVA RISKFRITT I 60 DAGAR",
+            "button_link": "shopify://products/5-step-bundle",
+            "scroll_to_section": "",
+            "hide_on_desktop": false,
+            "hide_on_mobile": false,
+            "button_icon": "",
+            "button_icon_filled": false,
+            "button_custom_icon": "",
+            "icon_position": "right",
+            "button_icon_size": 20,
+            "button_icon_gap": 8,
+            "button_icon_color": "#ffffff",
+            "alignment_desktop": "left",
+            "alignment_mobile": "center",
+            "use_custom_styles": true,
+            "button_text_color": "#ffffff",
+            "button_bg_color": "#000000",
+            "use_gradient": false,
+            "button_gradient": "",
+            "button_text_color_hover": "#ffffff",
+            "button_bg_color_hover": "#eb8fa2",
+            "border_width": 0,
+            "border_color": "#000000",
+            "border_radius": 6,
+            "font_size_desktop": 16,
+            "font_size_mobile": 14,
+            "font_weight": "600",
+            "text_transform": "uppercase",
+            "letter_spacing": 2.5,
+            "padding_vertical": 14,
+            "padding_horizontal": 32,
+            "full_width": false,
+            "full_width_mobile_only": true,
+            "use_custom_width": false,
+            "custom_width_desktop": 300,
+            "custom_width_mobile": 280,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
+        "custom_html_FKkzw7": {
+          "type": "custom_html",
+          "settings": {
+            "custom_html": "<div class=\"trust-strip\">\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">DERMATOLOGISKT TESTAD</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">60-DAGARS NÖJDHETSGARANTI</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">SÄKER BETALNING</span>\n  </span>\n</div>\n\n<style>\n  .trust-strip {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-wrap: wrap;\n    gap: 24px;\n    padding: 16px 12px;\n    background: transparent;\n    font-family: inherit;\n  }\n\n  .trust-strip__item {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    color: #1a1a1a;\n    font-size: 12px;\n    font-weight: 400;\n    letter-spacing: 0.08em;\n    white-space: nowrap;\n  }\n\n  .trust-strip__check {\n    color: #d9879a;\n    font-weight: 700;\n    font-size: 13px;\n    line-height: 1;\n  }\n\n  .trust-strip__text {\n    line-height: 1;\n  }\n\n  @media (max-width: 480px) {\n    .trust-strip {\n      gap: 14px;\n      padding: 14px 8px;\n    }\n    .trust-strip__item {\n      font-size: 11px;\n      letter-spacing: 0.06em;\n    }\n  }\n</style>",
+            "padding": 0,
+            "bg_color": "rgba(0,0,0,0)",
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 0,
+            "desktop_alignment": "center"
+          }
+        }
+      },
+      "block_order": [
+        "heading_XH6yjm",
+        "body_text_8TJdpb",
+        "button_xecnAG",
+        "custom_html_FKkzw7"
+      ],
+      "name": "Image with Blocks",
+      "settings": {
+        "use_theme_colors": false,
+        "image_position": "left",
+        "image_width_desktop": 50,
+        "content_gap_desktop": 45,
+        "heading_position": "top-content",
+        "vertical_alignment": "center",
+        "background_color": "#fdf8f5",
+        "section_padding_top": 60,
+        "section_padding_bottom": 30,
+        "block_spacing_mobile": 20,
+        "block_spacing_desktop": 12,
+        "content_block_spacing_mobile": 12,
+        "content_block_spacing_desktop": 20
+      }
+    }
+  },
+  "order": [
+    "font_override_BC6cBh",
+    "custom_liquid_JycJL3",
+    "image_with_blocks_RWNk7B",
+    "announcement_bar_gTkgM4",
+    "image_with_blocks_AjTcWU",
+    "image_with_blocks_3ipMPx",
+    "image_with_blocks_FyEWzC",
+    "image_with_blocks_F8WkWH",
+    "image_with_blocks_DTGeEy",
+    "image_with_blocks_jamDnN",
+    "image_with_blocks_eMGPgF",
+    "custom_liquid_FrQCtD",
+    "faq_accordion_4_qREhxY",
+    "image_with_blocks_3T38fW"
+  ]
+}

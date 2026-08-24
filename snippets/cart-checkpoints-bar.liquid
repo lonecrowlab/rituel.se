@@ -1,0 +1,1375 @@
+{% comment %}Updated by Elevate: 2026-01-02T23:28:58.157Z{% endcomment %}
+{% liquid
+  assign country_code = localization.country.iso_code | upcase | strip
+  assign checkpoint_currency = cart.currency.iso_code | upcase | strip
+
+  case country_code
+    when 'PL'
+      assign checkpoint_currency = 'PLN'
+    when 'GB'
+      assign checkpoint_currency = 'GBP'
+    when 'AU'
+      assign checkpoint_currency = 'AUD'
+    when 'US'
+      assign checkpoint_currency = 'USD'
+    when 'NO'
+      assign checkpoint_currency = 'NOK'
+    when 'DK'
+      assign checkpoint_currency = 'DKK'
+    when 'NZ'
+      assign checkpoint_currency = 'NZD'
+    when 'SE'
+      assign checkpoint_currency = 'SEK'
+    when 'ES', 'FR', 'DE', 'IT', 'NL', 'BE', 'AT', 'PT', 'IE', 'FI', 'GR', 'SK', 'SI', 'LT', 'LV', 'EE', 'CY', 'LU', 'MT', 'HR'
+      assign checkpoint_currency = 'EUR'
+  endcase
+
+  if checkpoint_currency == blank
+    assign checkpoint_currency = localization.country.currency.iso_code | upcase | strip
+  endif
+
+  case checkpoint_currency
+    when 'SEK', 'DKK', 'NOK'
+      assign checkpoint_currency_label = 'kr'
+    when 'EUR'
+      assign checkpoint_currency_label = '€'
+    when 'GBP'
+      assign checkpoint_currency_label = '£'
+    when 'USD'
+      assign checkpoint_currency_label = '$'
+    when 'PLN'
+      assign checkpoint_currency_label = 'zł'
+    when 'AUD'
+      assign checkpoint_currency_label = 'A$'
+    when 'NZD'
+      assign checkpoint_currency_label = 'NZ$'
+    else
+      assign checkpoint_currency_label = checkpoint_currency
+  endcase
+
+  case checkpoint_currency
+    when 'PLN'
+      assign goal_1_amount = block.settings.goal_1_amount_poland
+      assign goal_2_amount = block.settings.goal_2_amount_poland
+      assign goal_3_amount = block.settings.goal_3_amount_poland
+    when 'GBP'
+      assign goal_1_amount = block.settings.goal_1_amount_gbp
+      assign goal_2_amount = block.settings.goal_2_amount_gbp
+      assign goal_3_amount = block.settings.goal_3_amount_gbp
+    when 'AUD'
+      assign goal_1_amount = block.settings.goal_1_amount_aud
+      assign goal_2_amount = block.settings.goal_2_amount_aud
+      assign goal_3_amount = block.settings.goal_3_amount_aud
+    when 'USD'
+      assign goal_1_amount = block.settings.goal_1_amount_usd
+      assign goal_2_amount = block.settings.goal_2_amount_usd
+      assign goal_3_amount = block.settings.goal_3_amount_usd
+    when 'NOK'
+      assign goal_1_amount = block.settings.goal_1_amount_nok
+      assign goal_2_amount = block.settings.goal_2_amount_nok
+      assign goal_3_amount = block.settings.goal_3_amount_nok
+    when 'DKK'
+      assign goal_1_amount = block.settings.goal_1_amount_dkk
+      assign goal_2_amount = block.settings.goal_2_amount_dkk
+      assign goal_3_amount = block.settings.goal_3_amount_dkk
+    when 'EUR'
+      assign goal_1_amount = block.settings.goal_1_amount_eur
+      assign goal_2_amount = block.settings.goal_2_amount_eur
+      assign goal_3_amount = block.settings.goal_3_amount_eur
+    when 'NZD'
+      assign goal_1_amount = block.settings.goal_1_amount_nzd
+      assign goal_2_amount = block.settings.goal_2_amount_nzd
+      assign goal_3_amount = block.settings.goal_3_amount_nzd
+    when 'SEK'
+      assign goal_1_amount = block.settings.goal_1_amount_sweden
+      assign goal_2_amount = block.settings.goal_2_amount_sweden
+      assign goal_3_amount = block.settings.goal_3_amount_sweden
+    else
+      if checkpoint_currency == 'DKK'
+        assign goal_1_amount = block.settings.goal_1_amount_dkk
+        assign goal_2_amount = block.settings.goal_2_amount_dkk
+        assign goal_3_amount = block.settings.goal_3_amount_dkk
+      elsif checkpoint_currency == 'NOK'
+        assign goal_1_amount = block.settings.goal_1_amount_nok
+        assign goal_2_amount = block.settings.goal_2_amount_nok
+        assign goal_3_amount = block.settings.goal_3_amount_nok
+      else
+        assign goal_1_amount = block.settings.goal_1_amount_sweden
+        assign goal_2_amount = block.settings.goal_2_amount_sweden
+        assign goal_3_amount = block.settings.goal_3_amount_sweden
+      endif
+  endcase
+
+  if goal_1_amount == blank
+    assign goal_1_amount = block.settings.goal_1_amount
+  endif
+  if goal_2_amount == blank
+    assign goal_2_amount = block.settings.goal_2_amount
+  endif
+  if goal_3_amount == blank
+    assign goal_3_amount = block.settings.goal_3_amount
+  endif
+
+  assign is_quantity = false
+  if block.settings.goal_type == 'quantity'
+    assign is_quantity = true
+  endif
+
+  if is_quantity
+    assign goal_multiplier = 1.0
+    assign goal_max_reference = items_count
+    if product_page and product
+      assign goal_max_reference = items_count | plus: 1
+    endif
+  else
+    assign goal_multiplier = 100.00
+    assign goal_max_reference = cart.items_subtotal_price
+    if product_page and product
+      assign goal_max_reference = cart.items_subtotal_price | plus: product.selected_or_first_available_variant.price
+    endif
+  endif
+  
+  if block.settings.enable_goal_1
+    assign highest_goal = goal_1_amount | times: goal_multiplier
+  endif
+  if block.settings.enable_goal_2
+    assign highest_goal = goal_2_amount | times: goal_multiplier
+  endif
+  if block.settings.enable_goal_3
+    assign highest_goal = goal_3_amount | times: goal_multiplier
+  endif
+    
+  assign bar_progress = goal_max_reference | divided_by: highest_goal | times: 100.00
+  assign all_goals_reached = false
+  if bar_progress >= 100.00
+    assign all_goals_reached = true
+    assign bar_progress = 100
+  endif
+
+  assign next_goal_text = nil
+  if block.settings.enable_goal_1
+    assign goal_1_position = goal_1_amount | divided_by: highest_goal | times: goal_multiplier | times: 100.00
+    if goal_1_position > bar_progress and next_goal_text == nil
+      assign next_goal_text = block.settings.goal_1_text
+      assign next_goal = goal_1_amount | times: goal_multiplier
+    endif
+  endif
+  if block.settings.enable_goal_2
+    assign goal_2_position = goal_2_amount | divided_by: highest_goal | times: goal_multiplier | times: 100.00
+    if goal_2_position > bar_progress and next_goal_text == nil
+      assign next_goal_text = block.settings.goal_2_text
+      assign next_goal = goal_2_amount | times: goal_multiplier
+    endif
+  endif
+  if block.settings.enable_goal_3
+    assign goal_3_position = goal_3_amount | divided_by: highest_goal | times: goal_multiplier | times: 100.00
+    if goal_3_position > bar_progress and next_goal_text == nil
+      assign next_goal_text = block.settings.goal_3_text
+      assign next_goal = goal_3_amount | times: goal_multiplier
+    endif
+  endif
+%}
+
+{% capture goal_difference_html %}
+  {% if is_quantity %}
+    {{ next_goal | minus: items_count | round }}
+  {% else %}
+    {% liquid
+      assign amount_diff = next_goal | minus: cart.items_subtotal_price
+      if amount_diff < 0
+        assign amount_diff = 0
+      endif
+    %}
+    <span>{{ amount_diff | money_without_currency }}</span>
+  {% endif %}
+{% endcapture %}
+
+{% capture goal_difference_with_currency_html %}
+  {% if is_quantity %}
+    {{ next_goal | minus: items_count | round }}
+  {% else %}
+    {% liquid
+      assign amount_diff = next_goal | minus: cart.items_subtotal_price
+      if amount_diff < 0
+        assign amount_diff = 0
+      endif
+    %}
+    <span>{{ amount_diff | money_without_currency }}</span> {{ checkpoint_currency_label }}
+  {% endif %}
+{% endcapture %}
+
+{% liquid
+  if is_quantity
+    assign checkpoint_remaining = next_goal | minus: items_count | round
+  else
+    assign checkpoint_remaining = next_goal | minus: cart.items_subtotal_price
+  endif
+  if checkpoint_remaining < 0
+    assign checkpoint_remaining = 0
+  endif
+  if is_quantity
+    assign checkpoint_remaining_plain = checkpoint_remaining
+  else
+    assign checkpoint_remaining_plain = checkpoint_remaining | money_without_currency
+  endif
+
+  assign next_goal_text_lower = next_goal_text | downcase
+  assign checkpoint_currency_lower = checkpoint_currency_label | downcase
+
+  assign checkpoint_progress_template = block.settings.progress_message
+  assign checkpoint_progress_template = checkpoint_progress_template | replace: '[amount] kr', '[amount_with_currency]'
+  assign checkpoint_progress_template = checkpoint_progress_template | replace: '[amount] KR', '[amount_with_currency]'
+  assign checkpoint_progress_template = checkpoint_progress_template | replace: '[amount] Kr', '[amount_with_currency]'
+  assign checkpoint_progress_template = checkpoint_progress_template | replace: '[amount]kr', '[amount_with_currency]'
+  assign checkpoint_progress_template = checkpoint_progress_template | replace: '[amount] kr.', '[amount_with_currency].'
+  assign checkpoint_progress_template = checkpoint_progress_template | replace: '[amount] kr ', '[amount_with_currency] '
+
+  assign checkpoint_progress_text = checkpoint_progress_template
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '[amount_with_currency]', goal_difference_with_currency_html
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '[amount]', goal_difference_html
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '[next_goal]', next_goal_text
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '[next_goal_lowercase]', next_goal_text_lower
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '{{amount_with_space_separator}}', checkpoint_remaining_plain
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '{{ amount_with_space_separator }}', checkpoint_remaining_plain
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '{{amount_no_decimals_with_space_separator}}', checkpoint_remaining_plain
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '{{ amount_no_decimals_with_space_separator }}', checkpoint_remaining_plain
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '{{amount_with_comma_separator}}', checkpoint_remaining_plain
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '{{ amount_with_comma_separator }}', checkpoint_remaining_plain
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '{{amount_no_decimals_with_comma_separator}}', checkpoint_remaining_plain
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '{{ amount_no_decimals_with_comma_separator }}', checkpoint_remaining_plain
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '{{amount_no_decimals}}', checkpoint_remaining_plain
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '{{ amount_no_decimals }}', checkpoint_remaining_plain
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '{{amount}}', checkpoint_remaining_plain
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '{{ amount }}', checkpoint_remaining_plain
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '[currency]', checkpoint_currency_label
+  assign checkpoint_progress_text = checkpoint_progress_text | replace: '[currency_lowercase]', checkpoint_currency_lower
+%}
+
+<div class="cart-progress cart-checkpoints{% if product_page %} cart-checkpoints--product{% endif %}"
+     data-progress-message="{{ checkpoint_progress_template | escape }}"
+     data-success-message="{{ block.settings.success_message | escape }}"
+     data-currency-label="{{ checkpoint_currency_label | escape }}"
+     style="--mobile-text-size: {{ block.settings.labels_mobile_text_size | divided_by: 10.0 }}rem;
+            --desktop-text-size: {{ block.settings.labels_desktop_text_size | divided_by: 10.0 }}rem;
+            --margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;
+            --margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;
+            --text-font-size: {{ block.settings.text_font_size | default: 14 }}px;
+            --text-max-width: {{ block.settings.text_max_width | default: 600 }}px;
+            --text-color: {{ block.settings.text_color | default: '#000000' }};
+            --text-font-weight: {{ block.settings.text_font_weight | default: 400 }};
+            --text-margin-bottom: {{ block.settings.text_margin_bottom | default: 10 }}px;
+            {% if block.settings.bar_gradient != blank %}
+              --bar-background: {{ block.settings.bar_gradient }};
+            {% else %}
+              --bar-background: {{ block.settings.bar_color | default: '#000000' }};
+            {% endif %}
+            --icon-bg: {{ block.settings.icon_bg_color | default: '#FFFFFF' }};
+            --icon-color: {{ block.settings.icon_color | default: '#000000' }};
+            --icon-size: {{ block.settings.icon_size | default: 36 }}px;
+            --icon-border-radius: {{ block.settings.icon_border_radius | default: 50 }}%;
+            --icon-border-width: {{ block.settings.icon_border_width | default: 0 }}px;
+            --icon-border-color: {{ block.settings.icon_border_color | default: '#000000' }};"
+     {{ block.shopify_attributes }}>
+  <p class="cart-progress__text">
+    {% if all_goals_reached == false %}
+      {{ checkpoint_progress_text }}
+    {% else %}
+      {{ block.settings.success_message }}
+    {% endif %}
+  </p>
+  <div class="cart-progress__bar">
+    <div class="cart-progress__bar__progress" style="width: {{ bar_progress }}%;">&nbsp</div>
+    {% if block.settings.enable_goal_1 %}
+      <div class="cart-progress__bar__badge cart-checkpoints__icon" style="--position:{{ goal_1_position }}%;">
+        <span class="material-symbols-outlined{% if block.settings.goal_1_icon_filled %} filled{% endif %}">
+          {{ block.settings.goal_1_icon | strip | downcase | replace: ' ', '_' }}
+        </span>
+        {% if block.settings.goal_1_label != blank %}
+          <span class='cart-checkpoints__label custom-font-size'>
+            {{ block.settings.goal_1_label }}
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
+    {% if block.settings.enable_goal_2 %}
+      <div class="cart-progress__bar__badge cart-checkpoints__icon" style="--position:{{ goal_2_position }}%;">
+        <span class="material-symbols-outlined{% if block.settings.goal_2_icon_filled %} filled{% endif %}">
+          {{ block.settings.goal_2_icon | strip | downcase | replace: ' ', '_' }}
+        </span>
+        {% if block.settings.goal_2_label != blank %}
+          <span class='cart-checkpoints__label custom-font-size'>
+            {{ block.settings.goal_2_label }}
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
+    {% if block.settings.enable_goal_3 %}
+      <div class="cart-progress__bar__badge cart-checkpoints__icon" style="--position:{{ goal_3_position }}%;">
+        <span class="material-symbols-outlined{% if block.settings.goal_3_icon_filled %} filled{% endif %}">
+          {{ block.settings.goal_3_icon | strip | downcase | replace: ' ', '_' }}
+        </span>
+        {% if block.settings.goal_3_label != blank %}
+          <span class='cart-checkpoints__label custom-font-size'>
+            {{ block.settings.goal_3_label }}
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .cart-checkpoints .cart-progress__text {
+    font-size: var(--text-font-size, 14px);
+    max-width: var(--text-max-width, 600px);
+    color: var(--text-color, #000000);
+    font-weight: var(--text-font-weight, 400);
+    margin: 0 auto var(--text-margin-bottom, 10px);
+    text-align: center;
+  }
+
+  .cart-checkpoints .cart-progress__bar__progress {
+    background: var(--bar-background, #000000);
+    background-size: 100% 100%;
+    animation: none !important;
+    transition: width 0.3s ease;
+  }
+
+  .cart-checkpoints .cart-progress__bar__badge {
+    background: var(--icon-bg, #FFFFFF);
+    border-radius: var(--icon-border-radius, 50%);
+    width: var(--icon-size, 36px);
+    height: var(--icon-size, 36px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: var(--icon-border-width, 0px) solid var(--icon-border-color, #000000);
+  }
+
+  .cart-checkpoints .cart-progress__bar__badge .material-symbols-outlined {
+    color: var(--icon-color, #000000);
+    font-size: calc(var(--icon-size, 36px) * 0.6);
+  }
+</style>
+
+{% unless product_page %}
+  <script type="application/json" class="checkpoints-drawer-config">
+  {
+    "goalType": {{ block.settings.goal_type | json }},
+    "progressMessage": {{ checkpoint_progress_template | json }},
+    "successMessage": {{ block.settings.success_message | json }},
+    "currencyLabel": {{ checkpoint_currency_label | json }},
+    "moneyFormat": {{ shop.money_format | json }},
+    "countryCode": {{ localization.country.iso_code | json }},
+    "goals": [
+      {% if block.settings.enable_goal_1 %}{
+        "text": {{ block.settings.goal_1_text | json }},
+        "amounts": {
+          "SEK": {{ block.settings.goal_1_amount_sweden | json }},
+          "PLN": {{ block.settings.goal_1_amount_poland | json }},
+          "GBP": {{ block.settings.goal_1_amount_gbp | json }},
+          "AUD": {{ block.settings.goal_1_amount_aud | json }},
+          "USD": {{ block.settings.goal_1_amount_usd | json }},
+          "NOK": {{ block.settings.goal_1_amount_nok | json }},
+          "DKK": {{ block.settings.goal_1_amount_dkk | json }},
+          "EUR": {{ block.settings.goal_1_amount_eur | json }},
+          "NZD": {{ block.settings.goal_1_amount_nzd | json }}
+        }
+      }{% endif %}
+      {% if block.settings.enable_goal_1 and block.settings.enable_goal_2 %},{% endif %}
+      {% if block.settings.enable_goal_2 %}{
+        "text": {{ block.settings.goal_2_text | json }},
+        "amounts": {
+          "SEK": {{ block.settings.goal_2_amount_sweden | json }},
+          "PLN": {{ block.settings.goal_2_amount_poland | json }},
+          "GBP": {{ block.settings.goal_2_amount_gbp | json }},
+          "AUD": {{ block.settings.goal_2_amount_aud | json }},
+          "USD": {{ block.settings.goal_2_amount_usd | json }},
+          "NOK": {{ block.settings.goal_2_amount_nok | json }},
+          "DKK": {{ block.settings.goal_2_amount_dkk | json }},
+          "EUR": {{ block.settings.goal_2_amount_eur | json }},
+          "NZD": {{ block.settings.goal_2_amount_nzd | json }}
+        }
+      }{% endif %}
+      {% if block.settings.enable_goal_2 and block.settings.enable_goal_3 %},{% elsif block.settings.enable_goal_1 and block.settings.enable_goal_3 %},{% endif %}
+      {% if block.settings.enable_goal_3 %}{
+        "text": {{ block.settings.goal_3_text | json }},
+        "amounts": {
+          "SEK": {{ block.settings.goal_3_amount_sweden | json }},
+          "PLN": {{ block.settings.goal_3_amount_poland | json }},
+          "GBP": {{ block.settings.goal_3_amount_gbp | json }},
+          "AUD": {{ block.settings.goal_3_amount_aud | json }},
+          "USD": {{ block.settings.goal_3_amount_usd | json }},
+          "NOK": {{ block.settings.goal_3_amount_nok | json }},
+          "DKK": {{ block.settings.goal_3_amount_dkk | json }},
+          "EUR": {{ block.settings.goal_3_amount_eur | json }},
+          "NZD": {{ block.settings.goal_3_amount_nzd | json }}
+        }
+      }{% endif %}
+    ]
+  }
+  </script>
+  <script>
+  (function() {
+    'use strict';
+    if (window.__checkpointsDrawerInit) return;
+    window.__checkpointsDrawerInit = true;
+
+    var COUNTRY_CURRENCY = {
+      PL: 'PLN', GB: 'GBP', AU: 'AUD', US: 'USD', NO: 'NOK', DK: 'DKK', NZ: 'NZD', SE: 'SEK',
+      ES: 'EUR', FR: 'EUR', DE: 'EUR', IT: 'EUR', NL: 'EUR', BE: 'EUR', AT: 'EUR', PT: 'EUR',
+      IE: 'EUR', FI: 'EUR', GR: 'EUR', SK: 'EUR', SI: 'EUR', LT: 'EUR', LV: 'EUR', EE: 'EUR',
+      CY: 'EUR', LU: 'EUR', MT: 'EUR', HR: 'EUR'
+    };
+
+    function getConfig(wrapper) {
+      var el = wrapper && wrapper.parentElement
+        ? wrapper.parentElement.querySelector('.checkpoints-drawer-config')
+        : document.querySelector('cart-drawer .checkpoints-drawer-config');
+      if (!el) return null;
+      try { return JSON.parse(el.textContent); } catch (e) { return null; }
+    }
+
+    function resolveCurrency(cartCurrency, countryCode, goals) {
+      var cur = (cartCurrency || '').toUpperCase();
+      var country = (countryCode || '').toUpperCase();
+
+      function hasAmount(currency) {
+        if (!currency) return false;
+        for (var i = 0; i < goals.length; i++) {
+          var amount = goals[i].amounts && goals[i].amounts[currency];
+          if (amount !== null && amount !== undefined && amount !== '') return true;
+        }
+        return false;
+      }
+
+      if (country && COUNTRY_CURRENCY[country]) {
+        var countryCur = COUNTRY_CURRENCY[country];
+        if (hasAmount(countryCur)) return countryCur;
+        return countryCur;
+      }
+
+      if (hasAmount(cur)) return cur;
+      return cur || 'SEK';
+    }
+
+    function resolveCurrencyLabel(currencyCode, countryCode, cfg) {
+      if (cfg && cfg.currencyLabel) return cfg.currencyLabel;
+      var cur = (currencyCode || '').toUpperCase();
+      var country = (countryCode || '').toUpperCase();
+      if (cur === 'SEK' || cur === 'DKK' || cur === 'NOK') return 'kr';
+      if (country === 'SE' || country === 'DK' || country === 'NO') return 'kr';
+      if (cur === 'EUR') return '€';
+      if (cur === 'GBP') return '£';
+      if (cur === 'USD') return '$';
+      if (cur === 'PLN') return 'zł';
+      if (cur === 'AUD') return 'A$';
+      if (cur === 'NZD') return 'NZ$';
+      return cur;
+    }
+
+    function normalizeProgressTemplate(template) {
+      if (!template) return '';
+      return template
+        .replace(/\[amount\]\s*kr/gi, '[amount_with_currency]')
+        .replace(/\[amount\]kr/gi, '[amount_with_currency]');
+    }
+
+    function formatAmountVariants(cents) {
+      var n = Math.max(0, Number(cents) || 0) / 100;
+      var fixed2 = n.toFixed(2);
+      var parts = fixed2.split('.');
+      var intPart = parts[0];
+      var decPart = parts[1];
+      var spacedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+      var dottedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+      return {
+        amount: intPart + '.' + decPart,
+        amount_with_comma_separator: dottedInt + ',' + decPart,
+        amount_with_space_separator: spacedInt + ',' + decPart,
+        amount_no_decimals: String(Math.round(n)),
+        amount_no_decimals_with_comma_separator: dottedInt,
+        amount_no_decimals_with_space_separator: spacedInt
+      };
+    }
+
+    function formatPlainAmount(cents) {
+      return formatAmountVariants(cents).amount_with_space_separator;
+    }
+
+    function applyProgressMessage(template, amountHtml, amountWithCurrencyHtml, rawRemaining, nextGoalText, isQuantity, currencyLabel) {
+      if (!template) return '';
+
+      var msg = normalizeProgressTemplate(template);
+      var plainAmount = isQuantity
+        ? String(Math.max(0, Math.round(rawRemaining)))
+        : formatPlainAmount(Math.max(0, rawRemaining));
+      var variants = isQuantity
+        ? {
+            amount: plainAmount,
+            amount_with_comma_separator: plainAmount,
+            amount_with_space_separator: plainAmount,
+            amount_no_decimals: plainAmount,
+            amount_no_decimals_with_comma_separator: plainAmount,
+            amount_no_decimals_with_space_separator: plainAmount
+          }
+        : formatAmountVariants(Math.max(0, rawRemaining));
+      var label = currencyLabel || 'kr';
+
+      msg = msg.replace(/\[amount_with_currency\]/g, amountWithCurrencyHtml);
+      msg = msg.replace(/\[amount\]/g, amountHtml);
+      msg = msg.replace(/\[next_goal\]/g, nextGoalText || '');
+      msg = msg.replace(/\[next_goal_lowercase\]/g, (nextGoalText || '').toLowerCase());
+      msg = msg.replace(/\[currency\]/g, label);
+      msg = msg.replace(/\[currency_lowercase\]/g, label.toLowerCase());
+
+      Object.keys(variants).forEach(function (key) {
+        msg = msg.replace(new RegExp('\\{\\{\\s*' + key + '\\s*\\}\\}', 'g'), variants[key]);
+      });
+
+      return msg;
+    }
+
+    function getProgressTemplate(wrapper, cfg) {
+      if (wrapper && wrapper.dataset.progressMessage) {
+        return wrapper.dataset.progressMessage;
+      }
+      return cfg && cfg.progressMessage ? cfg.progressMessage : '';
+    }
+
+    function getSuccessTemplate(wrapper, cfg) {
+      if (wrapper && wrapper.dataset.successMessage) {
+        return wrapper.dataset.successMessage;
+      }
+      return cfg && cfg.successMessage ? cfg.successMessage : '';
+    }
+
+    function updateDrawerCheckpoints(cart) {
+      var wrapper = document.querySelector('cart-drawer .cart-checkpoints:not(.cart-checkpoints--product)');
+      var cfg = getConfig(wrapper);
+      if (!cfg || !wrapper || !cfg.goals || cfg.goals.length === 0) return;
+
+      var isQuantity = cfg.goalType === 'quantity';
+      var goalMultiplier = isQuantity ? 1 : 100;
+      var currency = resolveCurrency(cart.currency, cfg.countryCode, cfg.goals);
+
+      var goals = [];
+      for (var i = 0; i < cfg.goals.length; i++) {
+        var rawAmount = cfg.goals[i].amounts[currency];
+        if (rawAmount === null || rawAmount === undefined || rawAmount === '') {
+          var countryCur = COUNTRY_CURRENCY[(cfg.countryCode || '').toUpperCase()];
+          if (countryCur) rawAmount = cfg.goals[i].amounts[countryCur];
+        }
+        if (rawAmount === null || rawAmount === undefined || rawAmount === '') {
+          rawAmount = cfg.goals[i].amounts.SEK;
+        }
+        if (rawAmount === null || rawAmount === undefined || rawAmount === '') continue;
+        goals.push({
+          text: cfg.goals[i].text,
+          amount: Number(rawAmount)
+        });
+      }
+      if (goals.length === 0) return;
+
+      var cartValue = isQuantity ? cart.item_count : cart.items_subtotal_price;
+      var highestGoal = goals[goals.length - 1].amount * goalMultiplier;
+      var progress = (cartValue / highestGoal) * 100;
+      var allReached = progress >= 100;
+      if (allReached) progress = 100;
+
+      var bar = wrapper.querySelector('.cart-progress__bar__progress');
+      if (bar) bar.style.width = progress + '%';
+
+      var textEl = wrapper.querySelector('.cart-progress__text');
+      if (!textEl) return;
+
+      var currencyLabel = resolveCurrencyLabel(currency, cfg.countryCode, cfg);
+      if (wrapper.dataset.currencyLabel) {
+        currencyLabel = wrapper.dataset.currencyLabel;
+      }
+
+      if (allReached) {
+        textEl.innerHTML = getSuccessTemplate(wrapper, cfg);
+        return;
+      }
+
+      var nextGoalText = null;
+      var nextGoalValue = 0;
+      for (var g = 0; g < goals.length; g++) {
+        var goalValue = goals[g].amount * goalMultiplier;
+        if (cartValue < goalValue && !nextGoalText) {
+          nextGoalText = goals[g].text;
+          nextGoalValue = goalValue;
+        }
+      }
+
+      if (!nextGoalText) return;
+
+      var remaining = nextGoalValue - cartValue;
+      var amountHtml;
+      var amountWithCurrencyHtml;
+      if (isQuantity) {
+        var qtyRemaining = Math.max(0, Math.round(remaining));
+        amountHtml = String(qtyRemaining);
+        amountWithCurrencyHtml = amountHtml;
+      } else {
+        var plain = formatPlainAmount(Math.max(0, remaining));
+        amountHtml = '<span>' + plain + '</span>';
+        amountWithCurrencyHtml = '<span>' + plain + '</span> ' + currencyLabel;
+      }
+
+      textEl.innerHTML = applyProgressMessage(
+        getProgressTemplate(wrapper, cfg),
+        amountHtml,
+        amountWithCurrencyHtml,
+        remaining,
+        nextGoalText,
+        isQuantity,
+        currencyLabel
+      );
+    }
+
+    function refreshFromCart() {
+      fetch('/cart.js')
+        .then(function(r) { return r.json(); })
+        .then(updateDrawerCheckpoints)
+        .catch(function() {});
+    }
+
+    function scheduleRefresh() {
+      setTimeout(refreshFromCart, 300);
+    }
+
+    document.addEventListener('cart:updated', scheduleRefresh);
+    document.addEventListener('cart-update', scheduleRefresh);
+    document.addEventListener('cart:refresh', scheduleRefresh);
+    document.addEventListener('cartQuantityUpdated', scheduleRefresh);
+  })();
+  </script>
+
+  {%- comment -%} Free gift auto-add/remove — cart drawer only {%- endcomment -%}
+  {%- liquid
+    assign has_gifts = false
+    if block.settings.enable_goal_1 and block.settings.goal_1_free_gift != blank
+      assign has_gifts = true
+    endif
+    if block.settings.enable_goal_2 and block.settings.goal_2_free_gift != blank
+      assign has_gifts = true
+    endif
+    if block.settings.enable_goal_3 and block.settings.goal_3_free_gift != blank
+      assign has_gifts = true
+    endif
+  -%}
+
+  {% if has_gifts %}
+    <script type="application/json" class="checkpoints-gifts-config">
+    {
+      "goalType": {{ block.settings.goal_type | json }},
+      "gifts": [
+        {% if block.settings.enable_goal_1 and block.settings.goal_1_free_gift != blank %}
+          {
+            "variantId": {{ block.settings.goal_1_free_gift.selected_or_first_available_variant.id | json }},
+            "handle": {{ block.settings.goal_1_free_gift.handle | json }},
+            "goalAmount": {{ goal_1_amount }}
+          }
+        {% endif %}
+        {% if block.settings.enable_goal_1 and block.settings.goal_1_free_gift != blank and block.settings.enable_goal_2 and block.settings.goal_2_free_gift != blank %},{% endif %}
+        {% if block.settings.enable_goal_2 and block.settings.goal_2_free_gift != blank %}
+          {
+            "variantId": {{ block.settings.goal_2_free_gift.selected_or_first_available_variant.id | json }},
+            "handle": {{ block.settings.goal_2_free_gift.handle | json }},
+            "goalAmount": {{ goal_2_amount }}
+          }
+        {% endif %}
+        {% if block.settings.enable_goal_2 and block.settings.goal_2_free_gift != blank and block.settings.enable_goal_3 and block.settings.goal_3_free_gift != blank %},{% elsif block.settings.enable_goal_1 and block.settings.goal_1_free_gift != blank and block.settings.enable_goal_3 and block.settings.goal_3_free_gift != blank %},{% endif %}
+        {% if block.settings.enable_goal_3 and block.settings.goal_3_free_gift != blank %}
+          {
+            "variantId": {{ block.settings.goal_3_free_gift.selected_or_first_available_variant.id | json }},
+            "handle": {{ block.settings.goal_3_free_gift.handle | json }},
+            "goalAmount": {{ goal_3_amount }}
+          }
+        {% endif %}
+      ]
+    }
+    </script>
+
+    <script>
+    (function() {
+      'use strict';
+      if (window.Shopify && window.Shopify.designMode) return;
+
+      var configEl = document.querySelector('.checkpoints-gifts-config');
+      if (!configEl) return;
+
+      var cfg;
+      try { cfg = JSON.parse(configEl.textContent); } catch(e) { return; }
+
+      var gifts = cfg.gifts || [];
+      if (gifts.length === 0) return;
+
+      var goalType = cfg.goalType;
+      var isQuantity = goalType === 'quantity';
+      var isProcessing = false;
+      var debounceTimer = null;
+      var DEBOUNCE_MS = 1500;
+
+      /* Build a set of gift handles for quick lookup */
+      var giftHandleSet = {};
+      for (var g = 0; g < gifts.length; g++) {
+        giftHandleSet[gifts[g].handle] = true;
+      }
+
+      /* --- Manual-removal tracking via sessionStorage --- */
+      var DISMISSED_KEY = 'checkpoints_dismissed_gifts';
+
+      function getDismissed() {
+        try {
+          return JSON.parse(sessionStorage.getItem(DISMISSED_KEY)) || {};
+        } catch(e) { return {}; }
+      }
+      function setDismissed(obj) {
+        try { sessionStorage.setItem(DISMISSED_KEY, JSON.stringify(obj)); } catch(e) {}
+      }
+      function dismissGift(handle) {
+        var d = getDismissed(); d[handle] = true; setDismissed(d);
+      }
+      function undismissGift(handle) {
+        var d = getDismissed(); delete d[handle]; setDismissed(d);
+      }
+      function isDismissed(handle) {
+        return !!getDismissed()[handle];
+      }
+
+      /* Track previous cart state so we can detect manual removals */
+      var prevGiftHandlesInCart = {};
+
+      /* Debounced wrapper — waits for cart activity to settle before acting */
+      function scheduleCheck() {
+        if (debounceTimer) clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(checkAndManageGifts, DEBOUNCE_MS);
+      }
+
+      function checkAndManageGifts() {
+        if (isProcessing) return;
+        isProcessing = true;
+
+        fetch('/cart.js')
+          .then(function(r) { return r.json(); })
+          .then(function(cart) {
+            /* Exclude gift items from cart value so gifts don't count toward thresholds */
+            var cartValue = 0;
+            if (isQuantity) {
+              for (var q = 0; q < cart.items.length; q++) {
+                if (!giftHandleSet[cart.items[q].handle]) {
+                  cartValue += cart.items[q].quantity;
+                }
+              }
+            } else {
+              cartValue = cart.items_subtotal_price;
+            }
+            var goalMultiplier = isQuantity ? 1 : 100;
+
+            var currentGiftHandlesInCart = {};
+            var toAdd = [];
+            var toRemove = [];
+
+            for (var i = 0; i < gifts.length; i++) {
+              var gift = gifts[i];
+              var threshold = gift.goalAmount * goalMultiplier;
+              var goalMet = cartValue >= threshold;
+
+              /* Check if ANY variant of this product is in cart (match by handle) */
+              var inCart = false;
+              for (var j = 0; j < cart.items.length; j++) {
+                if (cart.items[j].handle === gift.handle) {
+                  inCart = true;
+                  break;
+                }
+              }
+
+              if (inCart) {
+                currentGiftHandlesInCart[gift.handle] = true;
+              }
+
+              if (!goalMet) {
+                /* Goal no longer met — remove ALL matching items AND clear dismissed flag */
+                undismissGift(gift.handle);
+                for (var k = 0; k < cart.items.length; k++) {
+                  if (cart.items[k].handle === gift.handle) {
+                    toRemove.push(cart.items[k].key);
+                  }
+                }
+              } else if (goalMet && !inCart) {
+                /* Goal met, gift not in cart */
+                if (prevGiftHandlesInCart[gift.handle]) {
+                  /* Was previously in cart but now gone = customer removed it */
+                  dismissGift(gift.handle);
+                }
+                if (!isDismissed(gift.handle)) {
+                  toAdd.push(gift.variantId);
+                }
+              }
+              /* goalMet && inCart — gift is where it should be, leave it alone */
+            }
+
+            prevGiftHandlesInCart = currentGiftHandlesInCart;
+
+            if (toAdd.length === 0 && toRemove.length === 0) {
+              isProcessing = false;
+              return;
+            }
+
+            var ops = [];
+
+            if (toAdd.length > 0) {
+              var addItems = toAdd.map(function(vid) { return { id: vid, quantity: 1 }; });
+              ops.push(
+                fetch('/cart/add.js', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ items: addItems })
+                })
+              );
+            }
+
+            for (var r = 0; r < toRemove.length; r++) {
+              ops.push(
+                fetch('/cart/change.js', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ id: toRemove[r], quantity: 0 })
+                })
+              );
+            }
+
+            Promise.all(ops)
+              .then(function() {
+                return fetch(((window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/') + '?section_id=' + encodeURIComponent(window.CartDrawerSections.getDrawerSectionId()));
+              })
+              .then(function(r) { return r.text(); })
+              .then(function(html) {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(html, 'text/html');
+                var newCartItems = doc.querySelector('cart-drawer-items');
+                var currentCartItems = document.querySelector('cart-drawer-items');
+                if (newCartItems && currentCartItems) {
+                  currentCartItems.innerHTML = newCartItems.innerHTML;
+                }
+                document.dispatchEvent(new CustomEvent('cart:refresh'));
+                isProcessing = false;
+              })
+              .catch(function() {
+                isProcessing = false;
+              });
+          })
+          .catch(function() {
+            isProcessing = false;
+          });
+      }
+
+      /* Use debounced version for cart events so variant swapper can finish */
+      document.addEventListener('cart:updated', scheduleCheck);
+      document.addEventListener('cart-update', scheduleCheck);
+      document.addEventListener('cartQuantityUpdated', scheduleCheck);
+
+      /* Initial check on page load */
+      setTimeout(checkAndManageGifts, 1500);
+    })();
+    </script>
+  {% endif %}
+{% endunless %}
+
+{% if product_page %}
+<script type="application/json" class="checkpoints-config">
+{
+  "cartSubtotal": {{ cart.items_subtotal_price }},
+  "cartQuantity": {{ items_count }},
+  "goalType": {{ block.settings.goal_type | json }},
+  "variantPrice": {{ product.selected_or_first_available_variant.price }},
+  "progressMessage": {{ block.settings.progress_message | json }},
+  "successMessage": {{ block.settings.success_message | json }},
+  "moneyFormat": {{ shop.money_format | json }},
+  "goals": [
+    {% if block.settings.enable_goal_1 %}{ "amount": {{ goal_1_amount }}, "text": {{ block.settings.goal_1_text | json }} }{% endif %}
+    {% if block.settings.enable_goal_1 and block.settings.enable_goal_2 %},{% endif %}
+    {% if block.settings.enable_goal_2 %}{ "amount": {{ goal_2_amount }}, "text": {{ block.settings.goal_2_text | json }} }{% endif %}
+    {% if block.settings.enable_goal_2 and block.settings.enable_goal_3 %},{% elsif block.settings.enable_goal_1 and block.settings.enable_goal_3 %},{% endif %}
+    {% if block.settings.enable_goal_3 %}{ "amount": {{ goal_3_amount }}, "text": {{ block.settings.goal_3_text | json }} }{% endif %}
+  ],
+  "variants": {{ product.variants | json }},
+  "gifts": [
+    {% if block.settings.enable_goal_1 and block.settings.goal_1_free_gift != blank %}
+      {
+        "variantId": {{ block.settings.goal_1_free_gift.selected_or_first_available_variant.id | json }},
+        "handle": {{ block.settings.goal_1_free_gift.handle | json }},
+        "goalAmount": {{ goal_1_amount }}
+      }
+    {% endif %}
+    {% if block.settings.enable_goal_1 and block.settings.goal_1_free_gift != blank and block.settings.enable_goal_2 and block.settings.goal_2_free_gift != blank %},{% endif %}
+    {% if block.settings.enable_goal_2 and block.settings.goal_2_free_gift != blank %}
+      {
+        "variantId": {{ block.settings.goal_2_free_gift.selected_or_first_available_variant.id | json }},
+        "handle": {{ block.settings.goal_2_free_gift.handle | json }},
+        "goalAmount": {{ goal_2_amount }}
+      }
+    {% endif %}
+    {% if block.settings.enable_goal_2 and block.settings.goal_2_free_gift != blank and block.settings.enable_goal_3 and block.settings.goal_3_free_gift != blank %},{% elsif block.settings.enable_goal_1 and block.settings.goal_1_free_gift != blank and block.settings.enable_goal_3 and block.settings.goal_3_free_gift != blank %},{% endif %}
+    {% if block.settings.enable_goal_3 and block.settings.goal_3_free_gift != blank %}
+      {
+        "variantId": {{ block.settings.goal_3_free_gift.selected_or_first_available_variant.id | json }},
+        "handle": {{ block.settings.goal_3_free_gift.handle | json }},
+        "goalAmount": {{ goal_3_amount }}
+      }
+    {% endif %}
+  ]
+}
+</script>
+<script>
+(function() {
+  'use strict';
+  const wrapper = document.querySelector('.cart-checkpoints--product');
+  if (!wrapper) return;
+
+  const configEl = wrapper.parentElement.querySelector('.checkpoints-config') ||
+                   document.querySelector('.checkpoints-config');
+  if (!configEl) return;
+
+  let cfg;
+  try { cfg = JSON.parse(configEl.textContent); } catch(e) { return; }
+
+  let cartSubtotal = cfg.cartSubtotal || 0;
+  let cartQuantity = cfg.cartQuantity || 0;
+  const isQuantity = cfg.goalType === 'quantity';
+  const moneyFormat = cfg.moneyFormat;
+  const progressMsg = cfg.progressMessage;
+  const successMsg = cfg.successMessage;
+  const goals = cfg.goals || [];
+  const variants = cfg.variants || [];
+
+  if (goals.length === 0) return;
+
+  const highestGoal = goals[goals.length - 1].amount;
+  const goalMultiplier = isQuantity ? 1 : 100;
+
+  let currentVariantPrice = cfg.variantPrice || 0;
+  let currentQuantity = 1;
+  let currentQbDiscount = 0;
+
+  function formatAmountVariants(cents) {
+    var n = Math.max(0, Number(cents) || 0) / 100;
+    var fixed2 = n.toFixed(2);
+    var parts = fixed2.split('.');
+    var intPart = parts[0];
+    var decPart = parts[1];
+    var spacedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    var dottedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+    return {
+      amount: intPart + '.' + decPart,
+      amount_with_comma_separator: dottedInt + ',' + decPart,
+      amount_with_space_separator: spacedInt + ',' + decPart,
+      amount_no_decimals: String(Math.round(n)),
+      amount_no_decimals_with_comma_separator: dottedInt,
+      amount_no_decimals_with_space_separator: spacedInt
+    };
+  }
+
+  function formatPlainAmount(cents) {
+    return formatAmountVariants(cents).amount_with_space_separator;
+  }
+
+  function applyProgressMessage(template, amountHtml, rawRemaining, nextGoalText, isQuantity) {
+    if (!template) return '';
+
+    var msg = template;
+    var variants = isQuantity
+      ? {
+          amount: String(Math.max(0, Math.round(rawRemaining))),
+          amount_with_comma_separator: String(Math.max(0, Math.round(rawRemaining))),
+          amount_with_space_separator: String(Math.max(0, Math.round(rawRemaining))),
+          amount_no_decimals: String(Math.max(0, Math.round(rawRemaining))),
+          amount_no_decimals_with_comma_separator: String(Math.max(0, Math.round(rawRemaining))),
+          amount_no_decimals_with_space_separator: String(Math.max(0, Math.round(rawRemaining)))
+        }
+      : formatAmountVariants(Math.max(0, rawRemaining));
+
+    msg = msg.replace(/\[amount\]/g, amountHtml);
+    msg = msg.replace(/\[next_goal\]/g, nextGoalText || '');
+    msg = msg.replace(/\[next_goal_lowercase\]/g, (nextGoalText || '').toLowerCase());
+
+    Object.keys(variants).forEach(function (key) {
+      msg = msg.replace(new RegExp('\\{\\{\\s*' + key + '\\s*\\}\\}', 'g'), variants[key]);
+    });
+
+    return msg;
+  }
+
+  function updateCheckpointsBar() {
+    var productValue;
+    if (isQuantity) {
+      productValue = currentQuantity;
+    } else {
+      var discountMultiplier = (100 - currentQbDiscount) / 100;
+      productValue = Math.round(currentVariantPrice * discountMultiplier) * currentQuantity;
+    }
+
+    var total = isQuantity ? cartQuantity + productValue : cartSubtotal + productValue;
+    var highestGoalValue = highestGoal * goalMultiplier;
+    var progress = (total / highestGoalValue) * 100;
+    var allReached = progress >= 100;
+    if (allReached) progress = 100;
+
+    // Update progress bar width
+    var bar = wrapper.querySelector('.cart-progress__bar__progress');
+    if (bar) bar.style.width = progress + '%';
+
+    // Find next unreached goal
+    var nextGoalText = null;
+    var nextGoalValue = 0;
+    for (var g = 0; g < goals.length; g++) {
+      var goalValue = goals[g].amount * goalMultiplier;
+      if (total < goalValue && !nextGoalText) {
+        nextGoalText = goals[g].text;
+        nextGoalValue = goalValue;
+      }
+    }
+
+    // Update progress text
+    var textEl = wrapper.querySelector('.cart-progress__text');
+    if (!textEl) return;
+
+    if (allReached) {
+      textEl.innerHTML = successMsg;
+    } else if (nextGoalText) {
+      var remaining = nextGoalValue - total;
+      var amountHtml;
+      if (isQuantity) {
+        amountHtml = Math.max(0, Math.round(remaining)).toString();
+      } else {
+        amountHtml = '<span>' + formatPlainAmount(Math.max(0, remaining)) + '</span>';
+      }
+      textEl.innerHTML = applyProgressMessage(
+        progressMsg,
+        amountHtml,
+        remaining,
+        nextGoalText,
+        isQuantity
+      );
+    }
+  }
+
+  // QB option changes
+  document.addEventListener('qb:state-changed', function(e) {
+    if (e.detail.quantity) currentQuantity = e.detail.quantity;
+    if (e.detail.qbDiscount !== undefined) currentQbDiscount = e.detail.qbDiscount;
+    updateCheckpointsBar();
+  });
+
+  // Bundle changes (multi-variant QB)
+  document.addEventListener('bundle:state-changed', function(e) {
+    if (e.detail.quantity !== undefined) currentQuantity = e.detail.quantity;
+    if (e.detail.finalPrice !== undefined) currentVariantPrice = e.detail.finalPrice;
+    currentQbDiscount = 0; // bundle already has pricing baked in
+    updateCheckpointsBar();
+  });
+
+  // Subscription changes
+  document.addEventListener('subscription:state-changed', function() {
+    updateCheckpointsBar();
+  });
+
+  // Variant changes
+  function handleVariant(e) {
+    var variantId = e.detail && e.detail.variant ? e.detail.variant.id :
+                    (e.detail ? (e.detail.variantId || e.detail.id) : null);
+    if (variantId) {
+      for (var i = 0; i < variants.length; i++) {
+        if (variants[i].id == variantId) {
+          currentVariantPrice = variants[i].price;
+          break;
+        }
+      }
+      updateCheckpointsBar();
+    }
+  }
+  document.addEventListener('variant-change', handleVariant);
+  document.addEventListener('variant:change', handleVariant);
+
+  // Also watch the hidden variant input for programmatic changes
+  function setupVariantObserver() {
+    var form = document.querySelector('form[action*="/cart/add"]');
+    if (!form) return;
+    var input = form.querySelector('input[name="id"]');
+    if (!input) return;
+
+    function onInputChange() {
+      var vid = input.value;
+      for (var i = 0; i < variants.length; i++) {
+        if (variants[i].id == vid) {
+          currentVariantPrice = variants[i].price;
+          updateCheckpointsBar();
+          break;
+        }
+      }
+    }
+
+    var obs = new MutationObserver(onInputChange);
+    obs.observe(input, { attributes: true, attributeFilter: ['value'] });
+    input.addEventListener('change', onInputChange);
+  }
+
+  // Deferred init: wait for form to be in DOM
+  function init() {
+    setupVariantObserver();
+
+    // Read initial QB state if present
+    var qbActive = document.querySelector('.qb-wrapper .qb-option.qb-active');
+    if (qbActive) {
+      currentQuantity = parseInt(qbActive.dataset.qty) || 1;
+    }
+
+    // Read initial quantity from form
+    var qtyInput = document.querySelector('.product-form__quantity-input, input[name="quantity"]');
+    if (qtyInput && !qbActive) {
+      currentQuantity = parseInt(qtyInput.value) || 1;
+    }
+
+    updateCheckpointsBar();
+  }
+
+  /* ── Gift auto-add/remove (only if cart drawer checkpoints bar is NOT active) ── */
+  var gifts = cfg.gifts || [];
+  var cartDrawerActive = document.querySelector('.checkpoints-gifts-config');
+  var shouldManageGifts = gifts.length > 0 && !cartDrawerActive;
+
+  var giftHandleSet = {};
+  for (var gi = 0; gi < gifts.length; gi++) {
+    giftHandleSet[gifts[gi].handle] = true;
+  }
+
+  /* --- SessionStorage dismissal tracking (shared key with cart drawer) --- */
+  var DISMISSED_KEY = 'checkpoints_dismissed_gifts';
+
+  function getDismissed() {
+    try {
+      return JSON.parse(sessionStorage.getItem(DISMISSED_KEY)) || {};
+    } catch(e) { return {}; }
+  }
+  function setDismissed(obj) {
+    try { sessionStorage.setItem(DISMISSED_KEY, JSON.stringify(obj)); } catch(e) {}
+  }
+  function dismissGift(handle) {
+    var d = getDismissed(); d[handle] = true; setDismissed(d);
+  }
+  function undismissGift(handle) {
+    var d = getDismissed(); delete d[handle]; setDismissed(d);
+  }
+  function isDismissed(handle) {
+    return !!getDismissed()[handle];
+  }
+
+  var prevGiftHandlesInCart = {};
+  var giftProcessing = false;
+
+  /**
+   * Core gift logic — returns a Promise that resolves when add/remove ops finish.
+   * Does NOT re-render the cart drawer (caller decides).
+   */
+  function manageGifts(cart) {
+    var cartValue = 0;
+    if (isQuantity) {
+      for (var q = 0; q < cart.items.length; q++) {
+        if (!giftHandleSet[cart.items[q].handle]) {
+          cartValue += cart.items[q].quantity;
+        }
+      }
+    } else {
+      cartValue = cart.items_subtotal_price;
+    }
+
+    var currentGiftHandlesInCart = {};
+    var toAdd = [];
+    var toRemove = [];
+
+    for (var i = 0; i < gifts.length; i++) {
+      var gift = gifts[i];
+      var threshold = gift.goalAmount * goalMultiplier;
+      var goalMet = cartValue >= threshold;
+
+      var inCart = false;
+      for (var j = 0; j < cart.items.length; j++) {
+        if (cart.items[j].handle === gift.handle) {
+          inCart = true;
+          break;
+        }
+      }
+
+      if (inCart) {
+        currentGiftHandlesInCart[gift.handle] = true;
+      }
+
+      if (!goalMet) {
+        undismissGift(gift.handle);
+        for (var k = 0; k < cart.items.length; k++) {
+          if (cart.items[k].handle === gift.handle) {
+            toRemove.push(cart.items[k].key);
+          }
+        }
+      } else if (goalMet && !inCart) {
+        if (prevGiftHandlesInCart[gift.handle]) {
+          dismissGift(gift.handle);
+        }
+        if (!isDismissed(gift.handle)) {
+          toAdd.push(gift.variantId);
+        }
+      }
+    }
+
+    prevGiftHandlesInCart = currentGiftHandlesInCart;
+
+    if (toAdd.length === 0 && toRemove.length === 0) {
+      return Promise.resolve();
+    }
+
+    var ops = [];
+
+    if (toAdd.length > 0) {
+      var addItems = toAdd.map(function(vid) { return { id: vid, quantity: 1 }; });
+      ops.push(
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: addItems })
+        })
+      );
+    }
+
+    for (var r = 0; r < toRemove.length; r++) {
+      ops.push(
+        fetch('/cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: toRemove[r], quantity: 0 })
+        })
+      );
+    }
+
+    return Promise.all(ops);
+  }
+
+  /**
+   * Global hook — buy-buttons calls this BEFORE opening the cart drawer
+   * so gifts are already in the cart when the drawer renders.
+   * Returns a Promise that resolves when done.
+   */
+  if (shouldManageGifts) {
+    window.__addCheckpointGifts = function() {
+      if (giftProcessing) return Promise.resolve();
+      giftProcessing = true;
+      return fetch('/cart.js')
+        .then(function(r) { return r.json(); })
+        .then(function(cart) {
+          cartSubtotal = cart.items_subtotal_price;
+          cartQuantity = cart.items.reduce(function(s, item) { return s + item.quantity; }, 0);
+          updateCheckpointsBar();
+          return manageGifts(cart);
+        })
+        .then(function() { giftProcessing = false; })
+        .catch(function() { giftProcessing = false; });
+    };
+  }
+
+  /**
+   * Event-based fallback — for non-buy-button cart changes (e.g. cart page,
+   * quantity edits in cart drawer). Re-renders cart drawer after gift changes.
+   */
+  function checkAndManageGiftsWithRerender(cart) {
+    if (giftProcessing) return;
+    giftProcessing = true;
+    manageGifts(cart)
+      .then(function() {
+        return fetch(window.CartDrawerSections.getSectionsUrl());
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(sections) {
+        if (sections && window.CartDrawerSections.pickDrawerHtml(sections)) {
+          var parser = new DOMParser();
+          var doc = parser.parseFromString(window.CartDrawerSections.pickDrawerHtml(sections), 'text/html');
+          var newItems = doc.querySelector('cart-drawer-items') || doc.querySelector('.cart-items, [id*="cart-items"], .drawer__inner');
+          var curItems = document.querySelector('cart-drawer-items') || document.querySelector('.cart-items, [id*="cart-items"], .drawer__inner');
+          if (newItems && curItems) curItems.innerHTML = newItems.innerHTML;
+        }
+        if (sections && sections['cart-icon-bubble']) {
+          var bParser = new DOMParser();
+          var bDoc = bParser.parseFromString(sections['cart-icon-bubble'], 'text/html');
+          var newBubble = bDoc.querySelector('.cart-count-bubble');
+          var curBubble = document.querySelector('#cart-icon-bubble');
+          if (curBubble && newBubble) {
+            var existing = curBubble.querySelector('.cart-count-bubble');
+            if (existing) existing.innerHTML = newBubble.innerHTML;
+            else curBubble.appendChild(newBubble.cloneNode(true));
+          }
+        }
+        document.dispatchEvent(new CustomEvent('cart:refresh'));
+        giftProcessing = false;
+      })
+      .catch(function() { giftProcessing = false; });
+  }
+
+  /* ── Live cart sync: update progress bar + gift check after cart changes ── */
+  var cartSyncTimer = null;
+  var CART_SYNC_DEBOUNCE = 1500;
+
+  function onCartChanged() {
+    clearTimeout(cartSyncTimer);
+    cartSyncTimer = setTimeout(function() {
+      fetch('/cart.js')
+        .then(function(r) { return r.json(); })
+        .then(function(cart) {
+          cartSubtotal = cart.items_subtotal_price;
+          cartQuantity = cart.items.reduce(function(s, item) { return s + item.quantity; }, 0);
+          updateCheckpointsBar();
+
+          if (shouldManageGifts) {
+            checkAndManageGiftsWithRerender(cart);
+          }
+        })
+        .catch(function() {});
+    }, CART_SYNC_DEBOUNCE);
+  }
+
+  document.addEventListener('cart:updated', onCartChanged);
+  document.addEventListener('cart-update', onCartChanged);
+  document.addEventListener('cartQuantityUpdated', onCartChanged);
+
+  /* ── Initial gift check on page load (cart may already meet threshold) ── */
+  function initialGiftCheck() {
+    if (!shouldManageGifts) return;
+    setTimeout(function() {
+      fetch('/cart.js')
+        .then(function(r) { return r.json(); })
+        .then(function(cart) {
+          cartSubtotal = cart.items_subtotal_price;
+          cartQuantity = cart.items.reduce(function(s, item) { return s + item.quantity; }, 0);
+          updateCheckpointsBar();
+          checkAndManageGiftsWithRerender(cart);
+        })
+        .catch(function() {});
+    }, 1500);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      init();
+      initialGiftCheck();
+    });
+  } else {
+    requestAnimationFrame(function() {
+      init();
+      initialGiftCheck();
+    });
+  }
+})();
+</script>
+{% endif %}

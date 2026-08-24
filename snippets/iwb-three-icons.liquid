@@ -1,0 +1,46 @@
+{% comment %}
+  Renders the 3 icons block for image-with-blocks section.
+  Icon priority: icon dropdown > SVG code > inline richtext (emoji + text)
+  Accepts: block
+{% endcomment %}
+
+<div class="iwb-block iwb-block-three-icons" data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
+  <div class="iwb-three-icons" data-block-id="{{ block.id }}">
+    {% for i in (1..3) %}
+      {% case i %}
+        {% when 1 %}
+          {% assign feature_icon = block.settings.feature_1_icon %}
+          {% assign feature_svg = block.settings.feature_1_svg %}
+          {% assign feature_content = block.settings.feature_1_content %}
+        {% when 2 %}
+          {% assign feature_icon = block.settings.feature_2_icon %}
+          {% assign feature_svg = block.settings.feature_2_svg %}
+          {% assign feature_content = block.settings.feature_2_content %}
+        {% when 3 %}
+          {% assign feature_icon = block.settings.feature_3_icon %}
+          {% assign feature_svg = block.settings.feature_3_svg %}
+          {% assign feature_content = block.settings.feature_3_content %}
+      {% endcase %}
+
+      {% if feature_content != blank or feature_icon != blank or feature_svg != blank %}
+        <div class="iwb-three-icons__item">
+          {% if feature_icon != blank %}
+            <span class="iwb-three-icons__icon">
+              {% render 'icons', icon: feature_icon %}
+            </span>
+          {% elsif feature_svg != blank %}
+            <span class="iwb-three-icons__icon">
+              {{ feature_svg }}
+            </span>
+          {% endif %}
+
+          {% if feature_content != blank %}
+            <div class="iwb-three-icons__content rte">
+              {{ feature_content }}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

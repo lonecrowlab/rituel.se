@@ -1,0 +1,66 @@
+{% comment %}
+  Replaces rating placeholders in custom text templates.
+
+  Accepts:
+  - template: {String} Text containing rating placeholders
+  - product: {Object} Product to read custom.review_* metafields from
+  - review_count: {String} Optional pre-formatted review count override
+  - review_average: {String|Number} Optional average rating override
+
+  Placeholders:
+  - [rating.ave] — metafield average (custom.review_stars_ave)
+  - [rating.count] — metafield review count (custom.review_count)
+  - [reviews.count] — alias for [rating.count]
+  - [original.rating] — Trustoo live rating (filled by JS)
+  - [original.count] — Trustoo live review count (filled by JS)
+{% endcomment %}
+
+{%- liquid
+  assign rating_text = template
+  assign average_value = review_average
+  assign count_value = review_count
+
+  if product != blank
+    if average_value == blank
+      assign average_value = product.metafields.custom.review_stars_ave.value
+      if average_value == blank
+        assign average_value = product.metafields.custom.review_stars_ave
+      endif
+    endif
+
+    if count_value == blank
+      assign count_raw = product.metafields.custom.review_count.value
+      if count_raw == blank
+        assign count_raw = product.metafields.custom.review_count
+      endif
+      if count_raw == blank
+        assign count_raw = product.metafields.custom['review-count']
+      endif
+      if count_raw == blank
+        assign count_raw = product.metafields.custom.reviews_count.value
+      endif
+
+      if count_raw != blank
+        capture count_value
+          render 'format-review-count', count: count_raw
+        endcapture
+        assign count_value = count_value | strip
+        if count_value == blank
+          assign count_value = count_raw
+        endif
+      endif
+    endif
+  endif
+
+  if average_value != blank
+    assign average_string = average_value | append: ''
+    assign rating_text = rating_text | replace: '[rating.ave]', average_string
+  endif
+
+  if count_value != blank
+    assign count_string = count_value | append: ''
+    assign rating_text = rating_text | replace: '[rating.count]', count_string
+    assign rating_text = rating_text | replace: '[reviews.count]', count_string
+  endif
+-%}
+{{- rating_text -}}

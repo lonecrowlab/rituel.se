@@ -1,0 +1,28 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "norway"
+  },
+  "parent": "product.zero-pore-pads.json",
+  "sections": {
+    "main": {
+      "settings": {},
+      "blocks": {
+        "product_flag_qn3MLq": {
+          "disabled": false,
+          "settings": {
+            "icon_1_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 220 160\" width=\"220\" height=\"160\">\n  <rect width=\"220\" height=\"160\" fill=\"#BA0C2F\"></rect>\n  <rect x=\"50\" width=\"40\" height=\"160\" fill=\"#FFFFFF\"></rect>\n  <rect y=\"60\" width=\"220\" height=\"40\" fill=\"#FFFFFF\"></rect>\n  <rect x=\"60\" width=\"20\" height=\"160\" fill=\"#00205B\"></rect>\n  <rect y=\"70\" width=\"220\" height=\"20\" fill=\"#00205B\"></rect>\n</svg>"
+          }
+        }
+      }
+    }
+  }
+}

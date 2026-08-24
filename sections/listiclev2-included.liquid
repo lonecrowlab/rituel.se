@@ -1,0 +1,1176 @@
+{% liquid
+  assign wrap_max_width = section.settings.container_max_width | plus: 0
+  case section.settings.content_layout
+    when '30_70'
+      assign media_fr = 30
+      assign content_fr = 70
+    when '70_30'
+      assign media_fr = 70
+      assign content_fr = 30
+    else
+      assign media_fr = 50
+      assign content_fr = 50
+  endcase
+%}
+
+<section
+  class="listiclev2-included section-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  {% if section.settings.section_id != blank %}id="{{ section.settings.section_id }}"{% endif %}
+>
+  <div class="page-width lv2inc-wrap">
+    {% if section.settings.title != blank %}
+      <h2 class="lv2inc-title">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="lv2inc-accordion" data-lv2inc-accordion>
+        {% for block in section.blocks %}
+          {% if block.type == 'item' %}
+            {% liquid
+              assign product = block.settings.product
+              assign item_image = block.settings.image
+              if item_image == blank and product != blank and product.featured_image
+                assign item_image = product.featured_image
+              endif
+
+              assign btn_url = block.settings.button_url
+              if btn_url == blank and product != blank
+                assign btn_url = product.url
+              endif
+
+              assign is_open = false
+              if forloop.first and section.settings.open_first
+                assign is_open = true
+              endif
+            %}
+            <div
+              class="lv2inc-item{% if is_open %} is-open{% endif %} lv2inc-item-{{ block.id }}"
+              data-lv2inc-item
+              {{ block.shopify_attributes }}
+            >
+              <button
+                type="button"
+                class="lv2inc-item__header"
+                aria-expanded="{% if is_open %}true{% else %}false{% endif %}"
+                aria-controls="lv2inc-panel-{{ block.id }}"
+                data-lv2inc-toggle
+              >
+                <span class="lv2inc-item__bar" aria-hidden="true"></span>
+                <span class="lv2inc-item__heading">{{ block.settings.title }}</span>
+                <span class="lv2inc-item__caret" aria-hidden="true">
+                  <span class="lv2inc-item__caret-closed">{% render 'icons', icon: 'caret_right' %}</span>
+                  <span class="lv2inc-item__caret-open">{% render 'icons', icon: 'caret_down' %}</span>
+                </span>
+              </button>
+
+              <div
+                id="lv2inc-panel-{{ block.id }}"
+                class="lv2inc-item__panel{% if is_open %} is-open{% endif %}"
+                data-lv2inc-panel
+              >
+                <div class="lv2inc-item__panel-inner">
+                  <div class="lv2inc-item__body{% if item_image != blank %} lv2inc-item__body--has-media{% endif %}">
+                    {% if item_image != blank %}
+                      <div class="lv2inc-item__media">
+                        {% if product != blank %}
+                          <a href="{{ product.url }}" class="lv2inc-item__media-link">
+                            {% assign media_alt = item_image.alt | default: product.title %}
+                            {{ item_image | image_url: width: 900 | image_tag: loading: 'lazy', class: 'lv2inc-item__image', alt: media_alt }}
+                          </a>
+                        {% else %}
+                          {{ item_image | image_url: width: 900 | image_tag: loading: 'lazy', class: 'lv2inc-item__image', alt: item_image.alt }}
+                        {% endif %}
+                      </div>
+                    {% endif %}
+
+                    <div class="lv2inc-item__content">
+                      {% if block.settings.stat_title_1 != blank or block.settings.stat_title_2 != blank %}
+                        <div class="lv2inc-stats">
+                          {% if block.settings.stat_title_1 != blank or block.settings.stat_desc_1 != blank %}
+                            <div class="lv2inc-stat">
+                              {% if block.settings.stat_title_1 != blank %}
+                                <div class="lv2inc-stat__title">{{ block.settings.stat_title_1 }}</div>
+                              {% endif %}
+                              {% if block.settings.stat_desc_1 != blank %}
+                                <div class="lv2inc-stat__desc">{{ block.settings.stat_desc_1 }}</div>
+                              {% endif %}
+                            </div>
+                          {% endif %}
+                          {% if block.settings.stat_title_2 != blank or block.settings.stat_desc_2 != blank %}
+                            <div class="lv2inc-stat">
+                              {% if block.settings.stat_title_2 != blank %}
+                                <div class="lv2inc-stat__title">{{ block.settings.stat_title_2 }}</div>
+                              {% endif %}
+                              {% if block.settings.stat_desc_2 != blank %}
+                                <div class="lv2inc-stat__desc">{{ block.settings.stat_desc_2 }}</div>
+                              {% endif %}
+                            </div>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+
+                      {% if block.settings.button_label != blank %}
+                        <a
+                          class="lv2inc-btn"
+                          href="{{ btn_url | default: '#' }}"
+                          {% if section.settings.button_open_new_tab %}target="_blank" rel="noopener"{% endif %}
+                        >
+                          {{ block.settings.button_label }}
+                        </a>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .section-{{ section.id }} {
+    background: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    border-top: {{ section.settings.section_border_top }}px solid {{ section.settings.section_border_color }};
+    border-bottom: {{ section.settings.section_border_bottom }}px solid {{ section.settings.section_border_color }};
+  }
+
+  .section-{{ section.id }} .lv2inc-wrap {
+    {% if wrap_max_width == 0 %}
+      max-width: none;
+    {% else %}
+      max-width: {{ wrap_max_width }}px;
+    {% endif %}
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .section-{{ section.id }} .lv2inc-title {
+    font-size: {{ section.settings.title_font_size_mobile }}px;
+    font-weight: {{ section.settings.title_font_weight }};
+    color: {{ section.settings.title_color }};
+    text-align: {{ section.settings.title_align }};
+    line-height: 1.25;
+    margin: 0 0 {{ section.settings.title_margin_bottom_mobile }}px;
+    font-family: {{ section.settings.title_font_family }};
+  }
+
+  .section-{{ section.id }} .lv2inc-accordion {
+    border-top: {{ section.settings.item_border_width }}px solid {{ section.settings.item_border_color }};
+  }
+
+  .section-{{ section.id }} .lv2inc-item {
+    border-bottom: {{ section.settings.item_border_width }}px solid {{ section.settings.item_border_color }};
+  }
+
+  .section-{{ section.id }} .lv2inc-item__header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: none;
+    padding: {{ section.settings.header_padding_vertical_mobile }}px 0;
+    cursor: pointer;
+    text-align: left;
+    color: {{ section.settings.item_title_color }};
+    font-family: inherit;
+  }
+
+  .section-{{ section.id }} .lv2inc-item__bar {
+    flex-shrink: 0;
+    width: {{ section.settings.bar_width }}px;
+    height: {{ section.settings.bar_height }}px;
+    background: {{ section.settings.bar_color }};
+  }
+
+  .section-{{ section.id }} .lv2inc-item__heading {
+    flex: 1;
+    font-size: {{ section.settings.item_title_font_size_mobile }}px;
+    font-weight: {{ section.settings.item_title_font_weight }};
+    line-height: 1.3;
+    font-family: {{ section.settings.item_title_font_family }};
+  }
+
+  .section-{{ section.id }} .lv2inc-item__caret {
+    flex-shrink: 0;
+    width: {{ section.settings.caret_width }}px;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: {{ section.settings.caret_color }};
+  }
+
+  .section-{{ section.id }} .lv2inc-item__caret svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .section-{{ section.id }} .lv2inc-item__caret-open {
+    display: none;
+  }
+
+  .section-{{ section.id }} .lv2inc-item.is-open .lv2inc-item__caret-closed {
+    display: none;
+  }
+
+  .section-{{ section.id }} .lv2inc-item.is-open .lv2inc-item__caret-open {
+    display: block;
+  }
+
+  .section-{{ section.id }} .lv2inc-item__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    overflow: hidden;
+    transition: grid-template-rows 0.35s ease, opacity 0.3s ease;
+  }
+
+  .section-{{ section.id }} .lv2inc-item__panel.is-open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .section-{{ section.id }} .lv2inc-item__panel-inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }} .lv2inc-item__body {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.content_gap_mobile }}px;
+    padding: 0 0 {{ section.settings.panel_padding_bottom_mobile }}px;
+  }
+
+  .section-{{ section.id }} .lv2inc-item__media {
+    width: 100%;
+  }
+
+  .section-{{ section.id }} .lv2inc-item__media-link {
+    display: block;
+    text-decoration: none;
+  }
+
+  .section-{{ section.id }} .lv2inc-item__image {
+    width: 100%;
+    max-width: {{ section.settings.image_max_width }}px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .section-{{ section.id }} .lv2inc-item__content {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .section-{{ section.id }} .lv2inc-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: {{ section.settings.stats_gap_mobile }}px;
+    margin-bottom: {{ section.settings.stats_margin_bottom_mobile }}px;
+  }
+
+  .section-{{ section.id }} .lv2inc-stat {
+    text-align: center;
+  }
+
+  .section-{{ section.id }} .lv2inc-stat__title {
+    font-size: {{ section.settings.stat_title_font_size_mobile }}px;
+    font-weight: {{ section.settings.stat_title_font_weight }};
+    color: {{ section.settings.stat_title_color }};
+    line-height: 1.1;
+    margin: 0 0 8px;
+    font-family: {{ section.settings.stat_title_font_family }};
+  }
+
+  .section-{{ section.id }} .lv2inc-stat__desc {
+    font-size: {{ section.settings.stat_desc_font_size_mobile }}px;
+    font-weight: {{ section.settings.stat_desc_font_weight }};
+    color: {{ section.settings.stat_desc_color }};
+    line-height: 1.45;
+    margin: 0;
+    font-family: {{ section.settings.stat_desc_font_family }};
+  }
+
+  .section-{{ section.id }} .lv2inc-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: {{ section.settings.button_font_size_mobile }}px;
+    font-weight: {{ section.settings.button_font_weight }};
+    color: {{ section.settings.button_text_color }};
+    background: {{ section.settings.button_bg_color }};
+    padding: {{ section.settings.button_padding_vertical_mobile }}px {{ section.settings.button_padding_horizontal_mobile }}px;
+    border-radius: {{ section.settings.button_border_radius }}px;
+    text-decoration: none;
+    text-align: center;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+    transition: opacity 0.2s ease;
+  }
+
+  .section-{{ section.id }} .lv2inc-btn:hover {
+    opacity: 0.9;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2inc-title {
+      font-size: {{ section.settings.title_font_size_desktop }}px;
+      margin-bottom: {{ section.settings.title_margin_bottom_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2inc-item__header {
+      padding-top: {{ section.settings.header_padding_vertical_desktop }}px;
+      padding-bottom: {{ section.settings.header_padding_vertical_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2inc-item__heading {
+      font-size: {{ section.settings.item_title_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2inc-item__body--has-media {
+      display: grid;
+      grid-template-columns: {{ media_fr }}fr {{ content_fr }}fr;
+      gap: {{ section.settings.content_gap_desktop }}px;
+      align-items: center;
+      padding-bottom: {{ section.settings.panel_padding_bottom_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2inc-item__body:not(.lv2inc-item__body--has-media) {
+      padding-bottom: {{ section.settings.panel_padding_bottom_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2inc-stats {
+      gap: {{ section.settings.stats_gap_desktop }}px;
+      margin-bottom: {{ section.settings.stats_margin_bottom_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2inc-stat__title {
+      font-size: {{ section.settings.stat_title_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2inc-stat__desc {
+      font-size: {{ section.settings.stat_desc_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2inc-btn {
+      font-size: {{ section.settings.button_font_size_desktop }}px;
+      padding: {{ section.settings.button_padding_vertical_desktop }}px {{ section.settings.button_padding_horizontal_desktop }}px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const section = document.querySelector('.section-{{ section.id }}');
+    if (!section) return;
+
+    const allowMultiple = {{ section.settings.allow_multiple | json }};
+
+    function setOpen(item, open) {
+      const toggle = item.querySelector('[data-lv2inc-toggle]');
+      const panel = item.querySelector('[data-lv2inc-panel]');
+      if (!toggle || !panel) return;
+
+      item.classList.toggle('is-open', open);
+      panel.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    function initAccordion(root) {
+      const items = root.querySelectorAll('[data-lv2inc-item]');
+      items.forEach(function (item) {
+        const toggle = item.querySelector('[data-lv2inc-toggle]');
+        if (!toggle || toggle.dataset.lv2incBound === 'true') return;
+        toggle.dataset.lv2incBound = 'true';
+
+        toggle.addEventListener('click', function () {
+          const isOpen = item.classList.contains('is-open');
+
+          if (!allowMultiple) {
+            items.forEach(function (other) {
+              if (other !== item) setOpen(other, false);
+            });
+          }
+
+          setOpen(item, !isOpen);
+        });
+      });
+    }
+
+    initAccordion(section);
+
+    document.addEventListener('shopify:section:load', function (event) {
+      if (event.target && event.target.contains(section)) {
+        initAccordion(section);
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Listiclev2 Included",
+  "tag": "section",
+  "class": "section-listiclev2-included",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section anchor ID"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "What's Included:"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "content_layout",
+      "label": "Content columns (desktop)",
+      "options": [
+        { "value": "50_50", "label": "50 / 50" },
+        { "value": "30_70", "label": "30 / 70" },
+        { "value": "70_30", "label": "70 / 30" }
+      ],
+      "default": "50_50",
+      "info": "Image / content width. Stacks on mobile."
+    },
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open first item by default",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "allow_multiple",
+      "label": "Allow multiple items open",
+      "default": false
+    },
+    {
+      "type": "number",
+      "id": "container_max_width",
+      "label": "Container max width (px)",
+      "default": 900,
+      "info": "Set to 0 for full width."
+    },
+    {
+      "type": "range",
+      "id": "image_max_width",
+      "min": 120,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "label": "Image max width",
+      "default": 320
+    },
+    {
+      "type": "range",
+      "id": "content_gap_mobile",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Content gap (mobile)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "content_gap_desktop",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Content gap (desktop)",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Title typography"
+    },
+    {
+      "type": "text",
+      "id": "title_font_family",
+      "label": "Title font family",
+      "default": "Oswald, sans-serif"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "min": 18,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Title (mobile)",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_desktop",
+      "min": 20,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "label": "Title (desktop)",
+      "default": 32
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Title weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "title_align",
+      "label": "Title align",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom_mobile",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Title margin bottom (mobile)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom_desktop",
+      "min": 8,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Title margin bottom (desktop)",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Accordion item title"
+    },
+    {
+      "type": "text",
+      "id": "item_title_font_family",
+      "label": "Item title font family",
+      "default": "Oswald, sans-serif"
+    },
+    {
+      "type": "range",
+      "id": "item_title_font_size_mobile",
+      "min": 14,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "label": "Item title (mobile)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "item_title_font_size_desktop",
+      "min": 16,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Item title (desktop)",
+      "default": 22
+    },
+    {
+      "type": "select",
+      "id": "item_title_font_weight",
+      "label": "Item title weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "item_title_color",
+      "label": "Item title color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "header_padding_vertical_mobile",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Header padding V (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "header_padding_vertical_desktop",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Header padding V (desktop)",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Left bar & caret"
+    },
+    {
+      "type": "range",
+      "id": "bar_width",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Bar width",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "bar_height",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Bar height",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "bar_color",
+      "label": "Bar color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "caret_width",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Caret width",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "caret_height",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Caret height",
+      "default": 19
+    },
+    {
+      "type": "color",
+      "id": "caret_color",
+      "label": "Caret color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Stats typography"
+    },
+    {
+      "type": "text",
+      "id": "stat_title_font_family",
+      "label": "Stat title font family",
+      "default": "Oswald, sans-serif"
+    },
+    {
+      "type": "range",
+      "id": "stat_title_font_size_mobile",
+      "min": 24,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "label": "Stat title (mobile)",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "stat_title_font_size_desktop",
+      "min": 28,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "label": "Stat title (desktop)",
+      "default": 44
+    },
+    {
+      "type": "select",
+      "id": "stat_title_font_weight",
+      "label": "Stat title weight",
+      "options": [
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "stat_title_color",
+      "label": "Stat title color",
+      "default": "#000000"
+    },
+    {
+      "type": "text",
+      "id": "stat_desc_font_family",
+      "label": "Stat description font family",
+      "default": "inherit"
+    },
+    {
+      "type": "range",
+      "id": "stat_desc_font_size_mobile",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Stat description (mobile)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "stat_desc_font_size_desktop",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Stat description (desktop)",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "stat_desc_font_weight",
+      "label": "Stat description weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "stat_desc_color",
+      "label": "Stat description color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "stats_gap_mobile",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Stats gap (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "stats_gap_desktop",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Stats gap (desktop)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "stats_margin_bottom_mobile",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Stats margin bottom (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "stats_margin_bottom_desktop",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Stats margin bottom (desktop)",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_mobile",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Button (mobile)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_desktop",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Button (desktop)",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Button weight",
+      "options": [
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "#8B1E2D"
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical_mobile",
+      "min": 8,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Button padding V (mobile)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal_mobile",
+      "min": 12,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Button padding H (mobile)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical_desktop",
+      "min": 8,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Button padding V (desktop)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal_desktop",
+      "min": 12,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "label": "Button padding H (desktop)",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Button border radius",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "button_open_new_tab",
+      "label": "Open button in new tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Borders & spacing"
+    },
+    {
+      "type": "color",
+      "id": "item_border_color",
+      "label": "Item border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "item_border_width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Item border width",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "section_border_color",
+      "label": "Section border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "section_border_top",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "label": "Section border top",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "section_border_bottom",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "label": "Section border bottom",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "panel_padding_bottom_mobile",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Panel padding bottom (mobile)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "panel_padding_bottom_desktop",
+      "min": 0,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Panel padding bottom (desktop)",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Accordion item",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "If empty, product image is used."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "The Day Formula"
+        },
+        {
+          "type": "header",
+          "content": "Stat 1"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "stat_title_1",
+          "label": "Title 1",
+          "default": "97%"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "stat_desc_1",
+          "label": "Description 1",
+          "default": "Of The Users Agreed Or Completely Agreed That The Day Formula Improved Skin’s Tightening"
+        },
+        {
+          "type": "header",
+          "content": "Stat 2"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "stat_title_2",
+          "label": "Title 2",
+          "default": "94%"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "stat_desc_2",
+          "label": "Description 2",
+          "default": "Would Recommend The Day Formula"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "button_label",
+          "label": "Button name",
+          "default": "LEARN MORE"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Link",
+          "info": "If empty, product link is used."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Listiclev2 Included",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "title": "The Day Formula",
+            "stat_title_1": "97%",
+            "stat_desc_1": "Of The Users Agreed Or Completely Agreed That The Day Formula Improved Skin’s Tightening",
+            "stat_title_2": "94%",
+            "stat_desc_2": "Would Recommend The Day Formula",
+            "button_label": "LEARN MORE"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "The Night Formula",
+            "stat_title_1": "96%",
+            "stat_desc_1": "Saw visibly smoother skin overnight",
+            "stat_title_2": "93%",
+            "stat_desc_2": "Would recommend The Night Formula",
+            "button_label": "LEARN MORE"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "title": "The AHA Peel",
+            "stat_title_1": "95%",
+            "stat_desc_1": "Noticed brighter, more even skin tone",
+            "stat_title_2": "92%",
+            "stat_desc_2": "Would recommend The AHA Peel",
+            "button_label": "LEARN MORE"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

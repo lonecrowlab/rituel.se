@@ -1,0 +1,46 @@
+{% comment %}
+  Formats a review count with locale-aware thousand separators.
+
+  Accepts:
+  - count: {Number|String} Raw review count value
+{% endcomment %}
+
+{%- liquid
+  assign count_num = count | plus: 0
+
+  if count_num == 0 and count != blank and count != 0 and count != '0'
+    assign count_digits = count | replace: ',', '' | replace: ' ', '' | replace: ' ', '' | replace: '.', ''
+    assign count_num = count_digits | plus: 0
+  endif
+
+  assign locale_code = request.locale.iso_code | default: localization.language.iso_code | downcase
+  assign thousands_separator = ','
+
+  if locale_code contains 'sv' or locale_code contains 'nb' or locale_code contains 'nn' or locale_code contains 'da' or locale_code contains 'fi' or locale_code contains 'cs' or locale_code contains 'pl' or locale_code contains 'sk'
+    assign thousands_separator = ' '
+  elsif locale_code contains 'de' or locale_code contains 'fr' or locale_code contains 'es' or locale_code contains 'it' or locale_code contains 'pt' or locale_code contains 'nl' or locale_code contains 'ru'
+    assign thousands_separator = '.'
+  endif
+
+  assign num_string = count_num | append: ''
+  assign num_length = num_string.size
+  assign formatted_count = num_string
+  assign group_size = 0
+
+  if num_length > 3
+    assign formatted_count = ''
+    for i in (1..num_length)
+      assign char_index = num_length | minus: forloop.index0 | minus: 1
+      assign digit = num_string | slice: char_index, 1
+      assign formatted_count = digit | append: formatted_count
+      assign group_size = group_size | plus: 1
+      assign digits_remaining = num_length | minus: forloop.index0 | minus: 1
+
+      if group_size == 3 and digits_remaining > 0
+        assign formatted_count = thousands_separator | append: formatted_count
+        assign group_size = 0
+      endif
+    endfor
+  endif
+-%}
+{{- formatted_count -}}

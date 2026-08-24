@@ -1,0 +1,843 @@
+{% comment %}
+  Section With Divider
+  Multi-wave dividers, Gradient Title block, Image w/ Text v2 card grid
+{% endcomment %}
+
+{%- liquid
+  assign divider_style = section.settings.divider_style
+  assign has_cards = false
+  for block in section.blocks
+    if block.type == 'image_with_text_v2'
+      assign has_cards = true
+      break
+    endif
+  endfor
+-%}
+
+<section
+  class="swd section-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  style="
+    --swd-divider-color-start: {{ section.settings.background_color }};
+    --swd-divider-color-end: {{ section.settings.background_color }};
+    --swd-bg-color: {{ section.settings.background_color }};
+    --swd-bg-size: {{ section.settings.background_size }};
+    --swd-bg-position: {{ section.settings.background_position }};
+    --swd-columns: {{ section.settings.columns }};
+    --swd-gap: {{ section.settings.gap }}px;
+    {% if section.settings.background_image != blank %}
+      --swd-bg-image: url({{ section.settings.background_image | image_url: width: 2400 }});
+    {% endif %}
+  "
+>
+  {% if divider_style != 'none' %}
+    {% render 'swd-wave-divider',
+      style: divider_style,
+      position: 'top',
+      section_id: section.id,
+      flip_horizontal: section.settings.top_flip_horizontal,
+      flip_vertical: section.settings.top_flip_vertical
+    %}
+  {% endif %}
+
+  <div class="swd__bg" aria-hidden="true"></div>
+
+  <div class="swd__inner">
+    <div class="page-width">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'gradient_title' -%}
+        <div
+          id="shopify-block-{{ block.id }}"
+          class="swd__gradient-title swd__gradient-title--{{ block.settings.text_align }}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="swd__gradient-title-text rte">
+            {{ block.settings.inline_richtext }}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if has_cards -%}
+      <div class="swd__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'image_with_text_v2' -%}
+            <div
+              id="shopify-block-{{ block.id }}"
+              class="swd__card swd__card--{{ block.settings.layout }}"
+              {{ block.shopify_attributes }}
+            >
+              {% if block.settings.image != blank %}
+                <div class="swd__card-media">
+                  <img
+                    src="{{ block.settings.image | image_url: width: 600 }}"
+                    srcset="{{ block.settings.image | image_url: width: 300 }} 300w,
+                            {{ block.settings.image | image_url: width: 450 }} 450w,
+                            {{ block.settings.image | image_url: width: 600 }} 600w"
+                    sizes="(max-width: 749px) 100vw, 280px"
+                    alt="{{ block.settings.image.alt | escape }}"
+                    width="{{ block.settings.image.width }}"
+                    height="{{ block.settings.image.height }}"
+                    loading="lazy"
+                    class="swd__card-image"
+                  >
+                </div>
+              {% else %}
+                <div class="swd__card-media swd__card-media--placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {% endif %}
+
+              <div class="swd__card-content">
+                {% if block.settings.title != blank %}
+                  <h3 class="swd__card-title">{{ block.settings.title }}</h3>
+                {% endif %}
+                {% if block.settings.description != blank %}
+                  <div class="swd__card-description rte">{{ block.settings.description }}</div>
+                {% endif %}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+  {% if divider_style != 'none' %}
+    {% render 'swd-wave-divider',
+      style: divider_style,
+      position: 'bottom',
+      section_id: section.id,
+      flip_horizontal: section.settings.bottom_flip_horizontal,
+      flip_vertical: section.settings.bottom_flip_vertical
+    %}
+  {% endif %}
+</section>
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .section-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
+ 
+  }
+
+  .section-{{ section.id }} .swd__bg {
+    position: absolute;
+    inset: 0;
+    background-color: var(--swd-bg-color);
+    {% if section.settings.background_image != blank %}
+      background-image: var(--swd-bg-image);
+      background-size: var(--swd-bg-size);
+      background-position: var(--swd-bg-position);
+      background-repeat: no-repeat;
+    {% endif %}
+    z-index: 0;
+  }
+
+  .section-{{ section.id }} .swd__divider {
+    position: relative;
+    z-index: 1;
+    line-height: 0;
+    width: 100%;
+  }
+
+  .section-{{ section.id }} .swd__divider-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: -1px;
+  }
+
+  .section-{{ section.id }} .swd__inner {
+    position: relative;
+    z-index: 2;
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    background: var(--swd-bg-color);
+   
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} .swd__inner {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+  }
+
+  .section-{{ section.id }} .swd__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--swd-columns), 1fr);
+    gap: var(--swd-gap);
+  }
+
+  @media screen and (max-width: 749px) {
+    .section-{{ section.id }} .swd__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .section-{{ section.id }} .swd__gradient-title {
+    margin-bottom: 32px;
+  }
+
+  .section-{{ section.id }} .swd__gradient-title--left {
+    text-align: left;
+  }
+
+  .section-{{ section.id }} .swd__gradient-title--center {
+    text-align: center;
+  }
+
+  .section-{{ section.id }} .swd__gradient-title--right {
+    text-align: right;
+  }
+
+  .section-{{ section.id }} .swd__card {
+    display: flex;
+    background: #ffffff;
+    overflow: hidden;
+    height: 100%;
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+    
+  }
+  .swd__card:hover {
+        transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(40, 20, 30, 0.1);
+}
+
+  .section-{{ section.id }} .swd__card--image_left {
+    flex-direction: row;
+  }
+
+  .section-{{ section.id }} .swd__card--image_right {
+    flex-direction: row-reverse;
+  }
+
+  .section-{{ section.id }} .swd__card--image_top {
+    flex-direction: column;
+  }
+
+  .section-{{ section.id }} .swd__card--image_bottom {
+    flex-direction: column-reverse;
+  }
+
+  .section-{{ section.id }} .swd__card-media {
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }} .swd__card--image_left .swd__card-media,
+  .section-{{ section.id }} .swd__card--image_right .swd__card-media {
+    width: 40%;
+    min-width: 120px;
+  }
+
+  .section-{{ section.id }} .swd__card--image_top .swd__card-media,
+  .section-{{ section.id }} .swd__card--image_bottom .swd__card-media {
+    width: 100%;
+  }
+
+  .section-{{ section.id }} .swd__card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    max-width:200px;
+  }
+
+  .section-{{ section.id }} .swd__card-media--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f4f6;
+    min-height: 120px;
+  }
+
+  .section-{{ section.id }} .swd__card-media--placeholder svg {
+    width: 60%;
+    height: auto;
+    opacity: 0.4;
+  }
+
+  .section-{{ section.id }} .swd__card-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .section-{{ section.id }} .swd__card-title {
+    margin: 0 0 8px;
+    line-height: 1.3;
+  }
+
+  .section-{{ section.id }} .swd__card-description {
+    line-height: 1.5;
+  }
+
+  .section-{{ section.id }} .swd__card-description p {
+    margin: 0;
+  }
+
+  .section-{{ section.id }} .swd__card-description p + p {
+    margin-top: 8px;
+  }
+
+  {% for block in section.blocks %}
+    {% if block.type == 'gradient_title' %}
+      #shopify-block-{{ block.id }} .swd__gradient-title-text {
+        color: {{ block.settings.text_color }};
+        font-size: {{ block.settings.font_size_mobile }}px;
+        line-height: 1.3;
+      }
+
+      @media screen and (min-width: 750px) {
+        #shopify-block-{{ block.id }} .swd__gradient-title-text {
+          font-size: {{ block.settings.font_size_desktop }}px;
+        }
+      }
+
+      {% if block.settings.strong_gradient != blank %}
+        #shopify-block-{{ block.id }} .swd__gradient-title-text strong {
+          background: {{ block.settings.strong_gradient }};
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+      {% endif %}
+    {% endif %}
+
+    {% if block.type == 'image_with_text_v2' %}
+      #shopify-block-{{ block.id }} {
+        border-radius: {{ block.settings.border_radius }}px;
+        {% if block.settings.border_width > 0 %}
+          border: {{ block.settings.border_width }}px {{ block.settings.border_style }} {{ block.settings.border_color }};
+        {% else %}
+          border: none;
+        {% endif %}
+        {% if block.settings.enable_shadow %}
+          box-shadow: {{ block.settings.shadow_x }}px {{ block.settings.shadow_y }}px {{ block.settings.shadow_blur }}px {{ block.settings.shadow_color }};
+        {% endif %}
+      }
+
+      {% if block.settings.layout == 'image_top' or block.settings.layout == 'image_bottom' %}
+        #shopify-block-{{ block.id }} {
+          padding: {{ block.settings.padding }}px;
+        }
+      {% else %}
+        #shopify-block-{{ block.id }} .swd__card-content {
+          padding: {{ block.settings.padding }}px;
+        }
+      {% endif %}
+
+      #shopify-block-{{ block.id }} .swd__card-content {
+        text-align: {{ block.settings.text_align }};
+      }
+
+      #shopify-block-{{ block.id }} .swd__card-title {
+        font-size: {{ block.settings.title_size }}px;
+        color: {{ block.settings.title_color }};
+      }
+
+      #shopify-block-{{ block.id }} .swd__card-description {
+        font-size: {{ block.settings.description_size }}px;
+        color: {{ block.settings.description_color }};
+      }
+    {% endif %}
+  {% endfor %}
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Section with divider",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color",
+      "default": "#f5eef8"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "background_size",
+      "label": "Background size",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" },
+        { "value": "auto", "label": "Auto" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "background_position",
+      "label": "Background position",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "top center", "label": "Top center" },
+        { "value": "bottom center", "label": "Bottom center" },
+        { "value": "left center", "label": "Left center" },
+        { "value": "right center", "label": "Right center" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Grid"
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Divider"
+    },
+    {
+      "type": "select",
+      "id": "divider_style",
+      "label": "Divider",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "style_1", "label": "Style 1" },
+        { "value": "style_2", "label": "Style 2" },
+        { "value": "style_3", "label": "Style 3" },
+        { "value": "style_4", "label": "Style 4" }
+      ],
+      "default": "style_1"
+    },
+    {
+      "type": "header",
+      "content": "Top divider"
+    },
+    {
+      "type": "checkbox",
+      "id": "top_flip_vertical",
+      "label": "Flip vertical",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "top_flip_horizontal",
+      "label": "Flip horizontal",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Bottom divider"
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_flip_vertical",
+      "label": "Flip vertical",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_flip_horizontal",
+      "label": "Flip horizontal",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "gradient_title",
+      "name": "Gradient Title",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "inline_richtext",
+          "label": "Text",
+          "default": "Klinisch geteste <strong>anti-aging</strong> ingrediënten"
+        },
+        {
+          "type": "color_background",
+          "id": "strong_gradient",
+          "label": "Strong gradient color"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text align",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#1a1a1a"
+        },
+        {
+          "type": "range",
+          "id": "font_size_desktop",
+          "min": 20,
+          "max": 72,
+          "step": 2,
+          "unit": "px",
+          "label": "Font size (desktop)",
+          "default": 40
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "min": 18,
+          "max": 48,
+          "step": 2,
+          "unit": "px",
+          "label": "Font size (mobile)",
+          "default": 28
+        }
+      ]
+    },
+    {
+      "type": "image_with_text_v2",
+      "name": "Image w/ Text v2",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Card title"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Add your description here.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Typography"
+        },
+        {
+          "type": "range",
+          "id": "title_size",
+          "min": 12,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Title size",
+          "default": 18
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title color",
+          "default": "#1a1a1a"
+        },
+        {
+          "type": "range",
+          "id": "description_size",
+          "min": 10,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Description size",
+          "default": 14
+        },
+        {
+          "type": "color",
+          "id": "description_color",
+          "label": "Description color",
+          "default": "#6b7280"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Align text",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" },
+            { "value": "justify", "label": "Justify" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Layout",
+          "options": [
+            { "value": "image_left", "label": "Image left" },
+            { "value": "image_top", "label": "Image top" },
+            { "value": "image_right", "label": "Image right" },
+            { "value": "image_bottom", "label": "Image bottom" }
+          ],
+          "default": "image_left"
+        },
+        {
+          "type": "header",
+          "content": "Card styling"
+        },
+        {
+          "type": "range",
+          "id": "border_radius",
+          "min": 0,
+          "max": 50,
+          "step": 2,
+          "unit": "px",
+          "label": "Border radius",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "padding",
+          "min": 0,
+          "max": 60,
+          "step": 4,
+          "unit": "px",
+          "label": "Padding",
+          "default": 16
+        },
+        {
+          "type": "header",
+          "content": "Shadow settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_shadow",
+          "label": "Enable shadow",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "shadow_x",
+          "min": -20,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "label": "Shadow horizontal offset",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "shadow_y",
+          "min": -20,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "label": "Shadow vertical offset",
+          "default": 4
+        },
+        {
+          "type": "range",
+          "id": "shadow_blur",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Shadow blur",
+          "default": 12
+        },
+        {
+          "type": "color",
+          "id": "shadow_color",
+          "label": "Shadow color",
+          "default": "rgba(0,0,0,0.08)"
+        },
+        {
+          "type": "header",
+          "content": "Border settings"
+        },
+        {
+          "type": "range",
+          "id": "border_width",
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "unit": "px",
+          "label": "Border width",
+          "default": 0
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border color",
+          "default": "#e5e7eb"
+        },
+        {
+          "type": "select",
+          "id": "border_style",
+          "label": "Border style",
+          "options": [
+            { "value": "solid", "label": "Solid" },
+            { "value": "dashed", "label": "Dashed" },
+            { "value": "dotted", "label": "Dotted" }
+          ],
+          "default": "solid"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Section with divider",
+      "category": "Custom",
+      "settings": {
+        "background_color": "#f5eef8",
+        "divider_style": "style_1",
+        "columns": "2",
+        "gap": 24,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      },
+      "blocks": [
+        {
+          "type": "gradient_title",
+          "settings": {
+            "inline_richtext": "Klinisch geteste <strong>anti-aging</strong> ingrediënten",
+            "text_align": "center",
+            "text_color": "#1a1a1a",
+            "font_size_desktop": 40,
+            "font_size_mobile": 28
+          }
+        },
+        {
+          "type": "image_with_text_v2",
+          "settings": {
+            "title": "Gehydrolyseerd Collageen",
+            "description": "<p>Verbetert de elasticiteit en stevigheid van de huid.</p>",
+            "layout": "image_left",
+            "border_radius": 16,
+            "padding": 16,
+            "enable_shadow": true
+          }
+        },
+        {
+          "type": "image_with_text_v2",
+          "settings": {
+            "title": "Niacinamide",
+            "description": "<p>Verheldert de teint en vermindert zichtbaar poriën.</p>",
+            "layout": "image_left",
+            "border_radius": 16,
+            "padding": 16,
+            "enable_shadow": true
+          }
+        },
+        {
+          "type": "image_with_text_v2",
+          "settings": {
+            "title": "Ceramide NP",
+            "description": "<p>Herstelt de huidbarrière en houdt vocht vast.</p>",
+            "layout": "image_left",
+            "border_radius": 16,
+            "padding": 16,
+            "enable_shadow": true
+          }
+        },
+        {
+          "type": "image_with_text_v2",
+          "settings": {
+            "title": "Hyaluronzuur",
+            "description": "<p>Diep hydraterend voor een volle, stralende huid.</p>",
+            "layout": "image_left",
+            "border_radius": 16,
+            "padding": 16,
+            "enable_shadow": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

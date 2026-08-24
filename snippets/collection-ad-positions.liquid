@@ -1,0 +1,53 @@
+{% comment %}
+  Builds a position map string for collection ad blocks.
+
+  Accepts:
+  - section: {Object} Section object
+  - max_items: {Number} Maximum grid positions to compute for repeating ads
+{% endcomment %}
+
+{% for block in section.blocks %}
+  {% if block.type == 'collection_ad' and block.settings.image != blank %}
+    {% if block.settings.display_type == 'fixed' %}
+      {% assign ad_pos = block.settings.fix_display %}
+      {{ block.id }}@{{ ad_pos }}|
+
+      {% if block.settings.repeat %}
+        {% for i in (1..20) %}
+          {% assign ad_pos = ad_pos | plus: block.settings.fix_display %}
+          {% if ad_pos > max_items %}
+            {% break %}
+          {% endif %}
+          {{ block.id }}@{{ ad_pos }}|
+        {% endfor %}
+      {% endif %}
+    {% else %}
+      {% liquid
+        assign ad_min = block.settings.random_min | default: 4
+        assign ad_max = block.settings.random_max | default: 6
+        if ad_max < ad_min
+          assign ad_max = ad_min
+        endif
+        assign ad_range = ad_max | minus: ad_min | plus: 1
+      %}
+
+      {% assign ad_seed = 'now' | date: '%S' | plus: block.id.size | modulo: ad_range %}
+      {% assign ad_interval = ad_min | plus: ad_seed %}
+      {% assign ad_pos = ad_interval %}
+      {{ block.id }}@{{ ad_pos }}|
+
+      {% if block.settings.repeat %}
+        {% for i in (1..20) %}
+          {% assign ad_repeat_idx = forloop.index %}
+          {% assign ad_seed = 'now' | date: '%S' | plus: block.id.size | plus: ad_repeat_idx | times: 17 | modulo: ad_range %}
+          {% assign ad_interval = ad_min | plus: ad_seed %}
+          {% assign ad_pos = ad_pos | plus: ad_interval %}
+          {% if ad_pos > max_items %}
+            {% break %}
+          {% endif %}
+          {{ block.id }}@{{ ad_pos }}|
+        {% endfor %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+{% endfor %}

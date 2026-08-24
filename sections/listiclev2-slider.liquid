@@ -1,0 +1,486 @@
+{% liquid
+  assign drag_value = 'true'
+  if section.settings.lock_drag
+    assign drag_value = 'false'
+  endif
+%}
+
+<section class="listiclev2-slider section-{{ section.id }}{% if section.settings.equal_height %} lv2s--equal-height{% endif %}" data-section-id="{{ section.id }}">
+  <div class="page-width lv2s-wrap">
+    {% if section.blocks.size > 0 %}
+      <splide-component
+        data-type="{{ section.settings.slider_type }}"
+        data-autoplay="{{ section.settings.autoplay }}"
+        data-autoplay-speed="{{ section.settings.autoplay_speed }}"
+        data-slides-desktop="{{ section.settings.columns_desktop }}"
+        data-slides-mobile="{{ section.settings.columns_mobile }}"
+        data-gap-desktop="{{ section.settings.gap_desktop }}"
+        data-gap-mobile="{{ section.settings.gap_mobile }}"
+        data-arrows="{{ section.settings.show_arrows }}"
+        data-pagination="{{ section.settings.show_pagination }}"
+        data-drag="{{ drag_value }}"
+      >
+        <div class="splide lv2s-splide">
+          <div class="splide__track">
+            <ul class="splide__list">
+              {% for block in section.blocks %}
+                {% if block.type == 'slide' %}
+                  <li class="splide__slide lv2s-slide-{{ block.id }}" {{ block.shopify_attributes }}>
+                    <div class="lv2s-card">
+                      {% if block.settings.image != blank %}
+                        <div class="lv2s-card__image-wrap">
+                          {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'lv2s-card__image', alt: block.settings.image.alt }}
+                        </div>
+                      {% endif %}
+                      <div class="lv2s-card__content">
+                        {% if block.settings.heading != blank %}
+                          <div class="lv2s-card__heading">{{ block.settings.heading }}</div>
+                        {% endif %}
+                        {% if block.settings.description != blank %}
+                          <div class="lv2s-card__desc rte">{{ block.settings.description }}</div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </splide-component>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .section-{{ section.id }} {
+    background: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  .section-{{ section.id }} .lv2s-wrap {
+    max-width: {{ section.settings.container_max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  .section-{{ section.id }} .lv2s-card {
+    border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+    border-radius: {{ section.settings.card_border_radius }}px;
+    overflow: hidden;
+    height: 100%;
+    background: {{ section.settings.card_bg_color }};
+  }
+
+  {% for block in section.blocks %}
+    {% if block.type == 'slide' %}
+      .section-{{ section.id }} .lv2s-slide-{{ block.id }} .lv2s-card__image-wrap {
+        margin: {{ block.settings.image_margin }}px;
+      }
+      .section-{{ section.id }} .lv2s-slide-{{ block.id }} .lv2s-card__content {
+        margin: {{ block.settings.content_margin }}px;
+        padding: {{ block.settings.content_padding_vertical }}px {{ block.settings.content_padding_horizontal }}px;
+      }
+    {% endif %}
+  {% endfor %}
+
+  .section-{{ section.id }} .lv2s-card__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .section-{{ section.id }} .lv2s-card__content {
+    padding: 10px 17px;
+  }
+
+  .section-{{ section.id }} .lv2s-card__heading {
+    font-size: {{ section.settings.heading_font_size_mobile }}px;
+    color: {{ section.settings.heading_color }};
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .section-{{ section.id }} .lv2s-card__desc {
+    font-size: {{ section.settings.desc_font_size_mobile }}px;
+    color: {{ section.settings.desc_color }};
+    line-height: 1.5;
+  }
+
+  .section-{{ section.id }} .lv2s-card__desc p {
+    margin: 0;
+  }
+
+  {% if section.settings.equal_height %}
+    .section-{{ section.id }}.lv2s--equal-height .splide__slide {
+      height: auto;
+      display: flex;
+    }
+
+    .section-{{ section.id }}.lv2s--equal-height .lv2s-card {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .section-{{ section.id }}.lv2s--equal-height .lv2s-card__content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+  {% endif %}
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2s-card__heading {
+      font-size: {{ section.settings.heading_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2s-card__desc {
+      font-size: {{ section.settings.desc_font_size_desktop }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Listiclev2 Slider",
+  "tag": "section",
+  "class": "section-listiclev2-slider",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "select",
+      "id": "slider_type",
+      "label": "Type",
+      "options": [
+        { "value": "slide", "label": "Slide" },
+        { "value": "loop", "label": "Loop" }
+      ],
+      "default": "slide"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay speed",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "lock_drag",
+      "label": "Lock drag",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Columns (mobile)",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Columns (desktop)",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap (desktop)",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show pagination",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "equal_height",
+      "label": "Equal height slides",
+      "default": false,
+      "info": "Makes all visible slide cards match the tallest card height"
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Border width",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading size (mobile)",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading size (desktop)",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "desc_font_size_mobile",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size (mobile)",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "desc_font_size_desktop",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size (desktop)",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "min": 400,
+      "max": 1400,
+      "step": 10,
+      "unit": "px",
+      "label": "Container max width",
+      "default": 750,
+      "info": "Content container width. Section background stays full width."
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "image_margin",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Image margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "content_margin",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Content margin",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "content_padding_vertical",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Content padding vertical",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "content_padding_horizontal",
+          "min": 0,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Content padding horizontal",
+          "default": 17
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "3 Year Age Reduction"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>\"So much love for the products! My skin has never looked better.\"</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Listiclev2 Slider",
+      "blocks": [
+        { "type": "slide" },
+        { "type": "slide" },
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}

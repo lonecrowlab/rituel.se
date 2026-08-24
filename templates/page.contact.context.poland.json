@@ -1,0 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "poland"
+  },
+  "parent": "page.contact.json",
+  "sections": {
+    "contact_form_new_YfdJm8": {
+      "settings": {
+        "heading_before": "Skontaktuj się z nami",
+        "highlighted_text": "",
+        "subheading": "Masz pytanie lub potrzebujesz pomocy? Chętnie odpowiemy.",
+        "name_label": "Imię",
+        "name_placeholder": "Podaj swoje imię",
+        "email_label": "E-mail",
+        "email_placeholder": "Podaj swój e-mail",
+        "message_label": "Wiadomość",
+        "message_placeholder": "Wpisz swoją wiadomość",
+        "button_text": "Wyślij wiadomość",
+        "success_message": "Dziękujemy za kontakt! Odpowiemy najszybciej, jak to możliwe."
+      },
+      "blocks": {}
+    }
+  }
+}

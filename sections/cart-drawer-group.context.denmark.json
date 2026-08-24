@@ -1,0 +1,27 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "denmark"
+  },
+  "parent": "cart-drawer-group.json",
+  "sections": {
+    "cart-drawer": {
+      "settings": {},
+      "blocks": {
+        "payment_badges_LwJbRV": {
+          "settings": {
+            "enabled_payment_types": "visa, master, american_express, mobilepay, apple_pay, klarna, shopify_pay"
+          }
+        }
+      }
+    }
+  }
+}

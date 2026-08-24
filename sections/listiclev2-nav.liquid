@@ -1,0 +1,263 @@
+<div class="listiclev2-nav section-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="page-width lv2n-wrap">
+    <nav class="lv2n-nav" aria-label="Page sections">
+      {% for block in section.blocks %}
+        {% if block.type == 'link' and block.settings.label != blank %}
+          <a
+            class="lv2n-link"
+            href="{{ block.settings.url }}"
+            {{ block.shopify_attributes }}
+          >{{ block.settings.label }}</a>
+        {% endif %}
+      {% endfor %}
+    </nav>
+  </div>
+</div>
+
+<style>
+  {% if section.settings.sticky %}
+  #shopify-section-{{ section.id }} {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  {% endif %}
+
+  .section-{{ section.id }} {
+    background: {{ section.settings.bg_color }};
+    border-bottom: {{ section.settings.border_width }}px solid {{ section.settings.border_color }};
+    padding: {{ section.settings.padding_vertical_mobile }}px 0;
+  }
+
+  .section-{{ section.id }} .lv2n-wrap {
+    max-width: {{ section.settings.container_max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  .section-{{ section.id }} .lv2n-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: {{ section.settings.link_gap_mobile }}px;
+    justify-content: {{ section.settings.align_desktop }};
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .section-{{ section.id }} .lv2n-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .section-{{ section.id }} .lv2n-link {
+    flex-shrink: 0;
+    font-size: {{ section.settings.font_size_mobile }}px;
+    color: {{ section.settings.link_color }};
+    text-decoration: none;
+    font-weight: {{ section.settings.font_weight }};
+    padding: 8px 4px;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .section-{{ section.id }} .lv2n-link:hover {
+    color: {{ section.settings.link_hover_color }};
+    border-bottom-color: {{ section.settings.link_hover_color }};
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding: {{ section.settings.padding_vertical_desktop }}px 0;
+    }
+
+    .section-{{ section.id }} .lv2n-nav {
+      flex-wrap: wrap;
+      overflow-x: visible;
+      justify-content: {{ section.settings.align_desktop }};
+      gap: {{ section.settings.link_gap_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2n-link {
+      font-size: {{ section.settings.font_size_desktop }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Listiclev2 Nav",
+  "tag": "section",
+  "class": "section-listiclev2-nav",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Sticky navigation",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "align_desktop",
+      "label": "Alignment (desktop)",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (mobile)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "font_size_desktop",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (desktop)",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "link_gap_mobile",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Link gap (mobile)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "link_gap_desktop",
+      "min": 12,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Link gap (desktop)",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "min": 400,
+      "max": 1400,
+      "step": 10,
+      "unit": "px",
+      "label": "Container max width",
+      "default": 750,
+      "info": "Content container width. Section background stays full width."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 2,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom border width",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical (mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical_desktop",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding vertical (desktop)",
+      "default": 14
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Nav link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "The Science"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL or anchor",
+          "info": "Use #section-id for in-page anchors"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Listiclev2 Nav",
+      "blocks": [
+        { "type": "link", "settings": { "label": "The Science", "url": "#science" } },
+        { "type": "link", "settings": { "label": "Clinical Results", "url": "#clinical-results" } },
+        { "type": "link", "settings": { "label": "The Collection", "url": "#collection" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

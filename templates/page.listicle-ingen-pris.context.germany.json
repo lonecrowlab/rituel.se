@@ -1,0 +1,43 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "germany"
+  },
+  "parent": "page.listicle-ingen-pris.json",
+  "sections": {
+    "custom_liquid_FrQCtD": {
+      "settings": {
+        "custom_liquid": "<section class=\"testimonials\">\n  <div class=\"testimonials__inner\">\n    <p class=\"testimonials__eyebrow\">WAS UNSERE KUNDINNEN SAGEN</p>\n    <h2 class=\"testimonials__heading\">Echte Erfahrungen von echten Frauen</h2>\n    <div class=\"testimonials__cards\">\n      <article class=\"testimonial-card\">\n        <div class=\"testimonial-card__stars\">★ ★ ★ ★ ★</div>\n        <p class=\"testimonial-card__quote\">\"Die Wechseljahre haben meine Haut auf eine Weise verändert, auf die ich nicht vorbereitet war. Seit ich den PDRN Collagen Volume Balm gefunden habe, weiß ich nicht, wie ich vorher ohne ihn ausgekommen bin.\"</p>\n        <p class=\"testimonial-card__name\">LINNEA S., 47</p>\n      </article>\n      <article class=\"testimonial-card\">\n        <div class=\"testimonial-card__stars\">★ ★ ★ ★ ★</div>\n        <p class=\"testimonial-card__quote\">\"Ich war skeptisch. Ich habe alles ausprobiert. Aber nach einer Woche habe ich einen echten Unterschied bemerkt. Die Haut wirkt straffer und der Glow ist zurück.\"</p>\n        <p class=\"testimonial-card__name\">EMMA K., 43</p>\n      </article>\n      <article class=\"testimonial-card\">\n        <div class=\"testimonial-card__stars\">★ ★ ★ ★ ★</div>\n        <p class=\"testimonial-card__quote\">\"Ich hatte einen Termin in der Klinik geplant. So froh, dass ich zuerst das hier ausprobiert habe. Die Haut sieht weicher aus und fühlt sich voller an, ganz natürlich.\"</p>\n        <p class=\"testimonial-card__name\">MAJA L., 51</p>\n      </article>\n    </div>\n  </div>\n</section>\n<style>\n  .testimonials {\n    background: #FDF8F5;\n    padding: 64px 16px;\n    font-family: inherit;\n  }\n  .testimonials__inner {\n    max-width: 520px;\n    margin: 0 auto;\n    text-align: center;\n  }\n  .testimonials__eyebrow {\n    color: #d9879a;\n    font-size: 11px;\n    font-weight: 500;\n    letter-spacing: 0.18em;\n    text-transform: uppercase;\n    margin: 0 0 14px 0;\n  }\n  .testimonials__heading {\n    font-family: 'Playfair Display', 'DM Serif Display', Georgia, serif;\n    font-size: 28px;\n    font-weight: 500;\n    color: #1a1a1a;\n    margin: 0 0 36px 0;\n    line-height: 1.25;\n  }\n  .testimonials__cards {\n    display: flex;\n    flex-direction: column;\n    gap: 16px;\n  }\n  .testimonial-card {\n    background: #ffffff;\n    border-radius: 12px;\n    padding: 24px 22px;\n    text-align: left;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);\n  }\n  .testimonial-card__stars {\n    color: #d9879a;\n    font-size: 14px;\n    letter-spacing: 0.05em;\n    margin-bottom: 14px;\n    line-height: 1;\n  }\n  .testimonial-card__quote {\n    color: #1a1a1a;\n    font-size: 14px;\n    font-style: italic;\n    line-height: 1.55;\n    margin: 0 0 18px 0;\n  }\n  .testimonial-card__name {\n    color: #1a1a1a;\n    font-size: 12px;\n    font-weight: 600;\n    letter-spacing: 0.1em;\n    margin: 0;\n  }\n  @media (max-width: 480px) {\n    .testimonials {\n      padding: 48px 16px;\n    }\n    .testimonial-card {\n      padding: 20px 18px;\n    }\n  }\n</style>"
+      },
+      "blocks": {}
+    },
+    "image_with_blocks_eMGPgF": {
+      "settings": {},
+      "blocks": {
+        "custom_html_k6Xkyd": {
+          "settings": {
+            "custom_html": "<div class=\"trust-strip\">\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">60 TAGE ZUFRIEDENHEITSGARANTIE</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">DERMATOLOGISCH GETESTET</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">JETZT AUF LAGER</span>\n  </span>\n</div>\n<style>\n  .trust-strip {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-wrap: wrap;\n    gap: 24px;\n    padding: 16px 12px;\n    background: transparent;\n    font-family: inherit;\n  }\n  .trust-strip__item {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    color: #1a1a1a;\n    font-size: 12px;\n    font-weight: 400;\n    letter-spacing: 0.08em;\n    white-space: nowrap;\n  }\n  .trust-strip__check {\n    color: #d9879a;\n    font-weight: 700;\n    font-size: 13px;\n    line-height: 1;\n  }\n  .trust-strip__text {\n    line-height: 1;\n  }\n  @media (max-width: 480px) {\n    .trust-strip {\n      gap: 14px;\n      padding: 14px 8px;\n    }\n    .trust-strip__item {\n      font-size: 11px;\n      letter-spacing: 0.06em;\n    }\n  }\n</style>"
+          }
+        }
+      }
+    },
+    "image_with_blocks_3T38fW": {
+      "settings": {},
+      "blocks": {
+        "custom_html_FKkzw7": {
+          "settings": {
+            "custom_html": "<div class=\"trust-strip\">\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">60 TAGE ZUFRIEDENHEITSGARANTIE</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">DERMATOLOGISCH GETESTET</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">JETZT AUF LAGER</span>\n  </span>\n</div>\n<style>\n  .trust-strip {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-wrap: wrap;\n    gap: 24px;\n    padding: 16px 12px;\n    background: transparent;\n    font-family: inherit;\n  }\n  .trust-strip__item {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    color: #1a1a1a;\n    font-size: 12px;\n    font-weight: 400;\n    letter-spacing: 0.08em;\n    white-space: nowrap;\n  }\n  .trust-strip__check {\n    color: #d9879a;\n    font-weight: 700;\n    font-size: 13px;\n    line-height: 1;\n  }\n  .trust-strip__text {\n    line-height: 1;\n  }\n  @media (max-width: 480px) {\n    .trust-strip {\n      gap: 14px;\n      padding: 14px 8px;\n    }\n    .trust-strip__item {\n      font-size: 11px;\n      letter-spacing: 0.06em;\n    }\n  }\n</style>"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "poland"
+  },
+  "parent": "header-group.json",
+  "sections": {
+    "announcement_bar_rUQ7f8": {
+      "settings": {},
+      "blocks": {
+        "announcement_AdjtQA": {
+          "settings": {
+            "text": "<strong>60 dni</strong> gwarancji satysfakcji"
+          }
+        },
+        "announcement_7wVMdc": {
+          "settings": {
+            "text": "<strong>Darmowa dostawa </strong>od 150 zł"
+          }
+        }
+      }
+    }
+  }
+}

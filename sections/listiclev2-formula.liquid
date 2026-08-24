@@ -1,0 +1,796 @@
+<section class="listiclev2-formula section-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="lv2f-bg">
+    {% if section.settings.bg_image != blank %}
+      {{ section.settings.bg_image | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'lv2f-bg__img', alt: '' }}
+    {% endif %}
+  </div>
+  <div class="page-width lv2f-wrap">
+    {% if section.settings.eyebrow != blank %}
+      <p class="lv2f-eyebrow">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    {% if section.settings.title != blank %}
+      <h2 class="lv2f-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.body != blank %}
+      <div class="lv2f-body rte">{{ section.settings.body }}</div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="lv2f-cards">
+        {% for block in section.blocks %}
+          {% if block.type == 'feature' %}
+            <div class="lv2f-card lv2f-card-{{ block.id }}" {{ block.shopify_attributes }}>
+              <div class="lv2f-card__head">
+                <div class="lv2f-card__icon">
+                  {% if block.settings.icon_image != blank %}
+                    {{ block.settings.icon_image | image_url: width: 80 | image_tag: loading: 'lazy', alt: block.settings.heading }}
+                  {% elsif block.settings.icon_svg != blank %}
+                    <span class="lv2f-card__svg">{{ block.settings.icon_svg }}</span>
+                  {% endif %}
+                </div>
+                {% if block.settings.heading != blank %}
+                  <h3 class="lv2f-card__heading">{{ block.settings.heading }}</h3>
+                {% endif %}
+              </div>
+              {% if block.settings.description != blank %}
+                <div class="lv2f-card__desc rte">{{ block.settings.description }}</div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .section-{{ section.id }} {
+    position: relative;
+    background: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }} .lv2f-bg {
+    position: absolute;
+    inset: 0;
+    opacity: {{ section.settings.bg_image_opacity | divided_by: 100.0 }};
+    pointer-events: none;
+  }
+
+  .section-{{ section.id }} .lv2f-bg__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .section-{{ section.id }} .lv2f-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: {{ section.settings.container_max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  .section-{{ section.id }} .lv2f-eyebrow {
+    font-size: {{ section.settings.eyebrow_font_size_mobile }}px;
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: {{ section.settings.eyebrow_color }};
+    max-width: {{ section.settings.title_max_width }}px;
+    width: 100%;
+    text-align: {{ section.settings.text_align }};
+    {% if section.settings.text_align == 'left' %}
+      margin-left: 0;
+      margin-right: auto;
+    {% elsif section.settings.text_align == 'right' %}
+      margin-left: auto;
+      margin-right: 0;
+    {% else %}
+      margin-left: auto;
+      margin-right: auto;
+    {% endif %}
+  }
+
+  .section-{{ section.id }} .lv2f-title {
+    font-size: {{ section.settings.title_font_size_mobile }}px;
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: {{ section.settings.title_color }};
+    max-width: {{ section.settings.title_max_width }}px;
+    width: 100%;
+    text-align: {{ section.settings.text_align }};
+    {% if section.settings.text_align == 'left' %}
+      margin-left: 0;
+      margin-right: auto;
+    {% elsif section.settings.text_align == 'right' %}
+      margin-left: auto;
+      margin-right: 0;
+    {% else %}
+      margin-left: auto;
+      margin-right: auto;
+    {% endif %}
+  }
+
+  .section-{{ section.id }} .lv2f-body {
+    font-size: {{ section.settings.body_font_size_mobile }}px;
+    line-height: 1.6;
+    max-width: {{ section.settings.body_max_width }}px;
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 32px;
+    color: {{ section.settings.body_color }};
+    text-align: {{ section.settings.text_align }};
+    {% if section.settings.text_align == 'left' %}
+      margin-left: 0;
+      margin-right: auto;
+    {% elsif section.settings.text_align == 'right' %}
+      margin-left: auto;
+      margin-right: 0;
+    {% else %}
+      margin-left: auto;
+      margin-right: auto;
+    {% endif %}
+  }
+
+  .section-{{ section.id }} .lv2f-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: {{ section.settings.card_gap_mobile }}px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .section-{{ section.id }} .lv2f-card {
+    display: flex;
+    flex-direction: column;
+    align-items: {{ section.settings.card_align_items }};
+    justify-content: {{ section.settings.card_justify_content }};
+    gap: {{ section.settings.card_inner_gap }}px;
+    text-align: left;
+    background: {{ section.settings.card_bg_color }};
+    border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+    border-radius: {{ section.settings.card_radius_tl }}px {{ section.settings.card_radius_tr }}px {{ section.settings.card_radius_br }}px {{ section.settings.card_radius_bl }}px;
+    padding: {{ section.settings.card_padding_vertical }}px {{ section.settings.card_padding_horizontal }}px;
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }} .lv2f-card__head {
+    display: flex;
+    flex-direction: row;
+    align-items: {{ section.settings.card_header_align_items }};
+    justify-content: {{ section.settings.card_header_justify_content }};
+    gap: {{ section.settings.card_header_gap }}px;
+    width: 100%;
+  }
+
+  {% for block in section.blocks %}
+    {% if block.type == 'feature' %}
+      .section-{{ section.id }} .lv2f-card-{{ block.id }} {
+        {% if block.settings.card_bg_color != blank %}background: {{ block.settings.card_bg_color }};{% endif %}
+        {% if block.settings.card_border_color != blank %}border-color: {{ block.settings.card_border_color }};{% endif %}
+      }
+    {% endif %}
+  {% endfor %}
+
+  .section-{{ section.id }} .lv2f-card__icon {
+    flex-shrink: 0;
+    width: {{ section.settings.icon_size_mobile }}px;
+    height: {{ section.settings.icon_size_mobile }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .section-{{ section.id }} .lv2f-card__icon img {
+    width: 100%;
+    height: auto;
+  }
+
+  .section-{{ section.id }} .lv2f-card__svg svg {
+    width: {{ section.settings.icon_size_mobile }}px;
+    height: {{ section.settings.icon_size_mobile }}px;
+  }
+
+  .section-{{ section.id }} .lv2f-card__heading {
+    font-size: {{ section.settings.card_heading_font_size_mobile }}px;
+    margin: 0;
+    font-weight: 600;
+    color: {{ section.settings.card_heading_color }};
+    flex: 1;
+    min-width: 0;
+  }
+
+  .section-{{ section.id }} .lv2f-card__desc {
+    font-size: {{ section.settings.card_desc_font_size_mobile }}px;
+    line-height: 1.5;
+    color: {{ section.settings.card_desc_color }};
+    width: 100%;
+  }
+
+  .section-{{ section.id }} .lv2f-card__desc p {
+    margin: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2f-eyebrow {
+      font-size: {{ section.settings.eyebrow_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2f-title {
+      font-size: {{ section.settings.title_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2f-body {
+      font-size: {{ section.settings.body_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2f-cards {
+      grid-template-columns: repeat(3, 1fr);
+      gap: {{ section.settings.card_gap_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2f-card__icon {
+      width: {{ section.settings.icon_size_desktop }}px;
+      height: {{ section.settings.icon_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2f-card__svg svg {
+      width: {{ section.settings.icon_size_desktop }}px;
+      height: {{ section.settings.icon_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2f-card__heading {
+      font-size: {{ section.settings.card_heading_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2f-card__desc {
+      font-size: {{ section.settings.card_desc_font_size_desktop }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Listiclev2 Formula",
+  "tag": "section",
+  "class": "section-listiclev2-formula",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Our Revolutionary Formula:"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "SAXZ-12®"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body text"
+    },
+    {
+      "type": "header",
+      "content": "Intro layout"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" },
+        { "value": "justify", "label": "Justify" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "title_max_width",
+      "min": 200,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Title max width",
+      "default": 650
+    },
+    {
+      "type": "range",
+      "id": "body_max_width",
+      "min": 200,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Body max width",
+      "default": 650
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f5f0eb"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Background image opacity",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_font_size_mobile",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Eyebrow (mobile)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_font_size_desktop",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Eyebrow (desktop)",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "min": 24,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "label": "Title (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_desktop",
+      "min": 28,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "label": "Title (desktop)",
+      "default": 48
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "body_font_size_mobile",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Body (mobile)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "body_font_size_desktop",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Body (desktop)",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body color",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "unit": "px",
+      "label": "Card border width",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "header",
+      "content": "Card border radius"
+    },
+    {
+      "type": "range",
+      "id": "card_radius_tl",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Top left",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_radius_tr",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Top right",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "card_radius_br",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom right",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "card_radius_bl",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom left",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Card layout"
+    },
+    {
+      "type": "select",
+      "id": "card_align_items",
+      "label": "Align items",
+      "options": [
+        { "value": "flex-start", "label": "Start" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "End" },
+        { "value": "stretch", "label": "Stretch" }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "select",
+      "id": "card_justify_content",
+      "label": "Justify content",
+      "options": [
+        { "value": "flex-start", "label": "Start" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "End" },
+        { "value": "space-between", "label": "Space between" }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "select",
+      "id": "card_header_align_items",
+      "label": "Header align items (icon + title)",
+      "options": [
+        { "value": "flex-start", "label": "Start" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "End" },
+        { "value": "stretch", "label": "Stretch" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "card_header_justify_content",
+      "label": "Header justify content (icon + title)",
+      "options": [
+        { "value": "flex-start", "label": "Start" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "End" },
+        { "value": "space-between", "label": "Space between" }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "range",
+      "id": "card_header_gap",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between icon and title",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "card_inner_gap",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between header and description",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "card_padding_vertical",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Card padding vertical",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "card_padding_horizontal",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Card padding horizontal",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Card spacing"
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Card gap (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Card gap (desktop)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon size (mobile)",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "icon_size_desktop",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon size (desktop)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "card_heading_font_size_mobile",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Card heading (mobile)",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "card_heading_font_size_desktop",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Card heading (desktop)",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "card_heading_color",
+      "label": "Card heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "card_desc_font_size_mobile",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Card description (mobile)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "card_desc_font_size_desktop",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Card description (desktop)",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "card_desc_color",
+      "label": "Card description color",
+      "default": "#555555"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "min": 400,
+      "max": 1400,
+      "step": 10,
+      "unit": "px",
+      "label": "Container max width",
+      "default": 750,
+      "info": "Content container width. Section background stays full width."
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon image"
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Icon SVG"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Native Atelocollagen"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "color",
+          "id": "card_bg_color",
+          "label": "Card background override"
+        },
+        {
+          "type": "color",
+          "id": "card_border_color",
+          "label": "Card border override"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Listiclev2 Formula",
+      "blocks": [
+        { "type": "feature" },
+        { "type": "feature" },
+        { "type": "feature" }
+      ]
+    }
+  ]
+}
+{% endschema %}

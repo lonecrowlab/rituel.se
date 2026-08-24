@@ -1,0 +1,1517 @@
+{% comment %}
+  Before & After Slider v2 — RT-H02
+  Multi-card interactive before/after results with reviews.
+  Reuses the theme's existing before/after slider interaction pattern.
+{% endcomment %}
+
+{%- liquid
+  assign equal_height = section.settings.equal_height
+  assign mobile_slide_width = section.settings.mobile_slide_width | default: 85
+  assign tablet_slide_width = section.settings.tablet_slide_width | default: 55
+  assign desktop_slide_width = section.settings.desktop_slide_width | default: 30
+  assign card_gap = section.settings.card_gap | default: 24
+  assign image_radius = section.settings.slider_border_radius | default: 16
+  assign card_radius = section.settings.card_border_radius | default: 16
+-%}
+
+<section
+  class="bas-v2 section-{{ section.id }}{% if equal_height %} bas-v2--equal-height{% endif %}"
+  data-section-id="{{ section.id }}"
+>
+  <div class="bas-v2__container page-width">
+    {%- if section.settings.title != blank or section.settings.description != blank -%}
+      <div class="bas-v2__header bas-v2__align-{{ section.settings.heading_alignment }}">
+        {%- if section.settings.title != blank -%}
+          <{{ section.settings.heading_tag }} class="bas-v2__title">
+            {{ section.settings.title }}
+          </{{ section.settings.heading_tag }}>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <div class="bas-v2__description rte">
+            {{ section.settings.description }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="bas-v2__viewport" data-bas-v2-viewport>
+      <div class="bas-v2__track" data-bas-v2-track>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'result' -%}
+            <article class="bas-v2__card" {{ block.shopify_attributes }}>
+              <div
+                class="bas-v2__slider bas-v2__slider--aspect-{{ section.settings.slider_aspect_ratio }}"
+                data-bas-v2-slider
+                data-auto-slide="{{ section.settings.auto_slide }}"
+                data-auto-speed="{{ section.settings.auto_slide_speed }}"
+              >
+                <div class="bas-v2__image bas-v2__image--before">
+                  {%- if block.settings.before_image != blank -%}
+                    {{
+                      block.settings.before_image
+                      | image_url: width: 800
+                      | image_tag:
+                        loading: 'lazy',
+                        class: 'bas-v2__img',
+                        widths: '320, 480, 640, 800',
+                        sizes: '(min-width: 990px) 28vw, (min-width: 750px) 50vw, 85vw'
+                    }}
+                  {%- else -%}
+                    <div class="bas-v2__placeholder">
+                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                <div class="bas-v2__image bas-v2__image--after">
+                  {%- if block.settings.after_image != blank -%}
+                    {{
+                      block.settings.after_image
+                      | image_url: width: 800
+                      | image_tag:
+                        loading: 'lazy',
+                        class: 'bas-v2__img',
+                        widths: '320, 480, 640, 800',
+                        sizes: '(min-width: 990px) 28vw, (min-width: 750px) 50vw, 85vw'
+                    }}
+                  {%- else -%}
+                    <div class="bas-v2__placeholder">
+                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                  {%- endif -%}
+                </div>
+
+                {%- if section.settings.show_day_labels -%}
+                  {%- if block.settings.before_day != blank -%}
+                    <span class="bas-v2__day bas-v2__day--before">{{ block.settings.before_day }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.after_day != blank -%}
+                    <span class="bas-v2__day bas-v2__day--after">{{ block.settings.after_day }}</span>
+                  {%- endif -%}
+                {%- endif -%}
+
+                <div class="bas-v2__control" data-bas-v2-handle>
+                  <div class="bas-v2__handle" aria-hidden="true">
+                    <svg class="bas-v2__chevron bas-v2__chevron--left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <svg class="bas-v2__chevron bas-v2__chevron--right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                      <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bas-v2__content">
+                {%- if block.settings.stars > 0 -%}
+                  <div
+                    class="bas-v2__stars"
+                    role="img"
+                    aria-label="{{ block.settings.stars }} out of 5 stars"
+                  >
+                    {%- for i in (1..5) -%}
+                      <svg
+                        class="bas-v2__star{% if i <= block.settings.stars %} bas-v2__star--filled{% endif %}"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 576 512"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                      </svg>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.title != blank -%}
+                  <h3 class="bas-v2__card-title">{{ block.settings.title }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.review != blank -%}
+                  <p class="bas-v2__review">“{{ block.settings.review | escape | strip }}”</p>
+                {%- endif -%}
+
+                {%- if block.settings.reviewer_name != blank or section.settings.show_verified_badge -%}
+                  <div class="bas-v2__meta">
+                    {%- if block.settings.reviewer_name != blank -%}
+                      <p class="bas-v2__reviewer">— {{ block.settings.reviewer_name }}</p>
+                    {%- endif -%}
+
+                    {%- if section.settings.show_verified_badge -%}
+                      <div class="bas-v2__verified">
+                        <svg class="bas-v2__verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M9.5924 3.20027C9.34888 3.4078 9.22711 3.51158 9.09706 3.59874C8.79896 3.79854 8.46417 3.93721 8.1121 4.00672C7.95851 4.03705 7.79903 4.04977 7.48008 4.07522C6.6787 4.13918 6.278 4.17115 5.94371 4.28923C5.17051 4.56233 4.56233 5.17051 4.28923 5.94371C4.17115 6.278 4.13918 6.6787 4.07522 7.48008C4.04977 7.79903 4.03705 7.95851 4.00672 8.1121C3.93721 8.46417 3.79854 8.79896 3.59874 9.09706C3.51158 9.22711 3.40781 9.34887 3.20027 9.5924C2.67883 10.2043 2.4181 10.5102 2.26522 10.8301C1.91159 11.57 1.91159 12.43 2.26522 13.1699C2.41811 13.4898 2.67883 13.7957 3.20027 14.4076C3.40778 14.6511 3.51158 14.7729 3.59874 14.9029C3.79854 15.201 3.93721 15.5358 4.00672 15.8879C4.03705 16.0415 4.04977 16.201 4.07522 16.5199C4.13918 17.3213 4.17115 17.722 4.28923 18.0563C4.56233 18.8295 5.17051 19.4377 5.94371 19.7108C6.278 19.8288 6.6787 19.8608 7.48008 19.9248C7.79903 19.9502 7.95851 19.963 8.1121 19.9933C8.46417 20.0628 8.79896 20.2015 9.09706 20.4013C9.22711 20.4884 9.34887 20.5922 9.5924 20.7997C10.2043 21.3212 10.5102 21.5819 10.8301 21.7348C11.57 22.0884 12.43 22.0884 13.1699 21.7348C13.4898 21.5819 13.7957 21.3212 14.4076 20.7997C14.6511 20.5922 14.7729 20.4884 14.9029 20.4013C15.201 20.2015 15.5358 20.0628 15.8879 19.9933C16.0415 19.963 16.201 19.9502 16.5199 19.9248C17.3213 19.8608 17.722 19.8288 18.0563 19.7108C18.8295 19.4377 19.4377 18.8295 19.7108 18.0563C19.8288 17.722 19.8608 17.3213 19.9248 16.5199C19.9502 16.201 19.963 16.0415 19.9933 15.8879C20.0628 15.5358 20.2015 15.201 20.4013 14.9029C20.4884 14.7729 20.5922 14.6511 20.7997 14.4076C21.3212 13.7957 21.5819 13.4898 21.7348 13.1699C22.0884 12.43 22.0884 11.57 21.7348 10.8301C21.5819 10.5102 21.3212 10.2043 20.7997 9.5924C20.5922 9.34887 20.4884 9.22711 20.4013 9.09706C20.2015 8.79896 20.0628 8.46417 19.9933 8.1121C19.963 7.95851 19.9502 7.79903 19.9248 7.48008C19.8608 6.6787 19.8288 6.278 19.7108 5.94371C19.4377 5.17051 18.8295 4.56233 18.0563 4.28923C17.722 4.17115 17.3213 4.13918 16.5199 4.07522C16.201 4.04977 16.0415 4.03705 15.8879 4.00672C15.5358 3.93721 15.201 3.79854 14.9029 3.59874C14.7729 3.51158 14.6511 3.40781 14.4076 3.20027C13.7957 2.67883 13.4898 2.41811 13.1699 2.26522C12.43 1.91159 11.57 1.91159 10.8301 2.26522C10.5102 2.4181 10.2043 2.67883 9.5924 3.20027ZM16.3735 9.86314C16.6913 9.5453 16.6913 9.03 16.3735 8.71216C16.0557 8.39433 15.5403 8.39433 15.2225 8.71216L10.3723 13.5624L8.77746 11.9676C8.45963 11.6498 7.94432 11.6498 7.62649 11.9676C7.30866 12.2854 7.30866 12.8007 7.62649 13.1186L9.79678 15.2889C10.1146 15.6067 10.6299 15.6067 10.9478 15.2889L16.3735 9.86314Z" fill="currentColor"/>
+                        </svg>
+                        <span class="bas-v2__verified-text">{{ section.settings.verified_badge_text }}</span>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    {% if section.settings.gradient_enabled %}
+      background: {{ section.settings.gradient_background }};
+    {% endif %}
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+  }
+
+  .section-{{ section.id }} .bas-v2__container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} .bas-v2__container {
+      padding: 0 5rem;
+    }
+  }
+
+  .section-{{ section.id }} .bas-v2__header {
+    margin-bottom: {{ section.settings.header_spacing }}px;
+  }
+
+  .section-{{ section.id }} .bas-v2__align-left { text-align: left; }
+  .section-{{ section.id }} .bas-v2__align-center { text-align: center; }
+  .section-{{ section.id }} .bas-v2__align-right { text-align: right; }
+
+  .section-{{ section.id }} .bas-v2__title {
+    color: {{ section.settings.title_color }};
+    font-size: {{ section.settings.title_size_desktop }}px;
+    font-weight: {{ section.settings.title_font_weight }};
+    line-height: 1.2;
+    margin: 0 0 {{ section.settings.title_margin_bottom }}px;
+  }
+
+  .section-{{ section.id }} .bas-v2__description {
+    color: {{ section.settings.description_color }};
+    font-size: {{ section.settings.description_size_desktop }}px;
+    line-height: 1.5;
+    max-width: 42rem;
+    margin: 0;
+  }
+
+  .section-{{ section.id }} .bas-v2__align-center .bas-v2__description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-{{ section.id }} .bas-v2__align-right .bas-v2__description {
+    margin-left: auto;
+  }
+
+  .section-{{ section.id }} .bas-v2__description p {
+    margin: 0;
+  }
+
+  .section-{{ section.id }} .bas-v2__card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: {{ section.settings.card_background }};
+    border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+    border-radius: {{ card_radius }}px;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .section-{{ section.id }}.bas-v2--equal-height .bas-v2__card {
+    height: 100%;
+  }
+
+  .section-{{ section.id }}.bas-v2--equal-height .bas-v2__content {
+    flex: 1 1 auto;
+  }
+
+  /* Native horizontal scroll — free-flow (no snap) */
+  .section-{{ section.id }} .bas-v2__viewport {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+    padding-bottom: 1rem;
+    scroll-behavior: auto;
+  }
+
+  .section-{{ section.id }} .bas-v2__viewport.is-dragging {
+    cursor: grabbing;
+  }
+
+  .section-{{ section.id }} .bas-v2__viewport::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .section-{{ section.id }} .bas-v2__viewport::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.08);
+    border-radius: 999px;
+  }
+
+  .section-{{ section.id }} .bas-v2__viewport::-webkit-scrollbar-thumb {
+    background: rgba(15, 23, 42, 0.3);
+    border-radius: 999px;
+  }
+
+  .section-{{ section.id }} .bas-v2__track {
+    display: flex;
+    gap: {{ card_gap }}px;
+    min-width: 100%;
+    {% if equal_height %}
+      align-items: stretch;
+    {% endif %}
+  }
+
+  .section-{{ section.id }} .bas-v2__card {
+    flex: 0 0 {{ mobile_slide_width }}%;
+    width: {{ mobile_slide_width }}%;
+    max-width: {{ mobile_slide_width }}%;
+  }
+
+  @media screen and (max-width: 749px) {
+    .section-{{ section.id }} .bas-v2__viewport {
+      margin-right: -1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .section-{{ section.id }} .bas-v2__viewport {
+      margin-right: -5rem;
+      padding-right: 5rem;
+    }
+
+    .section-{{ section.id }} .bas-v2__card {
+      flex: 0 0 {{ tablet_slide_width }}%;
+      width: {{ tablet_slide_width }}%;
+      max-width: {{ tablet_slide_width }}%;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .section-{{ section.id }} .bas-v2__card {
+      flex: 0 0 {{ desktop_slide_width }}%;
+      width: {{ desktop_slide_width }}%;
+      max-width: {{ desktop_slide_width }}%;
+    }
+  }
+
+  /* Before/After comparison — radius on top only */
+  .section-{{ section.id }} .bas-v2__slider {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    border-radius: {{ image_radius }}px {{ image_radius }}px 0 0;
+    user-select: none;
+    touch-action: pan-y pinch-zoom;
+    cursor: ew-resize;
+    background: #e8e4df;
+    flex-shrink: 0;
+  }
+
+  .section-{{ section.id }} .bas-v2__slider--aspect-square { aspect-ratio: 1 / 1; }
+  .section-{{ section.id }} .bas-v2__slider--aspect-portrait { aspect-ratio: 3 / 4; }
+  .section-{{ section.id }} .bas-v2__slider--aspect-landscape { aspect-ratio: 16 / 9; }
+  .section-{{ section.id }} .bas-v2__slider--aspect-original {
+    aspect-ratio: 1 / 1;
+  }
+
+  .section-{{ section.id }} .bas-v2__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }} .bas-v2__image--before {
+    z-index: 1;
+  }
+
+  .section-{{ section.id }} .bas-v2__image--after {
+    z-index: 2;
+    clip-path: inset(0 0 0 50%);
+  }
+
+  .section-{{ section.id }} .bas-v2__img {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: cover;
+    display: block;
+  }
+
+  .section-{{ section.id }} .bas-v2__placeholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #ebe7e2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .section-{{ section.id }} .bas-v2__placeholder svg {
+    width: 60%;
+    height: auto;
+  }
+
+  .section-{{ section.id }} .bas-v2__day {
+    position: absolute;
+    bottom: {{ section.settings.day_label_offset }}px;
+    z-index: 4;
+    pointer-events: none;
+    padding: {{ section.settings.day_padding_v }}px {{ section.settings.day_padding_h }}px;
+    background: {{ section.settings.day_bg_color }};
+    color: {{ section.settings.day_text_color }};
+    font-size: {{ section.settings.day_font_size }}px;
+    font-weight: {{ section.settings.day_font_weight }};
+    border-radius: {{ section.settings.day_border_radius }}px;
+    line-height: 1.2;
+  }
+
+  .section-{{ section.id }} .bas-v2__day--before {
+    left: {{ section.settings.day_label_offset }}px;
+  }
+
+  .section-{{ section.id }} .bas-v2__day--after {
+    right: {{ section.settings.day_label_offset }}px;
+  }
+
+  .section-{{ section.id }} .bas-v2__control {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: {{ section.settings.handle_line_width }}px;
+    height: 100%;
+    background: {{ section.settings.handle_color }};
+    transform: translateX(-50%);
+    z-index: 3;
+    cursor: ew-resize;
+  }
+
+  .section-{{ section.id }} .bas-v2__handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    width: {{ section.settings.handle_size | plus: 12 }}px;
+    height: {{ section.settings.handle_size }}px;
+    min-width: 44px;
+    min-height: 28px;
+    padding: 0 8px;
+    box-sizing: border-box;
+    background: {{ section.settings.handle_color }};
+    border-radius: 999px;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
+    color: {{ section.settings.handle_arrow_color }};
+  }
+
+  .section-{{ section.id }} .bas-v2__chevron {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .section-{{ section.id }} .bas-v2__content {
+    padding: {{ section.settings.content_padding }}px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .section-{{ section.id }} .bas-v2__stars {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-bottom: 2px;
+  }
+
+  .section-{{ section.id }} .bas-v2__star {
+    width: {{ section.settings.star_size }}px;
+    height: {{ section.settings.star_size }}px;
+    fill: {{ section.settings.star_empty_color }};
+  }
+
+  .section-{{ section.id }} .bas-v2__star--filled {
+    fill: {{ section.settings.star_color }};
+  }
+
+  .section-{{ section.id }} .bas-v2__card-title {
+    color: {{ section.settings.card_title_color }};
+    font-size: {{ section.settings.card_title_size_desktop }}px;
+    font-weight: {{ section.settings.card_title_font_weight }};
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  .section-{{ section.id }} .bas-v2__review {
+    color: {{ section.settings.review_color }};
+    font-size: {{ section.settings.review_size_desktop }}px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .section-{{ section.id }} .bas-v2__reviewer {
+    color: {{ section.settings.reviewer_color }};
+    font-size: {{ section.settings.reviewer_size_desktop }}px;
+    font-weight: 400;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .section-{{ section.id }} .bas-v2__meta {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .section-{{ section.id }} .bas-v2__verified {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .section-{{ section.id }} .bas-v2__verified-icon {
+    width: {{ section.settings.verified_badge_icon_size }}px;
+    height: {{ section.settings.verified_badge_icon_size }}px;
+    color: {{ section.settings.verified_badge_icon_color }};
+    flex-shrink: 0;
+  }
+
+  .section-{{ section.id }} .bas-v2__verified-text {
+    color: {{ section.settings.verified_badge_text_color }};
+    font-size: {{ section.settings.verified_badge_text_size }}px;
+    font-weight: {{ section.settings.verified_badge_text_weight }};
+    line-height: 1.2;
+  }
+
+  @media screen and (max-width: 989px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+
+    .section-{{ section.id }} .bas-v2__title {
+      font-size: {{ section.settings.title_size_mobile }}px;
+    }
+
+    .section-{{ section.id }} .bas-v2__description {
+      font-size: {{ section.settings.description_size_mobile }}px;
+    }
+
+    .section-{{ section.id }} .bas-v2__card-title {
+      font-size: {{ section.settings.card_title_size_mobile }}px;
+    }
+
+    .section-{{ section.id }} .bas-v2__review {
+      font-size: {{ section.settings.review_size_mobile }}px;
+    }
+
+    .section-{{ section.id }} .bas-v2__reviewer {
+      font-size: {{ section.settings.reviewer_size_mobile }}px;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  class BasV2Slider {
+    constructor(wrapper) {
+      this.wrapper = wrapper;
+      this.control = wrapper.querySelector('[data-bas-v2-handle]');
+      this.afterImage = wrapper.querySelector('.bas-v2__image--after');
+      this.isDragging = false;
+      this.autoSlide = wrapper.dataset.autoSlide === 'true';
+      this.autoSpeed = parseInt(wrapper.dataset.autoSpeed, 10) || 3000;
+      this.autoSlideInterval = null;
+      this.touchStartX = 0;
+      this.touchStartY = 0;
+      this.isHorizontalSwipe = false;
+      this.init();
+    }
+
+    init() {
+      if (!this.control || !this.afterImage) return;
+
+      this.wrapper.addEventListener('mousedown', this.startDrag.bind(this));
+      document.addEventListener('mousemove', this.onDrag.bind(this));
+      document.addEventListener('mouseup', this.stopDrag.bind(this));
+
+      this.wrapper.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: true });
+      this.wrapper.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false });
+      this.wrapper.addEventListener('touchend', this.handleTouchEnd.bind(this));
+      this.wrapper.addEventListener('click', this.handleClick.bind(this));
+
+      if (this.autoSlide) {
+        this.startAutoSlide();
+        this.wrapper.addEventListener('mouseenter', () => this.stopAutoSlide());
+        this.wrapper.addEventListener('mouseleave', () => this.startAutoSlide());
+      }
+    }
+
+    handleClick(e) {
+      if (e.type === 'click' && e.detail === 0) return;
+      const rect = this.wrapper.getBoundingClientRect();
+      const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      this.updateSlider(percentage);
+      this.stopAutoSlide();
+    }
+
+    handleTouchStart(e) {
+      this.touchStartX = e.touches[0].clientX;
+      this.touchStartY = e.touches[0].clientY;
+      this.isHorizontalSwipe = false;
+      this.stopAutoSlide();
+    }
+
+    handleTouchMove(e) {
+      const touchX = e.touches[0].clientX;
+      const touchY = e.touches[0].clientY;
+      const deltaX = Math.abs(touchX - this.touchStartX);
+      const deltaY = Math.abs(touchY - this.touchStartY);
+
+      if (!this.isHorizontalSwipe && deltaX < 10 && deltaY < 10) return;
+
+      if (!this.isHorizontalSwipe) {
+        this.isHorizontalSwipe = deltaX > deltaY;
+      }
+
+      if (this.isHorizontalSwipe) {
+        e.preventDefault();
+        this.isDragging = true;
+        const rect = this.wrapper.getBoundingClientRect();
+        const percentage = Math.max(0, Math.min(100, ((touchX - rect.left) / rect.width) * 100));
+        this.updateSlider(percentage);
+      }
+    }
+
+    handleTouchEnd() {
+      this.isDragging = false;
+      this.isHorizontalSwipe = false;
+      if (this.autoSlide) this.startAutoSlide();
+    }
+
+    startDrag(e) {
+      this.isDragging = true;
+      this.stopAutoSlide();
+      const rect = this.wrapper.getBoundingClientRect();
+      const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      this.updateSlider(percentage);
+    }
+
+    stopDrag() {
+      this.isDragging = false;
+      if (this.autoSlide) this.startAutoSlide();
+    }
+
+    onDrag(e) {
+      if (!this.isDragging) return;
+      e.preventDefault();
+      const rect = this.wrapper.getBoundingClientRect();
+      const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      this.updateSlider(percentage);
+    }
+
+    updateSlider(percentage) {
+      this.control.style.left = percentage + '%';
+      this.afterImage.style.clipPath = 'inset(0 0 0 ' + percentage + '%)';
+    }
+
+    startAutoSlide() {
+      this.stopAutoSlide();
+      let direction = 1;
+      let position = 50;
+      this.autoSlideInterval = setInterval(() => {
+        position += direction * 0.5;
+        if (position >= 100 || position <= 0) direction *= -1;
+        this.updateSlider(position);
+      }, this.autoSpeed / 100);
+    }
+
+    stopAutoSlide() {
+      if (this.autoSlideInterval) {
+        clearInterval(this.autoSlideInterval);
+        this.autoSlideInterval = null;
+      }
+    }
+  }
+
+  /* Desktop mouse drag → native horizontal scroll (avoids text selection) */
+  function initNativeScrollDrag(viewport) {
+    if (!viewport || viewport.dataset.scrollDrag === 'true') return;
+    viewport.dataset.scrollDrag = 'true';
+
+    let isDown = false;
+    let startX = 0;
+    let startScrollLeft = 0;
+    let moved = false;
+
+    viewport.addEventListener('mousedown', function(e) {
+      if (e.button !== 0) return;
+      /* Let before/after image handle its own drag */
+      if (e.target.closest('[data-bas-v2-slider]')) return;
+
+      isDown = true;
+      moved = false;
+      startX = e.pageX;
+      startScrollLeft = viewport.scrollLeft;
+      viewport.classList.add('is-dragging');
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (!isDown) return;
+      e.preventDefault();
+      const walk = e.pageX - startX;
+      if (Math.abs(walk) > 3) moved = true;
+      viewport.scrollLeft = startScrollLeft - walk;
+    });
+
+    document.addEventListener('mouseup', function() {
+      if (!isDown) return;
+      isDown = false;
+      viewport.classList.remove('is-dragging');
+    });
+
+    /* Prevent click-through after a drag */
+    viewport.addEventListener('click', function(e) {
+      if (!moved) return;
+      if (e.target.closest('[data-bas-v2-slider]')) return;
+      e.preventDefault();
+      e.stopPropagation();
+      moved = false;
+    }, true);
+
+    viewport.addEventListener('dragstart', function(e) {
+      e.preventDefault();
+    });
+  }
+
+  function initBasV2(root) {
+    const scope = root || document;
+    const sections = scope.querySelectorAll
+      ? scope.querySelectorAll('.bas-v2.section-{{ section.id }}')
+      : [];
+
+    const targets = sections.length
+      ? sections
+      : scope.classList && scope.classList.contains('bas-v2')
+        ? [scope]
+        : document.querySelectorAll('.bas-v2.section-{{ section.id }}');
+
+    targets.forEach((sectionEl) => {
+      sectionEl.querySelectorAll('[data-bas-v2-slider]').forEach((slider) => {
+        if (slider.dataset.initialized === 'true') return;
+        slider.dataset.initialized = 'true';
+        new BasV2Slider(slider);
+      });
+
+      const viewport = sectionEl.querySelector('[data-bas-v2-viewport]');
+      if (viewport) initNativeScrollDrag(viewport);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => initBasV2());
+  } else {
+    initBasV2();
+  }
+
+  document.addEventListener('shopify:section:load', (event) => {
+    if (!event.target.querySelector || !event.target.querySelector('.section-{{ section.id }}')) return;
+    event.target.querySelectorAll('[data-bas-v2-slider]').forEach((slider) => {
+      slider.dataset.initialized = 'false';
+    });
+    const viewport = event.target.querySelector('[data-bas-v2-viewport]');
+    if (viewport) viewport.dataset.scrollDrag = 'false';
+    initBasV2(event.target);
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Before & After Slider v2",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Verkliga resultat"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Före och efter från verifierade kunder. Dra i bilden för att se skillnaden.</p>"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Title tag",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "p", "label": "Paragraph" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Header alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Space below header",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "label": "Card gap",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "equal_height",
+      "label": "Equal height",
+      "default": true,
+      "info": "Makes all result cards the same height."
+    },
+    {
+      "type": "range",
+      "id": "mobile_slide_width",
+      "min": 70,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Mobile slide width",
+      "default": 85,
+      "info": "85% ≈ 1.2 cards visible. Lower = more peek of the next card."
+    },
+    {
+      "type": "range",
+      "id": "tablet_slide_width",
+      "min": 40,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Tablet slide width",
+      "default": 55
+    },
+    {
+      "type": "range",
+      "id": "desktop_slide_width",
+      "min": 20,
+      "max": 60,
+      "step": 1,
+      "unit": "%",
+      "label": "Desktop slide width",
+      "default": 30,
+      "info": "30% ≈ 3 cards with peek of the next."
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Card border width",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border color",
+      "default": "#d4d4d4"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Card border radius",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Content padding",
+      "default": 16,
+      "info": "Padding around stars, title, review, and name inside the card."
+    },
+    {
+      "type": "header",
+      "content": "Before / after slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_slide",
+      "label": "Enable auto slide",
+      "default": false,
+      "info": "Gently animates the before/after handle"
+    },
+    {
+      "type": "range",
+      "id": "auto_slide_speed",
+      "min": 1000,
+      "max": 8000,
+      "step": 500,
+      "unit": "ms",
+      "label": "Auto slide speed",
+      "default": 3000
+    },
+    {
+      "type": "select",
+      "id": "slider_aspect_ratio",
+      "label": "Aspect ratio",
+      "options": [
+        { "value": "square", "label": "Square (1:1)" },
+        { "value": "portrait", "label": "Portrait (3:4)" },
+        { "value": "landscape", "label": "Landscape (16:9)" },
+        { "value": "original", "label": "Original" }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "range",
+      "id": "slider_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Image top border radius",
+      "default": 16,
+      "info": "Applied to the top corners only. Bottom is square so it meets the card content."
+    },
+    {
+      "type": "color",
+      "id": "handle_color",
+      "label": "Handle / line color",
+      "default": "#F5F0E8"
+    },
+    {
+      "type": "color",
+      "id": "handle_arrow_color",
+      "label": "Handle arrow color",
+      "default": "#3a3a3a"
+    },
+    {
+      "type": "range",
+      "id": "handle_size",
+      "min": 28,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "label": "Handle height",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "handle_line_width",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "label": "Divider line width",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_day_labels",
+      "label": "Show day labels",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "day_bg_color",
+      "label": "Day label background",
+      "default": "#C4B5A8"
+    },
+    {
+      "type": "color",
+      "id": "day_text_color",
+      "label": "Day label text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "day_font_size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Day label font size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "day_font_weight",
+      "min": 400,
+      "max": 700,
+      "step": 100,
+      "label": "Day label font weight",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "day_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Day label radius",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "day_padding_v",
+      "min": 2,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Day label padding vertical",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "day_padding_h",
+      "min": 6,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Day label padding horizontal",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "day_label_offset",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Day label inset",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Card content style"
+    },
+    {
+      "type": "range",
+      "id": "star_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Star size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#C9A227"
+    },
+    {
+      "type": "color",
+      "id": "star_empty_color",
+      "label": "Empty star color",
+      "default": "#E5E0D8"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Result title color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "card_title_size_desktop",
+      "min": 14,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Result title size — desktop",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "card_title_size_mobile",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Result title size — mobile",
+      "default": 17
+    },
+    {
+      "type": "range",
+      "id": "card_title_font_weight",
+      "min": 400,
+      "max": 800,
+      "step": 100,
+      "label": "Result title weight",
+      "default": 700
+    },
+    {
+      "type": "color",
+      "id": "review_color",
+      "label": "Review color",
+      "default": "#3a3a3a"
+    },
+    {
+      "type": "range",
+      "id": "review_size_desktop",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Review size — desktop",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "review_size_mobile",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Review size — mobile",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "reviewer_color",
+      "label": "Reviewer name color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "reviewer_size_desktop",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Reviewer size — desktop",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "reviewer_size_mobile",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Reviewer size — mobile",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Verified badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_verified_badge",
+      "label": "Show verified badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "verified_badge_text",
+      "label": "Verified badge text",
+      "default": "Verifierad köpare"
+    },
+    {
+      "type": "color",
+      "id": "verified_badge_icon_color",
+      "label": "Verified icon color",
+      "default": "#16b3c7"
+    },
+    {
+      "type": "range",
+      "id": "verified_badge_icon_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Verified icon size",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "verified_badge_text_color",
+      "label": "Verified text color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "verified_badge_text_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Verified text size",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "verified_badge_text_weight",
+      "label": "Verified text weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#F5F0E8"
+    },
+    {
+      "type": "checkbox",
+      "id": "gradient_enabled",
+      "label": "Enable gradient background",
+      "default": false
+    },
+    {
+      "type": "color_background",
+      "id": "gradient_background",
+      "label": "Gradient background",
+      "default": "linear-gradient(180deg, #F5F0E8, #EDE6DB)"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Section title color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "min": 20,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Section title size — desktop",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "min": 18,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Section title size — mobile",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "title_font_weight",
+      "min": 400,
+      "max": 800,
+      "step": 100,
+      "label": "Section title weight",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Title bottom margin",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#4a4a4a"
+    },
+    {
+      "type": "range",
+      "id": "description_size_desktop",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size — desktop",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size — mobile",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top — desktop",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom — desktop",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding top — mobile",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding bottom — mobile",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "result",
+      "name": "Result",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Before"
+        },
+        {
+          "type": "image_picker",
+          "id": "before_image",
+          "label": "Before image"
+        },
+        {
+          "type": "text",
+          "id": "before_day",
+          "label": "Day",
+          "default": "Dag 1"
+        },
+        {
+          "type": "header",
+          "content": "After"
+        },
+        {
+          "type": "image_picker",
+          "id": "after_image",
+          "label": "After image"
+        },
+        {
+          "type": "text",
+          "id": "after_day",
+          "label": "Day",
+          "default": "Dag 30"
+        },
+        {
+          "type": "header",
+          "content": "Review"
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "label": "Stars",
+          "default": 5,
+          "info": "Set to 0 to hide stars"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Synliga resultat på mogen hud"
+        },
+        {
+          "type": "textarea",
+          "id": "review",
+          "label": "Review",
+          "default": "Jag var skeptisk efter att ha provat allt. Men efter 3 veckor frågade min syster vad jag gjort, hon trodde jag hade injicerat. Det här är det första som faktiskt fungerar för mogen hud."
+        },
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer name",
+          "default": "Emma. N, 56"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Before & After Slider v2",
+      "settings": {
+        "title": "Verkliga resultat",
+        "description": "<p>Före och efter från verifierade kunder. Dra i bilden för att se skillnaden.</p>",
+        "desktop_slide_width": 30,
+        "mobile_slide_width": 85,
+        "card_border_width": 1,
+        "card_border_color": "#d4d4d4",
+        "content_padding": 16,
+        "show_verified_badge": true,
+        "verified_badge_text": "Verifierad köpare"
+      },
+      "blocks": [
+        {
+          "type": "result",
+          "settings": {
+            "before_day": "Dag 1",
+            "after_day": "Dag 21",
+            "stars": 5,
+            "title": "Synliga resultat på mogen hud",
+            "review": "Jag var skeptisk efter att ha provat allt. Men efter 3 veckor frågade min syster vad jag gjort, hon trodde jag hade injicerat. Det här är det första som faktiskt fungerar för mogen hud.",
+            "reviewer_name": "Emma. N, 56"
+          }
+        },
+        {
+          "type": "result",
+          "settings": {
+            "before_day": "Dag 1",
+            "after_day": "Dag 42",
+            "stars": 5,
+            "title": "Mjukare textur & slätare panna",
+            "review": "Det första jag märkte var inte det jag väntade mig, det var hudens textur. Den känns mjukare, mer levande. Som om huden tar upp näring igen istället för att bara torka ut. Sen, efter 6 veckor, började även pannan se slätare ut.",
+            "reviewer_name": "Anna. B, 49"
+          }
+        },
+        {
+          "type": "result",
+          "settings": {
+            "before_day": "Dag 1",
+            "after_day": "Dag 30",
+            "stars": 5,
+            "title": "Mindre synliga fina linjer",
+            "review": "Jag har testat ungefär allt och är ganska trött på produkter som lovar runt. Den här är första gången på länge jag faktiskt ser skillnad, även på de fina linjerna.",
+            "reviewer_name": "Maja. L, 44"
+          }
+        },
+        {
+          "type": "result",
+          "settings": {
+            "before_day": "Dag 1",
+            "after_day": "Dag 21",
+            "stars": 5,
+            "title": "Synlig skillnad under ögonen",
+            "review": "Har provat alla krämer som finns på marknaden. Trodde inte längre på underverk. Men efter 3 veckor med PDRN-balmen är skillnaden så tydlig att jag inte längre behöver foundation under ögonen.",
+            "reviewer_name": "Sofia. H, 52"
+          }
+        },
+        {
+          "type": "result",
+          "settings": {
+            "before_day": "Dag 1",
+            "after_day": "Dag 60",
+            "stars": 5,
+            "title": "Huden känns verkligt annorlunda",
+            "review": "Jag hade gett upp hoppet, apotekshyllan, dyra behandlingar, inget höll vad det lovade. Så skepsisen var på topp. Men två månader in kan jag inte förneka det längre: huden känns annorlunda.",
+            "reviewer_name": "Eva. B, 68"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,2322 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "announcement_bar_wURXUp": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement_qctnmX": {
+          "type": "announcement",
+          "settings": {
+            "text": "Trusted by 250,000+ Users Worldwide",
+            "text_alignment": "center",
+            "icon_type": "google",
+            "icon": "",
+            "filled_icon": false,
+            "icon_svg": "",
+            "desktop_layout": "horizontal",
+            "mobile_layout": "horizontal",
+            "hidden_products": "",
+            "enable_specific_display": false,
+            "displayed_products": ""
+          }
+        }
+      },
+      "block_order": [
+        "announcement_qctnmX"
+      ],
+      "name": "t:sections.announcement-bar.name",
+      "settings": {
+        "columns_desktop": 1,
+        "columns_mobile": 1,
+        "desktop_spacing": 28,
+        "mobile_spacing": 16,
+        "show_separator": false,
+        "background_color": "#000000",
+        "gradient_background": "",
+        "text_color": "#ffffff",
+        "mobile_text_size": 8,
+        "desktop_text_size": 12,
+        "mobile_icon_size": 20,
+        "desktop_icon_size": 26,
+        "icon_color": "#ffffff",
+        "enable_infinite_scroll": false,
+        "scroll_speed": 60,
+        "infinite_scroll_spacing_desktop": 40,
+        "infinite_scroll_spacing_mobile": 24,
+        "slider_mobile": false,
+        "slider_desktop": false,
+        "type": "loop",
+        "autoplay": false,
+        "autoplay_speed": 3,
+        "hidden_products": "",
+        "enable_specific_display": false,
+        "displayed_products": "",
+        "padding_top": 8,
+        "padding_bottom": 8
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "custom_liquid_7zwMTX": {
+      "type": "custom-liquid",
+      "custom_css": [
+        "{position: absolute; width: 100%; z-index: 3; background: none; top: 30px; left: 0; text-align: center; padding: 20px;}",
+        ".gradient {background: none;}",
+        "img {max-width: 80px; margin: auto;}",
+        "@media only screen and (max-width: 768px) {img {max-width: 70px; } {top: 10px; }}"
+      ],
+      "name": "Header",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "custom_liquid": "<div class=\"\">\n<div>\n<div class=\"header-listicle\">\n<img src=\"https://cdn.shopify.com/s/files/1/0663/9458/7239/files/logo-white.png?v=1784271166\">\n</div>",
+        "color_scheme": "background-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "custom_liquid_TxyK7G": {
+      "type": "custom-liquid",
+      "name": "Import Font",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "custom_liquid": "<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n<link href=\"https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap\" rel=\"stylesheet\">\n\n<style>\nh1,h2,h3,h4,h5,.lv2co-heading,.lv2f-title,.lv2f-eyebrow{\n  font-family: \"Oswald\", sans-serif!important;\n  font-optical-sizing: auto;\n}\n.lv2co-heading a,.lv2f-title a,.lv2f-eyebrow a{\ntext-decoration:underline;\n}\n\n.shopify-section-group-header-group {\n    display: none;\n}\n</style>",
+        "color_scheme": "background-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "custom_hero_QeQ4pe": {
+      "type": "custom-hero",
+      "blocks": {
+        "subtitle_zHhYXc": {
+          "type": "subtitle",
+          "settings": {
+            "subtitle": "<h1>Discover How RITÚEL is Redefining <br/>Skincare with Revolutionary<br/> Anti-Aging Science</h1>",
+            "text_color": "#ffffff",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "margin_top": 0,
+            "margin_bottom": 24
+          }
+        }
+      },
+      "block_order": [
+        "subtitle_zHhYXc"
+      ],
+      "custom_css": [
+        "h1 {color: #fff !important; font-weight: 500; font-size: 35px;}",
+        "@media only screen and (max-width: 768px) {h1 {font-size: 25px !important; }}"
+      ],
+      "name": "Custom Hero",
+      "settings": {
+        "use_theme_colors": true,
+        "desktop_content_alignment": "center",
+        "mobile_content_alignment": "center",
+        "hero_image": "shopify://shop_images/listicle_sample.webp",
+        "image_position": "right",
+        "fit_image_to_height": true,
+        "overlay_content_desktop": true,
+        "overlay_content_mobile": true,
+        "overlay_position_desktop": "center",
+        "overlay_position_mobile": "center",
+        "overlay_padding": 28,
+        "desktop_aspect_ratio": "21/9",
+        "mobile_aspect_ratio": "1/1",
+        "enable_image_fade_mask": false,
+        "image_fade_mask_height": 50,
+        "section_padding_vertical": 60,
+        "section_padding_horizontal": 40,
+        "section_padding_vertical_mobile": 40,
+        "section_padding_horizontal_mobile": 20,
+        "content_padding_vertical": 20,
+        "content_padding_horizontal": 20,
+        "content_padding_mobile": 15,
+        "section_bg": "#f5f5f5",
+        "enable_gradient": false,
+        "section_gradient_background": "linear-gradient(135deg, rgba(247, 245, 252, 1), rgba(230, 225, 249, 1) 100%)",
+        "contain_section": false,
+        "container_max_width": 1200,
+        "container_bg_color": "#ffffff",
+        "enable_container_gradient": false,
+        "container_gradient_background": "linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(248, 248, 248, 1) 100%)",
+        "container_padding_top": 40,
+        "container_padding_right": 40,
+        "container_padding_bottom": 40,
+        "container_padding_left": 40,
+        "container_padding_top_mobile": 30,
+        "container_padding_right_mobile": 20,
+        "container_padding_bottom_mobile": 30,
+        "container_padding_left_mobile": 20,
+        "enable_border": false,
+        "border_width": 1,
+        "border_style": "solid",
+        "border_color": "#e5e7eb",
+        "border_radius": 8,
+        "enable_shadow": false
+      }
+    },
+    "lv2_nav": {
+      "type": "listiclev2-nav",
+      "blocks": {
+        "link_science": {
+          "type": "link",
+          "settings": {
+            "label": "The Science",
+            "url": "#science"
+          }
+        },
+        "link_results": {
+          "type": "link",
+          "settings": {
+            "label": "Clinical Results",
+            "url": "#clinical-results"
+          }
+        },
+        "link_collection": {
+          "type": "link",
+          "settings": {
+            "label": "The Collection",
+            "url": "#collection"
+          }
+        }
+      },
+      "block_order": [
+        "link_science",
+        "link_results",
+        "link_collection"
+      ],
+      "settings": {
+        "sticky": true,
+        "align_desktop": "center",
+        "font_size_mobile": 14,
+        "font_size_desktop": 15,
+        "font_weight": "400",
+        "link_color": "#000000",
+        "link_hover_color": "#333333",
+        "link_gap_mobile": 20,
+        "link_gap_desktop": 32,
+        "container_max_width": 750,
+        "bg_color": "#F8F8F8",
+        "border_width": 1,
+        "border_color": "#e5e5e5",
+        "padding_vertical_mobile": 12,
+        "padding_vertical_desktop": 14
+      }
+    },
+    "lv2_content_main": {
+      "type": "listiclev2-content",
+      "blocks": {
+        "heading_main": {
+          "type": "heading",
+          "settings": {
+            "title": "Reverse Aging Isn't Impossible — Science Is Making It A Reality.",
+            "heading_style": "bar",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_main"
+      ],
+      "settings": {
+        "section_id": "",
+        "text_align": "left",
+        "heading_font_size_mobile": 22,
+        "heading_font_size_desktop": 26,
+        "heading_color": "#000000",
+        "heading_font_weight": "400",
+        "heading_padding_left": 15,
+        "heading_padding_bottom": 12,
+        "heading_margin_bottom_mobile": 0,
+        "heading_margin_bottom_desktop": 0,
+        "border_color": "#000000",
+        "border_left_width": 4,
+        "border_left_height": 22,
+        "border_left_top": 6,
+        "border_bottom_width": 1,
+        "border_bottom_width_pct": 50,
+        "text_font_size_mobile": 15,
+        "text_font_size_desktop": 16,
+        "text_color": "#000000",
+        "text_font_weight": "400",
+        "text_line_height": 1.6,
+        "block_gap_mobile": 16,
+        "block_gap_desktop": 20,
+        "container_max_width": 750,
+        "bg_color": "#ffffff",
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 8,
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 16
+      }
+    },
+    "lv2_slider_stats": {
+      "type": "listiclev2-slider",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/sara.webp",
+            "image_margin": 0,
+            "content_margin": 0,
+            "content_padding_vertical": 10,
+            "content_padding_horizontal": 17,
+            "heading": "3 Year Age Reduction",
+            "description": "<p>\"So much love for the RITÚEL products! My skin has never looked better.\"</p>"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/sue.webp",
+            "image_margin": 0,
+            "content_margin": 0,
+            "content_padding_vertical": 10,
+            "content_padding_horizontal": 17,
+            "heading": "2 Year Age Reduction",
+            "description": "<p>\"I'm amazed at how firm and refreshed my skin feels.\"</p>"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/elene.webp",
+            "image_margin": 0,
+            "content_margin": 0,
+            "content_padding_vertical": 10,
+            "content_padding_horizontal": 17,
+            "heading": "54% Reduction in Fine Lines",
+            "description": "<p>\"My skin looks and feels more hydrated, and has a healthy glow.\"</p>"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3"
+      ],
+      "settings": {
+        "slider_type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "lock_drag": false,
+        "columns_mobile": 1,
+        "columns_desktop": 3,
+        "gap_mobile": 16,
+        "gap_desktop": 24,
+        "show_arrows": false,
+        "show_pagination": false,
+        "equal_height": false,
+        "card_border_width": 1,
+        "card_border_color": "#e5e5e5",
+        "card_border_radius": 16,
+        "card_bg_color": "#ffffff",
+        "heading_font_size_mobile": 15,
+        "heading_font_size_desktop": 15,
+        "heading_color": "#000000",
+        "desc_font_size_mobile": 14,
+        "desc_font_size_desktop": 14,
+        "desc_color": "#000000",
+        "container_max_width": 750,
+        "bg_color": "#ffffff",
+        "padding_top_mobile": 8,
+        "padding_bottom_mobile": 24,
+        "padding_top_desktop": 16,
+        "padding_bottom_desktop": 32
+      }
+    },
+    "lv2_content_factors": {
+      "type": "listiclev2-content",
+      "blocks": {
+        "heading_hy3fm7": {
+          "type": "heading",
+          "settings": {
+            "title": "The Main Factors Behind Skin Aging",
+            "heading_style": "bar",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "text_factors": {
+          "type": "text",
+          "settings": {
+            "content": "<p>Aging is driven by complex biochemical processes that impact the skin at a cellular level. The primary factors of skin aging include:</p><ol><li><strong>Collagen Degradation:</strong> Collagen diminishes by about 1% each year, leading to sagging and wrinkle formation.</li><li><strong>Moisture Loss:</strong> Hyaluronic acid decreases with age, compromising moisture retention.</li><li><strong>Oxidative Stress:</strong> UV rays and pollutants generate free radicals that damage skin cells.</li></ol><p><span style=\"text-decoration:underline\"><strong>RITÚEL's Advanced Technology</strong></span> employs cutting-edge scientific advancements to address these root causes of aging.</p>",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "image_g8zxpa": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/main_factor.webp",
+            "alignment": "center",
+            "image_max_width": 750,
+            "border_radius": 0,
+            "margin_top": 0,
+            "margin_bottom": 16,
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "heading_FjUeHF": {
+          "type": "heading",
+          "settings": {
+            "title": "Problem 1: Collagen Degradation",
+            "heading_style": "bar",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "text_K3ijVF": {
+          "type": "text",
+          "settings": {
+            "content": "<p>As we age, the fibroblast cells in our skin produce less collagen, reducing the skin’s structural support. Collagen acts like scaffolding, providing firmness and elasticity. When collagen degrades, the skin begins to sag and wrinkles form due to reduced structural integrity.</p>",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "heading_HDnFXe": {
+          "type": "heading",
+          "settings": {
+            "title": "Solution: Replenishing Collagen with <a href=\"https://labareau.com/pages/labareau-how-it-works#\" title=\"#\">97% Skin-Identical Collagen</a>",
+            "heading_style": "bar",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "text_UwVCpK": {
+          "type": "text",
+          "settings": {
+            "content": "<p>Labareau’s products contain 97% skin-identical atelocollagen, a highly absorbable form of collagen that mimics the collagen naturally found in your skin. This allows for deeper penetration into the skin’s layers, but also delivers additional collagen directly to the skin, actively replenishing and restoring lost collagen and stimulating its production. Unlike other products that only hydrate the surface, Labareau works within the skin to rebuild and restore its structure.</p>",
+            "block_padding_top": 0,
+            "block_padding_bottom": 20,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 1,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "heading_X8cKJV": {
+          "type": "heading",
+          "settings": {
+            "title": "Why It Works",
+            "heading_style": "bar",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "text_PKjiGa": {
+          "type": "text",
+          "settings": {
+            "content": "<h3>Hydrolyzed Collagen vs LABAREAU Native Atelocollagen</h3>",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "image_zegkPt": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/collagen.webp",
+            "alignment": "center",
+            "image_max_width": 750,
+            "border_radius": 0,
+            "margin_top": 0,
+            "margin_bottom": 16,
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "text_Trzx8A": {
+          "type": "text",
+          "settings": {
+            "content": "<p>Unlike most skincare products that are using hydrolyzed collagen, which is broken down into smaller peptides, our Premium Native Atelocollagen retains its triple-helix structure, closely mimicking the collagen naturally found in your skin.<br/></p>",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "image_wTTAwL": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/collagen2.webp",
+            "alignment": "center",
+            "image_max_width": 750,
+            "border_radius": 0,
+            "margin_top": 0,
+            "margin_bottom": 16,
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "text_WT7RQg": {
+          "type": "text",
+          "settings": {
+            "content": "<p>This intact structure allows for:</p>",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "icon_text_wNxzN6": {
+          "type": "icon_text",
+          "settings": {
+            "icon_name": "check-2",
+            "text": "<p>Deep penetration into the skin</p>",
+            "icon_color": "#AC0032",
+            "icon_bg_color": "#ac0032",
+            "icon_size_mobile": 22,
+            "icon_size_desktop": 20,
+            "icon_radius": 19,
+            "icon_padding": 2,
+            "gap": 12,
+            "padding_vertical": 0,
+            "padding_horizontal": 0,
+            "margin_bottom": 12,
+            "text_font_size_mobile": 15,
+            "text_font_size_desktop": 16,
+            "text_color": "#000000",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "icon_text_DgfUXg": {
+          "type": "icon_text",
+          "settings": {
+            "icon_name": "check-2",
+            "text": "<p>Boosts natural collagen production</p>",
+            "icon_color": "#AC0032",
+            "icon_bg_color": "#ac0032",
+            "icon_size_mobile": 22,
+            "icon_size_desktop": 20,
+            "icon_radius": 19,
+            "icon_padding": 2,
+            "gap": 12,
+            "padding_vertical": 0,
+            "padding_horizontal": 0,
+            "margin_bottom": 12,
+            "text_font_size_mobile": 15,
+            "text_font_size_desktop": 16,
+            "text_color": "#000000",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "icon_text_eNTBGP": {
+          "type": "icon_text",
+          "settings": {
+            "icon_name": "check-2",
+            "text": "<p>Gentle on sensitive skin</p>",
+            "icon_color": "#AC0032",
+            "icon_bg_color": "#ac0032",
+            "icon_size_mobile": 22,
+            "icon_size_desktop": 20,
+            "icon_radius": 19,
+            "icon_padding": 2,
+            "gap": 12,
+            "padding_vertical": 0,
+            "padding_horizontal": 0,
+            "margin_bottom": 12,
+            "text_font_size_mobile": 15,
+            "text_font_size_desktop": 16,
+            "text_color": "#000000",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "icon_text_bgjxrN": {
+          "type": "icon_text",
+          "settings": {
+            "icon_name": "check-2",
+            "text": "<p>Preserves natural structure</p>",
+            "icon_color": "#AC0032",
+            "icon_bg_color": "#ac0032",
+            "icon_size_mobile": 22,
+            "icon_size_desktop": 20,
+            "icon_radius": 19,
+            "icon_padding": 2,
+            "gap": 12,
+            "padding_vertical": 0,
+            "padding_horizontal": 0,
+            "margin_bottom": 12,
+            "text_font_size_mobile": 15,
+            "text_font_size_desktop": 16,
+            "text_color": "#000000",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "icon_text_Dd6DyY": {
+          "type": "icon_text",
+          "settings": {
+            "icon_name": "check-2",
+            "text": "<p>Multi-layer hydration</p>",
+            "icon_color": "#AC0032",
+            "icon_bg_color": "#ac0032",
+            "icon_size_mobile": 22,
+            "icon_size_desktop": 20,
+            "icon_radius": 19,
+            "icon_padding": 2,
+            "gap": 12,
+            "padding_vertical": 0,
+            "padding_horizontal": 0,
+            "margin_bottom": 12,
+            "text_font_size_mobile": 15,
+            "text_font_size_desktop": 16,
+            "text_color": "#000000",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "text_TyejQR": {
+          "type": "text",
+          "settings": {
+            "content": "<p>While hydrolyzed collagen only provides surface-level hydration, native atelocollagen penetrates deeper, delivering structural support and visible improvements in skin texture and resilience.</p>",
+            "block_padding_top": 0,
+            "block_padding_bottom": 20,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 1,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "image_Xqf3aw": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/oxidative_stres.webp",
+            "alignment": "center",
+            "image_max_width": 750,
+            "border_radius": 0,
+            "margin_top": 0,
+            "margin_bottom": 16,
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "heading_RHtkUX": {
+          "type": "heading",
+          "settings": {
+            "title": "Problem 3: Oxidative Stress",
+            "heading_style": "bar_left",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "text_Xd6C9b": {
+          "type": "text",
+          "settings": {
+            "content": "<p>Exposure to environmental factors like UV rays and pollution generates free radicals, which damage the skin at the cellular level. These free radicals break down collagen and elastin, leading to fine lines, pigmentation, and a loss of firmness. Over time, oxidative stress accelerates the visible signs of aging.</p>",
+            "block_padding_top": 0,
+            "block_padding_bottom": 20,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 1,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "heading_8iKb3F": {
+          "type": "heading",
+          "settings": {
+            "title": "Solution: Repair & Protect with Peptides",
+            "heading_style": "bar_left",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "text_VxqF9C": {
+          "type": "text",
+          "settings": {
+            "content": "<p>Labareau’s Bioactive Peptides work to neutralize free radicals, reducing oxidative damage and preventing further breakdown of skin proteins.   <br/><br/>Additionally, these peptides stimulate collagen and elastin production, repairing existing damage and strengthening the skin’s defenses against future oxidative stress. This dual action enhances resilience, firmness, and radiance.</p>",
+            "block_padding_top": 0,
+            "block_padding_bottom": 20,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 1,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "heading_7Fb7FR": {
+          "type": "heading",
+          "settings": {
+            "title": "Why It Works",
+            "heading_style": "bar_left",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "text_ikTBc3": {
+          "type": "text",
+          "settings": {
+            "content": "<h3>Regular Peptides vs Labareau Peptides</h3>",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "image_8m3y3V": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/peptides.webp",
+            "alignment": "center",
+            "image_max_width": 750,
+            "border_radius": 0,
+            "margin_top": 0,
+            "margin_bottom": 16,
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        },
+        "text_VEWwgV": {
+          "type": "text",
+          "settings": {
+            "content": "<p><a href=\"https://labareau.com/pages/labareau-how-it-works#\" title=\"#\"><strong>Labareau’s Peptides</strong></a> stand apart from regular peptides found in many skincare products due to their targeted design and superior absorption capabilities.</p><p><strong>Regular Peptides</strong></p><ul><li>Remain on the skin’s surface, providing minimal cellular interaction. </li><li>May offer superficial hydration but do not deeply stimulate skin repair.</li></ul><p><strong>Labareau’s Peptides</strong></p><ul><li><strong>Deep Penetration:</strong> Engineered to reach deeper layers and interact directly with fibroblasts, boosting collagen and elastin production. </li><li><strong>Dual Action:</strong> Neutralizes free radicals and actively repairs structural damage at the cellular level. </li><li><strong>Targeted Precision:</strong> Formulated to specifically stimulate natural regeneration processes, enhancing firmness and resilience.</li></ul><p>This multi-layered approach delivers comprehensive moisture, boosting elasticity and promoting a plump, rejuvenated complexion.</p>",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_hy3fm7",
+        "text_factors",
+        "image_g8zxpa",
+        "heading_FjUeHF",
+        "text_K3ijVF",
+        "heading_HDnFXe",
+        "text_UwVCpK",
+        "heading_X8cKJV",
+        "text_PKjiGa",
+        "image_zegkPt",
+        "text_Trzx8A",
+        "image_wTTAwL",
+        "text_WT7RQg",
+        "icon_text_wNxzN6",
+        "icon_text_DgfUXg",
+        "icon_text_eNTBGP",
+        "icon_text_bgjxrN",
+        "icon_text_Dd6DyY",
+        "text_TyejQR",
+        "image_Xqf3aw",
+        "heading_RHtkUX",
+        "text_Xd6C9b",
+        "heading_8iKb3F",
+        "text_VxqF9C",
+        "heading_7Fb7FR",
+        "text_ikTBc3",
+        "image_8m3y3V",
+        "text_VEWwgV"
+      ],
+      "settings": {
+        "section_id": "science",
+        "text_align": "left",
+        "heading_font_size_mobile": 22,
+        "heading_font_size_desktop": 26,
+        "heading_color": "#000000",
+        "heading_font_weight": "400",
+        "heading_padding_left": 16,
+        "heading_padding_bottom": 12,
+        "heading_margin_bottom_mobile": 16,
+        "heading_margin_bottom_desktop": 20,
+        "border_color": "#000000",
+        "border_left_width": 4,
+        "border_left_height": 22,
+        "border_left_top": 6,
+        "border_bottom_width": 1,
+        "border_bottom_width_pct": 50,
+        "text_font_size_mobile": 15,
+        "text_font_size_desktop": 16,
+        "text_color": "#000000",
+        "text_font_weight": "400",
+        "text_line_height": 1.6,
+        "block_gap_mobile": 16,
+        "block_gap_desktop": 20,
+        "container_max_width": 750,
+        "bg_color": "#ffffff",
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16,
+        "padding_top_desktop": 24,
+        "padding_bottom_desktop": 24
+      }
+    },
+    "lv2_formula": {
+      "type": "listiclev2-formula",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"35\" height=\"35\" viewbox=\"0 0 35 35\" fill=\"none\">\n  <g clip-path=\"url(#clip0_219_176)\">\n    <path d=\"M8.44116 2.02241C8.44116 1.37334 8.96734 0.847168 9.61641 0.847168C10.2655 0.847168 10.7917 1.37334 10.7917 2.02241C10.7917 4.91939 13.1216 7.0172 15.6865 8.31585C14.7988 8.66388 13.9367 9.07428 13.1069 9.54397C10.8563 8.0808 8.44116 5.65979 8.44116 2.02241Z\" fill=\"black\"></path>\n    <path d=\"M13.1069 26.2324C13.9367 26.7021 14.7988 27.1125 15.6865 27.4606C13.1186 28.7592 10.7917 30.8576 10.7917 33.754C10.7917 34.4031 10.2655 34.9292 9.61641 34.9292C8.96734 34.9292 8.44116 34.4031 8.44116 33.754C8.44116 30.1166 10.8563 27.6956 13.1069 26.2324Z\" fill=\"black\"></path>\n    <path d=\"M26.0698 17.8882C26.0698 21.2024 23.6605 23.4765 21.4158 24.8691C20.5923 24.3849 19.734 23.9626 18.8479 23.6057C25.347 20.4126 25.367 15.3737 18.8479 12.1706C19.734 11.8137 20.5923 11.3914 21.4158 10.9072C23.6605 12.2999 26.0698 14.574 26.0698 17.8882Z\" fill=\"black\"></path>\n    <path d=\"M22.544 17.8889C22.5469 18.0308 22.5351 18.1725 22.5087 18.312C22.5018 18.3673 22.492 18.4222 22.4794 18.4765H12.0256C11.9472 18.0887 11.9472 17.6891 12.0256 17.3013H22.4794L22.5146 17.5128C22.538 17.6367 22.5478 17.7628 22.544 17.8889Z\" fill=\"black\"></path>\n    <path d=\"M22.5442 2.02246C22.5438 2.42077 22.4844 2.81682 22.3679 3.19771H12.1433C12.1139 3.10369 12.0904 3.00967 12.0669 2.90977C12.0309 2.76687 12.0054 2.62154 11.9905 2.47493C11.9737 2.3247 11.9659 2.17362 11.9669 2.02246H22.5442Z\" fill=\"black\"></path>\n    <path d=\"M21.3806 4.96045C21.0053 5.39665 20.5836 5.79071 20.1231 6.13569H14.3996C14.0658 5.88785 13.7515 5.61478 13.4594 5.3189C13.336 5.18962 13.2303 5.0721 13.1304 4.96045H21.3806Z\" fill=\"black\"></path>\n    <path d=\"M22.5441 33.7539H11.9669C11.9659 33.5928 11.9757 33.4318 11.9963 33.272C12.0104 33.1253 12.036 32.9799 12.0727 32.8372C12.09 32.7494 12.1135 32.663 12.1432 32.5786H22.3679C22.4844 32.9595 22.5438 33.3556 22.5441 33.7539Z\" fill=\"black\"></path>\n    <path d=\"M21.3806 30.8159H13.1304C13.2185 30.7101 13.3302 30.5926 13.4536 30.4633C13.7469 30.167 14.0611 29.892 14.3938 29.6406H20.1231C20.5836 29.9856 21.0053 30.3797 21.3806 30.8159Z\" fill=\"black\"></path>\n    <path d=\"M21.551 15.5375H12.9658C13.3553 15.0982 13.7929 14.704 14.2703 14.3623H20.2406C20.5988 14.6155 20.9349 14.8986 21.2454 15.2085C21.3544 15.3113 21.4565 15.4213 21.551 15.5375Z\" fill=\"black\"></path>\n    <path d=\"M21.551 20.2393C21.4513 20.3583 21.3453 20.4721 21.2337 20.5801C20.9256 20.8844 20.5935 21.1634 20.2406 21.4145H14.2703C13.7929 21.0728 13.3553 20.6786 12.9658 20.2393H21.551Z\" fill=\"black\"></path>\n    <path d=\"M8.44116 17.8882C8.44116 23.9748 16.5639 26.5439 16.91 26.6508C16.9775 26.6714 23.7193 28.8033 23.7193 33.754C23.7193 34.4031 24.2455 34.9293 24.8946 34.9293C25.5436 34.9293 26.0698 34.4031 26.0698 33.754C26.0698 27.0863 17.9471 24.5107 17.6028 24.4044C17.5346 24.3832 10.7917 22.2396 10.7917 17.8882C10.7917 13.5369 17.5346 11.3932 17.6028 11.3721C17.9471 11.2657 26.0698 8.69016 26.0698 2.02241C26.0698 1.37334 25.5436 0.847168 24.8946 0.847168C24.2455 0.847168 23.7193 1.37334 23.7193 2.02241C23.7193 6.97313 16.9775 9.10502 16.91 9.12559C16.5639 9.23254 8.44116 11.8016 8.44116 17.8882Z\" fill=\"black\"></path>\n  </g>\n  <defs>\n    <clippath id=\"clip0_219_176\">\n      <rect width=\"34.0821\" height=\"34.0821\" fill=\"white\" transform=\"translate(0.214355 0.847168)\"></rect>\n    </clippath>\n  </defs>\n</svg>",
+            "heading": "Native Atelocollagen",
+            "description": "<p>Provides structure and volume to the skin. Reverses premature aging signs.</p>",
+            "card_bg_color": "",
+            "card_border_color": ""
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"43\" height=\"43\" viewbox=\"0 0 43 43\" fill=\"none\">\n  <path d=\"M35.2325 25.1527C34.4742 25.1539 33.7255 25.3225 33.0399 25.6467L29.7554 23.8614C30.0876 22.5804 30.1219 21.2403 29.8559 19.9439C29.5898 18.6475 29.0304 17.4293 28.2205 16.3826C27.4106 15.3359 26.3718 14.4887 25.1837 13.9057C23.9956 13.3228 22.6897 13.0198 21.3663 13.0198C19.7951 13.0192 18.254 13.4509 16.9118 14.2677L12.3446 9.70055C12.7463 8.66508 12.8059 7.52819 12.5147 6.4564C12.2234 5.38461 11.5966 4.43424 10.7261 3.74447C9.85563 3.0547 8.78714 2.66177 7.67716 2.62325C6.56717 2.58472 5.47401 2.90262 4.55778 3.53037C3.64155 4.15813 2.95039 5.06276 2.58554 6.11178C2.22068 7.1608 2.2013 8.29908 2.53023 9.35991C2.85915 10.4207 3.51911 11.3484 4.41343 12.007C5.30776 12.6656 6.38946 13.0205 7.50012 13.0198C7.91188 13.0199 8.32215 12.9704 8.72208 12.8724L13.6359 17.7863C13.0108 19.0165 12.6901 20.3787 12.7006 21.7585C12.7112 23.1384 13.0527 24.4956 13.6966 25.716L9.2334 30.6472C8.67685 30.4501 8.09052 30.3505 7.50012 30.3525C6.41203 30.3515 5.35103 30.6919 4.46658 31.3257C3.58212 31.9595 2.91877 32.8548 2.56996 33.8854C2.22115 34.9161 2.20444 36.0302 2.52221 37.0709C2.83997 38.1116 3.47618 39.0263 4.34124 39.6863C5.2063 40.3464 6.25661 40.7184 7.34425 40.75C8.43188 40.7816 9.50204 40.4713 10.404 39.8626C11.3059 39.254 11.9942 38.3777 12.3719 37.3573C12.7496 36.3368 12.7976 35.2236 12.5093 34.1744L17.0331 29.1652C18.6086 30.0906 20.4375 30.4911 22.2555 30.3089C24.0735 30.1266 25.7864 29.371 27.1468 28.1513L30.076 29.8846C30.0541 30.0398 30.0396 30.1959 30.0327 30.3525C30.0327 31.381 30.3377 32.3863 30.909 33.2414C31.4804 34.0965 32.2925 34.763 33.2427 35.1566C34.1928 35.5501 35.2383 35.6531 36.247 35.4525C37.2556 35.2518 38.1822 34.7566 38.9094 34.0294C39.6366 33.3022 40.1318 32.3756 40.3325 31.367C40.5331 30.3583 40.4301 29.3128 40.0366 28.3626C39.643 27.4125 38.9765 26.6004 38.1214 26.029C37.2663 25.4577 36.261 25.1527 35.2325 25.1527ZM4.03357 7.81995C4.03357 7.13433 4.23688 6.4641 4.61779 5.89403C4.9987 5.32396 5.5401 4.87964 6.17353 4.61727C6.80696 4.35489 7.50397 4.28624 8.17641 4.42C8.84886 4.55376 9.46654 4.88392 9.95134 5.36872C10.4361 5.85353 10.7663 6.47121 10.9001 7.14366C11.0338 7.8161 10.9652 8.51311 10.7028 9.14654C10.4404 9.77997 9.99611 10.3214 9.42603 10.7023C8.85596 11.0832 8.18574 11.2865 7.50012 11.2865C6.58073 11.2865 5.699 10.9213 5.0489 10.2712C4.39879 9.62106 4.03357 8.73933 4.03357 7.81995ZM10.4207 12.1531C10.7888 11.9083 11.1238 11.617 11.4173 11.2865L15.5079 15.377C15.1953 15.6786 14.9056 16.003 14.6412 16.3477L10.4207 12.1531ZM7.50012 39.0189C6.8145 39.0189 6.14428 38.8156 5.57421 38.4347C5.00414 38.0538 4.55982 37.5124 4.29744 36.879C4.03507 36.2455 3.96642 35.5485 4.10018 34.8761C4.23393 34.2036 4.56409 33.586 5.0489 33.1011C5.5337 32.6163 6.15138 32.2862 6.82383 32.1524C7.49627 32.0187 8.19328 32.0873 8.82671 32.3497C9.46014 32.6121 10.0015 33.0564 10.3825 33.6265C10.7634 34.1965 10.9667 34.8667 10.9667 35.5524C10.9667 36.4718 10.6014 37.3535 9.95134 38.0036C9.30124 38.6537 8.41951 39.0189 7.50012 39.0189ZM11.6946 32.4845C11.4243 32.126 11.1131 31.8003 10.7673 31.5138L14.6846 27.1806C14.9684 27.5165 15.2754 27.8321 15.6032 28.1253L11.6946 32.4845ZM21.3663 28.6193C19.9951 28.6193 18.6546 28.2126 17.5145 27.4508C16.3744 26.689 15.4857 25.6062 14.961 24.3393C14.4362 23.0725 14.2989 21.6785 14.5664 20.3336C14.834 18.9887 15.4943 17.7533 16.4639 16.7837C17.4335 15.8141 18.6689 15.1538 20.0138 14.8863C21.3586 14.6188 22.7527 14.7561 24.0195 15.2808C25.2864 15.8056 26.3692 16.6942 27.131 17.8343C27.8928 18.9745 28.2994 20.3149 28.2994 21.6862C28.2995 22.1256 28.256 22.564 28.1694 22.9948L25.6475 21.6168C25.1112 21.3234 24.4845 21.2417 23.8909 21.3877C23.2973 21.5337 22.78 21.8968 22.441 22.4055C22.2575 22.6834 22.1326 22.9957 22.0738 23.3235C22.015 23.6513 22.0236 23.9876 22.099 24.3119C22.1744 24.6363 22.3151 24.9419 22.5124 25.2101C22.7098 25.4783 22.9597 25.7035 23.2469 25.872L25.5349 27.2066C24.3393 28.1247 22.8737 28.6213 21.3663 28.6193ZM24.1222 24.3814C24.0372 24.3346 23.963 24.2701 23.9048 24.1924C23.8465 24.1147 23.8054 24.0255 23.7843 23.9307C23.751 23.796 23.758 23.6544 23.8043 23.5235C23.8506 23.3927 23.9342 23.2782 24.0448 23.1943C24.1554 23.1105 24.2882 23.0608 24.4267 23.0515C24.5652 23.0423 24.7034 23.0737 24.8242 23.1421L31.4713 26.7647C31.0927 27.1685 30.7771 27.6272 30.5354 28.1253L24.1222 24.3814ZM35.2325 33.8191C34.5469 33.8191 33.8767 33.6158 33.3066 33.2349C32.7366 32.854 32.2922 32.3126 32.0299 31.6791C31.7675 31.0457 31.6988 30.3487 31.8326 29.6762C31.9664 29.0038 32.2965 28.3861 32.7813 27.9013C33.2661 27.4165 33.8838 27.0864 34.5563 26.9526C35.2287 26.8188 35.9257 26.8875 36.5591 27.1499C37.1926 27.4122 37.734 27.8566 38.1149 28.4266C38.4958 28.9967 38.6991 29.6669 38.6991 30.3525C38.6991 31.2719 38.3339 32.1537 37.6838 32.8038C37.0337 33.4539 36.1519 33.8191 35.2325 33.8191Z\" fill=\"black\"></path>\n</svg>",
+            "heading": "3-Molecular Hyaluronic Acid",
+            "description": "<p>Retains water to keep skin moisturized. Deeply hydrates and improves elasticity.</p>",
+            "card_bg_color": "",
+            "card_border_color": ""
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "icon_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"35\" height=\"36\" viewbox=\"0 0 35 36\" fill=\"none\">\n  <g clip-path=\"url(#clip0_219_162)\">\n    <path d=\"M10.9889 35.3435L1.67627 29.9608V19.2138L10.9889 13.8403L20.3019 19.2138V29.97L10.9889 35.3435ZM3.16622 29.1038L10.9889 33.6206L18.8116 29.1038V20.0705L10.9889 15.5537L3.16622 20.0705V29.1038Z\" fill=\"black\"></path>\n    <path d=\"M23.6548 16.4146L24.3996 17.7051L19.9314 20.2842L19.1863 18.9937L23.6548 16.4146Z\" fill=\"black\"></path>\n    <path d=\"M19.9286 8.67383L24.3965 11.2535L23.6514 12.544L19.1835 9.96434L19.9286 8.67383Z\" fill=\"black\"></path>\n    <path d=\"M28.497 20.4993L23.2817 17.4913V11.466L28.497 8.45801L33.7122 11.466V17.4913L28.497 20.4993ZM24.772 16.6346L28.497 18.7859L32.222 16.6346V12.332L28.497 10.1807L24.772 12.332V16.6346Z\" fill=\"black\"></path>\n    <path d=\"M15.0866 12.76L9.87134 9.75203V3.72675L15.0866 0.71875L20.3018 3.72675V9.75203L15.0866 12.76ZM11.3616 8.88605L15.0866 11.0373L18.8116 8.88605V4.58345L15.0866 2.43242L11.3616 4.58345V8.88605Z\" fill=\"black\"></path>\n  </g>\n  <defs>\n    <clippath id=\"clip0_219_162\">\n      <rect width=\"34.6248\" height=\"34.6248\" fill=\"white\" transform=\"translate(0.367798 0.71875)\"></rect>\n    </clippath>\n  </defs>\n</svg>",
+            "heading": "Peptides",
+            "description": "<p>Acts as building blocks for essential skin proteins. Stimulates collagen and elastin production.</p>",
+            "card_bg_color": "",
+            "card_border_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3"
+      ],
+      "custom_css": [
+        ".lv2f-title,.lv2f-eyebrow {text-align: center;}",
+        ".lv2f-card__heading {font-weight: 400;}"
+      ],
+      "settings": {
+        "eyebrow": "Our Revolutionary Formula:",
+        "title": "SAXZ-12®",
+        "body": "<p><strong>Created through years of dedicated research,</strong> SAXZ-12® represents the pinnacle of advanced skincare science — harnessing hyaluronic molecules, premium native atelocollagen, and bioactive peptides to replenish and regenerate the skin.</p>",
+        "text_align": "justify",
+        "title_max_width": 650,
+        "body_max_width": 650,
+        "bg_color": "#f5f0eb",
+        "bg_image": "shopify://shop_images/sazr.webp",
+        "bg_image_opacity": 40,
+        "eyebrow_font_size_mobile": 14,
+        "eyebrow_font_size_desktop": 16,
+        "eyebrow_color": "#000000",
+        "title_font_size_mobile": 32,
+        "title_font_size_desktop": 48,
+        "title_color": "#000000",
+        "body_font_size_mobile": 14,
+        "body_font_size_desktop": 15,
+        "body_color": "#333333",
+        "card_bg_color": "#ffffff",
+        "card_border_width": 1,
+        "card_border_color": "#e5e5e5",
+        "card_radius_tl": 0,
+        "card_radius_tr": 50,
+        "card_radius_br": 50,
+        "card_radius_bl": 0,
+        "card_align_items": "flex-start",
+        "card_justify_content": "flex-start",
+        "card_header_align_items": "center",
+        "card_header_justify_content": "flex-start",
+        "card_header_gap": 14,
+        "card_inner_gap": 10,
+        "card_padding_vertical": 18,
+        "card_padding_horizontal": 20,
+        "card_gap_mobile": 16,
+        "card_gap_desktop": 20,
+        "icon_size_mobile": 28,
+        "icon_size_desktop": 32,
+        "card_heading_font_size_mobile": 20,
+        "card_heading_font_size_desktop": 20,
+        "card_heading_color": "#000000",
+        "card_desc_font_size_mobile": 13,
+        "card_desc_font_size_desktop": 14,
+        "card_desc_color": "#555555",
+        "container_max_width": 1190,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_top_desktop": 56,
+        "padding_bottom_desktop": 56
+      }
+    },
+    "horizontal_ticker_yyREzg": {
+      "type": "horizontal-ticker",
+      "blocks": {
+        "ticker_item_E3NKQY": {
+          "type": "ticker_item",
+          "settings": {
+            "icon_svg": "",
+            "icon": "",
+            "icon_filled": false,
+            "image": "shopify://shop_images/grazia.webp",
+            "text": ""
+          }
+        },
+        "ticker_item_f8cHQ7": {
+          "type": "ticker_item",
+          "settings": {
+            "icon_svg": "",
+            "icon": "",
+            "icon_filled": false,
+            "image": "shopify://shop_images/bazaar.jpg",
+            "text": ""
+          }
+        },
+        "ticker_item_jpr6DC": {
+          "type": "ticker_item",
+          "settings": {
+            "icon_svg": "",
+            "icon": "",
+            "icon_filled": false,
+            "image": "shopify://shop_images/vogue.svg",
+            "text": ""
+          }
+        },
+        "ticker_item_MMWj3A": {
+          "type": "ticker_item",
+          "settings": {
+            "icon_svg": "",
+            "icon": "",
+            "icon_filled": false,
+            "image": "shopify://shop_images/cosmopolitan.webp",
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "ticker_item_E3NKQY",
+        "ticker_item_f8cHQ7",
+        "ticker_item_jpr6DC",
+        "ticker_item_MMWj3A"
+      ],
+      "name": "Horizontal Ticker",
+      "settings": {
+        "enable_full_width": false,
+        "override_section_settings": false,
+        "section_gradient_enabled": false,
+        "section_gradient_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(245, 245, 245, 1) 100%)",
+        "section_background_color": "#ffffff",
+        "section_padding_top_desktop": 20,
+        "section_padding_bottom_desktop": 20,
+        "section_padding_top_mobile": 20,
+        "section_padding_bottom_mobile": 20,
+        "ticker_margin_top": 0,
+        "ticker_margin_bottom": 0,
+        "heading_text": "AS SEEN IN",
+        "heading_tag": "h3",
+        "heading_size_desktop": 24,
+        "heading_size_mobile": 20,
+        "heading_weight": "400",
+        "heading_color": "#000000",
+        "heading_text_transform": "uppercase",
+        "heading_gap": 20,
+        "border_top_width": 0,
+        "border_top_style": "solid",
+        "border_top_color": "#e0e0e0",
+        "border_bottom_width": 0,
+        "border_bottom_style": "solid",
+        "border_bottom_color": "#e0e0e0",
+        "ticker_padding_vertical": 0,
+        "animation_speed": 30,
+        "animation_direction": "normal",
+        "pause_on_hover": true,
+        "item_gap": 32,
+        "item_gradient_bg_enabled": false,
+        "item_gradient_background": "linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(245, 245, 245, 1) 100%)",
+        "item_background_color": "rgba(0,0,0,0)",
+        "item_padding_vertical": 12,
+        "item_padding_horizontal": 24,
+        "item_border_width": 0,
+        "item_border_style": "solid",
+        "item_border_color": "#e0e0e0",
+        "item_border_radius": 8,
+        "text_font": "body",
+        "text_size": 18,
+        "text_size_mobile": 16,
+        "text_weight": "500",
+        "text_color": "#000000",
+        "icon_size": 24,
+        "icon_color": "#000000",
+        "content_gap": 6,
+        "icon_border_color": "rgba(0,0,0,0)",
+        "icon_border_width": 0,
+        "icon_border_radius": 0,
+        "image_width": 120,
+        "image_height": 40
+      }
+    },
+    "listiclev2_content_HEaXG4": {
+      "type": "listiclev2-content",
+      "blocks": {
+        "heading_43V7jk": {
+          "type": "heading",
+          "settings": {
+            "title": "Why LABAREAU is Redefining Anti-Aging Skincare",
+            "heading_style": "bar_left",
+            "block_padding_top": 0,
+            "block_padding_bottom": 0,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 0,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_43V7jk"
+      ],
+      "name": "Listiclev2 Content",
+      "settings": {
+        "section_id": "",
+        "text_align": "center",
+        "heading_font_size_mobile": 22,
+        "heading_font_size_desktop": 26,
+        "heading_color": "#000000",
+        "heading_font_weight": "400",
+        "heading_padding_left": 16,
+        "heading_padding_bottom": 12,
+        "heading_margin_bottom_mobile": 16,
+        "heading_margin_bottom_desktop": 20,
+        "border_color": "#000000",
+        "border_left_width": 4,
+        "border_left_height": 22,
+        "border_left_top": 6,
+        "border_bottom_width": 1,
+        "border_bottom_width_pct": 50,
+        "text_font_size_mobile": 15,
+        "text_font_size_desktop": 16,
+        "text_color": "#000000",
+        "text_font_weight": "400",
+        "text_line_height": 1.6,
+        "block_gap_mobile": 16,
+        "block_gap_desktop": 20,
+        "container_max_width": 750,
+        "bg_color": "#ffffff",
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16,
+        "padding_top_desktop": 24,
+        "padding_bottom_desktop": 24
+      }
+    },
+    "lv2_compare_collagen": {
+      "type": "listiclev2-compare",
+      "blocks": {
+        "row_1": {
+          "type": "compare_row",
+          "settings": {
+            "feature_label": "97% skin-identical atelocollagen",
+            "us_icon_name": "checkmark_icon",
+            "us_icon_bg_color": "",
+            "us_icon_color": "",
+            "us_value": "",
+            "them_icon_name": "dash",
+            "them_icon_bg_color": "",
+            "them_icon_color": "",
+            "them_value": ""
+          }
+        },
+        "row_2": {
+          "type": "compare_row",
+          "settings": {
+            "feature_label": "multi-molecular hyaluronic acid",
+            "us_icon_name": "checkmark_icon",
+            "us_icon_bg_color": "",
+            "us_icon_color": "",
+            "us_value": "",
+            "them_icon_name": "dash",
+            "them_icon_bg_color": "",
+            "them_icon_color": "",
+            "them_value": ""
+          }
+        },
+        "compare_row_JUWQJG": {
+          "type": "compare_row",
+          "settings": {
+            "feature_label": "peptides",
+            "us_icon_name": "checkmark_icon",
+            "us_icon_bg_color": "",
+            "us_icon_color": "",
+            "us_value": "",
+            "them_icon_name": "checkmark_icon",
+            "them_icon_bg_color": "",
+            "them_icon_color": "",
+            "them_value": ""
+          }
+        },
+        "compare_row_Ji6DFk": {
+          "type": "compare_row",
+          "settings": {
+            "feature_label": "penetrates multiple skin layers",
+            "us_icon_name": "checkmark_icon",
+            "us_icon_bg_color": "",
+            "us_icon_color": "",
+            "us_value": "",
+            "them_icon_name": "dash",
+            "them_icon_bg_color": "",
+            "them_icon_color": "",
+            "them_value": ""
+          }
+        },
+        "compare_row_edKR8E": {
+          "type": "compare_row",
+          "settings": {
+            "feature_label": "clinically proven anti-aging results",
+            "us_icon_name": "checkmark_icon",
+            "us_icon_bg_color": "",
+            "us_icon_color": "",
+            "us_value": "",
+            "them_icon_name": "dash",
+            "them_icon_bg_color": "",
+            "them_icon_color": "",
+            "them_value": ""
+          }
+        },
+        "compare_row_jfWD7r": {
+          "type": "compare_row",
+          "settings": {
+            "feature_label": "designed for all skin types",
+            "us_icon_name": "checkmark_icon",
+            "us_icon_bg_color": "",
+            "us_icon_color": "",
+            "us_value": "",
+            "them_icon_name": "checkmark_icon",
+            "them_icon_bg_color": "",
+            "them_icon_color": "",
+            "them_value": ""
+          }
+        },
+        "compare_row_ke83j3": {
+          "type": "compare_row",
+          "settings": {
+            "feature_label": "developed by leading scientists +4 years",
+            "us_icon_name": "checkmark_icon",
+            "us_icon_bg_color": "",
+            "us_icon_color": "",
+            "us_value": "",
+            "them_icon_name": "dash",
+            "them_icon_bg_color": "",
+            "them_icon_color": "",
+            "them_value": ""
+          }
+        },
+        "compare_row_mrWPfM": {
+          "type": "compare_row",
+          "settings": {
+            "feature_label": "clinical results",
+            "us_icon_name": "checkmark_icon",
+            "us_icon_bg_color": "",
+            "us_icon_color": "",
+            "us_value": "",
+            "them_icon_name": "dash",
+            "them_icon_bg_color": "",
+            "them_icon_color": "",
+            "them_value": ""
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "compare_row_JUWQJG",
+        "compare_row_Ji6DFk",
+        "compare_row_edKR8E",
+        "compare_row_jfWD7r",
+        "compare_row_ke83j3",
+        "compare_row_mrWPfM"
+      ],
+      "custom_css": [
+        "{border-bottom: 1px solid #000;}"
+      ],
+      "settings": {
+        "heading": "",
+        "heading_style": "plain",
+        "intro": "",
+        "text_align": "left",
+        "us_label": "RITÚEL",
+        "them_label": "Hydrolyzed",
+        "featured_column_border_color": "#e6e6e6",
+        "featured_column_border_width": 1,
+        "row_stripe_bg": "#f9f9f9",
+        "row_stripe_radius": 50,
+        "row_min_height": 52,
+        "row_padding_vertical": 10,
+        "row_padding_horizontal": 16,
+        "row_padding_vertical_desktop": 12,
+        "row_padding_horizontal_desktop": 20,
+        "icon_badge_size": 20,
+        "icon_size": 14,
+        "us_icon_bg_color": "#000000",
+        "us_icon_color": "#ffffff",
+        "them_icon_bg_color": "#cccccc",
+        "them_icon_color": "#ffffff",
+        "dash_color": "#cccccc",
+        "dash_font_size": 22,
+        "heading_font_size_mobile": 22,
+        "heading_font_size_desktop": 28,
+        "heading_color": "#000000",
+        "intro_font_size_mobile": 15,
+        "intro_font_size_desktop": 16,
+        "intro_color": "#333333",
+        "header_font_size_mobile": 13,
+        "header_font_size_desktop": 14,
+        "header_color": "#000000",
+        "them_header_color": "#666666",
+        "header_padding_bottom": 16,
+        "feature_font_weight": "400",
+        "feature_color": "#000000",
+        "cell_font_size_mobile": 14,
+        "cell_font_size_desktop": 14,
+        "bullet_font_size_mobile": 15,
+        "bullet_font_size_desktop": 15,
+        "bullet_color": "#000000",
+        "container_max_width": 850,
+        "bg_color": "#ffffff",
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24,
+        "padding_top_desktop": 32,
+        "padding_bottom_desktop": 32
+      }
+    },
+    "lv2_content_why": {
+      "type": "listiclev2-content",
+      "blocks": {
+        "heading_why": {
+          "type": "heading",
+          "settings": {
+            "title": "Clinical Results: How RITÚEL's Formula Makes A Visible Difference",
+            "heading_style": "bar_left",
+            "block_padding_top": 0,
+            "block_padding_bottom": 20,
+            "block_padding_left": 0,
+            "block_padding_right": 0,
+            "block_border_color": "#000000",
+            "block_border_style": "solid",
+            "block_border_top": 0,
+            "block_border_right": 0,
+            "block_border_bottom": 1,
+            "block_border_left": 0,
+            "custom_css": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_why"
+      ],
+      "settings": {
+        "section_id": "",
+        "text_align": "center",
+        "heading_font_size_mobile": 22,
+        "heading_font_size_desktop": 26,
+        "heading_color": "#000000",
+        "heading_font_weight": "400",
+        "heading_padding_left": 16,
+        "heading_padding_bottom": 12,
+        "heading_margin_bottom_mobile": 0,
+        "heading_margin_bottom_desktop": 0,
+        "border_color": "#000000",
+        "border_left_width": 4,
+        "border_left_height": 22,
+        "border_left_top": 6,
+        "border_bottom_width": 1,
+        "border_bottom_width_pct": 50,
+        "text_font_size_mobile": 15,
+        "text_font_size_desktop": 16,
+        "text_color": "#000000",
+        "text_font_weight": "400",
+        "text_line_height": 1.6,
+        "block_gap_mobile": 16,
+        "block_gap_desktop": 20,
+        "container_max_width": 1270,
+        "bg_color": "#ffffff",
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 16,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 24
+      }
+    },
+    "lv2_cases": {
+      "type": "listiclev2-cases",
+      "blocks": {
+        "case_1": {
+          "type": "case",
+          "settings": {
+            "image": "shopify://shop_images/laura.webp",
+            "eyebrow": "CASE PROFILE",
+            "name_heading": "Laura, Age 28",
+            "description": "<p>In Laura’s case, the before image displays visible redness and uneven skin texture due to blemishes. After consistent use, the after image shows a <strong>45% reduction in redness</strong> and a <strong>50% improvement in skin texture</strong>, leading to a clearer and more balanced complexion.</p>",
+            "testimonial_label": "HER TESTIMONIAL",
+            "testimonial_text": "<p><em>“I really like Labareau's skincare products! My skin looks a lot better now. The results are impressive, and I'm very happy with how my skin has improved. I would totally recommend Labareau!”</em></p>",
+            "products_label": "RITÚEL products used to achieve this result:",
+            "product_list": [
+              "pdrn-collagen-volume-balm"
+            ]
+          }
+        },
+        "case_2": {
+          "type": "case",
+          "settings": {
+            "image": "shopify://shop_images/tiffany.webp",
+            "eyebrow": "CASE PROFILE",
+            "name_heading": "Tiffany, Age 27",
+            "description": "<p>In Tiffany’s case, the before image shows noticeable redness and inflammation across the forehead and cheeks. After consistent use, the after image reveals a <strong>65% reduction in redness</strong> and an <strong>overall improvement in skin clarity and tone.</strong></p>",
+            "testimonial_label": "HER TESTIMONIAL",
+            "testimonial_text": "<p><em>“My skin used to be extremely dry and itchy, and covered in red, irritated spots. I wasn't able to find anything that worked for me. After only one week of using The Collection, my red spots have cleared and my skin felt hydrated and comfortable again. My itch and overall skin irritations have disappeared. I am so happy with the results!”</em></p>",
+            "products_label": "RITÚEL products used to achieve this result:",
+            "product_list": [
+              "pdrn-collagen-volume-balm",
+              "zero-pore-pads"
+            ]
+          }
+        },
+        "case_3": {
+          "type": "case",
+          "settings": {
+            "image": "shopify://shop_images/maria.webp",
+            "eyebrow": "CASE PROFILE",
+            "name_heading": "Marie, Age 56",
+            "description": "<p>Marie had noticeable crow’s feet around her eyes and deep lines around her mouth. After using <strong>The Night Formula consistently for 30 days</strong>, clinical imaging at the <strong>Dermatological Research Center</strong> showed a <strong>42% reduction in wrinkle depth</strong> and a <strong>35% improvement in skin elasticity</strong>.</p>",
+            "testimonial_label": "HER TESTIMONIAL",
+            "testimonial_text": "<p><em>“For years, I've used expensive skincare brands that promised the world, but I found myself disappointed as I never noticed the promised results. With LABAREAU, I have finally found the products that truly deliver on their promises. My skin has never looked and felt better. An investment worth making!”<br/><br/></em></p>",
+            "products_label": "RITÚEL products used to achieve this result:",
+            "product_list": [
+              "pdrn-collagen-volume-balm",
+              "zero-pore-pads"
+            ]
+          }
+        },
+        "case_rhjp4E": {
+          "type": "case",
+          "settings": {
+            "image": "shopify://shop_images/elene.webp",
+            "eyebrow": "CASE PROFILE",
+            "name_heading": "Elene, Age 53",
+            "description": "<p>In Elene's case, there was a significant reduction in crow's feet, with visible fine lines around the eyes <strong>reduced by over 50%.</strong> Her after image reveals a smoother texture and improved hydration, likely due to increased collagen production and enhanced skin elasticity.</p>",
+            "testimonial_label": "HER TESTIMONIAL",
+            "testimonial_text": "<p><em>“I used to have very dry skin, which resulted in fine lines, especially around my eyes. LABAREAU gave my skin the hydration it so deeply needed. My skin is truly glowing, the results speak for themselves. I love the LABAREAU Glow.”</em></p>",
+            "products_label": "RITÚEL products used to achieve this result:",
+            "product_list": [
+              "pdrn-collagen-volume-balm"
+            ]
+          }
+        },
+        "case_Uqm68r": {
+          "type": "case",
+          "settings": {
+            "image": "shopify://shop_images/sue.webp",
+            "eyebrow": "CASE PROFILE",
+            "name_heading": "Sue, Age 51",
+            "description": "<p>In Sue's case, there is a clear reduction in crow’s feet and an improvement in skin smoothness. The after image shows a <strong>40% increase in skin firmness</strong> and a more even texture around the eyes. This change indicates enhanced hydration and collagen replenishment.</p>",
+            "testimonial_label": "HER TESTIMONIAL",
+            "testimonial_text": "<p>\"After using The Collection, my skin feels smoother and more even-toned. Fine lines are noticeably softened, and my complexion looks radiant and hydrated. I’m amazed at how firm and refreshed my skin feels. The Collection truly delivers.\"</p>",
+            "products_label": "RITÚEL products used to achieve this result:",
+            "product_list": [
+              "pdrn-collagen-volume-balm"
+            ]
+          }
+        }
+      },
+      "block_order": [
+        "case_1",
+        "case_2",
+        "case_3",
+        "case_rhjp4E",
+        "case_Uqm68r"
+      ],
+      "custom_css": [
+        ".lv2c-card__name {font-weight: 400;}"
+      ],
+      "settings": {
+        "section_id": "clinical-results",
+        "heading": "",
+        "heading_style": "plain",
+        "intro": "<p>Through rigorous testing, we've measured the tangible benefits of our products on wrinkles, dullness, and loss of firmness.</p>",
+        "text_align": "center",
+        "equal_height": true,
+        "slider_type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "lock_drag": false,
+        "columns_mobile": 1,
+        "columns_desktop": 4,
+        "gap_mobile": 16,
+        "gap_desktop": 20,
+        "show_arrows": true,
+        "show_pagination": true,
+        "card_border_width": 1,
+        "card_border_color": "#000000",
+        "card_border_radius": 6,
+        "product_image_size": 72,
+        "heading_font_size_mobile": 24,
+        "heading_font_size_desktop": 32,
+        "heading_color": "#000000",
+        "intro_font_size_mobile": 14,
+        "intro_font_size_desktop": 15,
+        "intro_color": "#333333",
+        "name_font_size_mobile": 18,
+        "name_font_size_desktop": 20,
+        "desc_font_size_mobile": 14,
+        "desc_font_size_desktop": 14,
+        "testimonial_font_size_mobile": 13,
+        "testimonial_font_size_desktop": 14,
+        "testimonial_color": "#333333",
+        "container_max_width": 1400,
+        "bg_color": "#ffffff",
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 48
+      }
+    },
+    "lv2_results": {
+      "type": "listiclev2-results",
+      "blocks": {
+        "result_1": {
+          "type": "result",
+          "settings": {
+            "header_text": "INCREASED SKIN ELASTICITY AND FIRMNESS",
+            "pct_1": 40,
+            "label_1": "WEEK 4",
+            "desc_1": "Users reported tighter skin",
+            "pct_2": 64,
+            "label_2": "WEEK 8",
+            "desc_2": "Users reported smoother texture & deeper lines soften",
+            "pct_3": 86,
+            "label_3": "WEEK 12",
+            "desc_3": "Dramatically firmer, plumper skin, visibly rejuvenated appearance"
+          }
+        },
+        "result_2": {
+          "type": "result",
+          "settings": {
+            "header_text": "IMPROVED MOISTURIZATION",
+            "pct_1": 45,
+            "label_1": "WEEK 4",
+            "desc_1": "Skin stays hydrated all day",
+            "pct_2": 68,
+            "label_2": "WEEK 8",
+            "desc_2": "Skin feels consistently soft and plump",
+            "pct_3": 90,
+            "label_3": "WEEK 12",
+            "desc_3": "Skin feels deeply nourished"
+          }
+        },
+        "result_3": {
+          "type": "result",
+          "settings": {
+            "header_text": "REDUCTION OF FINE LINES",
+            "pct_1": 35,
+            "label_1": "WEEK 4",
+            "desc_1": "Slight reduction in fine lines",
+            "pct_2": 58,
+            "label_2": "WEEK 8",
+            "desc_2": "Lines appear visibly smoother",
+            "pct_3": 82,
+            "label_3": "WEEK 12",
+            "desc_3": "Fine lines significantly reduced"
+          }
+        },
+        "result_4": {
+          "type": "result",
+          "settings": {
+            "header_text": "REDUCTION OF EXPRESSION LINES",
+            "pct_1": 30,
+            "label_1": "WEEK 4",
+            "desc_1": "Faint improvement in deep lines",
+            "pct_2": 55,
+            "label_2": "WEEK 8",
+            "desc_2": "Expression lines are less pronounced",
+            "pct_3": 78,
+            "label_3": "WEEK 12",
+            "desc_3": "Expression lines look softer and diminished"
+          }
+        }
+      },
+      "block_order": [
+        "result_1",
+        "result_2",
+        "result_3",
+        "result_4"
+      ],
+      "settings": {
+        "section_id": "",
+        "heading": "Clinically Proven Results",
+        "heading_style": "bar",
+        "intro": "<p>Our clinical trials were conducted on healthy volunteers <strong>over the age of 33 years for 12 consecutive weeks.</strong>   </p><p>During the clinical trials, the volunteers were instructed to use <a href=\"/collections/all\" title=\"ALL\">The Collection</a> by RITUEL daily. The volunteers were assessed on the effects on the skin’s moisturization, hydration, wrinkles, expression lines, smoothness, elasticity, and tightening.    </p><p>Our results present remarkable improvements after 12 weeks of use in all assessment areas.</p>",
+        "text_align": "center",
+        "slider_type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "lock_drag": false,
+        "gap_mobile": 16,
+        "gap_desktop": 24,
+        "show_arrows": true,
+        "show_pagination": true,
+        "card_border_width": 1,
+        "card_border_color": "#000000",
+        "header_bg_color": "#000000",
+        "header_text_color": "#ffffff",
+        "chart_active_color": "#000000",
+        "chart_inactive_color": "#e5e5e5",
+        "heading_font_size_mobile": 24,
+        "heading_font_size_desktop": 28,
+        "heading_color": "#000000",
+        "intro_font_size_mobile": 14,
+        "intro_font_size_desktop": 15,
+        "intro_color": "#333333",
+        "header_font_size_mobile": 12,
+        "header_font_size_desktop": 13,
+        "label_font_size_mobile": 12,
+        "label_font_size_desktop": 13,
+        "desc_font_size_mobile": 13,
+        "desc_font_size_desktop": 14,
+        "container_max_width": 750,
+        "bg_color": "#ffffff",
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
+      }
+    },
+    "listiclev2_cta_kVf3Gk": {
+      "type": "listiclev2-cta",
+      "blocks": {
+        "icon_text_U7TYzb": {
+          "type": "icon_text",
+          "settings": {
+            "layout": "horizontal",
+            "icon_name": "check-2",
+            "text": "<p>Clinically proven to smooth fine lines and wrinkles</p>",
+            "link": "",
+            "icon_color": "#8b1e2d",
+            "icon_bg_color": "rgba(0,0,0,0)",
+            "icon_size_mobile": 16,
+            "icon_size_desktop": 16,
+            "icon_radius": 50,
+            "icon_padding": 0,
+            "gap": 12,
+            "padding_vertical": 0,
+            "padding_horizontal": 0,
+            "margin_bottom": 0,
+            "text_font_size_mobile": 14,
+            "text_font_size_desktop": 15,
+            "text_color": "#000000"
+          }
+        },
+        "icon_text_9bRXtd": {
+          "type": "icon_text",
+          "settings": {
+            "layout": "horizontal",
+            "icon_name": "check-2",
+            "text": "<p>Provided with 97% skin identical collagen, the key factor for a youthful skin</p>",
+            "link": "",
+            "icon_color": "#8b1e2d",
+            "icon_bg_color": "rgba(0,0,0,0)",
+            "icon_size_mobile": 16,
+            "icon_size_desktop": 16,
+            "icon_radius": 50,
+            "icon_padding": 0,
+            "gap": 12,
+            "padding_vertical": 0,
+            "padding_horizontal": 0,
+            "margin_bottom": 0,
+            "text_font_size_mobile": 14,
+            "text_font_size_desktop": 15,
+            "text_color": "#000000"
+          }
+        },
+        "icon_text_zwmfNM": {
+          "type": "icon_text",
+          "settings": {
+            "layout": "horizontal",
+            "icon_name": "check-2",
+            "text": "<p>Creates a skin full of hydration</p>",
+            "link": "",
+            "icon_color": "#8b1e2d",
+            "icon_bg_color": "rgba(0,0,0,0)",
+            "icon_size_mobile": 16,
+            "icon_size_desktop": 16,
+            "icon_radius": 50,
+            "icon_padding": 0,
+            "gap": 12,
+            "padding_vertical": 0,
+            "padding_horizontal": 0,
+            "margin_bottom": 0,
+            "text_font_size_mobile": 14,
+            "text_font_size_desktop": 15,
+            "text_color": "#000000"
+          }
+        },
+        "icon_text_96qPdL": {
+          "type": "icon_text",
+          "settings": {
+            "layout": "horizontal",
+            "icon_name": "check-2",
+            "text": "<p>Plumping up the skin as a filler and giving the skin new elasticity</p>",
+            "link": "",
+            "icon_color": "#8b1e2d",
+            "icon_bg_color": "rgba(0,0,0,0)",
+            "icon_size_mobile": 16,
+            "icon_size_desktop": 16,
+            "icon_radius": 50,
+            "icon_padding": 0,
+            "gap": 12,
+            "padding_vertical": 0,
+            "padding_horizontal": 0,
+            "margin_bottom": 0,
+            "text_font_size_mobile": 14,
+            "text_font_size_desktop": 15,
+            "text_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "icon_text_U7TYzb",
+        "icon_text_9bRXtd",
+        "icon_text_zwmfNM",
+        "icon_text_96qPdL"
+      ],
+      "name": "Listiclev2 CTA",
+      "settings": {
+        "section_id": "",
+        "layout_style": "style_1",
+        "product": "pdrn-collagen-volume-balm",
+        "image_border_radius": 0,
+        "heading": "<h2>Get Started With Labareau's Signature Anti-Aging Set:</h2>",
+        "title": "The Collection",
+        "badge": "BESTSELLER",
+        "button_label": "GET \"THE COLLECTION\" NOW →",
+        "button_url": "",
+        "button_open_new_tab": false,
+        "guarantee_text": "Recommended by Doctors",
+        "customers_text": "250,000+ Happy Customers",
+        "media_width": 45,
+        "vertical_align": "center",
+        "column_gap_mobile": 20,
+        "column_gap_desktop": 40,
+        "blocks_gap_mobile": 12,
+        "blocks_gap_desktop": 14,
+        "container_max_width": 750,
+        "heading_font_size_mobile": 20,
+        "heading_font_size_desktop": 26,
+        "heading_font_weight": "700",
+        "heading_color": "#000000",
+        "heading_align_mobile": "center",
+        "heading_align_desktop": "center",
+        "title_font_size_mobile": 24,
+        "title_font_size_desktop": 28,
+        "title_font_weight": "400",
+        "title_color": "#000000",
+        "badge_font_size_mobile": 11,
+        "badge_font_size_desktop": 12,
+        "badge_font_weight": "500",
+        "badge_text_color": "#ffffff",
+        "badge_bg_color": "#000000",
+        "badge_padding_vertical": 6,
+        "badge_padding_horizontal": 12,
+        "badge_border_radius": 40,
+        "text_font_size_mobile": 14,
+        "text_font_size_desktop": 15,
+        "text_color": "#333333",
+        "button_font_size_mobile": 13,
+        "button_font_size_desktop": 14,
+        "button_font_weight": "700",
+        "button_text_color": "#ffffff",
+        "button_bg_color": "#8b1e2d",
+        "button_padding_vertical_mobile": 11,
+        "button_padding_horizontal_mobile": 12,
+        "button_padding_vertical_desktop": 11,
+        "button_padding_horizontal_desktop": 28,
+        "button_border_radius": 0,
+        "guarantee_font_size_mobile": 10,
+        "guarantee_font_size_desktop": 11,
+        "guarantee_color": "#000000",
+        "guarantee_icon_color": "#000000",
+        "guarantee_icon_size": 12,
+        "guarantee_align_mobile": "center",
+        "guarantee_align_desktop": "flex-start",
+        "bg_color": "#ffffff",
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_top_desktop": 56,
+        "padding_bottom_desktop": 56
+      }
+    },
+    "listiclev2_included_Qh9z8E": {
+      "type": "listiclev2-included",
+      "blocks": {
+        "item_XUfgbm": {
+          "type": "item",
+          "settings": {
+            "product": "pdrn-collagen-volume-balm",
+            "title": "The Day Formula",
+            "stat_title_1": "97%",
+            "stat_desc_1": "Of The Users Agreed Or Completely Agreed That The Day Formula Improved Skin’s Tightening",
+            "stat_title_2": "94%",
+            "stat_desc_2": "Would Recommend The Day Formula",
+            "button_label": "LEARN MORE",
+            "button_url": ""
+          }
+        },
+        "item_37x78M": {
+          "type": "item",
+          "settings": {
+            "product": "zero-pore-pads",
+            "title": "The Night Formula",
+            "stat_title_1": "96%",
+            "stat_desc_1": "Saw visibly smoother skin overnight",
+            "stat_title_2": "93%",
+            "stat_desc_2": "Would recommend The Night Formula",
+            "button_label": "LEARN MORE",
+            "button_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_XUfgbm",
+        "item_37x78M"
+      ],
+      "custom_css": [],
+      "name": "Listiclev2 Included",
+      "settings": {
+        "section_id": "collection",
+        "title": "What's Included:",
+        "content_layout": "50_50",
+        "open_first": true,
+        "allow_multiple": false,
+        "container_max_width": 900,
+        "image_max_width": 320,
+        "content_gap_mobile": 20,
+        "content_gap_desktop": 40,
+        "title_font_family": "Oswald, sans-serif",
+        "title_font_size_mobile": 26,
+        "title_font_size_desktop": 32,
+        "title_font_weight": "400",
+        "title_color": "#000000",
+        "title_align": "center",
+        "title_margin_bottom_mobile": 20,
+        "title_margin_bottom_desktop": 28,
+        "item_title_font_family": "Oswald, sans-serif",
+        "item_title_font_size_mobile": 18,
+        "item_title_font_size_desktop": 22,
+        "item_title_font_weight": "400",
+        "item_title_color": "#000000",
+        "header_padding_vertical_mobile": 16,
+        "header_padding_vertical_desktop": 18,
+        "bar_width": 4,
+        "bar_height": 20,
+        "bar_color": "#000000",
+        "caret_width": 24,
+        "caret_height": 10,
+        "caret_color": "#000000",
+        "stat_title_font_family": "Oswald, sans-serif",
+        "stat_title_font_size_mobile": 36,
+        "stat_title_font_size_desktop": 44,
+        "stat_title_font_weight": "600",
+        "stat_title_color": "#000000",
+        "stat_desc_font_family": "inherit",
+        "stat_desc_font_size_mobile": 13,
+        "stat_desc_font_size_desktop": 14,
+        "stat_desc_font_weight": "400",
+        "stat_desc_color": "#000000",
+        "stats_gap_mobile": 16,
+        "stats_gap_desktop": 24,
+        "stats_margin_bottom_mobile": 16,
+        "stats_margin_bottom_desktop": 20,
+        "button_font_size_mobile": 13,
+        "button_font_size_desktop": 14,
+        "button_font_weight": "700",
+        "button_text_color": "#ffffff",
+        "button_bg_color": "#AC0032",
+        "button_padding_vertical_mobile": 11,
+        "button_padding_horizontal_mobile": 12,
+        "button_padding_vertical_desktop": 11,
+        "button_padding_horizontal_desktop": 12,
+        "button_border_radius": 0,
+        "button_open_new_tab": false,
+        "item_border_color": "#e5e5e5",
+        "item_border_width": 1,
+        "section_border_color": "#e5e5e5",
+        "section_border_top": 1,
+        "section_border_bottom": 1,
+        "panel_padding_bottom_mobile": 20,
+        "panel_padding_bottom_desktop": 28,
+        "bg_color": "#ffffff",
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
+      }
+    },
+    "lv2_faq": {
+      "type": "faq-accordion-4",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I know these products will actually work for me?",
+            "answer": "<p>Our products are backed by years of scientific research and rigorous clinical testing. Results have shown that 95% of users reported visibly firmer skin within 8 weeks of use.</p>",
+            "custom_html": "",
+            "open_by_default": false,
+            "badge_text": "",
+            "badge_override_section": false,
+            "badge_bg_color": "#000000",
+            "badge_text_color": "#ffffff",
+            "badge_font_size": 12,
+            "badge_font_weight": "600",
+            "badge_border_color": "#000000",
+            "badge_border_width": 0,
+            "badge_border_radius": 4,
+            "badge_padding_vertical": 4,
+            "badge_padding_horizontal": 12,
+            "badge_margin_bottom": 8,
+            "icon_material": "",
+            "icon_material_filled": false,
+            "icon_svg": ""
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "I have very sensitive skin. Will these products cause irritation?",
+            "answer": "<p>RITÚEL products are dermatologically tested and formulated to be gentle on even the most sensitive skin. We always recommend performing a patch test before use.</p>",
+            "custom_html": "",
+            "open_by_default": false,
+            "badge_text": "",
+            "badge_override_section": false,
+            "badge_bg_color": "#000000",
+            "badge_text_color": "#ffffff",
+            "badge_font_size": 12,
+            "badge_font_weight": "600",
+            "badge_border_color": "#000000",
+            "badge_border_width": 0,
+            "badge_border_radius": 4,
+            "badge_padding_vertical": 4,
+            "badge_padding_horizontal": 12,
+            "badge_margin_bottom": 8,
+            "icon_material": "",
+            "icon_material_filled": false,
+            "icon_svg": ""
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Why should I choose RITÚEL over other anti-aging brands?",
+            "answer": "<p>RITÚEL's formula combines 97% skin-identical atelocollagen, multi-molecular hyaluronic acid, and bioactive peptides — designed to penetrate multiple skin layers and work at the cellular level.</p>",
+            "custom_html": "",
+            "open_by_default": false,
+            "badge_text": "",
+            "badge_override_section": false,
+            "badge_bg_color": "#000000",
+            "badge_text_color": "#ffffff",
+            "badge_font_size": 12,
+            "badge_font_weight": "600",
+            "badge_border_color": "#000000",
+            "badge_border_width": 0,
+            "badge_border_radius": 4,
+            "badge_padding_vertical": 4,
+            "badge_padding_horizontal": 12,
+            "badge_margin_bottom": 8,
+            "icon_material": "",
+            "icon_material_filled": false,
+            "icon_svg": ""
+          }
+        },
+        "faq_4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long will it take to see visible changes?",
+            "answer": "<p>Most users report noticeable improvements in hydration and skin texture within the first few weeks. Clinical trials have shown significant results after 8 weeks of consistent use.</p>",
+            "custom_html": "",
+            "open_by_default": false,
+            "badge_text": "",
+            "badge_override_section": false,
+            "badge_bg_color": "#000000",
+            "badge_text_color": "#ffffff",
+            "badge_font_size": 12,
+            "badge_font_weight": "600",
+            "badge_border_color": "#000000",
+            "badge_border_width": 0,
+            "badge_border_radius": 4,
+            "badge_padding_vertical": 4,
+            "badge_padding_horizontal": 12,
+            "badge_margin_bottom": 8,
+            "icon_material": "",
+            "icon_material_filled": false,
+            "icon_svg": ""
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4"
+      ],
+      "custom_css": [
+        ".page-width {max-width: 750px; margin: auto;}",
+        ".faq4-question {font-weight: 400;}"
+      ],
+      "name": "Accordion",
+      "settings": {
+        "use_theme_colors": false,
+        "background_color": "#F8F8F8",
+        "gradient_enabled": false,
+        "gradient_background": "",
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "heading_before": "Frequently Asked",
+        "highlighted_text": "Questions",
+        "heading_after": "",
+        "highlight_position": "inline_second",
+        "heading_tag": "h2",
+        "heading_text_align": "center",
+        "heading_color": "#000000",
+        "heading_font_size_desktop": 36,
+        "heading_font_size_mobile": 28,
+        "heading_font_weight": "500",
+        "heading_margin_top": 0,
+        "heading_margin_bottom": 16,
+        "highlighted_gradient_enabled": false,
+        "highlighted_color": "#000000",
+        "highlighted_gradient": "",
+        "highlighted_font_size_desktop": 36,
+        "highlighted_font_size_mobile": 28,
+        "highlighted_font_weight": "600",
+        "highlighted_spacing": 8,
+        "intro_text": "",
+        "intro_text_color": "#333333",
+        "intro_font_size_desktop": 16,
+        "intro_font_size_mobile": 14,
+        "intro_font_weight": "400",
+        "intro_max_width": 80,
+        "intro_margin_bottom": 24,
+        "layout": "image-left",
+        "layout_gap": 40,
+        "show_image": false,
+        "image_width": 45,
+        "image_border_radius": 4,
+        "hide_image_on_mobile": false,
+        "accordion_gap": 12,
+        "accordion_border_width": 1,
+        "accordion_border_color": "#e0e0e0",
+        "accordion_border_radius": 12,
+        "border_bottom_only": true,
+        "border_bottom_color": "#e0e0e0",
+        "border_bottom_width": 1,
+        "badge_bg_color": "#000000",
+        "badge_text_color": "#ffffff",
+        "badge_font_size": 12,
+        "badge_font_weight": "600",
+        "badge_border_color": "#000000",
+        "badge_border_width": 0,
+        "badge_border_radius": 4,
+        "badge_padding_vertical": 4,
+        "badge_padding_horizontal": 12,
+        "badge_margin_bottom": 8,
+        "icon_size": 24,
+        "icon_color": "#000000",
+        "icon_color_active": "#000000",
+        "icon_bg_color": "rgba(0,0,0,0)",
+        "icon_bg_color_active": "rgba(0,0,0,0)",
+        "icon_border_width": 0,
+        "icon_border_color": "#000000",
+        "icon_border_color_active": "#000000",
+        "icon_border_radius": 0,
+        "icon_padding": 0,
+        "question_bg_color": "rgba(0,0,0,0)",
+        "question_bg_color_hover": "#f5f5f5",
+        "question_bg_color_active": "#ffffff",
+        "question_text_color": "#000000",
+        "question_text_color_active": "#000000",
+        "question_font_size_desktop": 18,
+        "question_font_size_mobile": 16,
+        "question_font_weight": "600",
+        "question_padding_vertical": 16,
+        "question_padding_horizontal": 20,
+        "answer_bg_color": "#ffffff",
+        "answer_text_color": "#000000",
+        "answer_font_size_desktop": 16,
+        "answer_font_size_mobile": 14,
+        "answer_font_weight": "400",
+        "answer_padding_vertical": 20,
+        "answer_padding_horizontal": 20
+      }
+    },
+    "lv2_cta_final": {
+      "type": "listiclev2-cta",
+      "blocks": {
+        "text_bAhnmB": {
+          "type": "text",
+          "settings": {
+            "text": "Rituel’s signature anti-aging set. This exclusive set includes the must have products you need for a glowy and youthful complexion, from our powerful peeling to the best-selling day and night collagen serums.",
+            "font_size_mobile": 14,
+            "font_size_desktop": 15,
+            "color": "#333333"
+          }
+        }
+      },
+      "block_order": [
+        "text_bAhnmB"
+      ],
+      "settings": {
+        "section_id": "",
+        "layout_style": "style_2",
+        "product": "pdrn-collagen-volume-balm",
+        "image_border_radius": 0,
+        "heading": "<p>The Collection</p>",
+        "title": "The Collection",
+        "badge": "BESTSELLER",
+        "button_label": "GET \"THE COLLECTION\" NOW  →",
+        "button_url": "",
+        "button_open_new_tab": false,
+        "guarantee_text": "Recommended by Doctors",
+        "customers_text": "250,000+ Happy Customers",
+        "media_width": 45,
+        "vertical_align": "center",
+        "column_gap_mobile": 20,
+        "column_gap_desktop": 40,
+        "blocks_gap_mobile": 12,
+        "blocks_gap_desktop": 14,
+        "container_max_width": 750,
+        "heading_font_size_mobile": 26,
+        "heading_font_size_desktop": 32,
+        "heading_font_weight": "700",
+        "heading_color": "#000000",
+        "heading_align_mobile": "center",
+        "heading_align_desktop": "center",
+        "title_font_size_mobile": 24,
+        "title_font_size_desktop": 28,
+        "title_font_weight": "700",
+        "title_color": "#000000",
+        "badge_font_size_mobile": 11,
+        "badge_font_size_desktop": 12,
+        "badge_font_weight": "600",
+        "badge_text_color": "#ffffff",
+        "badge_bg_color": "#000000",
+        "badge_padding_vertical": 6,
+        "badge_padding_horizontal": 12,
+        "badge_border_radius": 40,
+        "text_font_size_mobile": 14,
+        "text_font_size_desktop": 15,
+        "text_color": "#333333",
+        "button_font_size_mobile": 13,
+        "button_font_size_desktop": 14,
+        "button_font_weight": "700",
+        "button_text_color": "#ffffff",
+        "button_bg_color": "#ac0032",
+        "button_padding_vertical_mobile": 11,
+        "button_padding_horizontal_mobile": 14,
+        "button_padding_vertical_desktop": 11,
+        "button_padding_horizontal_desktop": 12,
+        "button_border_radius": 0,
+        "guarantee_font_size_mobile": 10,
+        "guarantee_font_size_desktop": 12,
+        "guarantee_color": "#000000",
+        "guarantee_icon_color": "#000000",
+        "guarantee_icon_size": 12,
+        "guarantee_align_mobile": "center",
+        "guarantee_align_desktop": "flex-start",
+        "bg_color": "#ffffff",
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_top_desktop": 56,
+        "padding_bottom_desktop": 56
+      }
+    },
+    "custom_liquid_XRaUUr": {
+      "type": "custom-liquid",
+      "name": "Footer Style",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "custom_liquid": "<style>\n.ecl-footer-content {\n    display: grid;\n    gap: 40px;\n    margin-bottom: 40px;\n    grid-template-columns: 1fr;\n    text-align: center;\n    justify-content: center;\n}\n.ecl-footer-column ul {\n    list-style: none;\n    padding: 0;\n    margin: 0;\n    display: flex;\n    gap: 10px;\n}\n.ecl-footer-content{\n    grid-template-columns: 1fr;\n}\n.ecl-footer-brand {\n    display: flex;\n    flex-direction: column;\n    gap: 16px;\n\n}\n.ecl-footer-main {\n  padding: 20px;\n}\n.ecl-footer-brand img{\nmax-width:120px;\n}\n.ecl-footer-content h3 {\n    display: none;\n}\n    .ecl-footer-column--desktop-3 {\n        grid-column: span 3;\n        display: flex;\n        width: 100%;\n        justify-content: center;\n    }\n.ecl-footer-bottom,.newsletter-section{\ndisplay:none;\n}\n.ecl-footer-column li {\n    margin-bottom: 12px;\n    display: inline;\n    margin: 5px;\n}\n.ecl-footer-content{\ndisplay:block!important;\n}\n.ecl-footer-column ul {\n    list-style: none;\n    padding: 0;\n    margin: 0;\ndisplay:block;\n}\n.ecl-footer-brand img {\n    max-width: 120px;\n    margin-left: auto;\n    margin-right: auto;\n}\n.ecl-footer-main {\n    padding: 20px 20px 20px!important;\n}\n.ecl-footer-column li {\n    margin: 0px!important;\n}\n.ecl-footer-column ul {\ndisplay:inline-flex;\nflex-direction:row;\n    flex-wrap: wrap;\n    gap: 5px;\n}\n    .ecl-footer-column--mobile-1 {\n        grid-column: unset;\n        display: inline-block;\n        margin-top: 20px;\n    }\n</style>",
+        "color_scheme": "background-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "announcement_bar_wURXUp",
+    "main",
+    "custom_liquid_7zwMTX",
+    "custom_liquid_TxyK7G",
+    "custom_hero_QeQ4pe",
+    "lv2_nav",
+    "lv2_content_main",
+    "lv2_slider_stats",
+    "lv2_content_factors",
+    "lv2_formula",
+    "horizontal_ticker_yyREzg",
+    "listiclev2_content_HEaXG4",
+    "lv2_compare_collagen",
+    "lv2_content_why",
+    "lv2_cases",
+    "lv2_results",
+    "listiclev2_cta_kVf3Gk",
+    "listiclev2_included_Qh9z8E",
+    "lv2_faq",
+    "lv2_cta_final",
+    "custom_liquid_XRaUUr"
+  ]
+}

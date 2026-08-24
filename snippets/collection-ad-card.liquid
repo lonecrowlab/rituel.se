@@ -1,0 +1,50 @@
+{% comment %}
+  Collection grid promotional ad card.
+
+  Accepts:
+  - block: {Object} Ad block object
+  - section: {Object} Section object
+{% endcomment %}
+
+{% liquid
+  assign ad_image_fit = block.settings.image_fit | default: 'cover'
+  assign ad_image_position = block.settings.image_position | default: 'center'
+  if block.settings.background_type == 'gradient' and block.settings.background_gradient != blank
+    assign ad_card_bg = block.settings.background_gradient
+  elsif block.settings.background_color != blank
+    assign ad_card_bg = block.settings.background_color
+  else
+    assign ad_card_bg = 'transparent'
+  endif
+%}
+
+<div
+  class="fc-ad-card fc-product-card"
+  data-ad-block-id="{{ block.id }}"
+  style="--ad-image-fit: {{ ad_image_fit }}; --ad-image-position: {{ ad_image_position }}; --ad-card-bg: {{ ad_card_bg }};"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.link != blank %}
+    <a href="{{ block.settings.link }}" class="fc-ad-card__link" aria-label="Promotional offer">
+  {% else %}
+    <div class="fc-ad-card__link">
+  {% endif %}
+    <div class="fc-ad-card__image-wrapper">
+      {% assign ad_image_alt = block.settings.image.alt | default: 'Promotional banner' %}
+      {{
+        block.settings.image
+        | image_url: width: 800
+        | image_tag:
+          class: 'fc-ad-card__image',
+          loading: 'lazy',
+          widths: '200, 400, 600, 800',
+          sizes: '(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw',
+          alt: ad_image_alt
+      }}
+    </div>
+  {% if block.settings.link != blank %}
+    </a>
+  {% else %}
+    </div>
+  {% endif %}
+</div>

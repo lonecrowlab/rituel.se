@@ -1,0 +1,675 @@
+{% liquid
+  assign drag_value = 'true'
+  if section.settings.lock_drag
+    assign drag_value = 'false'
+  endif
+%}
+
+<style>
+  .section-{{ section.id }} {
+    background: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  .section-{{ section.id }} .lv2r-wrap {
+    max-width: {{ section.settings.container_max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    text-align: {{ section.settings.text_align }};
+  }
+
+  .section-{{ section.id }} .lv2r-heading {
+    font-size: {{ section.settings.heading_font_size_mobile }}px;
+    color: {{ section.settings.heading_color }};
+    margin: 0 0 16px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .section-{{ section.id }} .lv2r-heading--bar {
+    position: relative;
+    display: inline-block;
+    padding-left: 14px;
+  }
+
+  .section-{{ section.id }} .lv2r-heading--bar:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+    width: 4px;
+    height: 1em;
+    background: {{ section.settings.heading_color }};
+  }
+
+  .section-{{ section.id }} .lv2r-intro {
+    font-size: {{ section.settings.intro_font_size_mobile }}px;
+    color: {{ section.settings.intro_color }};
+    margin: 0 auto 28px;
+    max-width: 100%;
+    line-height: 1.6;
+  }
+
+  .section-{{ section.id }} .lv2r-card {
+    border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .section-{{ section.id }} .lv2r-card__header {
+    background: {{ section.settings.header_bg_color }};
+    color: {{ section.settings.header_text_color }};
+    text-align: center;
+    padding: 12px 16px;
+    font-size: {{ section.settings.header_font_size_mobile }}px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .section-{{ section.id }} .lv2r-card__metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding: 24px 16px 28px;
+  }
+
+  .section-{{ section.id }} .lv2r-metric {
+    text-align: center;
+  }
+
+  .section-{{ section.id }} .lv2r-metric__chart {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: conic-gradient(
+      {{ section.settings.chart_active_color }} 0deg var(--pct-deg),
+      {{ section.settings.chart_inactive_color }} var(--pct-deg) 360deg
+    );
+    position: relative;
+  }
+
+  .section-{{ section.id }} .lv2r-metric__chart:before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .section-{{ section.id }} .lv2r-metric__pct {
+    position: relative;
+    z-index: 1;
+    font-size: 18px;
+    font-weight: 600;
+    color: {{ section.settings.chart_active_color }};
+  }
+
+  .section-{{ section.id }} .lv2r-metric__label {
+    font-size: {{ section.settings.label_font_size_mobile }}px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .section-{{ section.id }} .lv2r-metric__desc {
+    font-size: {{ section.settings.desc_font_size_mobile }}px;
+    margin: 0;
+    line-height: 1.45;
+    color: #333;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2r-heading {
+      font-size: {{ section.settings.heading_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2r-intro {
+      font-size: {{ section.settings.intro_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2r-card__header {
+      font-size: {{ section.settings.header_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2r-card__metrics {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 32px 24px 36px;
+    }
+
+    .section-{{ section.id }} .lv2r-metric__chart {
+      width: 120px;
+      height: 120px;
+    }
+
+    .section-{{ section.id }} .lv2r-metric__label {
+      font-size: {{ section.settings.label_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2r-metric__desc {
+      font-size: {{ section.settings.desc_font_size_desktop }}px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .lv2r-metric__chart{
+      width:70px; 
+      height:70px;
+      width: auto!important;
+    height: auto!important ;
+  aspect-ratio: 1/1;
+    }
+    .lv2r-card__metrics{
+      gap:1px;
+    }
+  }
+</style>
+<section class="listiclev2-results section-{{ section.id }}" data-section-id="{{ section.id }}" {% if section.settings.section_id != blank %}id="{{ section.settings.section_id }}"{% endif %}>
+  <div class="page-width lv2r-wrap">
+    {% if section.settings.heading != blank %}
+      <h2 class="lv2r-heading{% if section.settings.heading_style == 'bar' %} lv2r-heading--bar{% endif %}">{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.intro != blank %}
+      <div class="lv2r-intro rte">{{ section.settings.intro }}</div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <splide-component
+        data-type="{{ section.settings.slider_type }}"
+        data-autoplay="{{ section.settings.autoplay }}"
+        data-autoplay-speed="{{ section.settings.autoplay_speed }}"
+        data-slides-desktop="1"
+        data-slides-mobile="1"
+        data-gap-desktop="{{ section.settings.gap_desktop }}"
+        data-gap-mobile="{{ section.settings.gap_mobile }}"
+        data-arrows="{{ section.settings.show_arrows }}"
+        data-pagination="{{ section.settings.show_pagination }}"
+        data-drag="{{ drag_value }}"
+      >
+        <div class="splide lv2r-splide">
+          <div class="splide__track">
+            <ul class="splide__list">
+              {% for block in section.blocks %}
+                {% if block.type == 'result' %}
+                  <li class="splide__slide" {{ block.shopify_attributes }}>
+                    <div class="lv2r-card">
+                      {% if block.settings.header_text != blank %}
+                        <div class="lv2r-card__header">{{ block.settings.header_text }}</div>
+                      {% endif %}
+                      <div class="lv2r-card__metrics">
+                        {% for i in (1..3) %}
+                          {% liquid
+                            assign pct_key = 'pct_' | append: i
+                            assign label_key = 'label_' | append: i
+                            assign desc_key = 'desc_' | append: i
+                            assign pct = block.settings[pct_key] | default: 0
+                            assign pct_deg = pct | times: 360 | divided_by: 100
+                          %}
+                          <div class="lv2r-metric">
+                            <div class="lv2r-metric__chart" style="--pct: {{ pct }}; --pct-deg: {{ pct_deg }}deg;">
+                              <span class="lv2r-metric__pct">{{ pct }}%</span>
+                            </div>
+                            {% if block.settings[label_key] != blank %}
+                              <p class="lv2r-metric__label">{{ block.settings[label_key] }}</p>
+                            {% endif %}
+                            {% if block.settings[desc_key] != blank %}
+                              <p class="lv2r-metric__desc">{{ block.settings[desc_key] }}</p>
+                            {% endif %}
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </splide-component>
+    {% endif %}
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Listiclev2 Results",
+  "tag": "section",
+  "class": "section-listiclev2-results",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section anchor ID"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Clinically Proven Results"
+    },
+    {
+      "type": "select",
+      "id": "heading_style",
+      "label": "Heading style",
+      "options": [
+        { "value": "plain", "label": "Plain" },
+        { "value": "bar", "label": "Left bar" }
+      ],
+      "default": "bar"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "select",
+      "id": "slider_type",
+      "label": "Type",
+      "options": [
+        { "value": "slide", "label": "Slide" },
+        { "value": "loop", "label": "Loop" }
+      ],
+      "default": "slide"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay speed",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "lock_drag",
+      "label": "Lock drag",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap (desktop)",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show pagination",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Card"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Border width",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "header_bg_color",
+      "label": "Header bar background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "header_text_color",
+      "label": "Header bar text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "chart_active_color",
+      "label": "Chart active color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "chart_inactive_color",
+      "label": "Chart inactive color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "min": 18,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading (mobile)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "min": 20,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading (desktop)",
+      "default": 28
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "intro_font_size_mobile",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Intro (mobile)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "intro_font_size_desktop",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Intro (desktop)",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "intro_color",
+      "label": "Intro color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "header_font_size_mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Card header (mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "header_font_size_desktop",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "label": "Card header (desktop)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "label_font_size_mobile",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Week label (mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "label_font_size_desktop",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Week label (desktop)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "desc_font_size_mobile",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Description (mobile)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "desc_font_size_desktop",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Description (desktop)",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "min": 400,
+      "max": 1400,
+      "step": 10,
+      "unit": "px",
+      "label": "Container max width",
+      "default": 650,
+      "info": "Content container width. Section background stays full width."
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "result",
+      "name": "Result slide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "header_text",
+          "label": "Header bar text",
+          "default": "INCREASED SKIN ELASTICITY AND FIRMNESS"
+        },
+        {
+          "type": "range",
+          "id": "pct_1",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Percentage 1",
+          "default": 40
+        },
+        {
+          "type": "text",
+          "id": "label_1",
+          "label": "Label 1",
+          "default": "WEEK 4"
+        },
+        {
+          "type": "text",
+          "id": "desc_1",
+          "label": "Description 1",
+          "default": "Users reported tighter skin"
+        },
+        {
+          "type": "range",
+          "id": "pct_2",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Percentage 2",
+          "default": 64
+        },
+        {
+          "type": "text",
+          "id": "label_2",
+          "label": "Label 2",
+          "default": "WEEK 8"
+        },
+        {
+          "type": "text",
+          "id": "desc_2",
+          "label": "Description 2",
+          "default": "Users reported smoother texture & deeper lines soften"
+        },
+        {
+          "type": "range",
+          "id": "pct_3",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Percentage 3",
+          "default": 86
+        },
+        {
+          "type": "text",
+          "id": "label_3",
+          "label": "Label 3",
+          "default": "WEEK 12"
+        },
+        {
+          "type": "text",
+          "id": "desc_3",
+          "label": "Description 3",
+          "default": "Dramatically firmer, plumper skin, visibly rejuvenated appearance"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Listiclev2 Results",
+      "blocks": [
+        { "type": "result" },
+        { "type": "result" },
+        { "type": "result" },
+        { "type": "result" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,333 @@
+<section class="listiclev2-title section-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="page-width lv2t-wrap">
+    {% if section.settings.title != blank %}
+      <div class="lv2t-heading heading_with_line heading_with_line_left">
+        <div class="lv2t-heading__text rte">{{ section.settings.title }}</div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .section-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  .section-{{ section.id }} .lv2t-wrap {
+    max-width: {{ section.settings.container_max_width }}px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: {{ section.settings.text_align }};
+  }
+
+  .section-{{ section.id }} .lv2t-heading {
+    position: relative;
+    display: inline-block;
+    padding-left: {{ section.settings.heading_padding_left }}px;
+    padding-bottom: {{ section.settings.heading_padding_bottom }}px;
+    margin: {{ section.settings.margin_top_mobile }}px 0 {{ section.settings.margin_bottom_mobile }}px;
+  }
+
+  .section-{{ section.id }} .lv2t-heading__text {
+    font-size: {{ section.settings.font_size_mobile }}px;
+    color: {{ section.settings.text_color }};
+    line-height: 1.3;
+    font-weight: {{ section.settings.font_weight }};
+  }
+
+  .section-{{ section.id }} .lv2t-heading__text p {
+    margin: 0;
+  }
+
+  .section-{{ section.id }} .lv2t-heading__text:before {
+    content: "";
+    position: absolute;
+    width: {{ section.settings.border_left_width }}px;
+    height: {{ section.settings.border_left_height }}px;
+    background: {{ section.settings.border_color }};
+    top: {{ section.settings.border_left_top }}px;
+    left: 0;
+  }
+
+  .section-{{ section.id }} .lv2t-heading__text:after {
+    content: "";
+    position: absolute;
+    border-bottom: {{ section.settings.border_bottom_width }}px solid {{ section.settings.border_color }};
+    width: {{ section.settings.border_bottom_width_pct }}%;
+    left: 0;
+    bottom: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2t-heading {
+      margin-top: {{ section.settings.margin_top_desktop }}px;
+      margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2t-heading__text {
+      font-size: {{ section.settings.font_size_desktop }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Listiclev2 Title",
+  "tag": "section",
+  "class": "section-listiclev2-title",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "Reverse Aging Isn't Impossible — Science Is Making It A Reality."
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (mobile)",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "font_size_desktop",
+      "min": 12,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (desktop)",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Border accents"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "border_left_width",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "label": "Left bar width",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "border_left_height",
+      "min": 10,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Left bar height",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "border_left_top",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Left bar top offset",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "border_bottom_width",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom line thickness",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "border_bottom_width_pct",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Bottom line width",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "heading_padding_left",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading left padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "heading_padding_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading bottom padding",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "min": 400,
+      "max": 1400,
+      "step": 10,
+      "unit": "px",
+      "label": "Container max width",
+      "default": 750,
+      "info": "Content container width. Section background stays full width."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top (mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin bottom (mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_top_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top (desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin bottom (desktop)",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Listiclev2 Title"
+    }
+  ]
+}
+{% endschema %}

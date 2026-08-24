@@ -1,0 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "context": {
+    "market": "united-kingdom"
+  },
+  "parent": "index.json",
+  "sections": {
+    "faq_accordion_4_Kz3UNj": {
+      "settings": {
+        "image": "shopify://shop_images/Rituel_Product_photo_1.png"
+      },
+      "blocks": {}
+    },
+    "media_with_image_v2_tVGjan": {
+      "settings": {},
+      "blocks": {
+        "paragraph_cXCfCD": {
+          "settings": {
+            "text": "As we age, the skin produces less collagen. PDRN triggers production again, directly in the deeper layers of the skin. It's the same anti-ageing technology that dermatologists use in clinical treatments costing £200–£400 per session. Now in a balm you apply morning and evening, for:"
+          }
+        }
+      }
+    }
+  }
+}

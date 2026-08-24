@@ -1,0 +1,210 @@
+{% doc %}
+  Custom Accordion Block
+  Single accordion item styled like product-info-accordion, with Text or Custom Liquid content.
+
+  @param {object} block - The section block with custom accordion settings
+{% enddoc %}
+
+{% liquid
+  assign question = block.settings.question
+  assign content_type = block.settings.content_type
+  assign answer = block.settings.answer
+  assign custom_liquid = block.settings.custom_liquid
+  assign open_default = block.settings.open_default
+
+  assign show_item = false
+  if question != blank
+    if content_type == 'liquid' and custom_liquid != blank
+      assign show_item = true
+    elsif content_type != 'liquid' and answer != blank
+      assign show_item = true
+    endif
+  endif
+%}
+
+{% if show_item %}
+
+<div
+  class="custom-accordion custom-accordion-{{ block.id }}"
+  data-custom-accordion="{{ block.id }}"
+  {{ block.shopify_attributes }}
+  style="--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;"
+>
+  <div class="custom-accordion-items">
+    <div class="custom-accordion-item" data-accordion-item>
+      <button
+        class="custom-accordion-question"
+        type="button"
+        aria-expanded="{% if open_default %}true{% else %}false{% endif %}"
+        data-accordion-trigger
+      >
+        <span class="custom-accordion-question-text">{{ question }}</span>
+        <span class="custom-accordion-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </button>
+      <div class="custom-accordion-answer" data-accordion-content>
+        <div class="custom-accordion-answer-inner{% if content_type != 'liquid' %} rte{% endif %}">
+          {% if content_type == 'liquid' %}
+            {{ custom_liquid }}
+          {% else %}
+            {{ answer }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .custom-accordion-{{ block.id }} {
+    width: 100%;
+    margin-top: var(--margin-top, 2rem);
+    margin-bottom: var(--margin-bottom, 2rem);
+  }
+
+  .custom-accordion-{{ block.id }} .custom-accordion-items {
+    width: 100%;
+  }
+
+  .custom-accordion-{{ block.id }} .custom-accordion-item {
+    {% if block.settings.border_width > 0 %}
+      border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    {% endif %}
+    border-radius: {{ block.settings.border_radius }}px;
+    overflow: hidden;
+  }
+
+  .custom-accordion-{{ block.id }} .custom-accordion-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background: {{ block.settings.question_bg_color }};
+    color: {{ block.settings.question_text_color }};
+    border: none;
+    text-align: left;
+    padding: {{ block.settings.question_padding_vertical_desktop }}px {{ block.settings.question_padding_horizontal_desktop }}px;
+    font-size: {{ block.settings.question_font_size }}px;
+    font-weight: {{ block.settings.question_font_weight }};
+    transition: all 0.3s ease;
+  }
+
+  .custom-accordion-{{ block.id }} .custom-accordion-question:hover {
+    background: {{ block.settings.question_bg_color_hover }};
+  }
+
+  .custom-accordion-{{ block.id }} .custom-accordion-question[aria-expanded="true"] {
+    background: {{ block.settings.question_bg_color_active }};
+    color: {{ block.settings.question_text_color_active }};
+  }
+
+  .custom-accordion-{{ block.id }} .custom-accordion-question-text {
+    flex: 1;
+  }
+
+  .custom-accordion-{{ block.id }} .custom-accordion-icon {
+    flex-shrink: 0;
+    margin-left: 1rem;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-accordion-{{ block.id }} .custom-accordion-question[aria-expanded="true"] .custom-accordion-icon {
+    transform: rotate(180deg);
+  }
+
+  .custom-accordion-{{ block.id }} .custom-accordion-answer {
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+  }
+
+  .custom-accordion-{{ block.id }} .custom-accordion-answer-inner {
+    padding: {{ block.settings.answer_padding_vertical_desktop }}px {{ block.settings.answer_padding_horizontal_desktop }}px;
+    font-size: {{ block.settings.answer_font_size }}px;
+    font-weight: {{ block.settings.answer_font_weight }};
+    color: {{ block.settings.answer_text_color }};
+    background-color: {{ block.settings.answer_bg_color }};
+    line-height: 1.6;
+  }
+
+  .custom-accordion-{{ block.id }} .custom-accordion-answer-inner img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .custom-accordion-{{ block.id }} .custom-accordion-answer-inner > *:first-child {
+    margin-top: 0;
+  }
+
+  .custom-accordion-{{ block.id }} .custom-accordion-answer-inner > *:last-child {
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .custom-accordion-{{ block.id }} .custom-accordion-question {
+      font-size: {{ block.settings.question_font_size_mobile }}px;
+      padding: {{ block.settings.question_padding_vertical_mobile }}px {{ block.settings.question_padding_horizontal_mobile }}px;
+    }
+
+    .custom-accordion-{{ block.id }} .custom-accordion-answer-inner {
+      font-size: {{ block.settings.answer_font_size_mobile }}px;
+      padding: {{ block.settings.answer_padding_vertical_mobile }}px {{ block.settings.answer_padding_horizontal_mobile }}px;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  function initCustomAccordion(accordionId) {
+    const accordion = document.querySelector(`[data-custom-accordion="${accordionId}"]`);
+    if (!accordion || accordion.dataset.initialized) return;
+
+    accordion.dataset.initialized = 'true';
+    const items = accordion.querySelectorAll('[data-accordion-item]');
+
+    items.forEach(item => {
+      const trigger = item.querySelector('[data-accordion-trigger]');
+      const content = item.querySelector('[data-accordion-content]');
+
+      if (trigger && content) {
+        trigger.addEventListener('click', () => {
+          const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+          if (isOpen) {
+            trigger.setAttribute('aria-expanded', 'false');
+            content.style.maxHeight = content.scrollHeight + 'px';
+            requestAnimationFrame(() => {
+              content.style.maxHeight = '0';
+            });
+          } else {
+            trigger.setAttribute('aria-expanded', 'true');
+            content.style.maxHeight = content.scrollHeight + 'px';
+          }
+        });
+
+        if (trigger.getAttribute('aria-expanded') === 'true') {
+          content.style.maxHeight = content.scrollHeight + 'px';
+        } else {
+          content.style.maxHeight = '0';
+        }
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initCustomAccordion('{{ block.id }}');
+    });
+  } else {
+    initCustomAccordion('{{ block.id }}');
+  }
+})();
+</script>
+
+{% endif %}

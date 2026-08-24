@@ -1,0 +1,341 @@
+{% comment %}
+  Cart drawer product upsells — stacked or Splide slider.
+  Accepts: block, section, pinned (boolean, optional)
+{% endcomment %}
+
+{%- liquid
+  assign products_list = block.settings.product_list
+  assign products_count = products_list.size
+  assign enable_slider = block.settings.enable_slider_mode
+  assign pinned = pinned | default: false
+-%}
+
+{%- if products_list == blank or products_count == 0 -%}
+  <div class="cart-upsell-empty-state" style="
+    padding: 32px 20px;
+    text-align: center;
+    background: #fafafa;
+    border-radius: 6px;
+    margin: 16px 14px;
+  " {{ block.shopify_attributes }}>
+    <p style="font-size: 13px; color: #999; margin: 0; font-weight: 500;">No cart upsell products added</p>
+  </div>
+{%- else -%}
+
+  {%- liquid
+    assign visible_upsells_count = 0
+    if cart.item_count > 0
+      for product in products_list
+        assign is_in_cart = false
+        for item in cart.items
+          if item.product.id == product.id
+            assign is_in_cart = true
+            break
+          endif
+        endfor
+        unless is_in_cart
+          assign visible_upsells_count = visible_upsells_count | plus: 1
+        endunless
+      endfor
+    endif
+
+    assign use_slider = false
+    if enable_slider and visible_upsells_count > 0
+      assign use_slider = true
+    endif
+  -%}
+
+  {%- if visible_upsells_count > 0 -%}
+    {%- unless use_slider -%}
+      <div class="cart-upsell-outer-wrapper" style="
+        padding-top: {{ block.settings.stacked_container_padding_vertical | default: 0 }}px;
+        padding-bottom: {{ block.settings.stacked_container_padding_vertical | default: 0 }}px;
+      ">
+    {%- endunless -%}
+
+    {%- if pinned -%}
+      <div class="cart-drawer__pinned-upsells">
+    {%- endif -%}
+
+    {%- if block.settings.show_section_title and visible_upsells_count > 0 -%}
+      <style>
+        @media screen and (min-width: 750px) {
+          .upsell-section-title-{{ block.id }} h3 {
+            font-size: {{ block.settings.section_title_font_size_desktop | default: 18 }}px !important;
+          }
+        }
+      </style>
+      <div class="upsell-section-title upsell-section-title-{{ block.id }}" style="
+        text-align: {{ block.settings.section_title_alignment | default: 'left' }};
+        margin-bottom: {{ block.settings.section_title_margin_bottom | default: 12 }}px;
+        {% if pinned %}
+          padding: 0 1.5rem;
+        {% elsif use_slider == false %}
+          padding-left: {{ block.settings.stacked_container_padding_horizontal | default: 14 }}px;
+          padding-right: {{ block.settings.stacked_container_padding_horizontal | default: 14 }}px;
+        {% else %}
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+        {% endif %}
+      ">
+        {%- case block.settings.section_highlight_position -%}
+          {%- when 'inline_first' -%}
+            <h3 style="
+              font-size: {{ block.settings.section_title_font_size_mobile | default: 18 }}px;
+              font-weight: {{ block.settings.section_title_font_weight | default: 700 }};
+              color: {{ block.settings.section_title_color | default: '#000000' }};
+              margin: 0;
+            ">
+              <span class="highlight-text" style="
+                font-size: {{ block.settings.section_highlight_font_size | default: 18 }}px;
+                font-weight: {{ block.settings.section_highlight_font_weight | default: 700 }};
+                {% if block.settings.use_theme_highlight_colors %}
+                  color: var(--color-accent, #ff6b6b);
+                {% elsif block.settings.section_highlight_gradient_enabled %}
+                  background: {{ block.settings.section_highlight_gradient | default: 'linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)' }};
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                {% else %}
+                  color: {{ block.settings.section_highlight_color | default: '#ed122d' }};
+                {% endif %}
+              ">{{ block.settings.section_highlighted_text }}</span>
+              {{ block.settings.section_title_before }}
+              {{ block.settings.section_title_after }}
+            </h3>
+          {%- when 'inline_middle' -%}
+            <h3 style="
+              font-size: {{ block.settings.section_title_font_size_mobile | default: 18 }}px;
+              font-weight: {{ block.settings.section_title_font_weight | default: 700 }};
+              color: {{ block.settings.section_title_color | default: '#000000' }};
+              margin: 0;
+            ">
+              {{ block.settings.section_title_before }}
+              <span class="highlight-text" style="
+                font-size: {{ block.settings.section_highlight_font_size | default: 18 }}px;
+                font-weight: {{ block.settings.section_highlight_font_weight | default: 700 }};
+                {% if block.settings.use_theme_highlight_colors %}
+                  color: var(--color-accent, #ff6b6b);
+                {% elsif block.settings.section_highlight_gradient_enabled %}
+                  background: {{ block.settings.section_highlight_gradient | default: 'linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)' }};
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                {% else %}
+                  color: {{ block.settings.section_highlight_color | default: '#ed122d' }};
+                {% endif %}
+              ">{{ block.settings.section_highlighted_text }}</span>
+              {{ block.settings.section_title_after }}
+            </h3>
+          {%- when 'inline_last' -%}
+            <h3 style="
+              font-size: {{ block.settings.section_title_font_size_mobile | default: 18 }}px;
+              font-weight: {{ block.settings.section_title_font_weight | default: 700 }};
+              color: {{ block.settings.section_title_color | default: '#000000' }};
+              margin: 0;
+            ">
+              {{ block.settings.section_title_before }}
+              {{ block.settings.section_title_after }}
+              <span class="highlight-text" style="
+                font-size: {{ block.settings.section_highlight_font_size | default: 18 }}px;
+                font-weight: {{ block.settings.section_highlight_font_weight | default: 700 }};
+                {% if block.settings.use_theme_highlight_colors %}
+                  color: var(--color-accent, #ff6b6b);
+                {% elsif block.settings.section_highlight_gradient_enabled %}
+                  background: {{ block.settings.section_highlight_gradient | default: 'linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)' }};
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                {% else %}
+                  color: {{ block.settings.section_highlight_color | default: '#ed122d' }};
+                {% endif %}
+              ">{{ block.settings.section_highlighted_text }}</span>
+            </h3>
+          {%- when 'above' -%}
+            <div style="margin-bottom: 8px;">
+              <span class="highlight-text" style="
+                font-size: {{ block.settings.section_highlight_font_size | default: 18 }}px;
+                font-weight: {{ block.settings.section_highlight_font_weight | default: 700 }};
+                {% if block.settings.use_theme_highlight_colors %}
+                  color: var(--color-accent, #ff6b6b);
+                {% elsif block.settings.section_highlight_gradient_enabled %}
+                  background: {{ block.settings.section_highlight_gradient | default: 'linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)' }};
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                {% else %}
+                  color: {{ block.settings.section_highlight_color | default: '#ed122d' }};
+                {% endif %}
+              ">{{ block.settings.section_highlighted_text }}</span>
+            </div>
+            <h3 style="
+              font-size: {{ block.settings.section_title_font_size_mobile | default: 18 }}px;
+              font-weight: {{ block.settings.section_title_font_weight | default: 700 }};
+              color: {{ block.settings.section_title_color | default: '#000000' }};
+              margin: 0;
+            ">
+              {{ block.settings.section_title_before }}
+              {{ block.settings.section_title_after }}
+            </h3>
+          {%- when 'below' -%}
+            <h3 style="
+              font-size: {{ block.settings.section_title_font_size_mobile | default: 18 }}px;
+              font-weight: {{ block.settings.section_title_font_weight | default: 700 }};
+              color: {{ block.settings.section_title_color | default: '#000000' }};
+              margin: 0 0 8px 0;
+            ">
+              {{ block.settings.section_title_before }}
+              {{ block.settings.section_title_after }}
+            </h3>
+            <div>
+              <span class="highlight-text" style="
+                font-size: {{ block.settings.section_highlight_font_size | default: 18 }}px;
+                font-weight: {{ block.settings.section_highlight_font_weight | default: 700 }};
+                {% if block.settings.use_theme_highlight_colors %}
+                  color: var(--color-accent, #ff6b6b);
+                {% elsif block.settings.section_highlight_gradient_enabled %}
+                  background: {{ block.settings.section_highlight_gradient | default: 'linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)' }};
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                {% else %}
+                  color: {{ block.settings.section_highlight_color | default: '#ed122d' }};
+                {% endif %}
+              ">{{ block.settings.section_highlighted_text }}</span>
+            </div>
+        {%- endcase -%}
+      </div>
+    {%- endif -%}
+
+    {%- if use_slider -%}
+      <splide-component
+        data-type="{{ block.settings.slider_type | default: 'loop' }}"
+        data-autoplay="{{ block.settings.slider_autoplay }}"
+        data-autoplay-speed="{{ block.settings.slider_autoplay_speed | default: 5 }}"
+        data-slides-desktop="1"
+        data-slides-mobile="1"
+        data-gap-desktop="{{ block.settings.slider_gap | default: 16 }}"
+        data-gap-mobile="{{ block.settings.slider_gap | default: 16 }}"
+        data-arrows="false"
+        data-pagination="{{ block.settings.slider_show_pagination }}"
+        data-drag="true"
+      >
+        <div class="splide cart-upsell-splide cart-upsell-splide--{{ block.id }} splide--precalc-width splide--small-pagination splide--desktop-dots-under splide--mobile-dots-under">
+          <div class="splide__track">
+            <ul class="splide__list">
+              {%- for product in products_list -%}
+                {%- liquid
+                  assign slide_in_cart = false
+                  for item in cart.items
+                    if item.product.id == product.id
+                      assign slide_in_cart = true
+                      break
+                    endif
+                  endfor
+                -%}
+                {%- unless slide_in_cart -%}
+                <li class="splide__slide">
+                  <div class="splide__slide__container">
+                    {% render 'upsell-block', block: block, type: 'cart-drawer', upsell_product: product %}
+                  </div>
+                </li>
+                {%- endunless -%}
+              {%- endfor -%}
+            </ul>
+          </div>
+          <div class="splide__dots-and-arrows">
+            <ul class="splide__pagination"></ul>
+          </div>
+        </div>
+      </splide-component>
+    {%- else -%}
+      <div class="cart-upsell-stacked-wrapper" style="
+        padding-left: {{ block.settings.stacked_container_padding_horizontal | default: 14 }}px;
+        padding-right: {{ block.settings.stacked_container_padding_horizontal | default: 14 }}px;
+        display: flex;
+        flex-direction: column;
+        gap: {{ block.settings.stacked_gap_between_upsells | default: 10 }}px;
+      ">
+        {%- for product in products_list -%}
+          {%- liquid
+            assign stack_in_cart = false
+            for item in cart.items
+              if item.product.id == product.id
+                assign stack_in_cart = true
+                break
+              endif
+            endfor
+          -%}
+          {%- unless stack_in_cart -%}
+            {% render 'upsell-block', block: block, type: 'cart-drawer', upsell_product: product %}
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if pinned -%}
+      </div>
+    {%- endif -%}
+
+    {%- unless use_slider -%}
+      </div>
+    {%- endunless -%}
+
+    <style>
+      {% if pinned %}
+      .cart-drawer__pinned-upsells {
+        padding: 1rem 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        background: var(--color-background, #fff);
+      }
+      {% endif %}
+
+      .cart-upsell-splide--{{ block.id }} {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .cart-upsell-splide--{{ block.id }} .splide__slide__container {
+        height: 100%;
+      }
+
+      .cart-upsell-splide--{{ block.id }} .product-upsell-container {
+        height: 100%;
+      }
+
+      .cart-upsell-splide--{{ block.id }} .upsell-title {
+        color: {{ block.settings.title_text_color | default: '#000000' }} !important;
+        font-size: {{ block.settings.title_font_size | default: 16 }}px !important;
+      }
+
+      .cart-upsell-splide--{{ block.id }} .splide__pagination {
+        position: relative;
+        margin-top: 10px;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .cart-upsell-splide--{{ block.id }} .splide__pagination__page {
+        width: 7px !important;
+        height: 7px !important;
+        min-width: 7px;
+        min-height: 7px;
+        padding: 0;
+        margin: 0;
+        border: none;
+        border-radius: 50%;
+        background: {{ block.settings.slider_pagination_color | default: '#cccccc' }};
+        opacity: 1;
+        transform: none;
+      }
+
+      .cart-upsell-splide--{{ block.id }} .splide__pagination__page.is-active {
+        background: {{ block.settings.slider_pagination_active_color | default: '#000000' }};
+        transform: scale(1.15);
+      }
+    </style>
+  {%- endif -%}
+{%- endif -%}

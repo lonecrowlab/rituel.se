@@ -1,0 +1,889 @@
+{% liquid
+  assign drag_value = 'true'
+  if section.settings.lock_drag
+    assign drag_value = 'false'
+  endif
+  assign wrap_max_width = section.settings.container_max_width | plus: 0
+%}
+
+<section class="listiclev2-cases section-{{ section.id }}{% if section.settings.equal_height %} lv2c--equal-height{% endif %}" data-section-id="{{ section.id }}" {% if section.settings.section_id != blank %}id="{{ section.settings.section_id }}"{% endif %}>
+  <div class="page-width lv2c-wrap">
+    {% if section.settings.heading != blank %}
+      <h2 class="lv2c-heading{% if section.settings.heading_style == 'bar' %} lv2c-heading--bar{% endif %}">{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.intro != blank %}
+      <div class="lv2c-intro rte">{{ section.settings.intro }}</div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <splide-component
+        data-type="{{ section.settings.slider_type }}"
+        data-autoplay="{{ section.settings.autoplay }}"
+        data-autoplay-speed="{{ section.settings.autoplay_speed }}"
+        data-slides-desktop="{{ section.settings.columns_desktop }}"
+        data-slides-mobile="{{ section.settings.columns_mobile }}"
+        data-gap-desktop="{{ section.settings.gap_desktop }}"
+        data-gap-mobile="{{ section.settings.gap_mobile }}"
+        data-arrows="{{ section.settings.show_arrows }}"
+        data-pagination="{{ section.settings.show_pagination }}"
+        data-drag="{{ drag_value }}"
+      >
+        <div class="splide lv2c-splide{% if section.settings.equal_height %} splide--align-stretch{% endif %}">
+          <div class="splide__track">
+            <ul class="splide__list">
+              {% for block in section.blocks %}
+                {% if block.type == 'case' %}
+                  <li class="splide__slide" {{ block.shopify_attributes }}>
+                    <div class="lv2c-card">
+                      {% if block.settings.image != blank %}
+                        <div class="lv2c-card__media">
+                          {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', class: 'lv2c-card__image', alt: block.settings.image.alt }}
+                        </div>
+                      {% endif %}
+                      <div class="lv2c-card__body">
+                        <div class="lv2c-card__body-top">
+                          {% if block.settings.eyebrow != blank %}
+                            <p class="lv2c-card__eyebrow">{{ block.settings.eyebrow }}</p>
+                          {% endif %}
+                          {% if block.settings.name_heading != blank %}
+                            <h3 class="lv2c-card__name">{{ block.settings.name_heading }}</h3>
+                          {% endif %}
+                          {% if block.settings.description != blank %}
+                            <div class="lv2c-card__desc rte">{{ block.settings.description }}</div>
+                          {% endif %}
+                          {% if block.settings.testimonial_label != blank and block.settings.testimonial_text != blank %}
+                            <div class="lv2c-testimonial" data-lv2c-accordion>
+                              <button
+                                type="button"
+                                class="lv2c-card__testimonial-toggle"
+                                aria-expanded="false"
+                                aria-controls="lv2c-testimonial-{{ block.id }}"
+                              >
+                                <span class="lv2c-card__testimonial-label">{{ block.settings.testimonial_label }}</span>
+                                <span class="lv2c-card__testimonial-icon" aria-hidden="true">
+                                  {% render 'icons', icon: 'caret_right' %}
+                                </span>
+                              </button>
+                              <div id="lv2c-testimonial-{{ block.id }}" class="lv2c-card__testimonial-panel">
+                                <div class="lv2c-card__testimonial-panel-inner">
+                                  <div class="lv2c-card__testimonial-text rte">{{ block.settings.testimonial_text }}</div>
+                                </div>
+                              </div>
+                            </div>
+                          {% endif %}
+                        </div>
+                        <div class="lv2c-card__body-bottom">
+                          <hr class="lv2c-card__divider">
+                          {% if block.settings.products_label != blank %}
+                            <p class="lv2c-card__products-label">{{ block.settings.products_label }}</p>
+                          {% endif %}
+                          {% if block.settings.product_list != blank %}
+                            <div class="lv2c-card__products">
+                              {% for product in block.settings.product_list %}
+                                <a class="lv2c-card__product" href="{{ product.url }}">
+                                  {% if product.featured_image %}
+                                    {{ product.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', class: 'lv2c-card__product-img', alt: product.title }}
+                                  {% endif %}
+                                  <span class="lv2c-card__product-title">{{ product.title }}</span>
+                                </a>
+                              {% endfor %}
+                            </div>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </splide-component>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .section-{{ section.id }} {
+    background: {{ section.settings.bg_color }};
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  .section-{{ section.id }} .lv2c-wrap {
+    {% if wrap_max_width == 0 %}
+      max-width: none;
+    {% else %}
+      max-width: {{ wrap_max_width }}px;
+    {% endif %}
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+  .lv2c-card__testimonial-label{
+    font-weight:600;
+  }
+  .section-{{ section.id }} .lv2c-heading {
+    font-size: {{ section.settings.heading_font_size_mobile }}px;
+    color: {{ section.settings.heading_color }};
+    text-align: {{ section.settings.text_align }};
+    margin: 0 0 16px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .section-{{ section.id }} .lv2c-heading--bar {
+    position: relative;
+    display: inline-block;
+    padding-left: 14px;
+  }
+
+  .section-{{ section.id }} .lv2c-heading--bar:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.15em;
+    width: 4px;
+    height: 1em;
+    background: {{ section.settings.heading_color }};
+  }
+
+  .section-{{ section.id }} .lv2c-intro {
+    font-size: {{ section.settings.intro_font_size_mobile }}px;
+    color: {{ section.settings.intro_color }};
+    text-align: {{ section.settings.text_align }};
+    margin-bottom: 24px;
+    line-height: 1.6;
+    max-width: 100%;
+    {% if section.settings.text_align == 'center' %}margin-left: auto; margin-right: auto;{% endif %}
+  }
+
+  .section-{{ section.id }} .lv2c-card {
+    border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+    border-radius: {{ section.settings.card_border_radius }}px;
+    overflow: hidden;
+    height: 100%;
+    background: #fff;
+  }
+
+  .section-{{ section.id }} .lv2c-card__image {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .section-{{ section.id }} .lv2c-card__body {
+    padding: 16px 18px 20px;
+  }
+
+  .section-{{ section.id }} .lv2c-card__eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #999;
+    margin: 0 0 8px;
+  }
+
+  .section-{{ section.id }} .lv2c-card__name {
+    font-size: {{ section.settings.name_font_size_mobile }}px;
+    margin: 0 0 12px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .section-{{ section.id }} .lv2c-card__desc {
+    font-size: {{ section.settings.desc_font_size_mobile }}px;
+    line-height: 1.55;
+    margin-bottom: 12px;
+  }
+
+  .section-{{ section.id }} .lv2c-card__testimonial-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 0 16px;
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #000;
+    font-family: inherit;
+  }
+
+  .section-{{ section.id }} .lv2c-card__testimonial-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .section-{{ section.id }} .lv2c-card__testimonial-toggle[aria-expanded="true"] .lv2c-card__testimonial-icon {
+    transform: rotate(90deg);
+  }
+
+  .section-{{ section.id }} .lv2c-card__testimonial-icon svg {
+    width: 12px;
+    height: 12px;
+    display: block;
+    fill: currentColor;
+  }
+
+  .section-{{ section.id }} .lv2c-card__testimonial-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    margin: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: grid-template-rows 0.35s ease, opacity 0.3s ease, margin 0.35s ease;
+  }
+
+  .section-{{ section.id }} .lv2c-card__testimonial-panel.is-open {
+    grid-template-rows: 1fr;
+    margin: -8px 0 16px;
+    opacity: 1;
+  }
+
+  .section-{{ section.id }} .lv2c-card__testimonial-panel-inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }} .lv2c-card__testimonial-text {
+    font-size: {{ section.settings.testimonial_font_size_mobile }}px;
+    line-height: 1.55;
+    color: {{ section.settings.testimonial_color }};
+  }
+
+  .section-{{ section.id }} .lv2c-card__testimonial-text p {
+    margin: 0 0 0.75em;
+  }
+
+  .section-{{ section.id }} .lv2c-card__testimonial-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  {% if section.settings.equal_height %}
+    .section-{{ section.id }}.lv2c--equal-height .splide__list {
+      align-items: stretch !important;
+    }
+
+    .section-{{ section.id }}.lv2c--equal-height .splide__slide {
+      height: auto !important;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .section-{{ section.id }}.lv2c--equal-height .lv2c-card {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      flex: 1;
+    }
+
+    .section-{{ section.id }}.lv2c--equal-height .lv2c-card__media {
+      flex-shrink: 0;
+    }
+
+    .section-{{ section.id }}.lv2c--equal-height .lv2c-card__body {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .section-{{ section.id }}.lv2c--equal-height .lv2c-card__body-top {
+      flex: 1 1 auto;
+    }
+
+    .section-{{ section.id }}.lv2c--equal-height .lv2c-card__body-bottom {
+      margin-top: auto;
+      flex-shrink: 0;
+    }
+  {% endif %}
+
+  .section-{{ section.id }} .lv2c-card__divider {
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    margin: 0 0 14px;
+  }
+
+  .section-{{ section.id }} .lv2c-card__products-label {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #888;
+    margin: 0 0 10px;
+  }
+
+  .section-{{ section.id }} .lv2c-card__products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .section-{{ section.id }} .lv2c-card__product {
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+    width: {{ section.settings.product_image_size }}px;
+  }
+
+  .section-{{ section.id }} .lv2c-card__product-img {
+    width: {{ section.settings.product_image_size }}px;
+    height: auto;
+    display: block;
+    margin: 0 auto 6px;
+  }
+
+  .section-{{ section.id }} .lv2c-card__product-title {
+    font-size: 11px;
+    line-height: 1.3;
+    display: block;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2c-heading {
+      font-size: {{ section.settings.heading_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2c-intro {
+      font-size: {{ section.settings.intro_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2c-card__name {
+      font-size: {{ section.settings.name_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2c-card__desc {
+      font-size: {{ section.settings.desc_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lv2c-card__testimonial-text {
+      font-size: {{ section.settings.testimonial_font_size_desktop }}px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const section = document.querySelector('.section-{{ section.id }}');
+    if (!section) return;
+
+    const equalHeight = section.classList.contains('lv2c--equal-height');
+
+    function refreshSplide() {
+      window.dispatchEvent(new Event('resize'));
+    }
+
+    function equalizeSlideHeights() {
+      if (!equalHeight) return;
+      const slides = section.querySelectorAll('.splide__slide');
+      if (!slides.length) return;
+
+      slides.forEach(function (slide) {
+        slide.style.minHeight = '';
+      });
+
+      let maxHeight = 0;
+      slides.forEach(function (slide) {
+        maxHeight = Math.max(maxHeight, slide.offsetHeight);
+      });
+
+      if (maxHeight > 0) {
+        slides.forEach(function (slide) {
+          slide.style.minHeight = maxHeight + 'px';
+        });
+      }
+
+      refreshSplide();
+    }
+
+    function initTestimonialAccordions(root) {
+      const toggles = root.querySelectorAll('.lv2c-card__testimonial-toggle');
+      if (!toggles.length) return;
+
+      toggles.forEach(function (toggle) {
+        if (toggle.dataset.lv2cBound === 'true') return;
+        toggle.dataset.lv2cBound = 'true';
+
+        toggle.addEventListener('click', function () {
+          const panelId = toggle.getAttribute('aria-controls');
+          const panel = panelId ? document.getElementById(panelId) : null;
+          const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+
+          toggles.forEach(function (otherToggle) {
+            otherToggle.setAttribute('aria-expanded', 'false');
+            const otherPanelId = otherToggle.getAttribute('aria-controls');
+            const otherPanel = otherPanelId ? document.getElementById(otherPanelId) : null;
+            if (otherPanel) otherPanel.classList.remove('is-open');
+          });
+
+          if (!isOpen && panel) {
+            toggle.setAttribute('aria-expanded', 'true');
+            panel.classList.add('is-open');
+          }
+
+          window.setTimeout(function () {
+            equalizeSlideHeights();
+            refreshSplide();
+          }, 360);
+        });
+      });
+    }
+
+    initTestimonialAccordions(section);
+
+    if (equalHeight) {
+      equalizeSlideHeights();
+      section.querySelectorAll('.lv2c-card__image').forEach(function (img) {
+        if (img.complete) return;
+        img.addEventListener('load', equalizeSlideHeights, { once: true });
+      });
+      window.addEventListener('resize', equalizeSlideHeights);
+      window.setTimeout(equalizeSlideHeights, 100);
+      window.setTimeout(equalizeSlideHeights, 500);
+    }
+
+    document.addEventListener('shopify:section:load', function (event) {
+      if (event.target && event.target.contains(section)) {
+        initTestimonialAccordions(section);
+        equalizeSlideHeights();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Listiclev2 Cases",
+  "tag": "section",
+  "class": "section-listiclev2-cases",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section anchor ID"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Clinical Results: How Our Formula Makes A Visible Difference"
+    },
+    {
+      "type": "select",
+      "id": "heading_style",
+      "label": "Heading style",
+      "options": [
+        { "value": "plain", "label": "Plain" },
+        { "value": "bar", "label": "Left bar" }
+      ],
+      "default": "plain"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "equal_height",
+      "label": "Equal height slides",
+      "default": true,
+      "info": "Makes all visible slide cards match the tallest card height"
+    },
+    {
+      "type": "select",
+      "id": "slider_type",
+      "label": "Type",
+      "options": [
+        { "value": "slide", "label": "Slide" },
+        { "value": "loop", "label": "Loop" }
+      ],
+      "default": "slide"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Autoplay speed",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "lock_drag",
+      "label": "Lock drag",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Columns (mobile)",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Columns (desktop)",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap (desktop)",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show pagination",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Card"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Border width",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "product_image_size",
+      "min": 48,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Product image size",
+      "default": 72
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "min": 18,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading (mobile)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "min": 20,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading (desktop)",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "intro_font_size_mobile",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Intro (mobile)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "intro_font_size_desktop",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Intro (desktop)",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "intro_color",
+      "label": "Intro color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "name_font_size_mobile",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Name (mobile)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "name_font_size_desktop",
+      "min": 16,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Name (desktop)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "desc_font_size_mobile",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Description (mobile)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "desc_font_size_desktop",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Description (desktop)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "testimonial_font_size_mobile",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Testimonial text (mobile)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "testimonial_font_size_desktop",
+      "min": 11,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Testimonial text (desktop)",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "testimonial_color",
+      "label": "Testimonial text color",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "number",
+      "id": "container_max_width",
+      "label": "Container max width (px)",
+      "default": 750,
+      "info": "Set to 0 for full width. Section background stays full width."
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "case",
+      "name": "Case profile",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Before/after image"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "CASE PROFILE"
+        },
+        {
+          "type": "text",
+          "id": "name_heading",
+          "label": "Name & age",
+          "default": "Laura, Age 28"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "testimonial_label",
+          "label": "Testimonial toggle label",
+          "default": "HER TESTIMONIAL"
+        },
+        {
+          "type": "richtext",
+          "id": "testimonial_text",
+          "label": "Testimonial text"
+        },
+        {
+          "type": "text",
+          "id": "products_label",
+          "label": "Products label",
+          "default": "Products used to achieve this result:"
+        },
+        {
+          "type": "product_list",
+          "id": "product_list",
+          "label": "Products",
+          "limit": 4
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Listiclev2 Cases",
+      "blocks": [
+        { "type": "case" },
+        { "type": "case" },
+        { "type": "case" }
+      ]
+    }
+  ]
+}
+{% endschema %}

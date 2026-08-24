@@ -1,0 +1,171 @@
+{% comment %}
+  Size Guide Popup Block
+  Renders a clickable link/button that opens a size guide popup with an image.
+
+  Usage:
+  {% render 'size-guide', block: block %}
+{% endcomment %}
+
+<div
+  class="size-guide-block size-guide-{{ block.id }}"
+  {{ block.shopify_attributes }}
+  style="--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem; --margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;"
+>
+  <style>
+    .size-guide-{{ block.id }} {
+      margin-top: var(--margin-top);
+      margin-bottom: var(--margin-bottom);
+      text-align: {{ block.settings.alignment }};
+    }
+
+    .size-guide-{{ block.id }} .size-guide__trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: {{ block.settings.icon_gap }}px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+      font-size: {{ block.settings.font_size_desktop }}px;
+      font-weight: {{ block.settings.font_weight }};
+      color: {{ block.settings.text_color }};
+      text-decoration: {{ block.settings.text_decoration }};
+      text-underline-offset: 3px;
+      transition: opacity 0.2s ease;
+      line-height: 1;
+    }
+
+    .size-guide-{{ block.id }} .size-guide__trigger:hover {
+      opacity: 0.7;
+    }
+
+    .size-guide-{{ block.id }} .size-guide__trigger-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: {{ block.settings.icon_size }}px;
+      height: {{ block.settings.icon_size }}px;
+      flex-shrink: 0;
+      line-height: 0;
+      position: relative;
+      top: -0.05em;
+    }
+
+    .size-guide-{{ block.id }} .size-guide__trigger-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .size-guide-{{ block.id }} .size-guide__trigger-text {
+      line-height: 1;
+    }
+
+    @media screen and (max-width: 749px) {
+      .size-guide-{{ block.id }} .size-guide__trigger {
+        font-size: {{ block.settings.font_size_mobile }}px;
+      }
+    }
+  </style>
+
+  <!-- Trigger button -->
+  <button type="button" class="size-guide__trigger" aria-haspopup="dialog" data-size-guide-open="{{ block.id }}">
+    {% if block.settings.show_icon %}
+      <span class="size-guide__trigger-icon">
+        {% if block.settings.custom_icon != blank %}
+          {{ block.settings.custom_icon }}
+        {% else %}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="22" height="12" rx="1"/><line x1="5" y1="6" x2="5" y2="12"/><line x1="9" y1="6" x2="9" y2="10"/><line x1="13" y1="6" x2="13" y2="12"/><line x1="17" y1="6" x2="17" y2="10"/><line x1="21" y1="6" x2="21" y2="12"/></svg>
+        {% endif %}
+      </span>
+    {% endif %}
+    <span class="size-guide__trigger-text">{{ block.settings.trigger_text }}</span>
+  </button>
+</div>
+
+<!-- Popup — all styles inlined so they work after JS moves this to body -->
+<div id="size-guide-popup-{{ block.id }}" role="dialog" aria-modal="true" aria-label="{{ block.settings.popup_title }}" style="display:none; position:fixed; inset:0; z-index:9999; align-items:center; justify-content:center; padding:20px;">
+  <div data-size-guide-close="{{ block.id }}" style="position:absolute; inset:0; background:rgba({{ block.settings.backdrop_color.red | default: 0 }}, {{ block.settings.backdrop_color.green | default: 0 }}, {{ block.settings.backdrop_color.blue | default: 0 }}, {{ block.settings.overlay_opacity | divided_by: 100.0 }}); cursor:pointer;{% if block.settings.backdrop_blur > 0 %} backdrop-filter:blur({{ block.settings.backdrop_blur }}px); -webkit-backdrop-filter:blur({{ block.settings.backdrop_blur }}px);{% endif %}">&nbsp;</div>
+  <div style="position:relative; background:{{ block.settings.popup_bg_color | default: '#ffffff' }}; border-radius:{{ block.settings.popup_border_radius | default: 12 }}px; max-width:{{ block.settings.popup_max_width | default: 600 }}px; width:100%; max-height:90vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.15); z-index:1;">
+    <div style="display:flex; align-items:center; justify-content:space-between; padding:{{ block.settings.popup_padding | default: 24 }}px; padding-bottom:0;">
+      {% if block.settings.popup_title != blank %}
+        <h2 style="font-size:{{ block.settings.popup_title_font_size | default: 20 }}px; font-weight:600; color:{{ block.settings.popup_title_color | default: '#1a1a1a' }}; margin:0;">{{ block.settings.popup_title }}</h2>
+      {% endif %}
+      <button type="button" aria-label="Close" data-size-guide-close="{{ block.id }}" style="display:flex; align-items:center; justify-content:center; width:32px; height:32px; border:none; background:none; cursor:pointer; color:{{ block.settings.popup_title_color | default: '#1a1a1a' }}; padding:0; border-radius:50%; flex-shrink:0;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="padding:{{ block.settings.popup_padding | default: 24 }}px;">
+      {% if block.settings.image != blank %}
+        <img
+          src="{{ block.settings.image | image_url: width: 1200 }}"
+          alt="{{ block.settings.image.alt | default: block.settings.popup_title | escape }}"
+          width="{{ block.settings.image.width }}"
+          height="{{ block.settings.image.height }}"
+          loading="lazy"
+          style="width:100%; height:auto; display:block; border-radius:{{ block.settings.image_border_radius | default: 8 }}px;"
+        >
+      {% else %}
+        <div style="padding:40px; text-align:center; background:#f5f5f5; border-radius:{{ block.settings.image_border_radius | default: 8 }}px;">
+          <p style="color:#999; margin:0; font-size:14px;">Add a size guide image in the block settings</p>
+        </div>
+      {% endif %}
+
+      {% if block.settings.description != blank %}
+        <div style="margin-top:16px; font-size:14px; line-height:1.6; color:{{ block.settings.popup_title_color | default: '#1a1a1a' }};">
+          {{ block.settings.description }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var blockId = '{{ block.id }}';
+  var popupId = 'size-guide-popup-' + blockId;
+  var bodyClass = 'size-guide-open-' + blockId;
+  var scrollY = 0;
+
+  // Move popup to body so it's not trapped inside any parent container
+  var popup = document.getElementById(popupId);
+  if (popup) {
+    document.body.appendChild(popup);
+  }
+
+  function openPopup() {
+    scrollY = window.scrollY;
+    var el = document.getElementById(popupId);
+    if (el) el.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePopup() {
+    var el = document.getElementById(popupId);
+    if (el) el.style.display = 'none';
+    document.body.style.overflow = '';
+    window.scrollTo(0, scrollY);
+  }
+
+  // Open trigger
+  document.querySelectorAll('[data-size-guide-open="' + blockId + '"]').forEach(function(btn) {
+    btn.addEventListener('click', openPopup);
+  });
+
+  // Close triggers (overlay + X button)
+  document.querySelectorAll('[data-size-guide-close="' + blockId + '"]').forEach(function(el) {
+    el.addEventListener('click', closePopup);
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var popup = document.getElementById(popupId);
+      if (popup && popup.classList.contains('is-open')) {
+        closePopup();
+      }
+    }
+  });
+})();
+</script>

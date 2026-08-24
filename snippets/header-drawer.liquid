@@ -1,0 +1,778 @@
+{% comment %}
+  Mobile shop menu drawer.
+  part: 'trigger' — hamburger + shell (rendered in Header)
+  part: 'panel'   — drawer content + styles (rendered in Header menu, injected into shell)
+  part: 'full'    — both together (fallback)
+{% endcomment %}
+
+{%- liquid
+  assign drawer_part = part | default: 'full'
+
+  if menu_section != blank
+    assign menu = menu_section.settings
+  else
+    assign menu = section.settings
+  endif
+
+  assign drawer_shop_title = menu.drawer_shop_title
+  assign drawer_left_icon = menu.drawer_left_icon
+  assign drawer_right_icon = menu.drawer_right_icon
+  assign drawer_left_icon_text = menu.drawer_left_icon_text
+  assign drawer_right_icon_text = menu.drawer_right_icon_text
+  assign drawer_products = menu.drawer_products
+  assign drawer_product_layout = menu.drawer_product_layout | default: 'horizontal'
+  assign drawer_product_style = menu.drawer_product_style | default: 'line'
+  assign drawer_show_product_tag = menu.drawer_show_product_tag
+  assign drawer_show_reviews = menu.drawer_show_reviews
+  assign drawer_show_star_only = menu.drawer_show_star_only
+  assign drawer_reviews_count_text = menu.drawer_reviews_count_text | default: '[rating.count] reviews'
+  assign drawer_cta_label = menu.drawer_cta_label
+  assign drawer_cta_link = menu.drawer_cta_link
+  assign drawer_left_menu = menu.drawer_left_menu
+  assign drawer_right_menu = menu.drawer_right_menu
+  assign drawer_left_menu_title = menu.drawer_left_menu_title
+  assign drawer_right_menu_title = menu.drawer_right_menu_title
+  assign drawer_logo_link = logo_link | default: routes.root_url
+
+  if drawer_left_menu_title == blank and drawer_left_menu != blank
+    assign drawer_left_menu_title = drawer_left_menu.title
+  endif
+  if drawer_right_menu_title == blank and drawer_right_menu != blank
+    assign drawer_right_menu_title = drawer_right_menu.title
+  endif
+-%}
+
+{%- if drawer_part == 'trigger' or drawer_part == 'full' -%}
+  <header-drawer data-breakpoint="{% if section.settings.menu_type_desktop == 'drawer' %}desktop{% else %}tablet{% endif %}" data-desktop-type="{{ section.settings.menu_type_desktop }}" data-drawer="{{ settings.animations_type }}">
+    <details
+      id="Details-menu-drawer-container"
+      class="menu-drawer-container"
+      data-logo-link="{{ section.settings.logo_link | default: routes.root_url }}"
+    >
+      <summary class="header__icon header__icon--menu header__icon--summary link " aria-label="{{ 'sections.header.menu' | t }}" aria-expanded="false">
+        <span>
+          {% if section.settings.menu_icon != blank %}
+            <span class="icon icon-hamburger">
+              {% render 'material-icon', icon: section.settings.menu_icon, filled: section.settings.menu_icon_filled %}
+            </span>
+          {% elsif section.settings.menu_icon_svg != blank %}
+            <span class="icon icon-hamburger">
+              {{ section.settings.menu_icon_svg }}
+            </span>
+          {% else %}
+            {% render 'icon-hamburger' %}
+          {% endif %}
+          {% render 'icon-close' %}
+        </span>
+      </summary>
+{%- endif -%}
+
+{%- if drawer_part == 'panel' or drawer_part == 'full' -%}
+    <div
+      id="menu-drawer"
+      class="gradient menu-drawer motion-reduce menu-drawer--shop {% if menu.menu_full_width %}menu-drawer--full-width{% endif %}"
+      tabindex="-1"
+      style="
+        --drawer-bg: {{ menu.menu_bg_color }};
+        --drawer-text: {{ menu.menu_text_color }};
+        --drawer-title-color: {{ menu.drawer_title_color }};
+        --drawer-title-size: {{ menu.drawer_title_size }}px;
+        --drawer-trust-icon-color: {{ menu.drawer_trust_icon_color }};
+        --drawer-trust-text-color: {{ menu.drawer_trust_text_color }};
+        --drawer-trust-text-size: {{ menu.drawer_trust_text_size }}px;
+        --drawer-trust-icon-size: {{ menu.drawer_trust_icon_size }}px;
+        --drawer-product-bg: {{ menu.drawer_product_bg_color }};
+        --drawer-product-border: {{ menu.drawer_product_border_color }};
+        --drawer-product-border-width: {{ menu.drawer_product_border_width | default: 1 }}px;
+        --drawer-product-text: {{ menu.drawer_product_text_color }};
+        --drawer-product-text-size: {{ menu.drawer_product_text_size }}px;
+        --drawer-product-image-size: {{ menu.drawer_product_image_size }}px;
+        --drawer-product-radius: {{ menu.drawer_product_radius }}px;
+        --drawer-product-tag-color: {{ menu.drawer_product_tag_color | default: '#ffffff' }};
+        --drawer-product-tag-bg: {{ menu.drawer_product_tag_bg | default: '#ba6a7f' }};
+        --drawer-product-tag-radius: {{ menu.drawer_product_tag_radius | default: 5 }}px;
+        --drawer-cta-bg: {{ menu.drawer_cta_bg_color }};
+        --drawer-cta-text: {{ menu.drawer_cta_text_color }};
+        --drawer-cta-font-size: {{ menu.drawer_cta_font_size }}px;
+        --drawer-cta-radius: {{ menu.drawer_cta_radius }}px;
+        --drawer-divider: {{ menu.drawer_divider_color }};
+        --drawer-menu-heading-color: {{ menu.drawer_menu_heading_color }};
+        --drawer-menu-heading-size: {{ menu.drawer_menu_heading_size }}px;
+        --drawer-menu-link-color: {{ menu.drawer_menu_link_color }};
+        --drawer-menu-link-size: {{ menu.drawer_menu_link_size }}px;
+        --drawer-content-padding: {{ menu.drawer_content_padding }}px;
+        --drawer-mobile-title-size: {{ menu.drawer_mobile_title_size }}px;
+        --drawer-mobile-trust-text-size: {{ menu.drawer_mobile_trust_text_size }}px;
+        --drawer-mobile-trust-icon-size: {{ menu.drawer_mobile_trust_icon_size }}px;
+        --drawer-mobile-product-text-size: {{ menu.drawer_mobile_product_text_size }}px;
+        --drawer-mobile-product-image-size: {{ menu.drawer_mobile_product_image_size }}px;
+        --drawer-mobile-cta-font-size: {{ menu.drawer_mobile_cta_font_size }}px;
+        --drawer-mobile-menu-heading-size: {{ menu.drawer_mobile_menu_heading_size }}px;
+        --drawer-mobile-menu-link-size: {{ menu.drawer_mobile_menu_link_size }}px;
+        --drawer-mobile-content-padding: {{ menu.drawer_mobile_content_padding }}px;
+        background-color: var(--drawer-bg);
+        color: var(--drawer-text);
+      "
+    >
+      <div class="menu-drawer__inner-container">
+        <div class="menu-drawer__mobile-content menu-drawer__title-and-close-btn">
+          <a href="{{ drawer_logo_link }}" class="menu-drawer__logo-wrapper" data-drawer-logo-link>
+            <img src="https://cdn.shopify.com/s/files/1/0663/9458/7239/files/LOGOS-38_16d7af5e-ee5c-4130-b002-344fe1508de5.png?v=1784520133" alt="logo" width="auto" height="auto" class="menu-drawer__logo">
+          </a>
+          <button type="button" class="menu-drawer__close-btn menu-drawer__close-menu-btn header__icon header__icon--menu header__icon--summary link" aria-label="{{ 'accessibility.close' | t }}">
+            {% render 'icon-close' %}
+          </button>
+        </div>
+
+        <div class="menu-drawer__navigation-container menu-drawer__shop">
+          {%- if drawer_shop_title != blank -%}
+            <p class="menu-drawer__shop-title">{{ drawer_shop_title | escape }}</p>
+          {%- endif -%}
+
+          {%- if drawer_left_icon_text != blank or drawer_right_icon_text != blank or drawer_left_icon != 'none' or drawer_right_icon != 'none' -%}
+            <div class="menu-drawer__trust">
+              {%- if drawer_left_icon_text != blank or drawer_left_icon != 'none' -%}
+                <div class="menu-drawer__trust-item">
+                  {%- if drawer_left_icon == 'custom' and menu.drawer_left_icon_image != blank -%}
+                    {{
+                      menu.drawer_left_icon_image
+                      | image_url: width: 64
+                      | image_tag:
+                        class: 'menu-drawer__trust-icon-img',
+                        alt: '',
+                        widths: '32, 48, 64',
+                        sizes: '18px'
+                    }}
+                  {%- elsif drawer_left_icon != blank and drawer_left_icon != 'none' and drawer_left_icon != 'custom' -%}
+                    <span class="menu-drawer__trust-icon" aria-hidden="true">
+                      {% render 'icons', icon: drawer_left_icon %}
+                    </span>
+                  {%- endif -%}
+                  {%- if drawer_left_icon_text != blank -%}
+                    <span class="menu-drawer__trust-text">{{ drawer_left_icon_text | escape }}</span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              {%- if drawer_right_icon_text != blank or drawer_right_icon != 'none' -%}
+                <div class="menu-drawer__trust-item">
+                  {%- if drawer_right_icon == 'custom' and menu.drawer_right_icon_image != blank -%}
+                    {{
+                      menu.drawer_right_icon_image
+                      | image_url: width: 64
+                      | image_tag:
+                        class: 'menu-drawer__trust-icon-img',
+                        alt: '',
+                        widths: '32, 48, 64',
+                        sizes: '18px'
+                    }}
+                  {%- elsif drawer_right_icon != blank and drawer_right_icon != 'none' and drawer_right_icon != 'custom' -%}
+                    <span class="menu-drawer__trust-icon" aria-hidden="true">
+                      {% render 'icons', icon: drawer_right_icon %}
+                    </span>
+                  {%- endif -%}
+                  {%- if drawer_right_icon_text != blank -%}
+                    <span class="menu-drawer__trust-text">{{ drawer_right_icon_text | escape }}</span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if drawer_products != blank -%}
+            <ul class="menu-drawer__product-grid menu-drawer__product-grid--{{ drawer_product_layout }} menu-drawer__product-grid--{{ drawer_product_style }} list-unstyled" role="list">
+              {%- for product in drawer_products -%}
+                {%- liquid
+                  assign show_reviews_count = false
+                  if drawer_show_reviews and drawer_show_star_only != true
+                    assign show_reviews_count = true
+                  endif
+                  assign product_image_sizes = menu.drawer_product_image_size | append: 'px'
+                -%}
+                <li>
+                  <a href="{{ product.url }}" class="menu-drawer__product-card">
+                    <span class="menu-drawer__product-media">
+                      {%- if product.featured_media != blank -%}
+                        {%- assign product_image_alt = product.featured_media.alt | default: product.title -%}
+                        {{
+                          product.featured_media
+                          | image_url: width: 160
+                          | image_tag:
+                            loading: 'lazy',
+                            widths: '80, 120, 160',
+                            sizes: product_image_sizes,
+                            alt: product_image_alt
+                        }}
+                      {%- else -%}
+                        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                      {%- endif -%}
+                    </span>
+                    <span class="menu-drawer__product-info">
+                      {%- if drawer_show_product_tag and menu.drawer_product_tag_text != blank -%}
+                        <span class="menu-drawer__product-tag">{{ menu.drawer_product_tag_text | escape }}</span>
+                      {%- endif -%}
+                      <span class="menu-drawer__product-title">{{ product.title | escape }}</span>
+                      {%- if drawer_show_reviews -%}
+                        {% render 'product-card-rating',
+                          product: product,
+                          use_custom_rating: true,
+                          show_rating_count: show_reviews_count,
+                          rating_count_text: drawer_reviews_count_text,
+                          wrapper_class: 'menu-drawer__product-rating'
+                        %}
+                      {%- endif -%}
+                    </span>
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+          {%- if drawer_cta_label != blank and drawer_cta_link != blank -%}
+            <a href="{{ drawer_cta_link }}" class="menu-drawer__cta">
+              {{ drawer_cta_label | escape }}
+            </a>
+          {%- elsif drawer_cta_label != blank -%}
+            <span class="menu-drawer__cta menu-drawer__cta--disabled">{{ drawer_cta_label | escape }}</span>
+          {%- endif -%}
+
+          {%- if drawer_left_menu != blank or drawer_right_menu != blank -%}
+            <div class="menu-drawer__columns">
+              {%- if drawer_left_menu != blank -%}
+                <nav class="menu-drawer__column" aria-label="{{ drawer_left_menu_title | default: drawer_left_menu.title | escape }}">
+                  {%- if drawer_left_menu_title != blank -%}
+                    <p class="menu-drawer__column-title">{{ drawer_left_menu_title | escape }}</p>
+                  {%- endif -%}
+                  <ul class="menu-drawer__column-links list-unstyled" role="list">
+                    {%- for link in drawer_left_menu.links -%}
+                      <li>
+                        <a
+                          href="{{ link.url }}"
+                          class="menu-drawer__column-link{% if link.current %} menu-drawer__column-link--active{% endif %}"
+                          {% if link.current %}
+                            aria-current="page"
+                          {% endif %}
+                        >
+                          {{ link.title | escape }}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </nav>
+              {%- endif -%}
+
+              {%- if drawer_right_menu != blank -%}
+                <nav class="menu-drawer__column" aria-label="{{ drawer_right_menu_title | default: drawer_right_menu.title | escape }}">
+                  {%- if drawer_right_menu_title != blank -%}
+                    <p class="menu-drawer__column-title">{{ drawer_right_menu_title | escape }}</p>
+                  {%- endif -%}
+                  <ul class="menu-drawer__column-links list-unstyled" role="list">
+                    {%- for link in drawer_right_menu.links -%}
+                      <li>
+                        <a
+                          href="{{ link.url }}"
+                          class="menu-drawer__column-link{% if link.current %} menu-drawer__column-link--active{% endif %}"
+                          {% if link.current %}
+                            aria-current="page"
+                          {% endif %}
+                        >
+                          {{ link.title | escape }}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </nav>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+{%- endif -%}
+
+{%- if drawer_part == 'trigger' or drawer_part == 'full' -%}
+    </details>
+  </header-drawer>
+{%- endif -%}
+
+{%- if drawer_part == 'panel' or drawer_part == 'full' -%}
+<style>
+  /* Closed: hamburger only, no close icon, no underlay */
+  header-drawer details:not([open]) > summary.header__icon--menu .icon-hamburger {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  header-drawer details:not([open]) > summary.header__icon--menu .icon-close {
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  header-drawer details:not([open]) > summary.header__icon--menu::before,
+  header-drawer details[open]:not(.menu-opening) > summary.header__icon--menu::before,
+  header-drawer summary.header__icon--menu[aria-expanded="false"]::before {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  header-drawer details[open]:not(.menu-opening) > summary.header__icon--menu .icon-hamburger {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* Open: hide header icons (drawer has its own close), show underlay */
+  header-drawer details[open].menu-opening > summary.header__icon--menu .icon-hamburger,
+  header-drawer details[open].menu-opening > summary.header__icon--menu .icon-close {
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  header-drawer details[open].menu-opening > summary.header__icon--menu::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgba(var(--color-foreground), 0.5);
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    z-index: 2;
+    cursor: default;
+  }
+
+  .js details[open].menu-opening > .menu-drawer.menu-drawer--shop {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  #menu-drawer .menu-drawer--shop.menu-drawer {
+    background-color: var(--drawer-bg, rgb(var(--color-background)));
+    color: var(--drawer-text, rgb(var(--color-foreground)));
+  }
+
+  .menu-drawer__logo {
+    width: 100%;
+    height: auto;
+    max-width: 80px;
+  }
+
+  @media screen and (max-width: 989px) {
+    .menu-drawer--full-width {
+      width: 100vw !important;
+      max-width: 100vw !important;
+    }
+  }
+
+  .menu-drawer--shop .menu-drawer__inner-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .menu-drawer--shop .menu-drawer__navigation-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--drawer-content-padding);
+    padding-top: 0.4rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .menu-drawer--shop .menu-drawer__title-and-close-btn {
+    padding: var(--drawer-content-padding);
+    padding-bottom: 0.8rem;
+    padding-top: 5px;
+  }
+
+  /* ID + drawer class so this always beats header/transparent-header icon color rules */
+  #menu-drawer.menu-drawer--shop .menu-drawer__close-btn,
+  #menu-drawer.menu-drawer--shop .menu-drawer__close-btn svg,
+  #menu-drawer.menu-drawer--shop .menu-drawer__close-btn .icon,
+  #menu-drawer.menu-drawer--shop .menu-drawer__close-btn .material-icon {
+    color: var(--drawer-text) !important;
+    fill: var(--drawer-text) !important;
+  }
+
+  .menu-drawer__shop-title {
+    margin: 0 0 1.2rem;
+    color: var(--drawer-title-color);
+    font-size: var(--drawer-title-size);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    margin-top:5px;
+  }
+
+  .menu-drawer__trust {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem 1.6rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .menu-drawer__trust-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    min-width: 0;
+    align-items: center;
+  }
+
+  .menu-drawer__trust-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    width: var(--drawer-trust-icon-size);
+    height: var(--drawer-trust-icon-size);
+    color: var(--drawer-trust-icon-color);
+  }
+
+  #menu-drawer .menu-drawer__trust-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor!important;
+    color:currentColor!important;
+  }
+
+  .menu-drawer__trust-icon-img {
+    width: var(--drawer-trust-icon-size);
+    height: var(--drawer-trust-icon-size);
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .menu-drawer__trust-text {
+    color: var(--drawer-trust-text-color);
+    font-size: var(--drawer-trust-text-size);
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .menu-drawer__product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    width: 100%;
+    margin: 0 0 1.6rem;
+    padding: 0;
+  }
+
+  .menu-drawer__product-grid--vertical {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .menu-drawer__product-grid > li {
+    display: flex;
+    min-width: 0;
+  }
+
+  .menu-drawer__product-grid--vertical.menu-drawer__product-grid--line > li:not(:last-child) {
+    border-bottom: 1px solid var(--drawer-divider, var(--drawer-product-border));
+  }
+
+  .menu-drawer__product-grid--vertical.menu-drawer__product-grid--card {
+    gap: 1rem;
+  }
+
+  .menu-drawer__product-card {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    min-height: 5.6rem;
+    padding: 0;
+    background: var(--drawer-product-bg);
+    border: var(--drawer-product-border-width, 1px) solid var(--drawer-product-border);
+    border-radius: var(--drawer-product-radius);
+    color: var(--drawer-product-text) !important;
+    text-decoration: none !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+  }
+
+  .menu-drawer__product-grid--vertical .menu-drawer__product-card {
+    align-items: center;
+    gap: 1.2rem;
+    min-height: 0;
+  }
+
+  .menu-drawer__product-grid--vertical.menu-drawer__product-grid--line .menu-drawer__product-card {
+    padding: 1.2rem 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .menu-drawer__product-grid--vertical.menu-drawer__product-grid--card .menu-drawer__product-card {
+    padding: 0.8rem;
+  }
+
+  .menu-drawer__product-grid--line .menu-drawer__product-card {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .menu-drawer__product-grid--card .menu-drawer__product-card:hover {
+    border-color: var(--drawer-cta-bg);
+  }
+
+  .menu-drawer__product-grid--line .menu-drawer__product-card:hover {
+    border-color: transparent;
+  }
+
+  .menu-drawer__product-grid--line .menu-drawer__product-card:hover .menu-drawer__product-title {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .menu-drawer__product-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--drawer-product-image-size);
+    min-width: var(--drawer-product-image-size);
+    height: var(--drawer-product-image-size);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .menu-drawer__product-grid--vertical .menu-drawer__product-media,
+  .menu-drawer__product-grid--line .menu-drawer__product-media {
+    border-radius: var(--drawer-product-radius);
+  }
+
+  .menu-drawer__product-media img,
+  .menu-drawer__product-media svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .menu-drawer__product-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.3rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .menu-drawer__product-grid--vertical .menu-drawer__product-info {
+    padding: 0;
+    gap: 0.35rem;
+  }
+
+  .menu-drawer__product-tag {
+    display: inline-block;
+    width: fit-content;
+    max-width: 100%;
+    padding: 0.15rem 0.5rem;
+    color: var(--drawer-product-tag-color, #fff);
+    background: var(--drawer-product-tag-bg, #ba6a7f);
+    border-radius: var(--drawer-product-tag-radius, 5px);
+    font-size: 0.7em;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .menu-drawer__product-title {
+    font-size: var(--drawer-product-text-size);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--drawer-product-text);
+  }
+
+  .menu-drawer__product-rating,
+  .menu-drawer__product-rating.product-card-rating {
+    margin: 0;
+    gap: 0.4rem;
+    color: var(--drawer-product-text);
+  }
+
+  .menu-drawer__product-rating .fc-rating-stars {
+    display: block;
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  .menu-drawer__product-rating .fc-rating-stars__container {
+    position: relative;
+    display: inline-flex;
+    flex-direction: row;
+    gap: 1px;
+    line-height: 1;
+  }
+
+  .menu-drawer__product-rating .fc-rating-stars__container--underlay,
+  .menu-drawer__product-rating .fc-rating-stars__container--overlay {
+    display: flex;
+    flex-direction: row;
+    gap: 1px;
+  }
+
+  .menu-drawer__product-rating .fc-rating-stars__container--overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .menu-drawer__product-rating .fc-rating-stars svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .menu-drawer__product-rating .fc-rating-stars__container--overlay svg path {
+    fill: var(--drawer-product-text) !important;
+  }
+
+  .menu-drawer__product-rating .product-card-rating__count {
+    font-size: 0.85em;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--drawer-product-text);
+  }
+
+  .header .menu-drawer__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 4.8rem;
+    margin-bottom: 2rem;
+    padding: 1.2rem 1.6rem;
+    background: var(--drawer-cta-bg);
+    color: var(--drawer-cta-text) !important;
+    fill: var(--drawer-cta-text) !important;
+    font-size: var(--drawer-cta-font-size);
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none !important;
+    border-radius: var(--drawer-cta-radius);
+    transition: opacity 0.2s ease;
+  }
+
+  .menu-drawer__cta:hover {
+    opacity: 0.92;
+  }
+
+  .menu-drawer__cta--disabled {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .menu-drawer__columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 1.6rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--drawer-divider);
+  }
+
+  .menu-drawer__column-title {
+    margin: 0 0 1.2rem;
+    color: var(--drawer-menu-heading-color);
+    font-size: var(--drawer-menu-heading-size);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .menu-drawer__column-links {
+    margin: 0;
+    padding: 0;
+  }
+
+  .menu-drawer__column-link {
+    display: block;
+    padding: 0.55rem 0;
+    color: var(--drawer-menu-link-color) !important;
+    font-size: var(--drawer-menu-link-size);
+    font-weight: 500;
+    line-height: 1.35;
+    text-decoration: none !important;
+  }
+
+  .menu-drawer__column-link:hover,
+  .menu-drawer__column-link--active {
+    text-decoration: underline !important;
+    text-underline-offset: 0.2em;
+  }
+@media screen and (min-width: 768px){
+  #menu-drawer{
+    width: 50rem;
+  }
+}
+  @media screen and (max-width: 749px) {
+    .menu-drawer--shop .menu-drawer__navigation-container,
+    .menu-drawer--shop .menu-drawer__title-and-close-btn {
+      padding-left: var(--drawer-mobile-content-padding);
+      padding-right: var(--drawer-mobile-content-padding);
+    }
+
+    .menu-drawer__shop-title {
+      font-size: var(--drawer-mobile-title-size);
+    }
+
+    .menu-drawer__trust-text {
+      font-size: var(--drawer-mobile-trust-text-size);
+    }
+
+    .menu-drawer__trust-icon,
+    .menu-drawer__trust-icon-img {
+      width: var(--drawer-mobile-trust-icon-size);
+      height: var(--drawer-mobile-trust-icon-size);
+    }
+
+    .menu-drawer__product-title {
+      font-size: var(--drawer-mobile-product-text-size);
+    }
+
+    .menu-drawer__product-info {
+      padding: 0.7rem 0.8rem;
+    }
+
+    .menu-drawer__product-grid--vertical .menu-drawer__product-info {
+      padding: 0;
+    }
+
+    .menu-drawer__product-media {
+      width: var(--drawer-mobile-product-image-size);
+      min-width: var(--drawer-mobile-product-image-size);
+      height: var(--drawer-mobile-product-image-size);
+    }
+
+    .menu-drawer__cta {
+      font-size: var(--drawer-mobile-cta-font-size);
+    }
+
+    .menu-drawer__column-title {
+      font-size: var(--drawer-mobile-menu-heading-size);
+    }
+
+    .menu-drawer__column-link {
+      font-size: var(--drawer-mobile-menu-link-size);
+    }
+  }
+</style>
+{%- endif -%}

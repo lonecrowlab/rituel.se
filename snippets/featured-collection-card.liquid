@@ -1,0 +1,163 @@
+{% comment %}Updated by Elevate: 2026-01-02T23:28:20.926Z{% endcomment %}
+{% comment %}
+  Product Card for Featured Collection
+
+  Accepts:
+  - product: {Object} Product object
+  - section: {Object} Section settings
+  - product_index: {Number} Index of product (0-based)
+{% endcomment %}
+
+<div class="fc-product-card{% if section.settings.overlay_info_on_image_mobile %} fc-product-card--overlay-mobile{% endif %}" data-section-id="{{ section.id }}" data-product-id="{{ product.id }}">
+  <a href="{{ product.url }}" class="fc-product-link">
+
+    {% comment %} Product Image {% endcomment %}
+    <div class="fc-product-image-wrapper">
+      {% if product.featured_image %}
+        {% comment %} All images lazy load for better performance {% endcomment %}
+        <img
+          srcset="{{ product.featured_image | image_url: width: 200 }} 200w,
+                  {{ product.featured_image | image_url: width: 400 }} 400w,
+                  {{ product.featured_image | image_url: width: 600 }} 600w,
+                  {{ product.featured_image | image_url: width: 800 }} 800w"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          src="{{ product.featured_image | image_url: width: 600 }}"
+          alt="{{ product.featured_image.alt | escape }}"
+          loading="lazy"
+          width="{{ product.featured_image.width }}"
+          height="{{ product.featured_image.height }}"
+          class="fc-product-image"
+        >
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'fc-product-image' }}
+      {% endif %}
+
+      {% comment %} Sale Badge with Savings {% endcomment %}
+      {% if section.settings.show_sale_badge and product.compare_at_price > product.price %}
+        {% liquid
+          assign savings = product.compare_at_price | minus: product.price
+          assign savings_percent = savings | times: 100.0 | divided_by: product.compare_at_price | round
+          assign savings_money = savings | money
+          assign badge_text = settings.badge_text | default: 'Save [percentage]%'
+          assign badge_text = badge_text | replace: '[price]', savings_money
+          assign badge_text = badge_text | replace: '[percentage]', savings_percent
+        %}
+        <div class="fc-sale-badge">
+          {{ badge_text }}
+        </div>
+      {% endif %}
+
+      {% comment %} Custom Badges {% endcomment %}
+      {% if section.settings.show_custom_badges and section.settings.badge_assignments != blank %}
+        {% liquid
+          assign badge_assignments_string = section.settings.badge_assignments | strip
+          assign badge_assignments_array = badge_assignments_string | split: ','
+          assign current_badge = badge_assignments_array[product_index] | strip
+        %}
+
+        {% if current_badge != 'blank' and current_badge != '' %}
+          {% case current_badge %}
+            {% when '1' %}
+              {% if section.settings.badge_1_text != blank %}
+                <div class="fc-custom-badge fc-custom-badge-1">
+                  {% if section.settings.badge_1_custom_icon != blank %}
+                    <span class="fc-badge-icon fc-badge-icon-svg">
+                      {{ section.settings.badge_1_custom_icon }}
+                    </span>
+                  {% elsif section.settings.badge_1_icon != blank %}
+                    <span class="fc-badge-icon">
+                      {% render 'material-icon', icon: section.settings.badge_1_icon, filled: section.settings.badge_1_icon_filled %}
+                    </span>
+                  {% endif %}
+                  <span class="fc-badge-text">{{ section.settings.badge_1_text }}</span>
+                </div>
+              {% endif %}
+            {% when '2' %}
+              {% if section.settings.badge_2_text != blank %}
+                <div class="fc-custom-badge fc-custom-badge-2">
+                  {% if section.settings.badge_2_custom_icon != blank %}
+                    <span class="fc-badge-icon fc-badge-icon-svg">
+                      {{ section.settings.badge_2_custom_icon }}
+                    </span>
+                  {% elsif section.settings.badge_2_icon != blank %}
+                    <span class="fc-badge-icon">
+                      {% render 'material-icon', icon: section.settings.badge_2_icon, filled: section.settings.badge_2_icon_filled %}
+                    </span>
+                  {% endif %}
+                  <span class="fc-badge-text">{{ section.settings.badge_2_text }}</span>
+                </div>
+              {% endif %}
+            {% when '3' %}
+              {% if section.settings.badge_3_text != blank %}
+                <div class="fc-custom-badge fc-custom-badge-3">
+                  {% if section.settings.badge_3_custom_icon != blank %}
+                    <span class="fc-badge-icon fc-badge-icon-svg">
+                      {{ section.settings.badge_3_custom_icon }}
+                    </span>
+                  {% elsif section.settings.badge_3_icon != blank %}
+                    <span class="fc-badge-icon">
+                      {% render 'material-icon', icon: section.settings.badge_3_icon, filled: section.settings.badge_3_icon_filled %}
+                    </span>
+                  {% endif %}
+                  <span class="fc-badge-text">{{ section.settings.badge_3_text }}</span>
+                </div>
+              {% endif %}
+          {% endcase %}
+        {% endif %}
+      {% endif %}
+    </div>
+
+    {% comment %} Product Info {% endcomment %}
+    <div class="fc-product-info">
+      {% render 'product-card-rating', product: product, section: section, product_index: product_index, wrapper_class: 'fc-trustoo-rating' %}
+
+      {% if section.settings.show_title %}
+        <h3 class="fc-product-title">{{ product.title }}</h3>
+      {% endif %}
+
+      {% if section.settings.show_price %}
+        <div class="fc-product-price">
+          {{ product.price | money }}
+          {% if product.compare_at_price > product.price %}
+            <span class="fc-compare-price">{{ product.compare_at_price | money }}</span>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+  </a>
+
+  {% comment %} View Product Button {% endcomment %}
+  {% if section.settings.show_view_button %}
+    <div class="fc-button-wrapper">
+      <a
+        href="{{ product.url }}"
+        class="fc-view-product-btn"
+        data-product-id="{{ product.id }}"
+        data-product-handle="{{ product.handle }}"
+      >
+        {% if section.settings.button_icon_position == 'before' %}
+          {% if section.settings.button_custom_icon != blank %}
+            <span class="fc-button__icon-svg">
+              {{ section.settings.button_custom_icon }}
+            </span>
+          {% elsif section.settings.button_icon != blank %}
+            {% render 'material-icon', icon: section.settings.button_icon, filled: section.settings.button_icon_filled %}
+          {% endif %}
+        {% endif %}
+
+        <span class="fc-button__label">{{ section.settings.button_text }}</span>
+
+        {% if section.settings.button_icon_position == 'after' %}
+          {% if section.settings.button_custom_icon != blank %}
+            <span class="fc-button__icon-svg">
+              {{ section.settings.button_custom_icon }}
+            </span>
+          {% elsif section.settings.button_icon != blank %}
+            {% render 'material-icon', icon: section.settings.button_icon, filled: section.settings.button_icon_filled %}
+          {% endif %}
+        {% endif %}
+      </a>
+    </div>
+  {% endif %}
+</div>

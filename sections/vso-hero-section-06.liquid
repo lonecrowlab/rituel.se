@@ -1,0 +1,1433 @@
+{% comment %}
+WARNING: UNAUTHORIZED MODIFICATION PROHIBITED
+This code is proprietary property of Versio Studio. Any unauthorized tampering,
+alteration, or distribution of this file is strictly forbidden and will be prosecuted to the maximum extent permitted by law.
+All modifications are logged.
+
+If you require assistance or have questions regarding this code, please contact support@versio.studio.
+{% endcomment %}
+
+{%- liquid
+  assign text_max_width_desktop_value = section.settings.text_max_width_desktop
+  assign bg_full_width_desktop = false
+
+  if text_max_width_desktop_value <= 100
+    assign text_max_width_desktop_value = text_max_width_desktop_value | times: 16
+  endif
+
+  if section.settings.bg_full_width == true
+    assign bg_full_width_desktop = true
+  endif
+-%}
+
+{%- style -%}
+  .vd-l { display: none !important; }
+    #shopify-section-{{ section.id }} {
+      --section-border-radius: {{ section.settings.section_border_radius_mobile }}px;
+      --section-horizontal-padding: var(--page-margin, 16px);
+      --blocks-gap: {{ section.settings.blocks_gap }}px;
+      --feature-gap: {{ section.settings.feature_gap }}px;
+      margin-top: {{ section.settings.margin_top_mobile }}px;
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+      border-radius: var(--section-border-radius);
+      overflow: hidden;
+      padding: 0;
+    }
+
+    {% if section.settings.enable_advanced_settings %}
+      #shopify-section-{{ section.id }} {
+        --section-horizontal-padding: {{ section.settings.padding_horizontal_mobile }}px;
+      }
+    {% endif %}
+
+    @media screen and (max-width: 749px) {
+      #shopify-section-{{ section.id }} {
+        background-color: {{ section.settings.section_bg_color }};
+      }
+    }
+
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} {
+        --section-border-radius: {% if bg_full_width_desktop %}0px{% else %}{{ section.settings.section_border_radius }}px{% endif %};
+        --section-horizontal-padding: 0px;
+        margin-top: {{ section.settings.margin_top }}px;
+        margin-bottom: {{ section.settings.margin_bottom }}px;
+        border-radius: var(--section-border-radius);
+        {% if bg_full_width_desktop %}
+          background-color: {{ section.settings.section_bg_color }};
+        {% else %}
+          background: transparent;
+        {% endif %}
+      }
+    }
+
+    {% if section.settings.enable_advanced_settings == false and bg_full_width_desktop == false %}
+      @media screen and (min-width: 750px) {
+        #shopify-section-{{ section.id }} {
+          --section-horizontal-padding: 40px;
+        }
+      }
+    {% endif %}
+
+    {% if section.settings.enable_advanced_settings == false and bg_full_width_desktop %}
+      @media screen and (min-width: 750px) {
+        #shopify-section-{{ section.id }} {
+          --section-container-max-width: var(--page-content-width, var(--page-width, 1440px));
+          --section-outer-gutter: max(0px, calc((100vw - var(--section-container-max-width)) / 2));
+          --section-horizontal-padding: max(0px, calc(var(--page-margin, 40px) - var(--section-outer-gutter)));
+        }
+      }
+    {% endif %}
+
+    {% if section.settings.enable_advanced_settings %}
+      @media screen and (min-width: 750px) {
+        #shopify-section-{{ section.id }} {
+          --section-horizontal-padding: {{ section.settings.padding_horizontal }}px;
+        }
+      }
+    {% endif %}
+  
+    #shopify-section-{{ section.id }} > .vso-hero-06__container {
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      max-width: var(--page-content-width, var(--page-width, 1440px));
+      {% if section.settings.enable_advanced_settings %}
+        {% if bg_full_width_desktop and section.settings.section_full_width == true %}
+          max-width: 100%;
+        {% else %}
+          max-width: {{ section.settings.section_max_width }}rem;
+        {% endif %}
+      {% endif %}
+      border-radius: var(--section-border-radius);
+      overflow: hidden;
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      padding-left: var(--section-horizontal-padding);
+      padding-right: var(--section-horizontal-padding);
+    }
+
+    {% if bg_full_width_desktop == false %}
+      @media screen and (min-width: 750px) {
+        #shopify-section-{{ section.id }} > .vso-hero-06__container {
+          width: calc(100% - (2 * var(--page-margin, 40px)));
+        }
+      }
+    {% endif %}
+
+    @media screen and (max-width: 749px) {
+      #shopify-section-{{ section.id }} > .vso-hero-06__container {
+        background: transparent;
+      }
+    }
+
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} > .vso-hero-06__container {
+        {% if bg_full_width_desktop %}
+          background: transparent;
+        {% else %}
+          background-color: {{ section.settings.section_bg_color }};
+        {% endif %}
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+  
+    #shopify-section-{{ section.id }} .vso-hero-06__inner {
+      display: flex;
+      flex-direction: column;
+      gap: var(--blocks-gap);
+    }
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} .vso-hero-06__inner {
+        --desktop-text-media-gap: {% if section.settings.enable_advanced_settings %}0px{% else %}40px{% endif %};
+        flex-direction: {% if section.settings.reverse_layout_desktop %}row-reverse{% else %}row{% endif %}; 
+        align-items: center;
+        gap: var(--desktop-text-media-gap);
+      }
+      #shopify-section-{{ section.id }} .vso-hero-06__media,
+      #shopify-section-{{ section.id }} .vso-hero-06__text {
+        flex: 0 0 calc((100% - var(--desktop-text-media-gap)) / 2);
+        max-width: calc((100% - var(--desktop-text-media-gap)) / 2);
+      }
+  
+      #shopify-section-{{ section.id }} .vso-hero-06__text > * {
+        max-width: {{ text_max_width_desktop_value }}px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  
+    #shopify-section-{{ section.id }} .vso-hero-06__text {
+      display: flex;
+      flex-direction: column;
+      gap: var(--blocks-gap);
+      {% if section.settings.enable_advanced_settings %}
+        padding-left: {{ section.settings.text_max_width_horizontal_padding_mobile }}px;
+        padding-right: {{ section.settings.text_max_width_horizontal_padding_mobile }}px;
+      {% else %}
+        padding-left: 0;
+        padding-right: 0;
+      {% endif %}
+    }
+    @media screen and (min-width: 750px) {
+      #shopify-section-{{ section.id }} .vso-hero-06__text {
+        {% if section.settings.enable_advanced_settings %}
+          padding-left: {{ section.settings.text_max_width_horizontal_padding }}px;
+          padding-right: {{ section.settings.text_max_width_horizontal_padding }}px;
+        {% else %}
+          padding-left: 0;
+          padding-right: 0;
+        {% endif %}
+      }
+    }
+  
+    #shopify-section-{{ section.id }} .vso-hero-06__feature {
+      display: flex;
+      align-items: center;
+    }
+  
+    #shopify-section-{{ section.id }} .vso-hero-06__media-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    
+    #shopify-section-{{ section.id }} .vso-hero-06__media-wrapper video,
+    #shopify-section-{{ section.id }} .vso-hero-06__media-wrapper .vso-hero-06__video,
+    #shopify-section-{{ section.id }} .vso-hero-06__media-wrapper .vso-hero-06__image,
+    #shopify-section-{{ section.id }} .vso-hero-06__media-wrapper picture,
+    #shopify-section-{{ section.id }} .vso-hero-06__media-wrapper img {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      display: block !important;
+      max-width: none !important;
+      max-height: none !important;
+      min-width: 100% !important;
+      min-height: 100% !important;
+    }
+
+    #shopify-section-{{ section.id }} .vso-hero-06__media-wrapper picture img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    #shopify-section-{{ section.id }} .vso-hero-06__media-wrapper .placeholder-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background-color: #f3f3f3;
+    }
+    
+    #shopify-section-{{ section.id }} .vso-hero-06__media-wrapper .placeholder-svg svg {
+      width: 100%;
+      height: 100%;
+      fill: #9ca3af;
+    }
+
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'heading' -%}
+        {%- assign justify_mobile_heading = 'flex-start' -%}
+        {%- if section.settings.feature_text_alignment_mobile == 'center' -%}
+          {%- assign justify_mobile_heading = 'center' -%}
+        {%- elsif section.settings.feature_text_alignment_mobile == 'right' -%}
+          {%- assign justify_mobile_heading = 'flex-end' -%}
+        {%- endif -%}
+        {%- assign justify_desktop_heading = 'flex-start' -%}
+        {%- if section.settings.feature_text_alignment_desktop == 'center' -%}
+          {%- assign justify_desktop_heading = 'center' -%}
+        {%- elsif section.settings.feature_text_alignment_desktop == 'right' -%}
+          {%- assign justify_desktop_heading = 'flex-end' -%}
+        {%- endif -%}
+        #shopify-section-{{ section.id }} .vso-hero-06__heading-flex[data-block-id="{{ block.id }}"] {
+          justify-content: {{ justify_mobile_heading }};
+          margin-top: {{ block.settings.margin_top_mobile }}px;
+          margin-bottom: {{ block.settings.margin_bottom_mobile }}px;
+        }
+        #shopify-section-{{ section.id }} .vso-hero-06__heading-flex[data-block-id="{{ block.id }}"] .vso-hero-06__title {
+          margin-top: 0;
+          margin-bottom: 0;
+          --highlight-color: {{ block.settings.highlight_color }};
+        }
+        {% if block.settings.custom_font %}
+          #shopify-section-{{ section.id }} .vso-hero-06__heading-flex[data-block-id="{{ block.id }}"] .vso-hero-06__title {
+            color: {{ block.settings.text_color }};
+            font-size: {{ block.settings.font_size_mobile }}px;
+            font-weight: {{ block.settings.font_weight }};
+            line-height: {{ block.settings.line_height }};
+            font-family: {{ block.settings.font.family }}, {{ block.settings.font.fallback_families }};
+            font-style: {{ block.settings.font.style }};
+          }
+        {% endif %}
+        @media screen and (min-width: 750px) {
+          #shopify-section-{{ section.id }} .vso-hero-06__heading-flex[data-block-id="{{ block.id }}"] {
+            justify-content: {{ justify_desktop_heading }};
+            margin-top: {{ block.settings.margin_top }}px;
+            margin-bottom: {{ block.settings.margin_bottom }}px;
+          }
+          #shopify-section-{{ section.id }} .vso-hero-06__heading-flex[data-block-id="{{ block.id }}"] .vso-hero-06__title {
+            margin-top: 0;
+          }
+          {% if block.settings.custom_font %}
+            #shopify-section-{{ section.id }} .vso-hero-06__heading-flex[data-block-id="{{ block.id }}"] .vso-hero-06__title {
+              font-size: {{ block.settings.font_size_desktop }}px;
+            }
+          {% endif %}
+        }
+
+      {%- when 'paragraph' -%}
+        {%- assign justify_mobile_para = 'flex-start' -%}
+        {%- if section.settings.feature_text_alignment_mobile == 'center' -%}
+          {%- assign justify_mobile_para = 'center' -%}
+        {%- elsif section.settings.feature_text_alignment_mobile == 'right' -%}
+          {%- assign justify_mobile_para = 'flex-end' -%}
+        {%- endif -%}
+        {%- assign justify_desktop_para = 'flex-start' -%}
+        {%- if section.settings.feature_text_alignment_desktop == 'center' -%}
+          {%- assign justify_desktop_para = 'center' -%}
+        {%- elsif section.settings.feature_text_alignment_desktop == 'right' -%}
+          {%- assign justify_desktop_para = 'flex-end' -%}
+        {%- endif -%}
+        #shopify-section-{{ section.id }} .vso-hero-06__paragraph-flex[data-block-id="{{ block.id }}"] {
+          justify-content: {{ justify_mobile_para }};
+          margin-top: {{ block.settings.margin_top_mobile }}px;
+          margin-bottom: {{ block.settings.margin_bottom_mobile }}px;
+        }
+        #shopify-section-{{ section.id }} .vso-hero-06__paragraph-flex[data-block-id="{{ block.id }}"] .vso-hero-06__paragraph {
+          {% if block.settings.custom_font %}
+            color: {{ block.settings.text_color }};
+            font-size: {{ block.settings.font_size_mobile }}px;
+            font-weight: {{ block.settings.font_weight }};
+            font-family: {{ block.settings.font.family }}, {{ block.settings.font.fallback_families }};
+            font-style: {{ block.settings.font.style }};
+          {% endif %}
+        }
+        @media screen and (min-width: 750px) {
+          #shopify-section-{{ section.id }} .vso-hero-06__paragraph-flex[data-block-id="{{ block.id }}"] {
+            justify-content: {{ justify_desktop_para }};
+            margin-top: {{ block.settings.margin_top }}px;
+            margin-bottom: {{ block.settings.margin_bottom }}px;
+          }
+          {% if block.settings.custom_font %}
+            #shopify-section-{{ section.id }} .vso-hero-06__paragraph-flex[data-block-id="{{ block.id }}"] .vso-hero-06__paragraph {
+              font-size: {{ block.settings.font_size_desktop }}px;
+              font-weight: {{ block.settings.font_weight }};
+            }
+          {% endif %}
+        }
+
+      {%- when 'button' -%}
+        {%- assign justify_mobile_btn = 'flex-start' -%}
+        {%- if section.settings.feature_text_alignment_mobile == 'center' -%}
+          {%- assign justify_mobile_btn = 'center' -%}
+        {%- elsif section.settings.feature_text_alignment_mobile == 'right' -%}
+          {%- assign justify_mobile_btn = 'flex-end' -%}
+        {%- endif -%}
+        {%- assign justify_desktop_btn = 'flex-start' -%}
+        {%- if section.settings.feature_text_alignment_desktop == 'center' -%}
+          {%- assign justify_desktop_btn = 'center' -%}
+        {%- elsif section.settings.feature_text_alignment_desktop == 'right' -%}
+          {%- assign justify_desktop_btn = 'flex-end' -%}
+        {%- endif -%}
+        #shopify-section-{{ section.id }} .vso-hero-06__button-wrapper-flex[data-block-id="{{ block.id }}"] {
+          justify-content: {{ justify_mobile_btn }};
+          margin-top: {{ block.settings.margin_top_mobile }}px;
+          margin-bottom: {{ block.settings.margin_bottom_mobile }}px;
+        }
+        #shopify-section-{{ section.id }} .vso-hero-06__button-wrapper-flex[data-block-id="{{ block.id }}"] .vso-hero-06__button {
+          font-size: {{ block.settings.font_size_mobile }}px;
+          padding: {{ block.settings.vertical_padding }}px {{ block.settings.horizontal_padding_mobile }}px;
+          border-radius: {{ block.settings.border_radius }}px;
+          background: {{ block.settings.bg_color }};
+          color: {{ block.settings.text_color }};
+          border: none;
+          cursor: pointer;
+          text-decoration: none;
+          display: inline-block;
+          transition: all 0.2s ease;
+          {% if block.settings.custom_font %}font-family: {{ block.settings.font.family }}, {{ block.settings.font.fallback_families }}; font-style: {{ block.settings.font.style }};{% endif %}
+        }
+        #shopify-section-{{ section.id }} .vso-hero-06__button-wrapper-flex[data-block-id="{{ block.id }}"] .vso-hero-06__button:hover {
+          background: {{ block.settings.hover_bg_color }};
+          color: {{ block.settings.hover_text_color }};
+        }
+        @media screen and (min-width: 750px) {
+          #shopify-section-{{ section.id }} .vso-hero-06__button-wrapper-flex[data-block-id="{{ block.id }}"] {
+            justify-content: {{ justify_desktop_btn }};
+            margin-top: {{ block.settings.margin_top }}px;
+            margin-bottom: {{ block.settings.margin_bottom }}px;
+          }
+          #shopify-section-{{ section.id }} .vso-hero-06__button-wrapper-flex[data-block-id="{{ block.id }}"] .vso-hero-06__button {
+            font-size: {{ block.settings.font_size_desktop }}px;
+            padding: {{ block.settings.vertical_padding }}px {{ block.settings.horizontal_padding }}px;
+          }
+        }
+
+      {%- when 'feature' -%}
+        {%- assign justify_mobile = 'flex-start' -%}
+        {%- if section.settings.feature_text_alignment_mobile == 'center' -%}
+          {%- assign justify_mobile = 'center' -%}
+        {%- elsif section.settings.feature_text_alignment_mobile == 'right' -%}
+          {%- assign justify_mobile = 'flex-end' -%}
+        {%- endif -%}
+        {%- assign justify_desktop = 'flex-start' -%}
+        {%- if section.settings.feature_text_alignment_desktop == 'center' -%}
+          {%- assign justify_desktop = 'center' -%}
+        {%- elsif section.settings.feature_text_alignment_desktop == 'right' -%}
+          {%- assign justify_desktop = 'flex-end' -%}
+        {%- endif -%}
+        #shopify-section-{{ section.id }} .vso-hero-06__feature[data-block-id="{{ block.id }}"] {
+          width: 100%;
+          --icon-size-mobile: {{ section.settings.feature_icon_size_mobile }}px;
+          --icon-size-desktop: {{ section.settings.feature_icon_size_desktop }}px;
+          --icon-text-gap: {{ section.settings.feature_icon_text_gap }}px;
+          margin-top: {{ block.settings.margin_top_mobile }}px;
+          margin-bottom: {{ block.settings.margin_bottom_mobile }}px;
+          display: flex;
+          align-items: center;
+          justify-content: {{ justify_mobile }};
+          gap: var(--icon-text-gap);
+        }
+        #shopify-section-{{ section.id }} .vso-hero-06__feature[data-block-id="{{ block.id }}"] .vso-hero-06__feature-icon {
+          width: var(--icon-size-mobile);
+          height: auto;
+          display: block;
+          vertical-align: middle;
+        }
+        #shopify-section-{{ section.id }} .vso-hero-06__feature[data-block-id="{{ block.id }}"] .vso-hero-06__feature-icon svg {
+          width: var(--icon-size-mobile);
+          height: var(--icon-size-mobile);
+          display: block;
+          vertical-align: middle;
+        }
+        #shopify-section-{{ section.id }} .vso-hero-06__feature[data-block-id="{{ block.id }}"] .vso-hero-06__feature-text {
+          margin: 0;
+        }
+        {% if section.settings.feature_custom_font %}
+          #shopify-section-{{ section.id }} .vso-hero-06__feature[data-block-id="{{ block.id }}"] .vso-hero-06__feature-text {
+            font-size: {{ section.settings.feature_font_size_mobile }}px;
+            color: {{ section.settings.feature_text_color }};
+            font-weight: {{ section.settings.feature_font_weight }};
+            font-family: {{ section.settings.feature_font.family }}, {{ section.settings.feature_font.fallback_families }};
+            font-style: {{ section.settings.feature_font.style }};
+          }
+        {% endif %}
+        @media screen and (min-width: 750px) {
+          #shopify-section-{{ section.id }} .vso-hero-06__feature[data-block-id="{{ block.id }}"] {
+            width: 100%;
+            margin-top: {{ block.settings.margin_top }}px;
+            margin-bottom: {{ block.settings.margin_bottom }}px;
+            justify-content: {{ justify_desktop }};
+          }
+          #shopify-section-{{ section.id }} .vso-hero-06__feature[data-block-id="{{ block.id }}"] .vso-hero-06__feature-icon {
+            width: var(--icon-size-desktop);
+          }
+          #shopify-section-{{ section.id }} .vso-hero-06__feature[data-block-id="{{ block.id }}"] .vso-hero-06__feature-icon svg {
+            width: var(--icon-size-desktop);
+            height: var(--icon-size-desktop);
+          }
+          {% if section.settings.feature_custom_font %}
+            #shopify-section-{{ section.id }} .vso-hero-06__feature[data-block-id="{{ block.id }}"] .vso-hero-06__feature-text {
+              font-size: {{ section.settings.feature_font_size_desktop }}px;
+              font-weight: {{ section.settings.feature_font_weight }};
+            }
+          {% endif %}
+        }
+
+      {%- when 'testimonial' -%}
+        {%- assign align_items_mobile = 'center' -%}
+        {%- assign text_align_mobile = block.settings.testimonial_alignment_mobile -%}
+        {%- if block.settings.testimonial_alignment_mobile == 'left' -%}
+          {%- assign align_items_mobile = 'flex-start' -%}
+        {%- elsif block.settings.testimonial_alignment_mobile == 'right' -%}
+          {%- assign align_items_mobile = 'flex-end' -%}
+        {%- endif -%}
+        {%- assign align_items_desktop = 'center' -%}
+        {%- assign text_align_desktop = block.settings.testimonial_alignment_desktop -%}
+        {%- if block.settings.testimonial_alignment_desktop == 'left' -%}
+          {%- assign align_items_desktop = 'flex-start' -%}
+        {%- elsif block.settings.testimonial_alignment_desktop == 'right' -%}
+          {%- assign align_items_desktop = 'flex-end' -%}
+        {%- endif -%}
+        #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] {
+          padding: 20px;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: {{ align_items_mobile }};
+          text-align: {{ text_align_mobile }};
+          border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+          border-radius: {{ block.settings.border_radius }}px;
+          background-color: {{ block.settings.block_bg_color }};
+          margin-top: {{ block.settings.margin_top_mobile }}px;
+          margin-bottom: {{ block.settings.margin_bottom_mobile }}px;
+        }
+        #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .vso-hero-06__testimonial-title {
+          margin-top: 0;
+          margin-bottom: {{ block.settings.title_margin_bottom }}px;
+        }
+        {% if block.settings.custom_title_font %}
+          #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .vso-hero-06__testimonial-title {
+            font-size: {{ block.settings.title_font_size_mobile }}px;
+            font-weight: 600;
+            color: {{ block.settings.title_color }};
+            font-family: {{ block.settings.title_font.family }}, {{ block.settings.title_font.fallback_families }};
+            font-style: {{ block.settings.title_font.style }};
+          }
+        {% endif %}
+        #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .vso-hero-06__testimonial-stars {
+          display: flex;
+          flex-direction: row;
+          gap: {{ block.settings.star_gap }}px;
+          font-size: {{ block.settings.star_size_mobile }}px;
+          margin: 0 0 {{ block.settings.stars_margin_bottom }}px 0;
+          color: {{ block.settings.star_color }};
+        }
+        #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .vso-hero-06__testimonial-content {
+          margin-top: 0;
+          margin-bottom: {{ block.settings.text_margin_bottom }}px;
+        }
+        {% if block.settings.custom_content_font %}
+          #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .vso-hero-06__testimonial-content {
+            font-size: {{ block.settings.content_font_size_mobile }}px;
+            line-height: 1.5;
+            color: {{ block.settings.content_color }};
+            font-family: {{ block.settings.content_font.family }}, {{ block.settings.content_font.fallback_families }};
+            font-style: {{ block.settings.content_font.style }};
+          }
+        {% endif %}
+        #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .vso-hero-06__testimonial-author {
+          margin: 0;
+        }
+        {% if block.settings.custom_author_font %}
+          #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .vso-hero-06__testimonial-author {
+            font-size: {{ block.settings.author_font_size_mobile }}px;
+            font-weight: 500;
+            color: {{ block.settings.author_color }};
+            font-family: {{ block.settings.author_font.family }}, {{ block.settings.author_font.fallback_families }};
+            font-style: {{ block.settings.author_font.style }};
+          }
+        {% endif %}
+        @media screen and (min-width: 750px) {
+          #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] {
+            align-items: {{ align_items_desktop }};
+            text-align: {{ text_align_desktop }};
+            margin-top: {{ block.settings.margin_top }}px;
+            margin-bottom: {{ block.settings.margin_bottom }}px;
+          }
+          {% if block.settings.custom_title_font %}
+            #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .vso-hero-06__testimonial-title {
+              font-size: {{ block.settings.title_font_size_desktop }}px;
+            }
+          {% endif %}
+          #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .vso-hero-06__testimonial-stars {
+            font-size: {{ block.settings.star_size_desktop }}px;
+          }
+          {% if block.settings.custom_content_font %}
+            #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .vso-hero-06__testimonial-content {
+              font-size: {{ block.settings.content_font_size_desktop }}px;
+            }
+          {% endif %}
+          {% if block.settings.custom_author_font %}
+            #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .vso-hero-06__testimonial-author {
+              font-size: {{ block.settings.author_font_size_desktop }}px;
+            }
+          {% endif %}
+        }
+
+      {%- when 'media' -%}
+        {%- liquid
+          assign media_height_mobile_value = block.settings.media_height_mobile
+          assign media_height_desktop_value = block.settings.media_height_desktop
+
+          if media_height_mobile_value <= 60
+            assign media_height_mobile_value = media_height_mobile_value | times: 16
+          endif
+
+          if media_height_desktop_value <= 75
+            assign media_height_desktop_value = media_height_desktop_value | times: 16
+          endif
+        -%}
+        #shopify-section-{{ section.id }} .vso-hero-06__media-container[data-block-id="{{ block.id }}"] {
+          border-radius: {{ block.settings.media_border_radius }}px;
+          margin-top: {{ block.settings.margin_top_mobile }}px;
+          margin-bottom: {{ block.settings.margin_bottom_mobile }}px;
+        }
+        #shopify-section-{{ section.id }} .vso-hero-06__media-container[data-block-id="{{ block.id }}"] .vso-hero-06__media-wrapper {
+          position: relative;
+          width: 100%;
+          height: {{ media_height_mobile_value }}px;
+          overflow: hidden;
+          background: #f0f0f0;
+        }
+        @media screen and (min-width: 750px) {
+          #shopify-section-{{ section.id }} .vso-hero-06__media-container[data-block-id="{{ block.id }}"] .vso-hero-06__media-wrapper {
+            height: {{ media_height_desktop_value }}px;
+          }
+          #shopify-section-{{ section.id }} .vso-hero-06__media-container[data-block-id="{{ block.id }}"] {
+            margin-top: {{ block.settings.margin_top }}px;
+            margin-bottom: {{ block.settings.margin_bottom }}px;
+          }
+        }
+
+    {%- endcase -%}
+  {%- endfor -%}
+
+  /* Heading block flex container styles */
+  #shopify-section-{{ section.id }} .vso-hero-06__heading-flex {
+    width: 100%;
+    display: flex;
+  }
+
+  /* Paragraph block flex container styles */
+  #shopify-section-{{ section.id }} .vso-hero-06__paragraph-flex {
+    width: 100%;
+    display: flex;
+  }
+
+  /* Button wrapper flex container styles */
+  #shopify-section-{{ section.id }} .vso-hero-06__button-wrapper-flex {
+    width: 100%;
+    display: flex;
+  }
+
+  /* Testimonial legacy stars hidden */
+  #shopify-section-{{ section.id }} .vso-hero-06__testimonial-stars--legacy {
+    display: none !important;
+  }
+
+  /* Highlight color for heading spans */
+  #shopify-section-{{ section.id }} .vso-hero-06__title .highlight-text {
+    color: var(--highlight-color);
+  }
+
+  /* Testimonial star styles */
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'testimonial' -%}
+      #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .star-half {
+        background: linear-gradient(to right, {{ block.settings.star_bg_color }} 50%, {{ block.settings.star_empty_color }} 50%);
+        color: {{ block.settings.star_color }};
+      }
+      #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .star-empty-text {
+        color: {{ block.settings.star_empty_color }};
+      }
+      #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .gradient-stop-filled {
+        stop-color: {{ block.settings.star_bg_color }};
+        stop-opacity: 1;
+      }
+      #shopify-section-{{ section.id }} .vso-hero-06__testimonial[data-block-id="{{ block.id }}"] .gradient-stop-empty {
+        stop-color: {{ block.settings.star_empty_color }};
+        stop-opacity: 1;
+      }
+    {%- endif -%}
+  {%- endfor -%}
+
+  .vso-node { display: none; }
+  .vso-node--v2 { display: block; }
+  {%- endstyle -%}
+  
+{%- if request.design_mode -%}
+  <div class="vso-require-script">
+    <div class="vso-warning">
+      <div class="vso-warning__left">
+        <div class="vso-warning__badge">
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+            <path d="M10 6.75a.75.75 0 0 1 .75.75v3.5a.75.75 0 1 1-1.5 0v-3.5a.75.75 0 0 1 .75-.75Z" fill="currentColor"/>
+            <path d="M11 13.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" fill="currentColor"/>
+            <path fill-rule="evenodd" d="M10 3.5c-1.045 0-1.784.702-2.152 1.447a449.26 449.26 0 0 1-2.005 3.847l-.028.052a403.426 403.426 0 0 0-2.008 3.856c-.372.752-.478 1.75.093 2.614.57.863 1.542 1.184 2.464 1.184h7.272c.922 0 1.895-.32 2.464-1.184.57-.864.465-1.862.093-2.614-.21-.424-1.113-2.147-2.004-3.847l-.032-.061a429.497 429.497 0 0 1-2.005-3.847c-.368-.745-1.107-1.447-2.152-1.447Zm-.808 2.112c.404-.816 1.212-.816 1.616 0 .202.409 1.112 2.145 2.022 3.88a418.904 418.904 0 0 1 2.018 3.875c.404.817 0 1.633-1.212 1.633h-7.272c-1.212 0-1.617-.816-1.212-1.633.202-.408 1.113-2.147 2.023-3.883a421.932 421.932 0 0 0 2.017-3.872Z" fill="currentColor"/>
+          </svg>
+          <span>Action Required</span>
+        </div>
+        <h2 class="vso-warning__title">App Embeds Are Disabled</h2>
+        <p class="vso-warning__subtitle">Enable the Versio Sections app embed in your theme editor to use this section.</p>
+        <div class="vso-warning__steps">
+          <div class="vso-warning__step">
+            <span class="vso-warning__step-number">1</span>
+            <span>Click the <strong>App embeds</strong> icon (puzzle piece) at the top of the left sidebar</span>
+          </div>
+          <div class="vso-warning__step">
+            <span class="vso-warning__step-number">2</span>
+            <span>Toggle on <strong>Versio Sections</strong></span>
+          </div>
+          <div class="vso-warning__step">
+            <span class="vso-warning__step-number">3</span>
+            <span>Click <strong>Save</strong> in the top right</span>
+          </div>
+        </div>
+      </div>
+      <div class="vso-warning__image">
+        <img src="https://cdn.shopify.com/s/files/1/0970/2880/0861/files/1.png?v=1773296966" alt="How to enable app embeds" loading="lazy" width="640" height="880" />
+      </div>
+    </div>
+  </div>
+  <style>
+    .vso-hidden {
+      display: none !important;
+      height: 0 !important;
+      overflow: hidden !important;
+      visibility: hidden !important;
+      width: 0 !important;
+      opacity: 0 !important;
+    }
+    .vso-require-script .vso-warning {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 900px;
+      margin: 24px auto;
+      background: #ffffff;
+      border: 1px solid #e2e2e2;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .vso-warning__left {
+      flex: 1;
+      min-width: 0;
+    }
+    .vso-warning__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fef2f2;
+      color: #dc2626;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 5px 12px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+      border: 1px solid #fecaca;
+    }
+    .vso-warning__badge svg {
+      flex-shrink: 0;
+    }
+    .vso-warning__title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 0 0 6px 0;
+      line-height: 1.3;
+    }
+    .vso-warning__subtitle {
+      font-size: 13px;
+      color: #777;
+      margin: 0 0 20px 0;
+      line-height: 1.5;
+      max-width: 340px;
+    }
+    .vso-warning__steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .vso-warning__step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.4;
+    }
+    .vso-warning__step strong {
+      color: #1a1a1a;
+    }
+    .vso-warning__step-number {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      background: #f3f3f3;
+      color: #555;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e0e0e0;
+    }
+    .vso-warning__image {
+      flex: 1;
+      min-width: 0;
+    }
+    .vso-warning__image img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+    @media screen and (max-width: 749px) {
+      .vso-require-script .vso-warning {
+        margin: 16px;
+        padding: 24px 20px;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .vso-warning__title {
+        font-size: 18px;
+      }
+      .vso-warning__subtitle {
+        max-width: none;
+      }
+      .vso-warning__image {
+        flex: none;
+        max-width: 100%;
+      }
+    }
+  </style>
+{%- endif -%}
+
+
+  <div class="vso-hero-06__container vso-node vd-l vso-hidden">
+      <div class="vso-hero-06__inner">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'media' -%}
+            <div class="vso-hero-06__media">
+              <div class="vso-hero-06__media-container" data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
+                <div class="vso-hero-06__media-wrapper">
+                  {% if block.settings.video != blank %}
+                    {{ block.settings.video | video_tag: 
+                      controls: block.settings.controls, 
+                      autoplay: true, 
+                      loop: true, 
+                      muted: true, 
+                      playsinline: block.settings.playsinline, 
+                      loading: 'lazy',
+                      preload: block.settings.preload | default: 'metadata',
+                      class: 'vso-hero-06__video' 
+                    }}
+                  {% elsif block.settings.image != blank %}
+                    {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'vso-hero-06__image' }}
+                  {% else %}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {% endif %}
+
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+  
+        <div class="vso-hero-06__text">
+          {%- for block in section.blocks -%}
+            {%- unless block.type == 'media' -%}
+              {%- case block.type -%}
+                {%- when 'heading' -%}
+                  {%- liquid
+                    assign title_parts = block.settings.heading | split: '_'
+                    assign processed_title = ''
+                    assign is_highlighted = false
+                    for part in title_parts
+                      if is_highlighted
+                        capture highlighted_part
+                          echo '<span class="highlight-text">' | append: part | append: '</span>'
+                        endcapture
+                        assign processed_title = processed_title | append: highlighted_part
+                        assign is_highlighted = false
+                      else
+                        assign processed_title = processed_title | append: part
+                        assign is_highlighted = true
+                      endif
+                    endfor
+                  -%}
+                  <div class="vso-hero-06__heading-flex" data-block-id="{{ block.id }}">
+                    {%- if block.settings.custom_font -%}
+                      <h2 class="vso-hero-06__title">
+                        {{ processed_title }}
+                      </h2>
+                    {%- else -%}
+                      {%- assign heading_tag = block.settings.heading_as | default: 'h2' -%}
+                      <{{ heading_tag }} class="vso-hero-06__title">
+                        {{ processed_title }}
+                      </{{ heading_tag }}>
+                    {%- endif -%}
+                  </div>
+                {%- when 'paragraph' -%}
+                  <div class="vso-hero-06__paragraph-flex" data-block-id="{{ block.id }}">
+                    {%- if block.settings.custom_font -%}
+                      <p class="vso-hero-06__paragraph">
+                        {{ block.settings.text }}
+                      </p>
+                    {%- else -%}
+                      {%- assign paragraph_tag = block.settings.paragraph_as | default: 'p' -%}
+                      <{{ paragraph_tag }} class="vso-hero-06__paragraph">
+                        {{ block.settings.text }}
+                      </{{ paragraph_tag }}>
+                    {%- endif -%}
+                  </div>
+                {%- when 'button' -%}
+                  <div class="vso-hero-06__button-wrapper-flex" data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
+                    {% assign btn_url = block.settings.url %}
+                    {% if btn_url != blank %}
+                      <a href="{{ btn_url }}" class="vso-hero-06__button">
+                        {{ block.settings.label }}
+                      </a>
+                    {% else %}
+                      <button class="vso-hero-06__button" type="button">
+                        {{ block.settings.label }}
+                      </button>
+                    {% endif %}
+                  </div>
+
+                {%- when 'feature' -%}
+                  <div class="vso-hero-06__feature" data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
+                    {% if block.settings.icon != blank %}
+                      <img class="vso-hero-06__feature-icon" src="{{ block.settings.icon | image_url: width: 64 }}" alt="{{ block.settings.icon.alt | escape }}" loading="lazy" width="{{ section.settings.feature_icon_size_desktop }}" height="{{ section.settings.feature_icon_size_desktop }}">
+                    {% else %}
+                      <svg class="vso-hero-06__feature-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="{{ section.settings.feature_icon_size_desktop }}" height="{{ section.settings.feature_icon_size_desktop }}">
+                        <circle cx="12" cy="12" r="10" fill="{{ section.settings.feature_svg_background_color | default: '#000000' }}"/>
+                        <path d="M8 12.5l3 3 5-6" fill="none" stroke="{{ section.settings.feature_svg_check_color | default: '#ffffff' }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    {% endif %}
+                    {%- if section.settings.feature_custom_font -%}
+                      <p class="vso-hero-06__feature-text">{{ block.settings.text }}</p>
+                    {%- else -%}
+                      {%- assign feature_tag = section.settings.feature_as | default: 'p' -%}
+                      <{{ feature_tag }} class="vso-hero-06__feature-text">{{ block.settings.text }}</{{ feature_tag }}>
+                    {%- endif -%}
+                  </div>
+                {%- when 'testimonial' -%}
+                  <div class="vso-hero-06__testimonial" data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
+                    <div class="vso-hero-06__testimonial-stars vso-hero-06__testimonial-stars--legacy">
+                      {% for i in (1..5) %}
+                        {% case block.settings.star_icon %}
+                          {% when 'star1' %}
+                            <span class="star star-filled">
+                              <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="1em" height="1em"><g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="0" fill="{{ block.settings.star_bg_color }}" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304"></path> </g> </g></svg>
+                            </span>
+                          {% when 'star2' %}
+                            <span class="star star-filled">
+                              <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g><g><g><path style="fill:{{ block.settings.star_bg_color }};" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:currentColor;" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g></svg>
+                            </span>
+                          {% when 'star3' %}
+                            <span class="star star-filled">
+                              <svg width="1em" height="1em" viewBox="0 0 1200 1200" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="600" cy="600" r="600" fill="{{ block.settings.star_bg_color }}"/><path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="currentColor"></path></svg>
+                            </span>
+                          {% else %}
+                            <span class="star star-filled"></span>
+                        {% endcase %}
+                      {% endfor %}
+                    </div>
+                    <div class="vso-hero-06__testimonial-stars">
+                      {%- liquid
+                        assign rating = block.settings.star_rating
+                        assign full_stars = rating | floor
+                        assign half_star = rating | modulo: 1
+                        assign empty_stars = 5 | minus: full_stars
+                        if half_star >= 0.5
+                          assign empty_stars = empty_stars | minus: 1
+                        endif
+                      -%}
+
+                      {% for i in (1..full_stars) %}
+                        {% case block.settings.star_icon %}
+                          {% when 'star1' %}
+                            <span class="star star-filled">
+                              <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="1em" height="1em"><g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="0" fill="{{ block.settings.star_bg_color }}" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304"></path> </g> </g></svg>
+                            </span>
+                          {% when 'star2' %}
+                            <span class="star star-filled">
+                              <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g><g><g><path style="fill:{{ block.settings.star_bg_color }};" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:currentColor;" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g></svg>
+                            </span>
+                          {% when 'star3' %}
+                            <span class="star star-filled">
+                              <svg width="1em" height="1em" viewBox="0 0 1200 1200" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="600" cy="600" r="600" fill="{{ block.settings.star_bg_color }}"/><path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="currentColor"></path></svg>
+                            </span>
+                          {% else %}
+                            <span class="star star-filled">★</span>
+                        {% endcase %}
+                      {% endfor %}
+
+                      {% if half_star >= 0.5 %}
+                        {% case block.settings.star_icon %}
+                          {% when 'star1' %}
+                            <span class="star star-half">
+                              <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em">
+                                <defs>
+                                  <linearGradient id="half-hero-06-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="50%" class="gradient-stop-filled" />
+                                    <stop offset="50%" class="gradient-stop-empty" />
+                                  </linearGradient>
+                                </defs>
+                                <g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="0" fill="url(#half-hero-06-{{ block.id }})" strokewidth="0"></rect></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier"> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304" fill="currentColor"></path> </g> </g>
+                              </svg>
+                            </span>
+                          {% when 'star2' %}
+                            <span class="star star-half">
+                              <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                  <linearGradient id="half-hero-06-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="50%" class="gradient-stop-filled" />
+                                    <stop offset="50%" class="gradient-stop-empty" />
+                                  </linearGradient>
+                                </defs>
+                                <g><g><g><path style="fill:url(#half-hero-06-{{ block.id }});" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:currentColor;" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g>
+                              </svg>
+                            </span>
+                          {% when 'star3' %}
+                            <span class="star star-half">
+                              <svg width="1em" height="1em" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                  <linearGradient id="half-hero-06-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="50%" class="gradient-stop-filled" />
+                                    <stop offset="50%" class="gradient-stop-empty" />
+                                  </linearGradient>
+                                </defs>
+                                <circle cx="600" cy="600" r="600" fill="url(#half-hero-06-{{ block.id }})"/>
+                                <path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="currentColor"></path>
+                              </svg>
+                            </span>
+                          {% else %}
+                            <span class="star star-half">★</span>
+                        {% endcase %}
+                      {% endif %}
+
+                      {% for i in (1..empty_stars) %}
+                        {% case block.settings.star_icon %}
+                          {% when 'star1' %}
+                            <span class="star star-empty">
+                              <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" fill="{{ block.settings.star_empty_color }}" width="1em" height="1em"><g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="0" fill="{{ block.settings.star_bg_color }}" strokewidth="0"></rect></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304"></path> </g> </g></svg>
+                            </span>
+                          {% when 'star2' %}
+                            <span class="star star-empty">
+                              <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" fill="{{ block.settings.star_empty_color }}" xmlns="http://www.w3.org/2000/svg"><g><g><g><path style="fill:{{ block.settings.star_bg_color }};" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:{{ block.settings.star_empty_color }};" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g></svg>
+                            </span>
+                          {% when 'star3' %}
+                            <span class="star star-empty">
+                              <svg width="1em" height="1em" viewBox="0 0 1200 1200" fill="{{ block.settings.star_empty_color }}" xmlns="http://www.w3.org/2000/svg"><circle cx="600" cy="600" r="600" fill="{{ block.settings.star_bg_color }}"/><path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="{{ block.settings.star_empty_color }}"></path></svg>
+                            </span>
+                          {% else %}
+                            <span class="star star-empty star-empty-text">★</span>
+                        {% endcase %}
+                      {% endfor %}
+                    </div>
+                    {% if block.settings.testimonial_title != blank %}
+                      {%- if block.settings.custom_title_font -%}
+                        <h3 class="vso-hero-06__testimonial-title">
+                          {{ block.settings.testimonial_title }}
+                        </h3>
+                      {%- else -%}
+                        {%- assign title_tag = block.settings.title_as | default: 'h3' -%}
+                        <{{ title_tag }} class="vso-hero-06__testimonial-title">
+                          {{ block.settings.testimonial_title }}
+                        </{{ title_tag }}>
+                      {%- endif -%}
+                    {% endif %}
+                    {% if block.settings.testimonial != blank %}
+                      {%- if block.settings.custom_content_font -%}
+                        <p class="vso-hero-06__testimonial-content">
+                          {{ block.settings.testimonial }}
+                        </p>
+                      {%- else -%}
+                        {%- assign content_tag = block.settings.content_as | default: 'p' -%}
+                        <{{ content_tag }} class="vso-hero-06__testimonial-content">
+                          {{ block.settings.testimonial }}
+                        </{{ content_tag }}>
+                      {%- endif -%}
+                    {% endif %}
+                    {% if block.settings.author != blank %}
+                      {%- if block.settings.custom_author_font -%}
+                        <cite class="vso-hero-06__testimonial-author">
+                          {{ block.settings.author }}
+                        </cite>
+                      {%- else -%}
+                        {%- assign author_tag = block.settings.author_as | default: 'p' -%}
+                        <{{ author_tag }} class="vso-hero-06__testimonial-author">
+                          {{ block.settings.author }}
+                        </{{ author_tag }}>
+                      {%- endif -%}
+                    {% endif %}
+                  </div>
+              {%- endcase -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        </div> 
+      </div>
+  </div>
+  
+  {% schema %}
+  {
+    "name": "VSO - Hero Section 06",
+    "tag": "section",
+    "class": "section vso-node vso-node--v2 vso-hero-06",
+    "disabled_on": {
+      "groups": ["header", "footer"]
+    },
+    "settings": [
+      { "type": "header", "content": "Section Settings" },
+      { "type": "checkbox", "id": "enable_advanced_settings", "label": "Enable advanced settings", "default": false, "info": "Shows additional settings for spacing, layout, and typography." },
+
+      { "type": "header", "content": "Section Background" },
+      { "type": "color", "id": "section_bg_color", "label": "Section background color", "default": "#F9F9F9" },
+      { "type": "checkbox", "id": "bg_full_width", "label": "Full width background on desktop", "default": true },
+      { "type": "range", "id": "section_border_radius", "label": "Desktop border radius", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 12, "visible_if": "{{ section.settings.bg_full_width == false }}" },
+      { "type": "range", "id": "section_border_radius_mobile", "label": "Mobile border radius", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 0, "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+
+      { "type": "header", "content": "Section Layout" },
+      { "type": "checkbox", "id": "reverse_layout_desktop", "label": "Reverse media/text order on desktop", "default": true },
+      { "type": "range", "id": "text_max_width_desktop", "label": "Desktop text container max width", "min": 320, "max": 1600, "step": 16, "unit": "px", "default": 736 },
+      { "type": "range", "id": "blocks_gap", "label": "Gap between blocks", "min": 0, "max": 50, "step": 1, "unit": "px", "default": 10, "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+      { "type": "range", "id": "feature_gap", "label": "Gap between features", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 8, "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+
+      { "type": "header", "content": "Advanced Layout", "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+      { "type": "checkbox", "id": "section_full_width", "label": "Content full width", "default": false, "visible_if": "{{ section.settings.enable_advanced_settings == true and section.settings.bg_full_width == true }}" },
+      { "type": "range", "id": "section_max_width", "label": "Section max width", "min": 30, "max": 200, "step": 2, "unit": "rem", "default": 120, "visible_if": "{{ section.settings.enable_advanced_settings == true and section.settings.section_full_width == false }}" },
+      { "type": "range", "id": "padding_horizontal", "label": "Desktop side spacing", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "info": "Adds spacing on the left and right sides of this section on desktop.", "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+      { "type": "range", "id": "padding_horizontal_mobile", "label": "Mobile side spacing", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "info": "Adds spacing on the left and right sides of this section on mobile.", "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+      { "type": "range", "id": "text_max_width_horizontal_padding", "label": "Desktop text horizontal padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 15, "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+      { "type": "range", "id": "text_max_width_horizontal_padding_mobile", "label": "Mobile text horizontal padding", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 0, "visible_if": "{{ section.settings.enable_advanced_settings == true }}" },
+
+      { "type": "header", "content": "Section Padding" },
+      { "type": "range", "id": "padding_top", "label": "Desktop padding top", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 40 },
+      { "type": "range", "id": "padding_bottom", "label": "Desktop padding bottom", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 40 },
+      { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 20 },
+      { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 20 },
+
+      { "type": "header", "content": "Section Margin" },
+      { "type": "range", "id": "margin_top", "label": "Desktop margin top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 40 },
+      { "type": "range", "id": "margin_bottom", "label": "Desktop margin bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 40 },
+      { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 20 },
+      { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile margin bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 20 },
+
+      { "type": "header", "content": "Feature Typography" },
+      { "type": "checkbox", "id": "feature_custom_font", "label": "Enable custom font settings", "default": false },
+      { "type": "select", "id": "feature_as", "label": "Render as", "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "p", "label": "Paragraph (p)" }
+      ], "default": "p", "visible_if": "{{ section.settings.feature_custom_font == false }}" },
+      { "type": "font_picker", "id": "feature_font", "label": "Font family", "default": "poppins_n4", "visible_if": "{{ section.settings.feature_custom_font }}" },
+      { "type": "range", "id": "feature_font_size_desktop", "label": "Desktop font size", "min": 12, "max": 48, "step": 1, "unit": "px", "default": 20, "visible_if": "{{ section.settings.feature_custom_font }}" },
+      { "type": "range", "id": "feature_font_size_mobile", "label": "Mobile font size", "min": 12, "max": 48, "step": 1, "unit": "px", "default": 18, "visible_if": "{{ section.settings.feature_custom_font }}" },
+      { "type": "range", "id": "feature_font_weight", "label": "Font weight", "min": 100, "max": 900, "step": 100, "default": 500, "visible_if": "{{ section.settings.feature_custom_font and section.settings.enable_advanced_settings == true }}" },
+      { "type": "color", "id": "feature_text_color", "label": "Text color", "default": "#000000", "visible_if": "{{ section.settings.feature_custom_font }}" },
+      { "type": "select", "id": "feature_text_alignment_desktop", "label": "Desktop alignment", "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ], "default": "left" },
+      { "type": "select", "id": "feature_text_alignment_mobile", "label": "Mobile alignment", "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ], "default": "left" },
+
+      { "type": "header", "content": "Feature Icons" },
+      { "type": "range", "id": "feature_icon_size_desktop", "label": "Desktop icon size", "min": 8, "max": 120, "step": 2, "unit": "px", "default": 28 },
+      { "type": "range", "id": "feature_icon_size_mobile", "label": "Mobile icon size", "min": 8, "max": 120, "step": 2, "unit": "px", "default": 26 },
+      { "type": "color", "id": "feature_svg_background_color", "label": "Icon background color", "default": "#000000" },
+      { "type": "color", "id": "feature_svg_check_color", "label": "Icon check color", "default": "#ffffff" },
+      { "type": "range", "id": "feature_icon_text_gap", "label": "Gap between icon and text", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 6 }
+    ],
+    "blocks": [
+      {
+        "type": "heading",
+        "name": "Heading",
+        "limit": 1,
+        "settings": [
+          { "type": "header", "content": "Heading" },
+          { "type": "inline_richtext", "id": "heading", "label": "Heading text", "default": "Smooth Curls, _Zero Fuss_", "info": "Use _underscores_ to highlight text in a different color" },
+          { "type": "checkbox", "id": "custom_font", "label": "Enable custom font settings", "default": false },
+          { "type": "select", "id": "heading_as", "label": "Render as", "options": [
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "h5", "label": "H5" },
+            { "value": "p", "label": "Paragraph (p)" }
+          ], "default": "h2", "visible_if": "{{ block.settings.custom_font == false }}" },
+          { "type": "font_picker", "id": "font", "label": "Font family", "default": "poppins_n4", "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "range", "id": "font_size_desktop", "label": "Desktop font size", "min": 18, "max": 72, "step": 1, "unit": "px", "default": 40, "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "range", "id": "font_size_mobile", "label": "Mobile font size", "min": 16, "max": 48, "step": 1, "unit": "px", "default": 30, "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "select", "id": "font_weight", "label": "Font weight", "options": [
+            { "value": "300", "label": "Light" },
+            { "value": "400", "label": "Normal" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi Bold" },
+            { "value": "700", "label": "Bold" },
+            { "value": "800", "label": "Extra Bold" }
+          ], "default": "600", "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "range", "id": "line_height", "label": "Line height", "min": 0.8, "max": 2.0, "step": 0.1, "default": 1.2, "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "color", "id": "text_color", "label": "Text color", "default": "#000000", "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "color", "id": "highlight_color", "label": "Highlight color", "default": "#FFB988" },
+
+          { "type": "header", "content": "Alignment" },
+          { "type": "select", "id": "text_alignment_desktop", "label": "Desktop alignment", "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ], "default": "center" },
+          { "type": "select", "id": "text_alignment_mobile", "label": "Mobile alignment", "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ], "default": "center" },
+
+          { "type": "header", "content": "Block Spacing" },
+          { "type": "range", "id": "margin_top", "label": "Desktop margin top", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 60, "step": 1, "unit": "px", "default": 16 },
+          { "type": "range", "id": "margin_bottom", "label": "Desktop margin bottom", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile margin bottom", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "name": "Paragraph",
+        "limit": 1,
+        "settings": [
+          { "type": "header", "content": "Paragraph" },
+          { "type": "inline_richtext", "id": "text", "label": "Paragraph text", "default": "Transform unruly, frizzy hair into salon quality curls from home. Designed for everyday women who want professional results without the heat damage or time commitment." },
+          { "type": "checkbox", "id": "custom_font", "label": "Enable custom font settings", "default": false },
+          { "type": "select", "id": "paragraph_as", "label": "Render as", "options": [
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "h5", "label": "H5" },
+            { "value": "p", "label": "Paragraph (p)" }
+          ], "default": "p", "visible_if": "{{ block.settings.custom_font == false }}" },
+          { "type": "font_picker", "id": "font", "label": "Font family", "default": "poppins_n4", "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "range", "id": "font_size_desktop", "label": "Desktop font size", "min": 12, "max": 48, "step": 1, "unit": "px", "default": 18, "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "range", "id": "font_size_mobile", "label": "Mobile font size", "min": 12, "max": 48, "step": 1, "unit": "px", "default": 16, "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "range", "id": "font_weight", "label": "Font weight", "min": 100, "max": 900, "step": 100, "default": 400, "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "color", "id": "text_color", "label": "Text color", "default": "#000000", "visible_if": "{{ block.settings.custom_font }}" },
+
+          { "type": "header", "content": "Alignment" },
+          { "type": "select", "id": "text_alignment_desktop", "label": "Desktop alignment", "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ], "default": "center" },
+          { "type": "select", "id": "text_alignment_mobile", "label": "Mobile alignment", "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ], "default": "center" },
+
+          { "type": "header", "content": "Block Spacing" },
+          { "type": "range", "id": "margin_top", "label": "Desktop margin top", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_bottom", "label": "Desktop margin bottom", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile margin bottom", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 }
+        ]
+      },
+      {
+        "type": "media",
+        "name": "Media",
+        "limit": 1,
+        "settings": [
+          { "type": "header", "content": "Desktop Media" },
+          { "type": "select", "id": "media_type", "label": "Media type", "options": [
+            { "value": "image", "label": "Image" },
+            { "value": "video", "label": "Video" }
+          ], "default": "image" },
+          { "type": "image_picker", "id": "image", "label": "Image", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+          { "type": "video", "id": "video", "label": "Video", "visible_if": "{{ block.settings.media_type == 'video' }}" },
+
+          { "type": "header", "content": "Mobile Media" },
+          { "type": "select", "id": "mobile_media_type", "label": "Mobile media type", "options": [
+            { "value": "image", "label": "Image" },
+            { "value": "video", "label": "Video" }
+          ], "default": "image" },
+          { "type": "image_picker", "id": "image_mobile", "label": "Image", "info": "Falls back to desktop image if not set", "visible_if": "{{ block.settings.mobile_media_type == 'image' }}" },
+          { "type": "video", "id": "video_mobile", "label": "Video", "info": "Falls back to desktop video if not set", "visible_if": "{{ block.settings.mobile_media_type == 'video' }}" },
+
+          { "type": "header", "content": "Media Settings" },
+          { "type": "range", "id": "media_border_radius", "label": "Border radius", "min": 0, "max": 30, "step": 1, "unit": "px", "default": 8 },
+          { "type": "range", "id": "media_height_desktop", "label": "Desktop height", "min": 320, "max": 1200, "step": 16, "unit": "px", "default": 608 },
+          { "type": "range", "id": "media_height_mobile", "label": "Mobile height", "min": 240, "max": 960, "step": 16, "unit": "px", "default": 400 },
+
+          { "type": "header", "content": "Video Settings", "visible_if": "{{ block.settings.media_type == 'video' or block.settings.mobile_media_type == 'video' }}" },
+          { "type": "checkbox", "id": "controls", "label": "Show video controls", "default": false, "visible_if": "{{ block.settings.media_type == 'video' or block.settings.mobile_media_type == 'video' }}" },
+          { "type": "checkbox", "id": "playsinline", "label": "Play inline on mobile", "default": true, "visible_if": "{{ block.settings.media_type == 'video' or block.settings.mobile_media_type == 'video' }}" },
+          { "type": "select", "id": "preload", "label": "Preload video", "options": [
+            { "value": "none", "label": "None" },
+            { "value": "metadata", "label": "Metadata" },
+            { "value": "auto", "label": "Auto" }
+          ], "default": "metadata", "visible_if": "{{ block.settings.media_type == 'video' or block.settings.mobile_media_type == 'video' }}" },
+
+          { "type": "header", "content": "Block Spacing" },
+          { "type": "range", "id": "margin_top", "label": "Desktop margin top", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_bottom", "label": "Desktop margin bottom", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile margin bottom", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 }
+        ]
+      },
+      {
+        "type": "feature",
+        "name": "Feature",
+        "settings": [
+          { "type": "header", "content": "Feature" },
+          { "type": "image_picker", "id": "icon", "label": "Icon" },
+          { "type": "inline_richtext", "id": "text", "label": "Feature text", "default": "Add feature text" },
+
+          { "type": "header", "content": "Block Spacing" },
+          { "type": "range", "id": "margin_top", "label": "Desktop margin top", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_bottom", "label": "Desktop margin bottom", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile margin bottom", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 }
+        ]
+      },
+      {
+        "type": "button",
+        "name": "Button",
+        "limit": 1,
+        "settings": [
+          { "type": "header", "content": "Button" },
+          { "type": "inline_richtext", "id": "label", "label": "Button label", "default": "Shop Now" },
+          { "type": "url", "id": "url", "label": "Button URL" },
+          { "type": "checkbox", "id": "custom_font", "label": "Enable custom font settings", "default": false },
+          { "type": "font_picker", "id": "font", "label": "Font family", "default": "poppins_n4", "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "range", "id": "font_size_desktop", "label": "Desktop font size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16, "visible_if": "{{ block.settings.custom_font }}" },
+          { "type": "range", "id": "font_size_mobile", "label": "Mobile font size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 14, "visible_if": "{{ block.settings.custom_font }}" },
+
+          { "type": "header", "content": "Alignment" },
+          { "type": "select", "id": "text_alignment_desktop", "label": "Desktop alignment", "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ], "default": "center" },
+          { "type": "select", "id": "text_alignment_mobile", "label": "Mobile alignment", "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ], "default": "center" },
+
+          { "type": "header", "content": "Button Colors" },
+          { "type": "color", "id": "bg_color", "label": "Background color", "default": "#000000" },
+          { "type": "color", "id": "hover_bg_color", "label": "Background hover color", "default": "#333333" },
+          { "type": "color", "id": "text_color", "label": "Text color", "default": "#ffffff" },
+          { "type": "color", "id": "hover_text_color", "label": "Text hover color", "default": "#ffffff" },
+
+          { "type": "header", "content": "Button Padding & Radius" },
+          { "type": "range", "id": "horizontal_padding", "label": "Desktop horizontal padding", "min": 8, "max": 60, "step": 2, "unit": "px", "default": 24 },
+          { "type": "range", "id": "horizontal_padding_mobile", "label": "Mobile horizontal padding", "min": 8, "max": 60, "step": 2, "unit": "px", "default": 24 },
+          { "type": "range", "id": "vertical_padding", "label": "Vertical padding", "min": 4, "max": 30, "step": 2, "unit": "px", "default": 12 },
+          { "type": "range", "id": "border_radius", "label": "Border radius", "min": 0, "max": 30, "step": 1, "unit": "px", "default": 6 },
+
+          { "type": "header", "content": "Block Spacing" },
+          { "type": "range", "id": "margin_top", "label": "Desktop margin top", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+          { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+          { "type": "range", "id": "margin_bottom", "label": "Desktop margin bottom", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile margin bottom", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 }
+        ]
+      },
+      {
+        "type": "testimonial",
+        "name": "Testimonial",
+        "limit": 1,
+        "settings": [
+          { "type": "header", "content": "Block styling" },
+          { "type": "color", "id": "block_bg_color", "label": "Block background color", "default": "#FFFFFF" },
+          { "type": "range", "id": "border_width", "label": "Border width", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 1 },
+          { "type": "color", "id": "border_color", "label": "Border color", "default": "#E5E7EB" },
+          { "type": "range", "id": "border_radius", "label": "Border radius", "min": 0, "max": 30, "step": 1, "unit": "px", "default": 8 },
+          { "type": "header", "content": "Stars" },
+          { "type": "select", "id": "star_icon", "label": "Star icon", "options": [
+            { "value": "star1", "label": "Star Style 1" },
+            { "value": "star2", "label": "Star Style 2" },
+            { "value": "star3", "label": "Star Style 3" }
+          ], "default": "star1" },
+          { "type": "range", "id": "star_size_desktop", "label": "Star size - Desktop", "min": 12, "max": 48, "step": 1, "unit": "px", "default": 26 },
+          { "type": "range", "id": "star_size_mobile", "label": "Star size - Mobile", "min": 12, "max": 48, "step": 1, "unit": "px", "default": 24 },
+          { "type": "color", "id": "star_color", "label": "Star color", "default": "#FFFFFF" },
+          { "type": "color", "id": "star_bg_color", "label": "Star background color", "default": "#FFB988" },
+          { "type": "color", "id": "star_empty_color", "label": "Empty star color", "default": "#DFDFDF" },
+          { "type": "range", "id": "star_rating", "label": "Star rating", "min": 0, "max": 5, "step": 0.5, "default": 5 },
+          { "type": "range", "id": "star_gap", "label": "Star gap", "min": 0, "max": 16, "step": 1, "unit": "px", "default": 2 },
+          { "type": "range", "id": "stars_margin_bottom", "label": "Stars margin bottom", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 10 },
+          { "type": "header", "content": "Title" },
+          { "type": "inline_richtext", "id": "testimonial_title", "label": "Title text", "default": "Best Investment I've Made for My Hair!" },
+          { "type": "checkbox", "id": "custom_title_font", "label": "Enable custom font settings", "default": false },
+          { "type": "select", "id": "title_as", "label": "Render as", "options": [
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "h5", "label": "H5" },
+            { "value": "p", "label": "Paragraph (p)" }
+          ], "default": "h3", "visible_if": "{{ block.settings.custom_title_font == false }}" },
+          { "type": "font_picker", "id": "title_font", "label": "Font family", "default": "poppins_n4", "visible_if": "{{ block.settings.custom_title_font }}" },
+          { "type": "range", "id": "title_font_size_desktop", "label": "Desktop font size", "min": 12, "max": 48, "step": 1, "unit": "px", "default": 20, "visible_if": "{{ block.settings.custom_title_font }}" },
+          { "type": "range", "id": "title_font_size_mobile", "label": "Mobile font size", "min": 12, "max": 48, "step": 1, "unit": "px", "default": 18, "visible_if": "{{ block.settings.custom_title_font }}" },
+          { "type": "color", "id": "title_color", "label": "Text color", "default": "#000000", "visible_if": "{{ block.settings.custom_title_font }}" },
+          { "type": "range", "id": "title_margin_bottom", "label": "Title margin bottom", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 10 },
+          { "type": "header", "content": "Testimonial Text" },
+          { "type": "inline_richtext", "id": "testimonial", "label": "Testimonial text", "default": "This styler is so easy to use and gives me perfect curls in minutes. No more frizz, just smooth, shiny hair that lasts all day. I seriously love it!" },
+          { "type": "checkbox", "id": "custom_content_font", "label": "Enable custom font settings", "default": false },
+          { "type": "select", "id": "content_as", "label": "Render as", "options": [
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "h5", "label": "H5" },
+            { "value": "p", "label": "Paragraph (p)" }
+          ], "default": "p", "visible_if": "{{ block.settings.custom_content_font == false }}" },
+          { "type": "font_picker", "id": "content_font", "label": "Font family", "default": "poppins_n4", "visible_if": "{{ block.settings.custom_content_font }}" },
+          { "type": "range", "id": "content_font_size_desktop", "label": "Desktop font size", "min": 12, "max": 32, "step": 1, "unit": "px", "default": 16, "visible_if": "{{ block.settings.custom_content_font }}" },
+          { "type": "range", "id": "content_font_size_mobile", "label": "Mobile font size", "min": 12, "max": 32, "step": 1, "unit": "px", "default": 14, "visible_if": "{{ block.settings.custom_content_font }}" },
+          { "type": "color", "id": "content_color", "label": "Text color", "default": "#374151", "visible_if": "{{ block.settings.custom_content_font }}" },
+          { "type": "range", "id": "text_margin_bottom", "label": "Text margin bottom", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 10 },
+
+          { "type": "header", "content": "Alignment" },
+          { "type": "select", "id": "testimonial_alignment_desktop", "label": "Desktop alignment", "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ], "default": "left" },
+          { "type": "select", "id": "testimonial_alignment_mobile", "label": "Mobile alignment", "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ], "default": "left" },
+          { "type": "header", "content": "Author" },
+          { "type": "inline_richtext", "id": "author", "label": "Author text", "default": "<em>Emma J.</em>" },
+          { "type": "checkbox", "id": "custom_author_font", "label": "Enable custom font settings", "default": false },
+          { "type": "select", "id": "author_as", "label": "Render as", "options": [
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "h4", "label": "H4" },
+            { "value": "h5", "label": "H5" },
+            { "value": "p", "label": "Paragraph (p)" }
+          ], "default": "p", "visible_if": "{{ block.settings.custom_author_font == false }}" },
+          { "type": "font_picker", "id": "author_font", "label": "Font family", "default": "poppins_n4", "visible_if": "{{ block.settings.custom_author_font }}" },
+          { "type": "range", "id": "author_font_size_desktop", "label": "Desktop font size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 14, "visible_if": "{{ block.settings.custom_author_font }}" },
+          { "type": "range", "id": "author_font_size_mobile", "label": "Mobile font size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 12, "visible_if": "{{ block.settings.custom_author_font }}" },
+          { "type": "color", "id": "author_color", "label": "Text color", "default": "#6B7280", "visible_if": "{{ block.settings.custom_author_font }}" },
+
+          { "type": "header", "content": "Block Spacing" },
+          { "type": "range", "id": "margin_top", "label": "Desktop margin top", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_top_mobile", "label": "Mobile margin top", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_bottom", "label": "Desktop margin bottom", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 },
+          { "type": "range", "id": "margin_bottom_mobile", "label": "Mobile margin bottom", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 0 }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "VSO - Hero Section 06",
+        "blocks": [
+          { "type": "heading" },
+          { "type": "paragraph" },
+          { "type": "feature", "settings": { "text": "Effortless Styling" } },
+          { "type": "feature", "settings": { "text": "Heat Safe Technology" } },
+          { "type": "feature", "settings": { "text": "Salon Quality Results" } },
+          { "type": "testimonial" },
+          { "type": "media" }
+        ]
+      }
+    ]
+  }
+  {% endschema %}

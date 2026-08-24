@@ -1,0 +1,223 @@
+{% comment %}
+  Pulsing scarcity stock indicator
+  Persists count in localStorage and decrements on a configurable interval.
+{% endcomment %}
+
+{%- liquid
+  assign stock_min = stock_min | default: 4
+  assign stock_max = stock_max | default: 18
+  assign reduction_minutes = reduction_minutes | default: 1
+  assign text_prefix = text_prefix | default: 'Endast'
+  assign text_suffix = text_suffix | default: 'kvar i lager'
+  assign dot_color = dot_color | default: '#f59e0b'
+  assign min_dot_color = min_dot_color | default: '#ff0000'
+  assign text_font_size = text_font_size | default: 14
+  assign text_font_weight = text_font_weight | default: 400
+  assign count_font_weight = count_font_weight | default: 600
+  assign text_color = text_color | default: '#121212'
+  assign match_text_to_dot_color = match_text_to_dot_color | default: true, allow_false: true
+  assign scarcity_id = scarcity_id | default: product.id
+
+  if stock_min > stock_max
+    assign stock_max = stock_min
+  endif
+-%}
+
+<div
+  class="scarcity-block{% if match_text_to_dot_color %} scarcity-block--match-text{% endif %}"
+  id="scarcity-{{ scarcity_id }}"
+  data-scarcity-block
+  data-product-id="{{ product.id }}"
+  data-stock-min="{{ stock_min }}"
+  data-stock-max="{{ stock_max }}"
+  data-reduction-minutes="{{ reduction_minutes }}"
+  data-text-prefix="{{ text_prefix | escape }}"
+  data-text-suffix="{{ text_suffix | escape }}"
+  data-dot-color="{{ dot_color }}"
+  data-min-dot-color="{{ min_dot_color }}"
+  style="--scarcity-dot-color: {{ dot_color }}; --scarcity-pulse-color: {{ dot_color }};"
+  {{ block_attributes }}
+>
+  <div class="scarcity-row scarcity-stock">
+    <span class="scarcity-dot pulsing-dot" aria-hidden="true"></span>
+    <span class="scarcity-text">
+      <span class="scarcity-text-prefix">{{ text_prefix }}</span>
+      <span class="scarcity-count-only" data-scarcity-count>{{ stock_max }}</span>
+      <span class="scarcity-text-suffix">{{ text_suffix }}</span>
+    </span>
+  </div>
+  <noscript>
+    <span class="visually-hidden">
+      {{- text_prefix }}
+      {{ stock_min }}
+      {{ text_suffix -}}
+    </span>
+  </noscript>
+</div>
+
+<style>
+  #scarcity-{{ scarcity_id }} {
+    display: flex;
+    width: 100%;
+    margin: 0;
+  }
+
+  #scarcity-{{ scarcity_id }} .scarcity-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    line-height: 1.5;
+    font-size: {{ text_font_size }}px;
+    font-weight: {{ text_font_weight }};
+    overflow: visible;
+  }
+
+  #scarcity-{{ scarcity_id }}.scarcity-block--match-text .scarcity-row {
+    color: var(--scarcity-dot-color, {{ dot_color }});
+  }
+
+  #scarcity-{{ scarcity_id }}:not(.scarcity-block--match-text) .scarcity-row {
+    color: {{ text_color }};
+  }
+
+  #scarcity-{{ scarcity_id }} .scarcity-text {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35em;
+  }
+
+  #scarcity-{{ scarcity_id }} .scarcity-count-only {
+    font-weight: {{ count_font_weight }};
+  }
+
+  #scarcity-{{ scarcity_id }} .pulsing-dot {
+    width: 10px;
+    height: 10px;
+    background-color: var(--scarcity-dot-color, {{ dot_color }});
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: scarcity-pulse-{{ scarcity_id }} 1.5s infinite;
+  }
+
+  @keyframes scarcity-pulse-{{ scarcity_id }} {
+    0% {
+      box-shadow: 0 0 0 0 var(--scarcity-pulse-color);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+    }
+  }
+
+  @media screen and (max-width: 750px) {
+    #scarcity-{{ scarcity_id }} {
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const root = document.getElementById('scarcity-{{ scarcity_id }}');
+    if (!root) return;
+
+    const productId = root.dataset.productId;
+    const stockMin = parseInt(root.dataset.stockMin, 10) || 4;
+    const stockMax = parseInt(root.dataset.stockMax, 10) || 18;
+    const reductionMinutes = Math.max(1, parseInt(root.dataset.reductionMinutes, 10) || 1);
+    const dotColor = root.dataset.dotColor || '#f59e0b';
+    const minDotColor = root.dataset.minDotColor || '#ff0000';
+    const countEl = root.querySelector('[data-scarcity-count]');
+    if (!countEl || !productId) return;
+
+    const storageKey = 'scarcity_stock_' + productId;
+    const configKey = 'scarcity_config_' + productId;
+    const configSignature = [stockMin, stockMax, reductionMinutes].join(':');
+    const intervalMs = reductionMinutes * 60 * 1000;
+
+    function randomBetween(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function loadState() {
+      try {
+        const savedConfig = localStorage.getItem(configKey);
+        const raw = localStorage.getItem(storageKey);
+        if (raw && savedConfig === configSignature) {
+          return JSON.parse(raw);
+        }
+      } catch (e) {}
+      return null;
+    }
+
+    function saveState(state) {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(state));
+        localStorage.setItem(configKey, configSignature);
+      } catch (e) {}
+    }
+
+    function applyCount(count) {
+      countEl.textContent = String(count);
+      const atMin = count <= stockMin;
+      const activeColor = atMin ? minDotColor : dotColor;
+      root.style.setProperty('--scarcity-dot-color', activeColor);
+      root.style.setProperty('--scarcity-pulse-color', activeColor);
+    }
+
+    function getCurrentCount() {
+      const now = Date.now();
+      let state = loadState();
+
+      if (!state || typeof state.count !== 'number' || !state.lastReductionAt) {
+        state = {
+          count: randomBetween(stockMin, stockMax),
+          lastReductionAt: now
+        };
+        saveState(state);
+        return state.count;
+      }
+
+      const elapsed = now - state.lastReductionAt;
+      const reductions = Math.floor(elapsed / intervalMs);
+
+      if (reductions > 0 && state.count > stockMin) {
+        state.count = Math.max(stockMin, state.count - reductions);
+        state.lastReductionAt += reductions * intervalMs;
+        saveState(state);
+      }
+
+      return state.count;
+    }
+
+    function decrementIfDue() {
+      const now = Date.now();
+      const state = loadState();
+      if (!state || state.count <= stockMin) return;
+
+      if (now - state.lastReductionAt >= intervalMs) {
+        state.count = Math.max(stockMin, state.count - 1);
+        state.lastReductionAt += intervalMs;
+        saveState(state);
+        applyCount(state.count);
+      }
+    }
+
+    applyCount(getCurrentCount());
+
+    const timerId = window.setInterval(decrementIfDue, Math.min(intervalMs, 60000));
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) {
+        applyCount(getCurrentCount());
+      }
+    });
+    window.addEventListener('pagehide', function () {
+      window.clearInterval(timerId);
+    });
+  })();
+</script>

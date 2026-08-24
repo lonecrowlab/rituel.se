@@ -1,0 +1,68 @@
+{% comment %}
+  Section With Divider — wave SVG renderer
+  Accepts: style, position, section_id, flip_horizontal, flip_vertical
+{% endcomment %}
+
+{%- liquid
+  assign gradient_id = 'swd-gradient-' | append: section_id | append: '-' | append: position
+
+  if flip_horizontal
+    assign scale_x = '-1'
+  else
+    assign scale_x = '1'
+  endif
+
+  if flip_vertical
+    assign scale_y = '-1'
+  else
+    assign scale_y = '1'
+  endif
+-%}
+
+<div
+  class="swd__divider swd__divider--{{ position }}"
+  style="transform: scaleX({{ scale_x }}) scaleY({{ scale_y }});"
+  aria-hidden="true"
+>
+  {% if position == 'bottom' %}
+    <div class="swd__divider-inner">
+  {% endif %}
+
+  <svg
+    class="swd__divider-svg"
+    viewBox="0 0 1440 120"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="none"
+  >
+    <defs>
+      <linearGradient id="{{ gradient_id }}" x1="0%" y1="0%" x2="100%" y2="100%" gradientTransform="rotate(60 0.5 0.5)">
+        <stop offset="20%" style="stop-color: var(--swd-divider-color-start)"></stop>
+        <stop offset="80%" style="stop-color: var(--swd-divider-color-end)"></stop>
+      </linearGradient>
+    </defs>
+
+    {% case style %}
+      {% when 'style_2' %}
+        <path d="M0,85 Q480,55 960,78 T1440,70 L1440,120 L0,120 Z" fill="url(#{{ gradient_id }})" fill-opacity="0.9"></path>
+        <path d="M0,92 Q320,68 640,82 T1280,75 T1440,88 L1440,120 L0,120 Z" fill="url(#{{ gradient_id }})" fill-opacity="0.7"></path>
+        <path d="M0,98 Q400,72 800,88 T1440,80 L1440,120 L0,120 Z" fill="url(#{{ gradient_id }})"></path>
+      {% when 'style_3' %}
+        <path d="M0,75 Q180,50 360,68 T720,62 T1080,72 T1440,58 L1440,120 L0,120 Z" fill="url(#{{ gradient_id }})" fill-opacity="0.9"></path>
+        <path d="M0,88 Q200,60 400,78 T800,70 T1200,82 T1440,76 L1440,120 L0,120 Z" fill="url(#{{ gradient_id }})" fill-opacity="0.7"></path>
+        <path d="M0,96 Q240,70 480,86 T960,78 T1440,72 L1440,120 L0,120 Z" fill="url(#{{ gradient_id }})"></path>
+      {% when 'style_4' %}
+        <path d="M0,70 Q540,95 720,55 T1440,75 L1440,120 L0,120 Z" fill="url(#{{ gradient_id }})" fill-opacity="0.9"></path>
+        <path d="M0,88 Q300,60 600,85 T1200,65 T1440,90 L1440,120 L0,120 Z" fill="url(#{{ gradient_id }})" fill-opacity="0.7"></path>
+        <path d="M0,94 Q450,75 900,90 T1440,68 L1440,120 L0,120 Z" fill="url(#{{ gradient_id }})"></path>
+      {% else %}
+        <path d="M0,80 Q360,40 720,70 T1440,60 L1440,120 L0,120 Z" fill="url(#{{ gradient_id }})" fill-opacity="0.9"></path>
+        <path d="M0,90 Q240,55 480,80 T960,70 T1440,85 L1440,120 L0,120 Z" fill="url(#{{ gradient_id }})" fill-opacity="0.7"></path>
+        <path d="M0,95 Q360,65 720,85 T1440,75 L1440,120 L0,120 Z" fill="url(#{{ gradient_id }})"></path>
+    {% endcase %}
+  </svg>
+
+  {% if position == 'bottom' %}
+    </div>
+  {% endif %}
+</div>
