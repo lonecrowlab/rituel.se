@@ -248,12 +248,17 @@
         "collection_ad_3er7UT": {
           "type": "collection_ad",
           "settings": {
-            "image": "shopify://shop_images/accordion--before.webp",
+            "image": "shopify://shop_images/gradient.png",
+            "image_fit": "contain",
+            "image_position": "center",
+            "background_type": "gradient",
+            "background_color": "#ffffff",
+            "background_gradient": "linear-gradient(180deg, rgba(179, 59, 114, 1), rgba(234, 142, 161, 1) 100%)",
             "link": "",
-            "display_type": "fixed",
+            "display_type": "random",
             "fix_display": 4,
             "random_min": 4,
-            "random_max": 6,
+            "random_max": 8,
             "repeat": true
           }
         },
