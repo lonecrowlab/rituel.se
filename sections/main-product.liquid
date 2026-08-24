@@ -522,21 +522,16 @@
                   }
                 }
 
-                /* Background layer with opacity */
-                #sticky-atc-{{ section.id }}::before {
-                  content: '';
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  right: 0;
-                  bottom: 0;
-                  z-index: -1;
+                #sticky-atc-{{ section.id }} .sticky-atc-container {
                   {% if block.settings.enable_background_gradient %}
-                    background: {{ block.settings.background_gradient }};
+                    background: {{ block.settings.background_gradient }} !important;
                   {% else %}
-                    background-color: {{ block.settings.background_color }};
+                    {%- assign sticky_atc_bg_alpha = block.settings.background_opacity | divided_by: 100.0 -%}
+                    background-color: {{ block.settings.background_color | color_modify: 'alpha', sticky_atc_bg_alpha }} !important;
                   {% endif %}
-                  opacity: {{ block.settings.background_opacity | divided_by: 100.0 }};
+                }
+                #sticky-atc-{{ section.id }} .sticky-atc__button {
+                  background: transparent !important;
                 }
                 @media screen and (min-width: 750px) {
                   #sticky-atc-{{ section.id }} .button {
@@ -920,13 +915,8 @@
               </sticky-atc>
               {% style  %}
               @media (min-width: 768px) {
-                .sticky-atc {
-                    background-color: rgba(255, 255, 255, 0.6) !important;
-                    -webkit-backdrop-filter: blur(19px);
-                    backdrop-filter: blur(19px);
-                }
                 .sticky-atc__button {
-                  background:none;
+                  background: none;
                 }
               }
               {% endstyle %}
