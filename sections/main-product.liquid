@@ -608,6 +608,49 @@
                     font-size: {{ block.settings.price_font_size_mobile }}px !important;
                   }
                 }
+
+                #sticky-atc-{{ section.id }} .sticky-atc__button .button {
+                  padding: {{ block.settings.button_padding_top_bottom }}px {{ block.settings.button_padding_left_right }}px !important;
+                  min-height: auto !important;
+                  height: auto !important;
+                  flex-direction: column !important;
+                  line-height: 1.2 !important;
+                }
+                @media screen and (min-width: 750px) {
+                  #sticky-atc-{{ section.id }} .sticky-atc__button .button {
+                    padding: {{ block.settings.button_padding_top_bottom_desktop | default: 14 }}px {{ block.settings.button_padding_left_right_desktop | default: 24 }}px !important;
+                  }
+                }
+                #sticky-atc-{{ section.id }} .sticky-atc__label {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  text-align: center;
+                  line-height: 1.2;
+                }
+                #sticky-atc-{{ section.id }} .sticky-atc__label-main {
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  flex-wrap: wrap;
+                }
+                #sticky-atc-{{ section.id }} .sticky-atc__note {
+                  display: block;
+                  width: 100%;
+                  line-height: 1.2;
+                  font-weight: {{ block.settings.button_note_font_weight | default: 400 }} !important;
+                  font-size: {{ block.settings.button_note_font_size_mobile | default: 11 }}px !important;
+                  margin-top: {{ block.settings.button_note_margin_top | default: 2 }}px;
+                  {% if block.settings.button_note_color != blank %}
+                    color: {{ block.settings.button_note_color }} !important;
+                  {% endif %}
+                }
+                @media screen and (min-width: 750px) {
+                  #sticky-atc-{{ section.id }} .sticky-atc__note {
+                    font-size: {{ block.settings.button_note_font_size_desktop | default: 12 }}px !important;
+                  }
+                }
               {% endstyle %}
               <sticky-atc
                 id="sticky-atc-{{ section.id }}"
@@ -641,7 +684,11 @@
                     <div class='sticky-atc__left__content'>
                       {% if block.settings.mobile_show_title or block.settings.desktop_show_title %}
                         <h4 class='sticky-atc__title{% unless block.settings.mobile_show_title %} mobile-hidden{% endunless %}{% unless block.settings.desktop_show_title %} desktop-hidden{% endunless %}'>
-                          {{ product.title }}
+                          {%- if block.settings.title_label != blank -%}
+                            {{ block.settings.title_label }}
+                          {%- else -%}
+                            {{ product.title }}
+                          {%- endif -%}
                         </h4>
                       {% endif %}
                       {% if block.settings.mobile_rating_stars or block.settings.desktop_rating_stars %}
@@ -819,19 +866,24 @@
                         {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %}
                           disabled
                         {% endif %}
-                        style="padding:{{ block.settings.button_padding_top_bottom }}px {{ block.settings.button_padding_left_right }}px;min-height:auto !important;height:auto !important;border-width:{{ block.settings.button_border_width }}px !important;border-style:solid !important;border-color:{{ block.settings.button_border_color }} !important;border-radius:{{ block.settings.button_border_radius }}px !important;color:{{ block.settings.button_text_color }} !important;font-weight:{{ block.settings.button_font_weight }} !important;font-size:{{ block.settings.button_font_size_mobile }}px !important;{% if block.settings.enable_button_gradient %}background:{{ block.settings.button_gradient }} !important;{% elsif block.settings.enable_custom_btn_color %}background:{{ block.settings.custom_btn_color }} !important;{% endif %}"
+                        style="min-height:auto !important;height:auto !important;border-width:{{ block.settings.button_border_width }}px !important;border-style:solid !important;border-color:{{ block.settings.button_border_color }} !important;border-radius:{{ block.settings.button_border_radius }}px !important;color:{{ block.settings.button_text_color }} !important;font-weight:{{ block.settings.button_font_weight }} !important;font-size:{{ block.settings.button_font_size_mobile }}px !important;{% if block.settings.enable_button_gradient %}background:{{ block.settings.button_gradient }} !important;{% elsif block.settings.enable_custom_btn_color %}background:{{ block.settings.custom_btn_color }} !important;{% endif %}"
                       >
                         <span class="sticky-atc__error" style="display:none;"></span>
                         <span class="sticky-atc__label">
                           {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
                             {{ 'products.product.sold_out' | t }}
                           {%- else -%}
-                            {% if block.settings.mobile_show_price_in_button or block.settings.desktop_show_price_in_button %}
-                              <span id="sticky-atc-price-{{ section.id }}" class="{% unless block.settings.mobile_show_price_in_button %} mobile-hidden{% endunless %}{% unless block.settings.desktop_show_price_in_button %} desktop-hidden{% endunless %}" style="{% if block.settings.price_color != blank %}color: {{ block.settings.price_color }} !important;{% endif %}">
-                                {{ product.selected_or_first_available_variant.price | money }} •
-                              </span>
-                            {% endif %}
-                            <span class="sticky-atc__label__text">{{ block.settings.button_label }}</span>
+                            <span class="sticky-atc__label-main">
+                              {% if block.settings.mobile_show_price_in_button or block.settings.desktop_show_price_in_button %}
+                                <span id="sticky-atc-price-{{ section.id }}" class="{% unless block.settings.mobile_show_price_in_button %} mobile-hidden{% endunless %}{% unless block.settings.desktop_show_price_in_button %} desktop-hidden{% endunless %}" style="{% if block.settings.price_color != blank %}color: {{ block.settings.price_color }} !important;{% endif %}">
+                                  {{ product.selected_or_first_available_variant.price | money }} •
+                                </span>
+                              {% endif %}
+                              <span class="sticky-atc__label__text">{{ block.settings.button_label }}</span>
+                            </span>
+                            {%- if block.settings.button_note != blank -%}
+                              <span class="sticky-atc__note">{{ block.settings.button_note }}</span>
+                            {%- endif -%}
                           {%- endif -%}
                         </span>
                         <div class="loading-overlay__spinner">
@@ -847,14 +899,19 @@
                         </div>
                       </button>
                     {% else %}
-                      <button class='button sticky-atc__scroll-btn' style="padding:{{ block.settings.button_padding_top_bottom }}px {{ block.settings.button_padding_left_right }}px ;min-height:auto !important;height:auto !important;border-width:{{ block.settings.button_border_width }}px !important;border-style:solid !important;border-color:{{ block.settings.button_border_color }} !important;border-radius:{{ block.settings.button_border_radius }}px !important;color:{{ block.settings.button_text_color }} !important;font-weight:{{ block.settings.button_font_weight }} !important;font-size:{{ block.settings.button_font_size_mobile }}px !important;{% if block.settings.enable_button_gradient %}background:{{ block.settings.button_gradient }} !important;{% elsif block.settings.enable_custom_btn_color %}background:{{ block.settings.custom_btn_color }} !important;{% endif %}">
-                        <span>
-                          {% if block.settings.mobile_show_price_in_button or block.settings.desktop_show_price_in_button %}
-                            <span id="sticky-atc-price-{{ section.id }}" class="{% unless block.settings.mobile_show_price_in_button %} mobile-hidden{% endunless %}{% unless block.settings.desktop_show_price_in_button %} desktop-hidden{% endunless %}" style="{% if block.settings.price_color != blank %}color: {{ block.settings.price_color }} !important;{% endif %}">
-                              {{ product.selected_or_first_available_variant.price | money }} •
-                            </span>
-                          {% endif %}
-                          <span class="sticky-atc__label__text">{{ block.settings.button_label }}</span>
+                      <button class='button sticky-atc__scroll-btn' style="min-height:auto !important;height:auto !important;border-width:{{ block.settings.button_border_width }}px !important;border-style:solid !important;border-color:{{ block.settings.button_border_color }} !important;border-radius:{{ block.settings.button_border_radius }}px !important;color:{{ block.settings.button_text_color }} !important;font-weight:{{ block.settings.button_font_weight }} !important;font-size:{{ block.settings.button_font_size_mobile }}px !important;{% if block.settings.enable_button_gradient %}background:{{ block.settings.button_gradient }} !important;{% elsif block.settings.enable_custom_btn_color %}background:{{ block.settings.custom_btn_color }} !important;{% endif %}">
+                        <span class="sticky-atc__label">
+                          <span class="sticky-atc__label-main">
+                            {% if block.settings.mobile_show_price_in_button or block.settings.desktop_show_price_in_button %}
+                              <span id="sticky-atc-price-{{ section.id }}" class="{% unless block.settings.mobile_show_price_in_button %} mobile-hidden{% endunless %}{% unless block.settings.desktop_show_price_in_button %} desktop-hidden{% endunless %}" style="{% if block.settings.price_color != blank %}color: {{ block.settings.price_color }} !important;{% endif %}">
+                                {{ product.selected_or_first_available_variant.price | money }} •
+                              </span>
+                            {% endif %}
+                            <span class="sticky-atc__label__text">{{ block.settings.button_label }}</span>
+                          </span>
+                          {%- if block.settings.button_note != blank -%}
+                            <span class="sticky-atc__note">{{ block.settings.button_note }}</span>
+                          {%- endif -%}
                         </span>
                       </button>
                     {% endif %}
@@ -870,9 +927,6 @@
                 }
                 .sticky-atc__button {
                   background:none;
-                }
-                .sticky-atc .sticky-atc__scroll-btn{
-                  padding: 5px 20px !important;
                 }
               }
               {% endstyle %}
@@ -10814,6 +10868,71 @@
           "default": "Add to Cart"
         },
         {
+          "type": "text",
+          "id": "button_note",
+          "label": "Button note",
+          "info": "Optional text shown under the button label. Leave blank to hide."
+        },
+        {
+          "type": "color",
+          "id": "button_note_color",
+          "label": "Button note color"
+        },
+        {
+          "type": "range",
+          "id": "button_note_font_size_desktop",
+          "min": 8,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "label": "Button note font size - Desktop",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "button_note_font_size_mobile",
+          "min": 8,
+          "max": 18,
+          "step": 1,
+          "unit": "px",
+          "label": "Button note font size - Mobile",
+          "default": 11
+        },
+        {
+          "type": "select",
+          "id": "button_note_font_weight",
+          "options": [
+            {
+              "value": "400",
+              "label": "Normal"
+            },
+            {
+              "value": "500",
+              "label": "Medium"
+            },
+            {
+              "value": "600",
+              "label": "Semi Bold"
+            },
+            {
+              "value": "700",
+              "label": "Bold"
+            }
+          ],
+          "default": "400",
+          "label": "Button note font weight"
+        },
+        {
+          "type": "range",
+          "id": "button_note_margin_top",
+          "min": 0,
+          "max": 16,
+          "step": 1,
+          "unit": "px",
+          "label": "Button note spacing",
+          "default": 2
+        },
+        {
           "type": "checkbox",
           "id": "enable_custom_btn_color",
           "label": "Enable custom button color",
@@ -10845,7 +10964,7 @@
           "max": 32,
           "step": 1,
           "unit": "px",
-          "label": "Button padding top/bottom",
+          "label": "Button padding top/bottom - Mobile",
           "default": 14
         },
         {
@@ -10855,7 +10974,27 @@
           "max": 48,
           "step": 1,
           "unit": "px",
-          "label": "Button padding left/right",
+          "label": "Button padding left/right - Mobile",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "button_padding_top_bottom_desktop",
+          "min": 0,
+          "max": 32,
+          "step": 1,
+          "unit": "px",
+          "label": "Button padding top/bottom - Desktop",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "button_padding_left_right_desktop",
+          "min": 0,
+          "max": 48,
+          "step": 1,
+          "unit": "px",
+          "label": "Button padding left/right - Desktop",
           "default": 24
         },
         {
@@ -10937,6 +11076,12 @@
         {
           "type": "header",
           "content": "Title Settings"
+        },
+        {
+          "type": "text",
+          "id": "title_label",
+          "label": "Label",
+          "info": "Leave blank to use the product title"
         },
         {
           "type": "checkbox",
