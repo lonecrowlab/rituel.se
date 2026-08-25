@@ -188,6 +188,13 @@
                     assign show_reviews_count = true
                   endif
                   assign product_image_sizes = menu.drawer_product_image_size | append: 'px'
+                  assign product_tag_text = product.metafields.custom.badge.value
+                  if product_tag_text == blank
+                    assign product_tag_text = product.metafields.custom.badge
+                  endif
+                  if product_tag_text == blank
+                    assign product_tag_text = menu.drawer_product_tag_text
+                  endif
                 -%}
                 <li>
                   <a href="{{ product.url }}" class="menu-drawer__product-card">
@@ -208,8 +215,8 @@
                       {%- endif -%}
                     </span>
                     <span class="menu-drawer__product-info">
-                      {%- if drawer_show_product_tag and menu.drawer_product_tag_text != blank -%}
-                        <span class="menu-drawer__product-tag">{{ menu.drawer_product_tag_text | escape }}</span>
+                      {%- if drawer_show_product_tag and product_tag_text != blank -%}
+                        <span class="menu-drawer__product-tag">{{ product_tag_text | escape }}</span>
                       {%- endif -%}
                       <span class="menu-drawer__product-title">{{ product.title | escape }}</span>
                       {%- if drawer_show_reviews -%}
