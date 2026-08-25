@@ -1147,7 +1147,8 @@
           "label": "Show custom tag"
         },
         "drawer_product_tag_text": {
-          "label": "Tag text"
+          "label": "Tag text",
+          "info": "Used when a product has no custom badge. For a custom badge, go to the [product page](/admin/products) and scroll down. Under Product metafields, find Badge and enter the badge text there."
         },
         "drawer_product_tag_color": {
           "label": "Tag text color"

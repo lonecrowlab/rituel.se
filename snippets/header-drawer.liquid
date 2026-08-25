@@ -188,6 +188,20 @@
                     assign show_reviews_count = true
                   endif
                   assign product_image_sizes = menu.drawer_product_image_size | append: 'px'
+                  assign badge_product = all_products[product.handle]
+                  if badge_product == blank
+                    assign badge_product = product
+                  endif
+                  assign product_tag_text = badge_product.metafields.custom.badge | metafield_text | strip
+                  if product_tag_text == blank
+                    assign product_tag_text = badge_product.metafields.custom.badge.value
+                  endif
+                  if product_tag_text == blank
+                    assign product_tag_text = badge_product.metafields.custom['badge'].value
+                  endif
+                  if product_tag_text == blank
+                    assign product_tag_text = menu.drawer_product_tag_text
+                  endif
                 -%}
                 <li>
                   <a href="{{ product.url }}" class="menu-drawer__product-card">
@@ -208,8 +222,8 @@
                       {%- endif -%}
                     </span>
                     <span class="menu-drawer__product-info">
-                      {%- if drawer_show_product_tag and menu.drawer_product_tag_text != blank -%}
-                        <span class="menu-drawer__product-tag">{{ menu.drawer_product_tag_text | escape }}</span>
+                      {%- if drawer_show_product_tag and product_tag_text != blank -%}
+                        <span class="menu-drawer__product-tag">{{ product_tag_text | escape }}</span>
                       {%- endif -%}
                       <span class="menu-drawer__product-title">{{ product.title | escape }}</span>
                       {%- if drawer_show_reviews -%}
@@ -577,14 +591,14 @@
     display: inline-block;
     width: fit-content;
     max-width: 100%;
-    padding: 0.15rem 0.5rem;
+    padding: 2px 0.5rem;
     color: var(--drawer-product-tag-color, #fff);
     background: var(--drawer-product-tag-bg, #ba6a7f);
     border-radius: var(--drawer-product-tag-radius, 5px);
     font-size: 0.7em;
     font-weight: 400;
     letter-spacing: 0.03em;
-    line-height: 1.2;
+    line-height: 1.3;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
