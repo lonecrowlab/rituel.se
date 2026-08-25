@@ -116,7 +116,7 @@
           "type": "cart_items",
           "settings": {
             "image_size_desktop": 90,
-            "image_size_mobile": 80,
+            "image_size_mobile": 70,
             "image_link": true,
             "image_border_radius": 8,
             "title_font_size_desktop": 16,
@@ -274,7 +274,7 @@
             "show_compare_price": false,
             "silent_add_to_cart": false,
             "add_button_label": "Lägg till",
-            "add_button_added_label": "Added",
+            "add_button_added_label": "Tillagd",
             "upsell_bg_color": "#ffffff",
             "upsell_border_color": "#e5e5e5",
             "upsell_border_width": 1,
