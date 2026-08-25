@@ -159,7 +159,9 @@
         "load_image": "Afbeelding {{ index }} laden in gallery-weergave",
         "load_model": "3D-model {{ index }} laden in gallery-weergave",
         "load_video": "Video {{ index }} afspelen in gallery-weergave",
-        "image_available": "Afbeelding {{ index }} is nu beschikbaar in gallery-weergave"
+        "image_available": "Afbeelding {{ index }} is nu beschikbaar in gallery-weergave",
+        "see_it_in_action": "Bekijk hem in actie",
+        "see_before_after": "Bekijk echte resultaten"
       },
       "view_full_details": "Alle details bekijken",
       "include_taxes": "Inclusief btw.",
