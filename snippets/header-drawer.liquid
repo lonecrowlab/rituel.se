@@ -188,9 +188,16 @@
                     assign show_reviews_count = true
                   endif
                   assign product_image_sizes = menu.drawer_product_image_size | append: 'px'
-                  assign product_tag_text = product.metafields.custom.badge.value
+                  assign badge_product = all_products[product.handle]
+                  if badge_product == blank
+                    assign badge_product = product
+                  endif
+                  assign product_tag_text = badge_product.metafields.custom.badge | metafield_text | strip
                   if product_tag_text == blank
-                    assign product_tag_text = product.metafields.custom.badge
+                    assign product_tag_text = badge_product.metafields.custom.badge.value
+                  endif
+                  if product_tag_text == blank
+                    assign product_tag_text = badge_product.metafields.custom['badge'].value
                   endif
                   if product_tag_text == blank
                     assign product_tag_text = menu.drawer_product_tag_text
