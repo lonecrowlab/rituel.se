@@ -300,7 +300,9 @@
         "load_image": "Laster bildet {{ index }} i gallerivisning",
         "load_model": "Laster 3D-modellen {{ index }} i gallerivisning",
         "load_video": "Spill av videoen {{ index }} i gallerivisning",
-        "image_available": "Bild {{ index }} er nå tilgjengelig i gallerivisning"
+        "image_available": "Bild {{ index }} er nå tilgjengelig i gallerivisning",
+        "see_it_in_action": "Se den i aksjon",
+        "see_before_after": "Se reelle resultater"
       },
       "view_full_details": "Vis alle oppgaver",
       "include_taxes": "Skatt er inkludert.",
@@ -1738,6 +1740,9 @@
             "checkout_disclosure_with_alternative_payment_currency": "%{shop_name} behandler betalinger i %{processing_currency} (%{amount_due}).\nBekreft den endelige CNY-summen i Alipay-appen.",
             "checkout_disclosure_charged_in_cny": "%{shop_name} vil behandle denne betalingen som %{amount_due} %{processing_currency}"
           }
+        },
+        "product_disclosures": {
+          "title": "Produktopplysninger"
         }
       },
       "payment": {
@@ -2018,7 +2023,8 @@
           },
           "oxxo": {
             "pay": "Betal %{amount}",
-            "expiry_date_time": "%{date} kl. %{time}"
+            "expiry_date_time": "%{date} kl. %{time}",
+            "reference_number": "Referansenummer:"
           }
         },
         "purchase_options_agreement_label": "En eller flere artikler i handlekurven din er et utsatt eller tilbakevendende kjøp. Ved å fortsette betalingen godtar du at betalingsmetoden din automatisk belastes med den prisen og frekvensen som er angitt på denne siden, inntil det avsluttes eller du avbryter. For alle avbestillinger gjelder %{cancellation_policy_label}.",
@@ -2159,7 +2165,9 @@
         "bizum_label": "Bizum",
         "payment_method_unavailable_error": "Denne betalingsmetoden er ikke tilgjengelig akkurat nå. Velg en annen betalingsmetode.",
         "payment_method_loading_error": "Denne betalingsmetoden lastes fortsatt inn. Prøv igjen om noen sekunder.",
-        "bank_payment_method_label": "Betalingsmetode for bankbetaling"
+        "bank_payment_method_label": "Betalingsmetode for bankbetaling",
+        "set_as_default_card": "Angi som standardkort",
+        "loading": "Laster inn betaling..."
       },
       "payment_errors": {
         "generic_error": "Det oppstod en feil under behandlingen av betalingen. Prøv igjen eller bruk en annen betalingsmetode.",
@@ -2226,7 +2234,8 @@
         "test_mode_enabled_only_test_cards": "Testmodus er aktivert, kun testkredittkort kan legges til.",
         "shipping_company_required_error": "{{shopName}} krever et firmanavn for leveringsadressen.",
         "payment_credential_delegation_error": "Det oppstod et problem med behandlingen av betalingen din. Velg en ny betalingsmetode.",
-        "missing_cvc": "Angi en sikkerhetskode"
+        "missing_cvc": "Angi en sikkerhetskode",
+        "custom_redeemable_no_longer_available": "Dette tilbudet er ikke lenger tilgjengelig."
       },
       "payment_challenge_modal": {
         "instructions": "Fullfør kjøpet med din {{paymentMethod}}-kode",
@@ -3546,12 +3555,64 @@
       },
       "vaulted": {
         "change_button": "Endre",
-        "loading_section": "Laster inn {{section}} …"
+        "loading_section": "Laster inn {{section}} …",
+        "loaded_section": "{{section}} er lastet inn"
       },
       "ucp": {
         "standard_errors": {
           "item_unavailable": "Artikkelen kan ikke kjøpes"
         }
+      },
+      "shop_wallet": {
+        "title": "Shop Pay-lommebok",
+        "description": "Velg hva du vil bruke til dette kjøpet.",
+        "loading": "Laster inn Shop Pay-lommeboken din …",
+        "cancel": "Avbryt",
+        "retry": "Prøv igjen",
+        "return_to_hatch": "Gå tilbake til Hatch",
+        "choose_again": "Velg igjen",
+        "payment_method": {
+          "heading": "Betalingsmetode",
+          "expiry": "Går ut {{expiry}}",
+          "accessibility_label": "{{brand}} som ender på {{lastDigits}}"
+        },
+        "shipping_address": {
+          "heading": "Leveringsadresse"
+        },
+        "confirm": {
+          "label": "Bekreft valget",
+          "success_title": "Valget er bekreftet",
+          "success_message": "De valgte lommebokopplysningene er klare. Denne prototypen returnerer dem ikke til partnerappen ennå.",
+          "retryable_error_title": "Valet ble ikke delt",
+          "retryable_error_message": "Prøv å bekrefte lommebokvalget ditt på nytt.",
+          "terminal_error_title": "Lommeboktilkoblingen ble avsluttet",
+          "terminal_error_message": "Gå tilbake og åpne Shop Pay igjen."
+        },
+        "cancelled": {
+          "title": "Valget ble avbrutt",
+          "message": "Ingen lommebokinformasjon ble delt, og ingen kjøp ble gjennomført."
+        },
+        "empty": {
+          "title": "Ingen lagrede kort",
+          "message": "Det finnes ingen lagrede kort i denne Shop Pay-lommeboken."
+        },
+        "ineligible": {
+          "title": "Ingen gyldige kort",
+          "message": "Ingen av de lagrede kortene kan brukes til dette kjøpet."
+        },
+        "expired": {
+          "title": "Denne lommebokøkten har utløpt",
+          "message": "Gå tilbake til partnerappen og start kjøpet på nytt."
+        },
+        "revoked": {
+          "title": "Shop Pay er ikke lenger tilkoblet",
+          "message": "Koble Shop Pay til partnerappen på nytt før du fortsetter."
+        },
+        "error": {
+          "title": "Din Shop Pay-lommebok kunne ikke lastes inn",
+          "message": "Gå tilbake til Hatch og prøv å åpne Shop Pay igjen."
+        },
+        "ready_status": "Shop Pay-lommeboken din er klar. Velg en betalingsmåte."
       }
     },
     "attributes": {
