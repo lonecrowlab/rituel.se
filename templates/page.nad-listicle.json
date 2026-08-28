@@ -36,7 +36,7 @@
           "settings": {
             "body_text": "<p>FÖR KVINNOR 30+ SOM VÄGRAR ATT ÅLDRAS SOM SINA MÖDRAR</p>",
             "font_weight": "400",
-            "text_color": "#B3344F",
+            "text_color": "#b3344f",
             "bg_color": "rgba(0,0,0,0)",
             "padding": 0,
             "border_width": 0,
@@ -536,7 +536,7 @@
         "padding_top_desktop": 60,
         "padding_bottom_desktop": 60,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40
+        "padding_bottom_mobile": 0
       }
     },
     "image_with_blocks_AjTcWU": {
@@ -634,6 +634,7 @@
         "body_text_eTHJ3U",
         "image_ywY8KV"
       ],
+      "disabled": true,
       "name": "Image with Blocks",
       "settings": {
         "use_theme_colors": false,
@@ -1626,8 +1627,15 @@
         "layout": "image-left",
         "layout_gap": 40,
         "show_image": false,
+        "media_type": "image",
+        "mobile_media_type": "image",
         "image_width": 45,
+        "media_height_desktop": 496,
+        "media_height_mobile": 320,
         "image_border_radius": 4,
+        "controls": false,
+        "playsinline": true,
+        "preload": "metadata",
         "hide_image_on_mobile": false,
         "accordion_gap": 12,
         "accordion_border_width": 1,
