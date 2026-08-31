@@ -31,8 +31,33 @@
     "image_with_blocks_RWNk7B": {
       "type": "image-with-blocks",
       "blocks": {
+        "review_eK7xiH": {
+          "type": "review",
+          "settings": {
+            "show_stars": true,
+            "star_rating": 5,
+            "star_size": 16,
+            "star_color": "#CC667C",
+            "star_spacing": 0,
+            "review_count": "<p>ÄLSKAD AV 15,000+ KVINNOR</p>",
+            "font_size": 13,
+            "font_weight": "400",
+            "text_color": "#000000",
+            "bg_color": "rgba(0,0,0,0)",
+            "padding": 0,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 0,
+            "mobile_alignment": "center",
+            "desktop_alignment": "left",
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
         "body_text_P6RWdJ": {
           "type": "body_text",
+          "disabled": true,
           "settings": {
             "body_text": "<p>FÖR KVINNOR 30+ SOM VÄGRAR ATT ÅLDRAS SOM SINA MÖDRAR</p>",
             "font_weight": "400",
@@ -54,7 +79,7 @@
         "heading_k3aVKe": {
           "type": "heading",
           "settings": {
-            "heading_before": "Varför åldras koreanska kvinnors hud så långsamt?(Det handlar inte om gener)",
+            "heading_before": "Varför koreanska hudläkare slutade rekommendera Botox, och började använda det här serumet istället",
             "highlighted_text": "",
             "heading_after": "",
             "highlight_position": "inline_second",
@@ -83,7 +108,7 @@
         "body_text_AHAAzF": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Hemligheten ligger i en molekyl som kroppen själv tillverkar, <strong>NAD+</strong>. Den finns naturligt i huden när vi är unga, men minskar för varje år som går. Koreanska hudvårdslabb har i åratal byggt formler kring den. Nu finns samma tänk i ett serum du kan använda hemma, morgon och kväll.</p>",
+            "body_text": "<p>De flesta kvinnor har testat allt. Retinol. Fillers. Botox. Rynkorna kommer tillbaka. Klinikbesöken blir fler. Räkningarna tar aldrig slut.</p><p>Inga nålar. Ingen klinik. Inga 4 000 kr per besök.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -92,7 +117,7 @@
             "border_color": "#e5e7eb",
             "border_style": "solid",
             "border_radius": 0,
-            "font_size_mobile": 14,
+            "font_size_mobile": 16,
             "mobile_alignment": "center",
             "font_size_desktop": 16,
             "desktop_alignment": "left",
@@ -102,6 +127,7 @@
         },
         "customer_testimonial_gVYVMk": {
           "type": "customer_testimonial",
+          "disabled": true,
           "settings": {
             "quote_before": "Vid 35 har huden betydligt lägre nivåer av flera av de ämnen som håller den fast, fuktig och spänstig. Det är inte din inbillning, och det är inte ditt fel.",
             "quote_highlight": "",
@@ -136,6 +162,7 @@
         },
         "review_jGRibc": {
           "type": "review",
+          "disabled": true,
           "settings": {
             "show_stars": true,
             "star_rating": 5,
@@ -215,6 +242,7 @@
         }
       },
       "block_order": [
+        "review_eK7xiH",
         "body_text_P6RWdJ",
         "heading_k3aVKe",
         "body_text_AHAAzF",
@@ -232,7 +260,7 @@
         "heading_position": "top-content",
         "vertical_alignment": "flex-start",
         "background_color": "#fdf8f5",
-        "section_padding_top": 55,
+        "section_padding_top": 20,
         "section_padding_bottom": 55,
         "block_spacing_mobile": 20,
         "block_spacing_desktop": 0,
@@ -377,6 +405,7 @@
         },
         "button_xVawHr": {
           "type": "button",
+          "disabled": true,
           "settings": {
             "button_text": "PRÖVA RISKFRITT I 60 DAGAR",
             "button_link": "shopify://products/egf-nad-firming-serum",
@@ -435,7 +464,7 @@
         "heading_text_align": "center",
         "heading_color": "#000000",
         "heading_font_size_desktop": 48,
-        "heading_font_size_mobile": 32,
+        "heading_font_size_mobile": 28,
         "heading_font_weight": "500",
         "heading_line_height": 1.2,
         "heading_spacing_desktop": 35,
@@ -536,7 +565,7 @@
         "padding_top_desktop": 60,
         "padding_bottom_desktop": 60,
         "padding_top_mobile": 40,
-        "padding_bottom_mobile": 0
+        "padding_bottom_mobile": 40
       }
     },
     "image_with_blocks_AjTcWU": {
@@ -666,7 +695,7 @@
             "text_align": "left",
             "heading_color": "#1f2937",
             "heading_font_size_desktop": 40,
-            "heading_font_size_mobile": 24,
+            "heading_font_size_mobile": 28,
             "heading_font_weight": "600",
             "heading_line_height": 1.2,
             "heading_margin_top": 0,
@@ -709,7 +738,7 @@
           "settings": {
             "image_desktop": "shopify://shop_images/rituel_product_photos.png",
             "aspect_ratio_desktop": "1 / 1",
-            "image_mobile": "shopify://shop_images/rituel_product_photos.png",
+            "image_mobile": "shopify://shop_images/A.png",
             "aspect_ratio_mobile": "1 / 1",
             "border_radius": 12,
             "max_width": 100,
@@ -789,7 +818,7 @@
             "text_align": "left",
             "heading_color": "#1f2937",
             "heading_font_size_desktop": 40,
-            "heading_font_size_mobile": 24,
+            "heading_font_size_mobile": 28,
             "heading_font_weight": "600",
             "heading_line_height": 1.2,
             "heading_margin_top": 0,
@@ -1014,7 +1043,7 @@
         "heading_tag": "h2",
         "heading_text_align": "center",
         "heading_font_size_desktop": 40,
-        "heading_font_size_mobile": 24,
+        "heading_font_size_mobile": 28,
         "heading_font_weight": 700,
         "heading_color": "#000000",
         "heading_margin_bottom": 15,
@@ -1194,7 +1223,7 @@
         "heading_text_align": "center",
         "heading_color": "#1f2937",
         "heading_font_size_desktop": 40,
-        "heading_font_size_mobile": 24,
+        "heading_font_size_mobile": 28,
         "heading_font_weight": "600",
         "heading_line_height": 1.2,
         "heading_spacing_desktop": 10,
