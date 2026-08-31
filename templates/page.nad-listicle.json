@@ -125,70 +125,10 @@
             "margin_bottom": 12
           }
         },
-        "customer_testimonial_gVYVMk": {
-          "type": "customer_testimonial",
-          "disabled": true,
-          "settings": {
-            "quote_before": "Vid 35 har huden betydligt lägre nivåer av flera av de ämnen som håller den fast, fuktig och spänstig. Det är inte din inbillning, och det är inte ditt fel.",
-            "quote_highlight": "",
-            "quote_after": "",
-            "quote_size": 16,
-            "quote_weight": "400",
-            "quote_color": "#000000",
-            "highlight_color": "#fbbf24",
-            "bg_color": "#ffffff",
-            "enable_gradient": false,
-            "gradient_bg": "",
-            "padding": 20,
-            "border_width": 0,
-            "border_color": "#e5e7eb",
-            "border_style": "solid",
-            "border_radius": 12,
-            "show_stars": false,
-            "star_rating": 5,
-            "star_size": 18,
-            "star_color": "#fbbf24",
-            "star_spacing": 4,
-            "customer_name": "",
-            "name_size": 15,
-            "name_weight": "400",
-            "name_color": "#ffffff",
-            "show_verified": false,
-            "verified_size": 14,
-            "verified_color": "#ffffff",
-            "desktop_max_width": 100,
-            "desktop_alignment": "left"
-          }
-        },
-        "review_jGRibc": {
-          "type": "review",
-          "disabled": true,
-          "settings": {
-            "show_stars": true,
-            "star_rating": 5,
-            "star_size": 16,
-            "star_color": "#ffc800",
-            "star_spacing": 0,
-            "review_count": "<p>ÄLSKAD AV 8631 KVINNOR</p>",
-            "font_size": 13,
-            "font_weight": "400",
-            "text_color": "#000000",
-            "bg_color": "#ffffff",
-            "padding": 4,
-            "border_width": 0,
-            "border_color": "#e5e7eb",
-            "border_style": "solid",
-            "border_radius": 4,
-            "mobile_alignment": "center",
-            "desktop_alignment": "left",
-            "margin_top": 8,
-            "margin_bottom": 8
-          }
-        },
         "image_3qzexL": {
           "type": "image",
           "settings": {
-            "image_desktop": "shopify://shop_images/Rituel_Product_photo-44.png",
+            "image_desktop": "shopify://shop_images/A.png",
             "aspect_ratio_desktop": "auto",
             "aspect_ratio_mobile": "auto",
             "border_radius": 10,
@@ -237,7 +177,41 @@
             "custom_width_desktop": 300,
             "custom_width_mobile": 230,
             "margin_top": 8,
-            "margin_bottom": 0
+            "margin_bottom": 8
+          }
+        },
+        "customer_testimonial_dPGriW": {
+          "type": "customer_testimonial",
+          "settings": {
+            "quote_before": "Jag köpte det för att jag ville ha den uppstramande effekten utan att göra Botox på riktigt. Jag var skeptisk. Efter tio dagar var jag helt såld. Mjukare linjer, fastare hud. Koreansk hudvård är på en annan nivå.",
+            "quote_highlight": "",
+            "quote_after": "",
+            "quote_size": 16,
+            "quote_weight": "400",
+            "quote_color": "#000000",
+            "highlight_color": "#CC667C",
+            "bg_color": "#ffffff",
+            "enable_gradient": false,
+            "gradient_bg": "",
+            "padding": 24,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 12,
+            "show_stars": true,
+            "star_rating": 5,
+            "star_size": 18,
+            "star_color": "#CC667C",
+            "star_spacing": 4,
+            "customer_name": "Sandra J",
+            "name_size": 15,
+            "name_weight": "400",
+            "name_color": "#525252",
+            "show_verified": false,
+            "verified_size": 14,
+            "verified_color": "#ffffff",
+            "desktop_max_width": 100,
+            "desktop_alignment": "left"
           }
         }
       },
@@ -246,10 +220,9 @@
         "body_text_P6RWdJ",
         "heading_k3aVKe",
         "body_text_AHAAzF",
-        "customer_testimonial_gVYVMk",
-        "review_jGRibc",
         "image_3qzexL",
-        "button_iqinH8"
+        "button_iqinH8",
+        "customer_testimonial_dPGriW"
       ],
       "name": "Image with Blocks",
       "settings": {
@@ -274,7 +247,7 @@
         "announcement_3iWxKy": {
           "type": "announcement",
           "settings": {
-            "text": "60 DAGARS GARANTI • KLINISKT TESTAT • SÄKER BETALNING",
+            "text": "60 DAGARS GARANTI • KLINISKT TESTAT",
             "text_alignment": "center",
             "icon_type": "google",
             "icon": "",
@@ -301,7 +274,7 @@
         "background_color": "#000000",
         "gradient_background": "",
         "text_color": "#ffffff",
-        "mobile_text_size": 12,
+        "mobile_text_size": 14,
         "desktop_text_size": 16,
         "mobile_icon_size": 20,
         "desktop_icon_size": 26,
@@ -738,7 +711,7 @@
           "settings": {
             "image_desktop": "shopify://shop_images/rituel_product_photos.png",
             "aspect_ratio_desktop": "1 / 1",
-            "image_mobile": "shopify://shop_images/A.png",
+            "image_mobile": "shopify://shop_images/Rituel_Product_photo-44.png",
             "aspect_ratio_mobile": "1 / 1",
             "border_radius": 12,
             "max_width": 100,
