@@ -329,12 +329,47 @@
             "margin_top": 0,
             "margin_bottom": 0
           }
+        },
+        "customer_testimonial_8c4XwL": {
+          "type": "customer_testimonial",
+          "settings": {
+            "quote_before": "Det första jag märkte var inte det jag väntade mig, det var hudens textur. Den känns mjukare, mer levande. Som om huden tar upp näring igen istället för att bara torka ut. Sen, efter 6 veckor, började även pannan se slätare ut.",
+            "quote_highlight": "",
+            "quote_after": "",
+            "quote_size": 16,
+            "quote_weight": "400",
+            "quote_color": "#000000",
+            "highlight_color": "#fbbf24",
+            "bg_color": "#EDEDED",
+            "enable_gradient": false,
+            "gradient_bg": "",
+            "padding": 20,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 12,
+            "show_stars": true,
+            "star_rating": 5,
+            "star_size": 18,
+            "star_color": "#fbbf24",
+            "star_spacing": 4,
+            "customer_name": "Anna. B",
+            "name_size": 15,
+            "name_weight": "400",
+            "name_color": "#000000",
+            "show_verified": false,
+            "verified_size": 14,
+            "verified_color": "#000000",
+            "desktop_max_width": 100,
+            "desktop_alignment": "left"
+          }
         }
       },
       "block_order": [
         "heading_9RbYNt",
         "body_text_eTHJ3U",
-        "image_ywY8KV"
+        "image_ywY8KV",
+        "customer_testimonial_8c4XwL"
       ],
       "name": "Image with Blocks",
       "settings": {
@@ -681,12 +716,47 @@
             "margin_top": 0,
             "margin_bottom": 0
           }
+        },
+        "customer_testimonial_eRqB4V": {
+          "type": "customer_testimonial",
+          "settings": {
+            "quote_before": "Efter två veckor med serumet varje kväll sa en väninna igår att jag lyser! Jag känner själv skillnaden i huden, men det var extra roligt att andra också ser den.",
+            "quote_highlight": "",
+            "quote_after": "",
+            "quote_size": 16,
+            "quote_weight": "400",
+            "quote_color": "#000000",
+            "highlight_color": "#fbbf24",
+            "bg_color": "#EDEDED",
+            "enable_gradient": false,
+            "gradient_bg": "",
+            "padding": 20,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 12,
+            "show_stars": true,
+            "star_rating": 5,
+            "star_size": 18,
+            "star_color": "#fbbf24",
+            "star_spacing": 4,
+            "customer_name": "Sandra. R",
+            "name_size": 15,
+            "name_weight": "400",
+            "name_color": "#000000",
+            "show_verified": false,
+            "verified_size": 14,
+            "verified_color": "#000000",
+            "desktop_max_width": 100,
+            "desktop_alignment": "left"
+          }
         }
       },
       "block_order": [
         "heading_7aT7Wj",
         "body_text_TbfBGY",
-        "image_RBjLwx"
+        "image_RBjLwx",
+        "customer_testimonial_eRqB4V"
       ],
       "name": "Image with Blocks",
       "settings": {
