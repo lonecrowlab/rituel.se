@@ -524,7 +524,7 @@
           "type": "social_proof_accordion",
           "settings": {
             "question": "Tryggt att beställa 😍",
-            "open_default": false,
+            "open_default": true,
             "display_mode": "slider",
             "poster_image": "shopify://shop_images/accordion--before.webp",
             "products_used_heading": "De använde:",
