@@ -12,6 +12,8 @@
   assign display_mode = block.settings.display_mode | default: 'poster'
   assign poster_image = block.settings.poster_image
   assign review_source = block.settings.review_source | default: 'custom'
+  assign products_used_heading = block.settings.products_used_heading | default: 'PRODUCTS USED'
+  assign products_used_button = block.settings.products_used_button_text | default: 'Lägg i kundvagn'
 -%}
 
 {%- capture spa_slides -%}
@@ -160,62 +162,60 @@
 
           {%- if review_products != blank and review_products.size > 0 -%}
             <div class="spa-dialog__products">
-              <p class="spa-dialog__products-title">Products used</p>
-              <splide-component
-                data-type="slide"
-                data-slides-desktop="2"
-                data-slides-mobile="1.5"
-                data-gap-desktop="8"
-                data-gap-mobile="8"
-                data-arrows="false"
-                data-pagination="true"
-                data-drag="true"
-              >
-                <div class="splide">
-                  <div class="splide__track">
-                    <ul class="splide__list">
-                      {%- for p in review_products -%}
-                        {%- assign p_image = p.featured_image -%}
-                        {%- assign p_variant = p.selected_or_first_available_variant -%}
-                        <li class="splide__slide spa-dialog__product-slide">
-                          <a href="{{ p.url }}" class="spa-dialog__product-link" aria-label="{{ p.title | escape }}">
-                            <div class="spa-dialog__product-img-wrap">
-                              {%- if p_image != blank -%}
-                                {{
-                                  p_image
-                                  | image_url: width: 300
-                                  | image_tag:
-                                    loading: 'lazy',
-                                    class: 'spa-dialog__product-img',
-                                    widths: '120, 200, 300',
-                                    sizes: '80px',
-                                    alt: p.title
-                                }}
-                              {%- else -%}
-                                <div class="spa-dialog__product-img-placeholder">
-                                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                                </div>
-                              {%- endif -%}
-                            </div>
-                            <div class="spa-dialog__product-info">
-                              <p class="spa-dialog__product-title">{{ p.title }}</p>
-                              <p class="spa-dialog__product-price">{{ p_variant.price | money }}</p>
-                            </div>
-                          </a>
-                          <a
-                            href="/cart/add?id={{ p_variant.id }}&quantity=1&return_to=/products/{{ p.handle }}"
+              {%- if products_used_heading != blank -%}
+                <p class="spa-dialog__products-title">{{ products_used_heading | escape }}</p>
+              {%- endif -%}
+              <div class="spa-dialog__products-viewport" data-spa-viewport data-spa-products>
+                <div class="spa-dialog__products-track{% if review_products.size == 1 %} spa-dialog__products-track--single{% endif %}">
+                  {%- for p in review_products -%}
+                    {%- assign p_variant = p.selected_or_first_available_variant -%}
+                    <article class="spa-dialog__product-card">
+                      <a class="spa-dialog__product-image" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
+                        {%- if p.featured_image != blank -%}
+                          {{
+                            p.featured_image
+                            | image_url: width: 240
+                            | image_tag:
+                              loading: 'lazy',
+                              class: 'spa-dialog__product-img',
+                              widths: '120, 160, 240',
+                              sizes: '72px',
+                              alt: p.title
+                          }}
+                        {%- else -%}
+                          <span class="spa-dialog__product-img-placeholder">
+                            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                          </span>
+                        {%- endif -%}
+                      </a>
+                      <div class="spa-dialog__product-info">
+                        <a class="spa-dialog__product-title" href="{{ p.url }}">{{ p.title | escape }}</a>
+                        {%- if p_variant != blank -%}
+                          <p class="spa-dialog__product-price">{{ p_variant.price | money }}</p>
+                          <button
+                            type="button"
                             class="spa-dialog__product-atc"
-                            aria-label="{{ 'products.product.add_to_cart' | t | escape }}: {{ p.title | escape }}"
-                          >+ Add to Cart</a>
-                        </li>
-                      {%- endfor -%}
-                    </ul>
-                  </div>
-                  <div class="splide__dots-and-arrows">
-                    <ul class="splide__pagination"></ul>
-                  </div>
+                            data-spa-atc
+                            data-variant-id="{{ p_variant.id }}"
+                            data-add-label="{{ products_used_button | escape }}"
+                            data-added-label="Tillagd"
+                            {% unless p_variant.available %}disabled{% endunless %}
+                          >
+                            <span class="spa-dialog__product-spinner" aria-hidden="true"></span>
+                            <span class="spa-dialog__product-atc-text">
+                              {%- if p_variant.available -%}
+                                {{ products_used_button | escape }}
+                              {%- else -%}
+                                Slutsåld
+                              {%- endif -%}
+                            </span>
+                          </button>
+                        {%- endif -%}
+                      </div>
+                    </article>
+                  {%- endfor -%}
                 </div>
-              </splide-component>
+              </div>
             </div>
           {%- endif -%}
 
@@ -678,7 +678,8 @@
     flex-direction: column;
     gap: 8px;
     flex: 1 1 auto;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .spa-{{ spa_id }} .spa-dialog__stars {
@@ -765,8 +766,6 @@
     line-height: 1.2;
   }
 
-  /* ── Products used slider ─────────────────────────────────── */
-
   .spa-{{ spa_id }} .spa-dialog__products {
     margin-top: 4px;
     padding-top: 12px;
@@ -774,131 +773,181 @@
   }
 
   .spa-{{ spa_id }} .spa-dialog__products-title {
-    margin: 0 0 8px;
-    font-size: 12px;
+    margin: 0 0 10px;
+    font-size: 13px;
     font-weight: 700;
     color: #1a1a1a;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
   }
 
-  .spa-{{ spa_id }} .spa-dialog__products .splide__pagination {
-    bottom: -18px;
-    position: relative;
-    margin-top: 8px;
+  .spa-{{ spa_id }} .spa-dialog__products-viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
   }
 
-  .spa-{{ spa_id }} .spa-dialog__products .splide__pagination__page {
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background: #d4d4d4;
-    margin: 0 2px;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: background 0.2s;
+  .spa-{{ spa_id }} .spa-dialog__products-viewport::-webkit-scrollbar {
+    display: none;
   }
 
-  .spa-{{ spa_id }} .spa-dialog__products .splide__pagination__page.is-active {
-    background: #1a1a1a;
-    transform: scale(1.2);
+  .spa-{{ spa_id }} .spa-dialog__products-viewport.is-dragging {
+    cursor: grabbing;
   }
 
-  .spa-{{ spa_id }} .spa-dialog__product-slide {
-    display: flex !important;
-    flex-direction: column;
-    border: 1px solid #ece8e3;
+  .spa-{{ spa_id }} .spa-dialog__products-track {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__product-card {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex: 0 0 calc((100% - 10px) / 1.2);
+    width: calc((100% - 10px) / 1.2);
+    max-width: calc((100% - 10px) / 1.2);
+    min-width: 0;
+    gap: 12px;
+    padding: 12px;
+    background: #ffffff;
+    border: 1px solid #d4d4d4;
+    border-radius: 16px;
+    box-sizing: border-box;
+    scroll-snap-align: start;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__products-track--single .spa-dialog__product-card {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__product-image {
+    flex: 0 0 72px;
+    width: 72px;
+    height: 72px;
     border-radius: 10px;
     overflow: hidden;
-    background: #fafaf9;
-    height: auto;
+    background: #f4f1ed;
+    align-self: center;
   }
 
-  .spa-{{ spa_id }} .spa-dialog__product-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px;
-    text-decoration: none;
-    color: inherit;
-    flex: 1;
-  }
-
-  .spa-{{ spa_id }} .spa-dialog__product-link:hover {
-    opacity: 0.85;
-  }
-
-  .spa-{{ spa_id }} .spa-dialog__product-img-wrap {
-    flex-shrink: 0;
-    width: 64px;
-    height: 64px;
-    border-radius: 6px;
-    overflow: hidden;
-    background: #ece8e3;
-  }
-
-  .spa-{{ spa_id }} .spa-dialog__product-img {
+  .spa-{{ spa_id }} .spa-dialog__product-img,
+  .spa-{{ spa_id }} .spa-dialog__product-image svg,
+  .spa-{{ spa_id }} .spa-dialog__product-img-placeholder svg {
     width: 100% !important;
     height: 100% !important;
+    max-width: none !important;
     object-fit: cover;
     display: block;
   }
 
   .spa-{{ spa_id }} .spa-dialog__product-img-placeholder {
-    width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .spa-{{ spa_id }} .spa-dialog__product-img-placeholder svg {
-    width: 60%;
-    height: auto;
+    width: 100%;
+    height: 100%;
+    background: #ece8e3;
   }
 
   .spa-{{ spa_id }} .spa-dialog__product-info {
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 4px;
   }
 
   .spa-{{ spa_id }} .spa-dialog__product-title {
-    margin: 0 0 3px;
-    font-size: 11px;
-    font-weight: 600;
-    line-height: 1.3;
+    margin: 0;
     color: #1a1a1a;
-    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .spa-{{ spa_id }} .spa-dialog__product-price {
     margin: 0;
-    font-size: 11px;
+    color: #8a8a8a;
+    font-size: 13px;
     font-weight: 400;
-    color: #5a5a5a;
+    line-height: 1.3;
   }
 
   .spa-{{ spa_id }} .spa-dialog__product-atc {
-    display: block;
-    width: calc(100% - 20px);
-    margin: 0 10px 10px;
-    padding: 7px 10px;
-    border-radius: 6px;
-    background: #1a1a1a;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 8px;
+    background: #111111;
     color: #ffffff;
-    font-size: 11px;
-    font-weight: 600;
-    text-align: center;
-    text-decoration: none;
-    letter-spacing: 0.02em;
-    transition: background 0.2s;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    max-width: 100%;
+    white-space: nowrap;
   }
 
-  .spa-{{ spa_id }} .spa-dialog__product-atc:hover {
-    background: #333333;
+  .spa-{{ spa_id }} .spa-dialog__product-atc:hover:not(:disabled) {
+    opacity: 0.88;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__product-atc:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__product-atc.loading {
+    pointer-events: none;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__product-spinner {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: currentColor;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: spa-atc-spin 0.8s linear infinite;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__product-atc.loading .spa-dialog__product-spinner {
+    display: block;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__product-atc.loading .spa-dialog__product-atc-text {
+    opacity: 0;
+  }
+
+  @keyframes spa-atc-spin {
+    to { transform: rotate(360deg); }
   }
 
   @media screen and (min-width: 750px) and (max-width: 989px) {
@@ -926,6 +975,21 @@
 
     .spa-{{ spa_id }} .spa-dialog__card-title {
       font-size: 17px;
+    }
+
+    .spa-{{ spa_id }} .spa-dialog__product-image {
+      flex: 0 0 64px;
+      width: 64px;
+      height: 64px;
+    }
+
+    .spa-{{ spa_id }} .spa-dialog__product-title {
+      font-size: 13px;
+    }
+
+    .spa-{{ spa_id }} .spa-dialog__product-atc {
+      font-size: 12px;
+      padding: 9px 14px;
     }
   }
 </style>
@@ -1018,6 +1082,134 @@
     }
   }
 
+  function spaCartRoot() {
+    if (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) {
+      return window.Shopify.routes.root;
+    }
+    return '/';
+  }
+
+  function spaCartAddUrl() {
+    var root = spaCartRoot();
+    if (root.charAt(root.length - 1) !== '/') root += '/';
+    return root + 'cart/add.js';
+  }
+
+  function spaRefreshCartAndOpenDrawer() {
+    var sectionsApi = window.CartDrawerSections;
+    if (!sectionsApi || typeof sectionsApi.getSectionsUrl !== 'function') {
+      var fallbackTrigger = document.querySelector('#cart-icon-bubble');
+      if (fallbackTrigger) fallbackTrigger.click();
+      return Promise.resolve();
+    }
+
+    return fetch(sectionsApi.getSectionsUrl())
+      .then(function(res) { return res.json(); })
+      .then(function(sections) {
+        var html = sectionsApi.pickDrawerHtml(sections);
+        var cartDrawer = document.querySelector('cart-drawer');
+        if (html && cartDrawer) {
+          var parser = new DOMParser();
+          var doc = parser.parseFromString(html, 'text/html');
+          var rendered = doc.querySelector('cart-drawer');
+          if (rendered) {
+            cartDrawer.innerHTML = rendered.innerHTML;
+            cartDrawer.className = rendered.className;
+            if (rendered.getAttribute('data-section-id')) {
+              cartDrawer.setAttribute('data-section-id', rendered.getAttribute('data-section-id'));
+            }
+          }
+        }
+
+        if (sections['cart-icon-bubble']) {
+          var bubbleDoc = new DOMParser().parseFromString(sections['cart-icon-bubble'], 'text/html');
+          var newBubble = bubbleDoc.querySelector('.cart-count-bubble');
+          var cartIconBubble = document.querySelector('#cart-icon-bubble');
+          var existingBubble = cartIconBubble ? cartIconBubble.querySelector('.cart-count-bubble') : null;
+          if (cartIconBubble) {
+            if (newBubble && existingBubble) {
+              existingBubble.innerHTML = newBubble.innerHTML;
+            } else if (newBubble && !existingBubble) {
+              cartIconBubble.appendChild(newBubble.cloneNode(true));
+            } else if (!newBubble && existingBubble) {
+              existingBubble.remove();
+            }
+          }
+        }
+
+        if (cartDrawer) {
+          cartDrawer.classList.remove('is-empty', 'is-loading');
+          cartDrawer.classList.add('is-loaded');
+          if (typeof cartDrawer.open === 'function') {
+            cartDrawer.open();
+          } else {
+            var trigger = document.querySelector('#cart-icon-bubble, .header__icon--cart');
+            if (trigger) trigger.click();
+          }
+        }
+      });
+  }
+
+  function initSpaProductsAtc() {
+    if (document.body.dataset.spaAtc === 'true') return;
+    document.body.dataset.spaAtc = 'true';
+
+    document.addEventListener('click', function(e) {
+      var button = e.target.closest('[data-spa-atc]');
+      if (!button || button.disabled) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      var variantId = parseInt(button.getAttribute('data-variant-id'), 10);
+      if (!variantId) return;
+
+      var textEl = button.querySelector('.spa-dialog__product-atc-text');
+      var originalText = button.getAttribute('data-add-label') || (textEl ? textEl.textContent : '');
+      var addedText = button.getAttribute('data-added-label') || 'Tillagd';
+
+      button.classList.add('loading');
+      button.disabled = true;
+
+      fetch(spaCartAddUrl(), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-Upsell-Add': 'true'
+        },
+        body: JSON.stringify({
+          items: [{ id: variantId, quantity: 1 }]
+        })
+      })
+        .then(function(response) {
+          if (!response.ok) {
+            return response.json().then(function(err) {
+              throw new Error((err && err.description) || 'HTTP ' + response.status);
+            });
+          }
+          return response.json();
+        })
+        .then(function() {
+          return spaRefreshCartAndOpenDrawer();
+        })
+        .then(function() {
+          button.classList.remove('loading');
+          button.disabled = false;
+          if (textEl) textEl.textContent = addedText;
+          setTimeout(function() {
+            if (textEl) textEl.textContent = originalText;
+          }, 2000);
+        })
+        .catch(function(error) {
+          button.classList.remove('loading');
+          button.disabled = false;
+          if (textEl) textEl.textContent = originalText;
+          alert('Kunde inte lägga till: ' + (error && error.message ? error.message : 'okänt fel'));
+        });
+    });
+  }
+
   function initSocialProofAccordion(blockId) {
     const accordion = document.querySelector('[data-spa="' + blockId + '"]');
     if (!accordion || accordion.dataset.initialized === 'true') return;
@@ -1076,7 +1268,8 @@
 
       scroller.addEventListener('mousedown', function(e) {
         if (e.button !== 0) return;
-        if (e.target.closest('[data-spa-slider]')) return;
+        if (e.target.closest('[data-spa-slider], [data-spa-atc], button, a, select')) return;
+        if (scroller.hasAttribute('data-spa-products') === false && e.target.closest('[data-spa-products]')) return;
         isDown = true;
         moved = false;
         startX = e.pageX;
@@ -1100,7 +1293,7 @@
 
       scroller.addEventListener('click', function(e) {
         if (!moved) return;
-        if (e.target.closest('[data-spa-slider]')) return;
+        if (e.target.closest('[data-spa-slider], [data-spa-atc]')) return;
         e.preventDefault();
         e.stopPropagation();
         moved = false;
@@ -1115,18 +1308,18 @@
       new SpaSlider(slider);
     });
     accordion.querySelectorAll('[data-spa-viewport]').forEach(initNativeScrollDrag);
+    initSpaProductsAtc();
 
     if (!dialog) return;
 
     dialog.querySelectorAll('[data-spa-slider]').forEach(function(slider) {
       new SpaSlider(slider);
     });
+    dialog.querySelectorAll('[data-spa-viewport]').forEach(initNativeScrollDrag);
 
-    const viewport = dialog.querySelector('[data-spa-viewport]');
+    const viewport = dialog.querySelector('[data-spa-viewport]:not([data-spa-products])');
     const openBtn = accordion.querySelector('[data-spa-open]');
     const closeBtn = dialog.querySelector('[data-spa-close]');
-
-    if (viewport) initNativeScrollDrag(viewport);
 
     function openDialog() {
       if (typeof dialog.showModal === 'function') {
