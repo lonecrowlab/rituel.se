@@ -11,6 +11,13 @@
   assign spa_id = block.id
   assign display_mode = block.settings.display_mode | default: 'poster'
   assign poster_image = block.settings.poster_image
+  assign products_used_list = block.settings.products_used
+  assign products_used_heading = block.settings.products_used_heading
+  assign products_used_button = block.settings.products_used_button_text | default: 'Lägg i kundvagn'
+  assign products_used_count = 0
+  if products_used_list != blank
+    assign products_used_count = products_used_list.size
+  endif
 -%}
 
 {%- capture spa_slides -%}
@@ -127,13 +134,72 @@
   {%- endfor -%}
 {%- endcapture -%}
 
+{%- capture spa_products -%}
+  {%- if products_used_count > 0 -%}
+    <div class="spa-products">
+      {%- if products_used_heading != blank -%}
+        <p class="spa-products__heading">{{ products_used_heading | escape }}</p>
+      {%- endif -%}
+      <div class="spa-products__viewport" data-spa-viewport>
+        <div class="spa-products__track{% if products_used_count == 1 %} spa-products__track--single{% endif %}">
+          {%- for used_product in products_used_list -%}
+            {%- assign used_variant = used_product.selected_or_first_available_variant -%}
+            <article class="spa-products__card">
+              <a class="spa-products__image" href="{{ used_product.url }}">
+                {%- if used_product.featured_image != blank -%}
+                  {{
+                    used_product.featured_image
+                    | image_url: width: 240
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'spa-products__img',
+                      widths: '120, 160, 240',
+                      sizes: '88px',
+                      alt: used_product.title
+                  }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </a>
+              <div class="spa-products__info">
+                <a class="spa-products__title" href="{{ used_product.url }}">{{ used_product.title | escape }}</a>
+                {%- if used_variant != blank -%}
+                  <p class="spa-products__price">{{ used_variant.price | money }}</p>
+                  <button
+                    type="button"
+                    class="spa-products__atc"
+                    data-spa-atc
+                    data-variant-id="{{ used_variant.id }}"
+                    data-add-label="{{ products_used_button | escape }}"
+                    data-added-label="Tillagd"
+                    {% unless used_variant.available %}disabled{% endunless %}
+                  >
+                    <span class="spa-products__spinner" aria-hidden="true"></span>
+                    <span class="spa-products__atc-text">
+                      {%- if used_variant.available -%}
+                        {{ products_used_button | escape }}
+                      {%- else -%}
+                        Slutsåld
+                      {%- endif -%}
+                    </span>
+                  </button>
+                {%- endif -%}
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+
 {%- if question != blank and spa_slides != blank -%}
 <div
   class="spa spa-{{ spa_id }}"
   data-spa="{{ spa_id }}"
   data-spa-mode="{{ display_mode }}"
   {{ block.shopify_attributes }}
-  style="--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;"
+  style="--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;--spa-pad-x-desktop: {{ block.settings.answer_padding_horizontal_desktop }}px;--spa-pad-x-mobile: {{ block.settings.answer_padding_horizontal_mobile }}px;"
 >
   <div class="spa__items">
     <div class="spa__item" data-accordion-item>
@@ -152,7 +218,7 @@
         </span>
       </button>
       <div class="spa__answer" id="SpaAnswer-{{ spa_id }}" data-accordion-content>
-        <div class="spa__answer-inner{% if display_mode == 'slider' %} spa__answer-inner--slider{% endif %}">
+        <div class="spa__answer-inner{% if display_mode == 'slider' %} spa__answer-inner--slider{% endif %}{% if spa_products != blank %} spa__answer-inner--has-products{% endif %}">
           {%- if display_mode == 'slider' -%}
             <div class="spa-slider-viewport" data-spa-viewport>
               <div class="spa-slider-track">
@@ -184,6 +250,7 @@
               {%- endif -%}
             </button>
           {%- endif -%}
+          {{ spa_products }}
         </div>
       </div>
     </div>
@@ -211,6 +278,7 @@
     width: 100%;
     margin-top: var(--margin-top, 2rem);
     margin-bottom: var(--margin-bottom, 2rem);
+    --spa-pad-x: var(--spa-pad-x-desktop, 20px);
   }
 
   .spa-{{ spa_id }} .spa__items {
@@ -372,6 +440,21 @@
       flex: 0 0 85%;
       width: 85%;
       max-width: 85%;
+    }
+
+    .spa-{{ spa_id }} .spa-products__image {
+      flex: 0 0 72px;
+      width: 72px;
+      height: 72px;
+    }
+
+    .spa-{{ spa_id }} .spa-products__title {
+      font-size: 14px;
+    }
+
+    .spa-{{ spa_id }} .spa-products__atc {
+      font-size: 12px;
+      padding: 9px 14px;
     }
   }
 
@@ -678,6 +761,191 @@
     .spa-{{ spa_id }} .spa-dialog__card-title {
       font-size: 17px;
     }
+
+    .spa-{{ spa_id }} {
+      --spa-pad-x: var(--spa-pad-x-mobile);
+    }
+  }
+
+  .spa-{{ spa_id }} .spa-products {
+    margin-top: 16px;
+  }
+
+  .spa-{{ spa_id }} .spa-products__heading {
+    margin: 0 0 12px;
+    color: #1a1a1a;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .spa-{{ spa_id }} .spa__answer-inner--slider .spa-products__heading {
+    padding-right: var(--spa-pad-x);
+  }
+
+  .spa-{{ spa_id }} .spa-products__viewport {
+    width: calc(100% + var(--spa-pad-x));
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+    padding-right: var(--spa-pad-x);
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+  }
+
+  .spa-{{ spa_id }} .spa__answer-inner--slider .spa-products__viewport {
+    width: 100%;
+  }
+
+  .spa-{{ spa_id }} .spa-products__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .spa-{{ spa_id }} .spa-products__viewport.is-dragging {
+    cursor: grabbing;
+  }
+
+  .spa-{{ spa_id }} .spa-products__track {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .spa-{{ spa_id }} .spa-products__card {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex: 0 0 calc((100% - 12px) / 1.2);
+    width: calc((100% - 12px) / 1.2);
+    max-width: calc((100% - 12px) / 1.2);
+    min-width: 0;
+    gap: 12px;
+    padding: 12px;
+    background: #ffffff;
+    border: 1px solid #d4d4d4;
+    border-radius: 16px;
+    box-sizing: border-box;
+    scroll-snap-align: start;
+  }
+
+  .spa-{{ spa_id }} .spa-products__track--single .spa-products__card {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .spa-{{ spa_id }} .spa-products__image {
+    flex: 0 0 88px;
+    width: 88px;
+    height: 88px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f4f1ed;
+    align-self: center;
+  }
+
+  .spa-{{ spa_id }} .spa-products__img,
+  .spa-{{ spa_id }} .spa-products__image svg {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: cover;
+    display: block;
+  }
+
+  .spa-{{ spa_id }} .spa-products__info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .spa-{{ spa_id }} .spa-products__title {
+    color: #1a1a1a;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .spa-{{ spa_id }} .spa-products__price {
+    margin: 0;
+    color: #8a8a8a;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  .spa-{{ spa_id }} .spa-products__atc {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 6px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 8px;
+    background: #111111;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    max-width: 100%;
+    white-space: nowrap;
+  }
+
+  .spa-{{ spa_id }} .spa-products__atc:hover:not(:disabled) {
+    opacity: 0.88;
+  }
+
+  .spa-{{ spa_id }} .spa-products__atc:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .spa-{{ spa_id }} .spa-products__atc.loading {
+    pointer-events: none;
+  }
+
+  .spa-{{ spa_id }} .spa-products__spinner {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: currentColor;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: spa-atc-spin 0.8s linear infinite;
+  }
+
+  .spa-{{ spa_id }} .spa-products__atc.loading .spa-products__spinner {
+    display: block;
+  }
+
+  .spa-{{ spa_id }} .spa-products__atc.loading .spa-products__atc-text {
+    opacity: 0;
+  }
+
+  @keyframes spa-atc-spin {
+    to { transform: rotate(360deg); }
   }
 </style>
 
@@ -769,6 +1037,134 @@
     }
   }
 
+  function spaCartRoot() {
+    if (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) {
+      return window.Shopify.routes.root;
+    }
+    return '/';
+  }
+
+  function spaCartAddUrl() {
+    var root = spaCartRoot();
+    if (root.charAt(root.length - 1) !== '/') root += '/';
+    return root + 'cart/add.js';
+  }
+
+  function spaRefreshCartAndOpenDrawer() {
+    var sectionsApi = window.CartDrawerSections;
+    if (!sectionsApi || typeof sectionsApi.getSectionsUrl !== 'function') {
+      var fallbackTrigger = document.querySelector('#cart-icon-bubble');
+      if (fallbackTrigger) fallbackTrigger.click();
+      return Promise.resolve();
+    }
+
+    return fetch(sectionsApi.getSectionsUrl())
+      .then(function(res) { return res.json(); })
+      .then(function(sections) {
+        var html = sectionsApi.pickDrawerHtml(sections);
+        var cartDrawer = document.querySelector('cart-drawer');
+        if (html && cartDrawer) {
+          var parser = new DOMParser();
+          var doc = parser.parseFromString(html, 'text/html');
+          var rendered = doc.querySelector('cart-drawer');
+          if (rendered) {
+            cartDrawer.innerHTML = rendered.innerHTML;
+            cartDrawer.className = rendered.className;
+            if (rendered.getAttribute('data-section-id')) {
+              cartDrawer.setAttribute('data-section-id', rendered.getAttribute('data-section-id'));
+            }
+          }
+        }
+
+        if (sections['cart-icon-bubble']) {
+          var bubbleDoc = new DOMParser().parseFromString(sections['cart-icon-bubble'], 'text/html');
+          var newBubble = bubbleDoc.querySelector('.cart-count-bubble');
+          var cartIconBubble = document.querySelector('#cart-icon-bubble');
+          var existingBubble = cartIconBubble ? cartIconBubble.querySelector('.cart-count-bubble') : null;
+          if (cartIconBubble) {
+            if (newBubble && existingBubble) {
+              existingBubble.innerHTML = newBubble.innerHTML;
+            } else if (newBubble && !existingBubble) {
+              cartIconBubble.appendChild(newBubble.cloneNode(true));
+            } else if (!newBubble && existingBubble) {
+              existingBubble.remove();
+            }
+          }
+        }
+
+        if (cartDrawer) {
+          cartDrawer.classList.remove('is-empty', 'is-loading');
+          cartDrawer.classList.add('is-loaded');
+          if (typeof cartDrawer.open === 'function') {
+            cartDrawer.open();
+          } else {
+            var trigger = document.querySelector('#cart-icon-bubble, .header__icon--cart');
+            if (trigger) trigger.click();
+          }
+        }
+      });
+  }
+
+  function initSpaProductsAtc(accordion) {
+    if (!accordion || accordion.dataset.spaAtc === 'true') return;
+    accordion.dataset.spaAtc = 'true';
+
+    accordion.addEventListener('click', function(e) {
+      var button = e.target.closest('[data-spa-atc]');
+      if (!button || !accordion.contains(button) || button.disabled) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      var variantId = parseInt(button.getAttribute('data-variant-id'), 10);
+      if (!variantId) return;
+
+      var textEl = button.querySelector('.spa-products__atc-text');
+      var originalText = button.getAttribute('data-add-label') || (textEl ? textEl.textContent : '');
+      var addedText = button.getAttribute('data-added-label') || 'Tillagd';
+
+      button.classList.add('loading');
+      button.disabled = true;
+
+      fetch(spaCartAddUrl(), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-Upsell-Add': 'true'
+        },
+        body: JSON.stringify({
+          items: [{ id: variantId, quantity: 1 }]
+        })
+      })
+        .then(function(response) {
+          if (!response.ok) {
+            return response.json().then(function(err) {
+              throw new Error((err && err.description) || 'HTTP ' + response.status);
+            });
+          }
+          return response.json();
+        })
+        .then(function() {
+          return spaRefreshCartAndOpenDrawer();
+        })
+        .then(function() {
+          button.classList.remove('loading');
+          button.disabled = false;
+          if (textEl) textEl.textContent = addedText;
+          setTimeout(function() {
+            if (textEl) textEl.textContent = originalText;
+          }, 2000);
+        })
+        .catch(function(error) {
+          button.classList.remove('loading');
+          button.disabled = false;
+          if (textEl) textEl.textContent = originalText;
+          alert('Kunde inte lägga till: ' + (error && error.message ? error.message : 'okänt fel'));
+        });
+    });
+  }
+
   function initSocialProofAccordion(blockId) {
     const accordion = document.querySelector('[data-spa="' + blockId + '"]');
     if (!accordion || accordion.dataset.initialized === 'true') return;
@@ -827,7 +1223,7 @@
 
       scroller.addEventListener('mousedown', function(e) {
         if (e.button !== 0) return;
-        if (e.target.closest('[data-spa-slider]')) return;
+        if (e.target.closest('[data-spa-slider], [data-spa-atc], button, a, select')) return;
         isDown = true;
         moved = false;
         startX = e.pageX;
@@ -851,7 +1247,7 @@
 
       scroller.addEventListener('click', function(e) {
         if (!moved) return;
-        if (e.target.closest('[data-spa-slider]')) return;
+        if (e.target.closest('[data-spa-slider], [data-spa-atc]')) return;
         e.preventDefault();
         e.stopPropagation();
         moved = false;
@@ -866,6 +1262,7 @@
       new SpaSlider(slider);
     });
     accordion.querySelectorAll('[data-spa-viewport]').forEach(initNativeScrollDrag);
+    initSpaProductsAtc(accordion);
 
     if (!dialog) return;
 
