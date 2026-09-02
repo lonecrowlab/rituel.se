@@ -527,6 +527,8 @@
             "open_default": false,
             "display_mode": "slider",
             "poster_image": "shopify://shop_images/accordion--before.webp",
+            "products_used_heading": "De använde:",
+            "products_used_button_text": "Lägg i kundvagn",
             "review_source": "custom",
             "review_1_entry": "",
             "review_1_before_image": "shopify://shop_images/Emma--1.webp",
