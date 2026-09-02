@@ -64,26 +64,26 @@
     -%}
     {%- if before_image != blank or after_image != blank or reviewer_name != blank or review_text_raw != blank or review_title != blank -%}
       <article class="spa-dialog__slide" data-spa-slide>
-        <div class="spa-dialog__slider" data-spa-slider>
-          <div class="spa-dialog__image spa-dialog__image--before">
-            {%- if before_image != blank -%}
-              {{
-                before_image
-                | image_url: width: 1200
-                | image_tag:
-                  loading: 'lazy',
-                  class: 'spa-dialog__img',
-                  widths: '480, 640, 800, 1000, 1200',
-                  sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
-              }}
-            {%- else -%}
-              <div class="spa-dialog__placeholder">
-                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-              </div>
-            {%- endif -%}
-          </div>
-          <div class="spa-dialog__image spa-dialog__image--after">
-            {%- if after_image != blank -%}
+        {%- if after_image != blank -%}
+          <div class="spa-dialog__slider" data-spa-slider>
+            <div class="spa-dialog__image spa-dialog__image--before">
+              {%- if before_image != blank -%}
+                {{
+                  before_image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'spa-dialog__img',
+                    widths: '480, 640, 800, 1000, 1200',
+                    sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
+                }}
+              {%- else -%}
+                <div class="spa-dialog__placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+            </div>
+            <div class="spa-dialog__image spa-dialog__image--after">
               {{
                 after_image
                 | image_url: width: 1200
@@ -93,29 +93,48 @@
                   widths: '480, 640, 800, 1000, 1200',
                   sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
               }}
-            {%- else -%}
-              <div class="spa-dialog__placeholder">
-                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-              </div>
+            </div>
+            {%- if before_day != blank -%}
+              <span class="spa-dialog__day spa-dialog__day--before">{{ before_day }}</span>
             {%- endif -%}
-          </div>
-          {%- if before_day != blank -%}
-            <span class="spa-dialog__day spa-dialog__day--before">{{ before_day }}</span>
-          {%- endif -%}
-          {%- if after_day != blank -%}
-            <span class="spa-dialog__day spa-dialog__day--after">{{ after_day }}</span>
-          {%- endif -%}
-          <div class="spa-dialog__control" data-spa-handle>
-            <div class="spa-dialog__handle" aria-hidden="true">
-              <svg class="spa-dialog__chevron spa-dialog__chevron--left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
-                <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <svg class="spa-dialog__chevron spa-dialog__chevron--right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
-                <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            {%- if after_day != blank -%}
+              <span class="spa-dialog__day spa-dialog__day--after">{{ after_day }}</span>
+            {%- endif -%}
+            <div class="spa-dialog__control" data-spa-handle>
+              <div class="spa-dialog__handle" aria-hidden="true">
+                <svg class="spa-dialog__chevron spa-dialog__chevron--left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                  <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <svg class="spa-dialog__chevron spa-dialog__chevron--right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                  <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
             </div>
           </div>
-        </div>
+        {%- else -%}
+          <div class="spa-dialog__slider spa-dialog__slider--static">
+            <div class="spa-dialog__image spa-dialog__image--single">
+              {%- if before_image != blank -%}
+                {{
+                  before_image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'spa-dialog__img',
+                    widths: '480, 640, 800, 1000, 1200',
+                    sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
+                }}
+              {%- else -%}
+                <div class="spa-dialog__placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+            </div>
+            {%- if before_day != blank -%}
+              <span class="spa-dialog__day spa-dialog__day--before">{{ before_day }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
         <div class="spa-dialog__content">
           {%- if stars > 0 -%}
             <div class="spa-dialog__stars" role="img" aria-label="{{ stars }} out of 5 stars">
@@ -576,6 +595,12 @@
     cursor: ew-resize;
     background: #e8e4df;
     flex-shrink: 0;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__slider--static {
+    cursor: default;
+    touch-action: auto;
+    user-select: auto;
   }
 
   .spa-{{ spa_id }} .spa-dialog__image {
