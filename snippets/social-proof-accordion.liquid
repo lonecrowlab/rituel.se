@@ -16,342 +16,6 @@
   assign products_used_button = block.settings.products_used_button_text | default: 'Lägg i kundvagn'
   assign verified_text = block.settings.verified_text | default: 'Verifierad köpare'
 -%}
-
-{%- capture spa_slides -%}
-  {%- for i in (1..5) -%}
-    {%- liquid
-      if review_source == 'metafield'
-        assign entry_key = 'review_' | append: i | append: '_entry'
-        assign entry = block.settings[entry_key]
-
-        if entry == blank
-          continue
-        endif
-
-        assign before_image    = entry.before_image.value
-        assign after_image     = entry.after_date.value
-        assign before_day      = entry.before_date.value
-        assign after_day       = entry.result_day.value
-        assign stars           = entry.stars_count.value | plus: 0
-        assign review_title    = blank
-        assign review_text_raw = entry.review_message.value
-        assign reviewer_name   = entry.name.value
-        assign reviewer_age    = entry.age.value
-        assign is_verified     = entry.verified.value
-        assign review_products = entry.products_used.value
-      else
-        assign before_key   = 'review_' | append: i | append: '_before_image'
-        assign after_key    = 'review_' | append: i | append: '_after_image'
-        assign before_day_key = 'review_' | append: i | append: '_before_day'
-        assign after_day_key  = 'review_' | append: i | append: '_after_day'
-        assign stars_key    = 'review_' | append: i | append: '_stars'
-        assign title_key    = 'review_' | append: i | append: '_title'
-        assign review_key   = 'review_' | append: i | append: '_review'
-        assign name_key     = 'review_' | append: i | append: '_name'
-        assign products_key = 'review_' | append: i | append: '_products'
-
-        assign before_image    = block.settings[before_key]
-        assign after_image     = block.settings[after_key]
-        assign before_day      = block.settings[before_day_key]
-        assign after_day       = block.settings[after_day_key]
-        assign stars           = block.settings[stars_key] | default: 5
-        assign review_title    = block.settings[title_key]
-        assign review_text_raw = blank
-        assign reviewer_name   = block.settings[name_key]
-        assign reviewer_age    = blank
-        assign is_verified     = true
-        assign review_products = block.settings[products_key]
-      endif
-    -%}
-    {%- if before_image != blank or after_image != blank or reviewer_name != blank or review_text_raw != blank or review_title != blank -%}
-      <li class="splide__slide">
-      <article class="spa-dialog__slide" data-spa-slide>
-        {%- if after_image != blank -%}
-          <div class="spa-dialog__slider" data-spa-slider>
-            <div class="spa-dialog__image spa-dialog__image--before">
-              {%- if before_image != blank -%}
-                {{
-                  before_image
-                  | image_url: width: 1200
-                  | image_tag:
-                    loading: 'lazy',
-                    class: 'spa-dialog__img',
-                    widths: '480, 640, 800, 1000, 1200',
-                    sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
-                }}
-              {%- else -%}
-                <div class="spa-dialog__placeholder">
-                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                </div>
-              {%- endif -%}
-            </div>
-            <div class="spa-dialog__image spa-dialog__image--after">
-              {{
-                after_image
-                | image_url: width: 1200
-                | image_tag:
-                  loading: 'lazy',
-                  class: 'spa-dialog__img',
-                  widths: '480, 640, 800, 1000, 1200',
-                  sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
-              }}
-            </div>
-            {%- if before_day != blank -%}
-              <span class="spa-dialog__day spa-dialog__day--before">{{ before_day }}</span>
-            {%- endif -%}
-            {%- if after_day != blank -%}
-              <span class="spa-dialog__day spa-dialog__day--after">{{ after_day }}</span>
-            {%- endif -%}
-            <div class="spa-dialog__control" data-spa-handle>
-              <div class="spa-dialog__handle" aria-hidden="true">
-                <svg class="spa-dialog__chevron spa-dialog__chevron--left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
-                  <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <svg class="spa-dialog__chevron spa-dialog__chevron--right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
-                  <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-            </div>
-          </div>
-        {%- else -%}
-          <div class="spa-dialog__slider spa-dialog__slider--static">
-            <div class="spa-dialog__image spa-dialog__image--single">
-              {%- if before_image != blank -%}
-                {{
-                  before_image
-                  | image_url: width: 1200
-                  | image_tag:
-                    loading: 'lazy',
-                    class: 'spa-dialog__img',
-                    widths: '480, 640, 800, 1000, 1200',
-                    sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
-                }}
-              {%- else -%}
-                <div class="spa-dialog__placeholder">
-                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                </div>
-              {%- endif -%}
-            </div>
-            {%- if before_day != blank -%}
-              <span class="spa-dialog__day spa-dialog__day--before">{{ before_day }}</span>
-            {%- endif -%}
-            {%- if after_day != blank -%}
-              <span class="spa-dialog__day spa-dialog__day--after">{{ after_day }}</span>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-        <div class="spa-dialog__content">
-          {%- if stars > 0 -%}
-            <div class="spa-dialog__stars" role="img" aria-label="{{ stars }} out of 5 stars">
-              {%- for s in (1..5) -%}
-                <svg
-                  class="spa-dialog__star{% if s <= stars %} spa-dialog__star--filled{% endif %}"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 576 512"
-                  aria-hidden="true"
-                  focusable="false"
-                >
-                  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
-                </svg>
-              {%- endfor -%}
-            </div>
-          {%- endif -%}
-          {%- if review_title != blank -%}
-            <h3 class="spa-dialog__card-title">{{ review_title }}</h3>
-          {%- endif -%}
-          {%- if review_source == 'metafield' and review_text_raw != blank -%}
-            <div class="spa-dialog__review spa-dialog__review--rich">{{ review_text_raw }}</div>
-          {%- elsif review_source == 'custom' -%}
-            {%- assign review_text_custom = block.settings[review_key] -%}
-            {%- if review_text_custom != blank -%}
-              <p class="spa-dialog__review">"{{ review_text_custom | escape | strip }}"</p>
-            {%- endif -%}
-          {%- endif -%}
-          {%- if reviewer_name != blank -%}
-            <div class="spa-dialog__meta">
-              <p class="spa-dialog__reviewer">
-                — {{ reviewer_name }}
-                {%- if reviewer_age != blank %} {{ reviewer_age }}{%- endif -%}
-              </p>
-              {%- if is_verified -%}
-                <div class="spa-dialog__verified">
-                  <svg class="spa-dialog__verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.5924 3.20027C9.34888 3.4078 9.22711 3.51158 9.09706 3.59874C8.79896 3.79854 8.46417 3.93721 8.1121 4.00672C7.95851 4.03705 7.79903 4.04977 7.48008 4.07522C6.6787 4.13918 6.278 4.17115 5.94371 4.28923C5.17051 4.56233 4.56233 5.17051 4.28923 5.94371C4.17115 6.278 4.13918 6.6787 4.07522 7.48008C4.04977 7.79903 4.03705 7.95851 4.00672 8.1121C3.93721 8.46417 3.79854 8.79896 3.59874 9.09706C3.51158 9.22711 3.40781 9.34887 3.20027 9.5924C2.67883 10.2043 2.4181 10.5102 2.26522 10.8301C1.91159 11.57 1.91159 12.43 2.26522 13.1699C2.41811 13.4898 2.67883 13.7957 3.20027 14.4076C3.40778 14.6511 3.51158 14.7729 3.59874 14.9029C3.79854 15.201 3.93721 15.5358 4.00672 15.8879C4.03705 16.0415 4.04977 16.201 4.07522 16.5199C4.13918 17.3213 4.17115 17.722 4.28923 18.0563C4.56233 18.8295 5.17051 19.4377 5.94371 19.7108C6.278 19.8288 6.6787 19.8608 7.48008 19.9248C7.79903 19.9502 7.95851 19.963 8.1121 19.9933C8.46417 20.0628 8.79896 20.2015 9.09706 20.4013C9.22711 20.4884 9.34887 20.5922 9.5924 20.7997C10.2043 21.3212 10.5102 21.5819 10.8301 21.7348C11.57 22.0884 12.43 22.0884 13.1699 21.7348C13.4898 21.5819 13.7957 21.3212 14.4076 20.7997C14.6511 20.5922 14.7729 20.4884 14.9029 20.4013C15.201 20.2015 15.5358 20.0628 15.8879 19.9933C16.0415 19.963 16.201 19.9502 16.5199 19.9248C17.3213 19.8608 17.722 19.8288 18.0563 19.7108C18.8295 19.4377 19.4377 18.8295 19.7108 18.0563C19.8288 17.722 19.8608 17.3213 19.9248 16.5199C19.9502 16.201 19.963 16.0415 19.9933 15.8879C20.0628 15.5358 20.2015 15.201 20.4013 14.9029C20.4884 14.7729 20.5922 14.6511 20.7997 14.4076C21.3212 13.7957 21.5819 13.4898 21.7348 13.1699C22.0884 12.43 22.0884 11.57 21.7348 10.8301C21.5819 10.5102 21.3212 10.2043 20.7997 9.5924C20.5922 9.34887 20.4884 9.22711 20.4013 9.09706C20.2015 8.79896 20.0628 8.46417 19.9933 8.1121C19.963 7.95851 19.9502 7.79903 19.9248 7.48008C19.8608 6.6787 19.8288 6.278 19.7108 5.94371C19.4377 5.17051 18.8295 4.56233 18.0563 4.28923C17.722 4.17115 17.3213 4.13918 16.5199 4.07522C16.201 4.04977 16.0415 4.03705 15.8879 4.00672C15.5358 3.93721 15.201 3.79854 14.9029 3.59874C14.7729 3.51158 14.6511 3.40781 14.4076 3.20027C13.7957 2.67883 13.4898 2.41811 13.1699 2.26522C12.43 1.91159 11.57 1.91159 10.8301 2.26522C10.5102 2.4181 10.2043 2.67883 9.5924 3.20027ZM16.3735 9.86314C16.6913 9.5453 16.6913 9.03 16.3735 8.71216C16.0557 8.39433 15.5403 8.39433 15.2225 8.71216L10.3723 13.5624L8.77746 11.9676C8.45963 11.6498 7.94432 11.6498 7.62649 11.9676C7.30866 12.2854 7.30866 12.8007 7.62649 13.1186L9.79678 15.2889C10.1146 15.6067 10.6299 15.6067 10.9478 15.2889L16.3735 9.86314Z" fill="currentColor"/>
-                  </svg>
-                  <span class="spa-dialog__verified-text">{{ verified_text | escape }}</span>
-                </div>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-
-          {%- if review_products != blank and review_products.size > 0 -%}
-            <div class="spa-dialog__products">
-              {%- if products_used_heading != blank -%}
-                <p class="spa-dialog__products-title">{{ products_used_heading | escape }}</p>
-              {%- endif -%}
-              <div class="spa-dialog__products-viewport" data-spa-viewport data-spa-products>
-                <div class="spa-dialog__products-track{% if review_products.size == 1 %} spa-dialog__products-track--single{% endif %}">
-                  {%- for p in review_products -%}
-                    {%- assign p_variant = p.selected_or_first_available_variant -%}
-                    <article class="spa-dialog__product-card">
-                      <a class="spa-dialog__product-image" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
-                        {%- if p.featured_image != blank -%}
-                          {{
-                            p.featured_image
-                            | image_url: width: 240
-                            | image_tag:
-                              loading: 'lazy',
-                              class: 'spa-dialog__product-img',
-                              widths: '120, 160, 240',
-                              sizes: '72px',
-                              alt: p.title
-                          }}
-                        {%- else -%}
-                          <span class="spa-dialog__product-img-placeholder">
-                            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                          </span>
-                        {%- endif -%}
-                      </a>
-                      <div class="spa-dialog__product-info">
-                        <a class="spa-dialog__product-title" href="{{ p.url }}">{{ p.title | escape }}</a>
-                        {%- if p_variant != blank -%}
-                          <p class="spa-dialog__product-price">{{ p_variant.price | money }}</p>
-                          <button
-                            type="button"
-                            class="spa-dialog__product-atc"
-                            data-spa-atc
-                            data-variant-id="{{ p_variant.id }}"
-                            data-add-label="{{ products_used_button | escape }}"
-                            data-added-label="Tillagd"
-                            {% unless p_variant.available %}disabled{% endunless %}
-                          >
-                            <span class="spa-dialog__product-spinner" aria-hidden="true"></span>
-                            <span class="spa-dialog__product-atc-text">
-                              {%- if p_variant.available -%}
-                                {{ products_used_button | escape }}
-                              {%- else -%}
-                                Slutsåld
-                              {%- endif -%}
-                            </span>
-                          </button>
-                        {%- endif -%}
-                      </div>
-                    </article>
-                  {%- endfor -%}
-                </div>
-              </div>
-            </div>
-          {%- endif -%}
-
-        </div>
-      </article>
-      </li>
-    {%- endif -%}
-  {%- endfor -%}
-{%- endcapture -%}
-
-{%- if question != blank and spa_slides != blank -%}
-<div
-  class="spa spa-{{ spa_id }}"
-  data-spa="{{ spa_id }}"
-  data-spa-mode="{{ display_mode }}"
-  {{ block.shopify_attributes }}
-  style="--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;"
->
-  <div class="spa__items">
-    <div class="spa__item" data-accordion-item>
-      <button
-        class="spa__question"
-        type="button"
-        aria-expanded="{% if open_default %}true{% else %}false{% endif %}"
-        aria-controls="SpaAnswer-{{ spa_id }}"
-        data-accordion-trigger
-      >
-        <span class="spa__question-text">{{ question }}</span>
-        <span class="spa__icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </button>
-      <div class="spa__answer" id="SpaAnswer-{{ spa_id }}" data-accordion-content>
-        <div class="spa__answer-inner{% if display_mode == 'slider' %} spa__answer-inner--slider{% endif %}">
-          {%- if display_mode == 'slider' -%}
-            <div
-              class="spa-reviews-splide-wrap"
-              data-spa-reviews-splide
-              data-spa-gap="12"
-              data-spa-padding-right="{{ block.settings.answer_padding_horizontal_desktop }}"
-              data-spa-peek="10"
-            >
-              <div class="splide spa-reviews-splide">
-                <div class="splide__track">
-                  <ul class="splide__list">
-                    {{ spa_slides }}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          {%- else -%}
-            <button
-              type="button"
-              class="spa__poster"
-              data-spa-open
-              aria-label="{{ question | escape }}"
-            >
-              {%- if poster_image != blank -%}
-                {{
-                  poster_image
-                  | image_url: width: 1400
-                  | image_tag:
-                    loading: 'lazy',
-                    class: 'spa__poster-img',
-                    widths: '400, 600, 800, 1000, 1200, 1400',
-                    sizes: '(min-width: 990px) 420px, 92vw',
-                    alt: question
-                }}
-              {%- else -%}
-                <span class="spa__poster-placeholder">
-                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                </span>
-              {%- endif -%}
-            </button>
-          {%- endif -%}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-{%- if display_mode == 'poster' -%}
-<dialog class="spa-dialog spa-{{ spa_id }}" id="SpaDialog-{{ spa_id }}" aria-labelledby="SpaDialogTitle-{{ spa_id }}">
-  <h2 class="visually-hidden" id="SpaDialogTitle-{{ spa_id }}">{{ question }}</h2>
-  <button type="button" class="spa-dialog__close" data-spa-close aria-label="Stäng">
-    <svg width="18" height="18" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
-  </button>
-  <div class="spa-dialog__viewport">
-    <div
-      class="spa-reviews-splide-wrap spa-reviews-splide-wrap--dialog"
-      data-spa-reviews-splide
-      data-spa-gap="16"
-      data-spa-padding-right="16"
-      data-spa-peek="12"
-      data-spa-per-page="4"
-    >
-      <div class="splide spa-reviews-splide spa-reviews-splide--dialog">
-        <div class="splide__track">
-          <ul class="splide__list">
-            {{ spa_slides }}
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</dialog>
-{%- endif -%}
-
 <style>
   .spa-{{ spa_id }} {
     width: 100%;
@@ -493,8 +157,6 @@
     list-style: none;
     flex-shrink: 0;
     min-width: 0;
-    max-height:750px;
-    oveflow:scroll
   }
 
   .spa-{{ spa_id }} .spa-reviews-splide .spa-dialog__slide {
@@ -707,12 +369,8 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-   
   }
-  .spa-{{ spa_id }} .spa-dialog__image img {
-    max-height:400px;
 
-  }
   .spa-{{ spa_id }} .spa-dialog__image--before { z-index: 1; }
   .spa-{{ spa_id }} .spa-dialog__image--after {
     z-index: 2;
@@ -1111,6 +769,342 @@
     }
   }
 </style>
+{%- capture spa_slides -%}
+  {%- for i in (1..5) -%}
+    {%- liquid
+      if review_source == 'metafield'
+        assign entry_key = 'review_' | append: i | append: '_entry'
+        assign entry = block.settings[entry_key]
+
+        if entry == blank
+          continue
+        endif
+
+        assign before_image    = entry.before_image.value
+        assign after_image     = entry.after_date.value
+        assign before_day      = entry.before_date.value
+        assign after_day       = entry.result_day.value
+        assign stars           = entry.stars_count.value | plus: 0
+        assign review_title    = blank
+        assign review_text_raw = entry.review_message.value
+        assign reviewer_name   = entry.name.value
+        assign reviewer_age    = entry.age.value
+        assign is_verified     = entry.verified.value
+        assign review_products = entry.products_used.value
+      else
+        assign before_key   = 'review_' | append: i | append: '_before_image'
+        assign after_key    = 'review_' | append: i | append: '_after_image'
+        assign before_day_key = 'review_' | append: i | append: '_before_day'
+        assign after_day_key  = 'review_' | append: i | append: '_after_day'
+        assign stars_key    = 'review_' | append: i | append: '_stars'
+        assign title_key    = 'review_' | append: i | append: '_title'
+        assign review_key   = 'review_' | append: i | append: '_review'
+        assign name_key     = 'review_' | append: i | append: '_name'
+        assign products_key = 'review_' | append: i | append: '_products'
+
+        assign before_image    = block.settings[before_key]
+        assign after_image     = block.settings[after_key]
+        assign before_day      = block.settings[before_day_key]
+        assign after_day       = block.settings[after_day_key]
+        assign stars           = block.settings[stars_key] | default: 5
+        assign review_title    = block.settings[title_key]
+        assign review_text_raw = blank
+        assign reviewer_name   = block.settings[name_key]
+        assign reviewer_age    = blank
+        assign is_verified     = true
+        assign review_products = block.settings[products_key]
+      endif
+    -%}
+    {%- if before_image != blank or after_image != blank or reviewer_name != blank or review_text_raw != blank or review_title != blank -%}
+      <li class="splide__slide">
+      <article class="spa-dialog__slide" data-spa-slide>
+        {%- if after_image != blank -%}
+          <div class="spa-dialog__slider" data-spa-slider>
+            <div class="spa-dialog__image spa-dialog__image--before">
+              {%- if before_image != blank -%}
+                {{
+                  before_image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'spa-dialog__img',
+                    widths: '480, 640, 800, 1000, 1200',
+                    sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
+                }}
+              {%- else -%}
+                <div class="spa-dialog__placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+            </div>
+            <div class="spa-dialog__image spa-dialog__image--after">
+              {{
+                after_image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  class: 'spa-dialog__img',
+                  widths: '480, 640, 800, 1000, 1200',
+                  sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
+              }}
+            </div>
+            {%- if before_day != blank -%}
+              <span class="spa-dialog__day spa-dialog__day--before">{{ before_day }}</span>
+            {%- endif -%}
+            {%- if after_day != blank -%}
+              <span class="spa-dialog__day spa-dialog__day--after">{{ after_day }}</span>
+            {%- endif -%}
+            <div class="spa-dialog__control" data-spa-handle>
+              <div class="spa-dialog__handle" aria-hidden="true">
+                <svg class="spa-dialog__chevron spa-dialog__chevron--left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                  <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <svg class="spa-dialog__chevron spa-dialog__chevron--right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                  <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        {%- else -%}
+          <div class="spa-dialog__slider spa-dialog__slider--static">
+            <div class="spa-dialog__image spa-dialog__image--single">
+              {%- if before_image != blank -%}
+                {{
+                  before_image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'spa-dialog__img',
+                    widths: '480, 640, 800, 1000, 1200',
+                    sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
+                }}
+              {%- else -%}
+                <div class="spa-dialog__placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+            </div>
+            {%- if before_day != blank -%}
+              <span class="spa-dialog__day spa-dialog__day--before">{{ before_day }}</span>
+            {%- endif -%}
+            {%- if after_day != blank -%}
+              <span class="spa-dialog__day spa-dialog__day--after">{{ after_day }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        <div class="spa-dialog__content">
+          {%- if stars > 0 -%}
+            <div class="spa-dialog__stars" role="img" aria-label="{{ stars }} out of 5 stars">
+              {%- for s in (1..5) -%}
+                <svg
+                  class="spa-dialog__star{% if s <= stars %} spa-dialog__star--filled{% endif %}"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 576 512"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                </svg>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+          {%- if review_title != blank -%}
+            <h3 class="spa-dialog__card-title">{{ review_title }}</h3>
+          {%- endif -%}
+          {%- if review_source == 'metafield' and review_text_raw != blank -%}
+            <div class="spa-dialog__review spa-dialog__review--rich">{{ review_text_raw }}</div>
+          {%- elsif review_source == 'custom' -%}
+            {%- assign review_text_custom = block.settings[review_key] -%}
+            {%- if review_text_custom != blank -%}
+              <p class="spa-dialog__review">"{{ review_text_custom | escape | strip }}"</p>
+            {%- endif -%}
+          {%- endif -%}
+          {%- if reviewer_name != blank -%}
+            <div class="spa-dialog__meta">
+              <p class="spa-dialog__reviewer">
+                — {{ reviewer_name }}
+                {%- if reviewer_age != blank %} {{ reviewer_age }}{%- endif -%}
+              </p>
+              {%- if is_verified -%}
+                <div class="spa-dialog__verified">
+                  <svg class="spa-dialog__verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.5924 3.20027C9.34888 3.4078 9.22711 3.51158 9.09706 3.59874C8.79896 3.79854 8.46417 3.93721 8.1121 4.00672C7.95851 4.03705 7.79903 4.04977 7.48008 4.07522C6.6787 4.13918 6.278 4.17115 5.94371 4.28923C5.17051 4.56233 4.56233 5.17051 4.28923 5.94371C4.17115 6.278 4.13918 6.6787 4.07522 7.48008C4.04977 7.79903 4.03705 7.95851 4.00672 8.1121C3.93721 8.46417 3.79854 8.79896 3.59874 9.09706C3.51158 9.22711 3.40781 9.34887 3.20027 9.5924C2.67883 10.2043 2.4181 10.5102 2.26522 10.8301C1.91159 11.57 1.91159 12.43 2.26522 13.1699C2.41811 13.4898 2.67883 13.7957 3.20027 14.4076C3.40778 14.6511 3.51158 14.7729 3.59874 14.9029C3.79854 15.201 3.93721 15.5358 4.00672 15.8879C4.03705 16.0415 4.04977 16.201 4.07522 16.5199C4.13918 17.3213 4.17115 17.722 4.28923 18.0563C4.56233 18.8295 5.17051 19.4377 5.94371 19.7108C6.278 19.8288 6.6787 19.8608 7.48008 19.9248C7.79903 19.9502 7.95851 19.963 8.1121 19.9933C8.46417 20.0628 8.79896 20.2015 9.09706 20.4013C9.22711 20.4884 9.34887 20.5922 9.5924 20.7997C10.2043 21.3212 10.5102 21.5819 10.8301 21.7348C11.57 22.0884 12.43 22.0884 13.1699 21.7348C13.4898 21.5819 13.7957 21.3212 14.4076 20.7997C14.6511 20.5922 14.7729 20.4884 14.9029 20.4013C15.201 20.2015 15.5358 20.0628 15.8879 19.9933C16.0415 19.963 16.201 19.9502 16.5199 19.9248C17.3213 19.8608 17.722 19.8288 18.0563 19.7108C18.8295 19.4377 19.4377 18.8295 19.7108 18.0563C19.8288 17.722 19.8608 17.3213 19.9248 16.5199C19.9502 16.201 19.963 16.0415 19.9933 15.8879C20.0628 15.5358 20.2015 15.201 20.4013 14.9029C20.4884 14.7729 20.5922 14.6511 20.7997 14.4076C21.3212 13.7957 21.5819 13.4898 21.7348 13.1699C22.0884 12.43 22.0884 11.57 21.7348 10.8301C21.5819 10.5102 21.3212 10.2043 20.7997 9.5924C20.5922 9.34887 20.4884 9.22711 20.4013 9.09706C20.2015 8.79896 20.0628 8.46417 19.9933 8.1121C19.963 7.95851 19.9502 7.79903 19.9248 7.48008C19.8608 6.6787 19.8288 6.278 19.7108 5.94371C19.4377 5.17051 18.8295 4.56233 18.0563 4.28923C17.722 4.17115 17.3213 4.13918 16.5199 4.07522C16.201 4.04977 16.0415 4.03705 15.8879 4.00672C15.5358 3.93721 15.201 3.79854 14.9029 3.59874C14.7729 3.51158 14.6511 3.40781 14.4076 3.20027C13.7957 2.67883 13.4898 2.41811 13.1699 2.26522C12.43 1.91159 11.57 1.91159 10.8301 2.26522C10.5102 2.4181 10.2043 2.67883 9.5924 3.20027ZM16.3735 9.86314C16.6913 9.5453 16.6913 9.03 16.3735 8.71216C16.0557 8.39433 15.5403 8.39433 15.2225 8.71216L10.3723 13.5624L8.77746 11.9676C8.45963 11.6498 7.94432 11.6498 7.62649 11.9676C7.30866 12.2854 7.30866 12.8007 7.62649 13.1186L9.79678 15.2889C10.1146 15.6067 10.6299 15.6067 10.9478 15.2889L16.3735 9.86314Z" fill="currentColor"/>
+                  </svg>
+                  <span class="spa-dialog__verified-text">{{ verified_text | escape }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if review_products != blank and review_products.size > 0 -%}
+            <div class="spa-dialog__products">
+              {%- if products_used_heading != blank -%}
+                <p class="spa-dialog__products-title">{{ products_used_heading | escape }}</p>
+              {%- endif -%}
+              <div class="spa-dialog__products-viewport" data-spa-viewport data-spa-products>
+                <div class="spa-dialog__products-track{% if review_products.size == 1 %} spa-dialog__products-track--single{% endif %}">
+                  {%- for p in review_products -%}
+                    {%- assign p_variant = p.selected_or_first_available_variant -%}
+                    <article class="spa-dialog__product-card">
+                      <a class="spa-dialog__product-image" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
+                        {%- if p.featured_image != blank -%}
+                          {{
+                            p.featured_image
+                            | image_url: width: 240
+                            | image_tag:
+                              loading: 'lazy',
+                              class: 'spa-dialog__product-img',
+                              widths: '120, 160, 240',
+                              sizes: '72px',
+                              alt: p.title
+                          }}
+                        {%- else -%}
+                          <span class="spa-dialog__product-img-placeholder">
+                            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                          </span>
+                        {%- endif -%}
+                      </a>
+                      <div class="spa-dialog__product-info">
+                        <a class="spa-dialog__product-title" href="{{ p.url }}">{{ p.title | escape }}</a>
+                        {%- if p_variant != blank -%}
+                          <p class="spa-dialog__product-price">{{ p_variant.price | money }}</p>
+                          <button
+                            type="button"
+                            class="spa-dialog__product-atc"
+                            data-spa-atc
+                            data-variant-id="{{ p_variant.id }}"
+                            data-add-label="{{ products_used_button | escape }}"
+                            data-added-label="Tillagd"
+                            {% unless p_variant.available %}disabled{% endunless %}
+                          >
+                            <span class="spa-dialog__product-spinner" aria-hidden="true"></span>
+                            <span class="spa-dialog__product-atc-text">
+                              {%- if p_variant.available -%}
+                                {{ products_used_button | escape }}
+                              {%- else -%}
+                                Slutsåld
+                              {%- endif -%}
+                            </span>
+                          </button>
+                        {%- endif -%}
+                      </div>
+                    </article>
+                  {%- endfor -%}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+
+        </div>
+      </article>
+      </li>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if question != blank and spa_slides != blank -%}
+<div
+  class="spa spa-{{ spa_id }}"
+  data-spa="{{ spa_id }}"
+  data-spa-mode="{{ display_mode }}"
+  {{ block.shopify_attributes }}
+  style="--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;"
+>
+  <div class="spa__items">
+    <div class="spa__item" data-accordion-item>
+      <button
+        class="spa__question"
+        type="button"
+        aria-expanded="{% if open_default %}true{% else %}false{% endif %}"
+        aria-controls="SpaAnswer-{{ spa_id }}"
+        data-accordion-trigger
+      >
+        <span class="spa__question-text">{{ question }}</span>
+        <span class="spa__icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </button>
+      <div class="spa__answer" id="SpaAnswer-{{ spa_id }}" data-accordion-content>
+        <div class="spa__answer-inner{% if display_mode == 'slider' %} spa__answer-inner--slider{% endif %}">
+          {%- if display_mode == 'slider' -%}
+            <div
+              class="spa-reviews-splide-wrap"
+              data-spa-reviews-splide
+              data-spa-gap="12"
+              data-spa-padding-right="{{ block.settings.answer_padding_horizontal_desktop }}"
+              data-spa-peek="10"
+            >
+              <div class="splide spa-reviews-splide">
+                <div class="splide__track">
+                  <ul class="splide__list">
+                    {{ spa_slides }}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          {%- else -%}
+            <button
+              type="button"
+              class="spa__poster"
+              data-spa-open
+              aria-label="{{ question | escape }}"
+            >
+              {%- if poster_image != blank -%}
+                {{
+                  poster_image
+                  | image_url: width: 1400
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'spa__poster-img',
+                    widths: '400, 600, 800, 1000, 1200, 1400',
+                    sizes: '(min-width: 990px) 420px, 92vw',
+                    alt: question
+                }}
+              {%- else -%}
+                <span class="spa__poster-placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </span>
+              {%- endif -%}
+            </button>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- if display_mode == 'poster' -%}
+<dialog class="spa-dialog spa-{{ spa_id }}" id="SpaDialog-{{ spa_id }}" aria-labelledby="SpaDialogTitle-{{ spa_id }}">
+  <h2 class="visually-hidden" id="SpaDialogTitle-{{ spa_id }}">{{ question }}</h2>
+  <button type="button" class="spa-dialog__close" data-spa-close aria-label="Stäng">
+    <svg width="18" height="18" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <div class="spa-dialog__viewport">
+    <div
+      class="spa-reviews-splide-wrap spa-reviews-splide-wrap--dialog"
+      data-spa-reviews-splide
+      data-spa-gap="16"
+      data-spa-padding-right="16"
+      data-spa-peek="12"
+      data-spa-per-page="4"
+    >
+      <div class="splide spa-reviews-splide spa-reviews-splide--dialog">
+        <div class="splide__track">
+          <ul class="splide__list">
+            {{ spa_slides }}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>
+{%- endif -%}
+
+
 
 <script>
 (function() {
