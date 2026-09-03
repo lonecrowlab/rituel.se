@@ -302,7 +302,7 @@
         "load_video": "Spill av videoen {{ index }} i gallerivisning",
         "image_available": "Bild {{ index }} er nå tilgjengelig i gallerivisning",
         "see_it_in_action": "Se den i aksjon",
-        "see_before_after": "Se reelle resultater"
+        "see_before_after": "Se ekte resultater"
       },
       "view_full_details": "Vis alle oppgaver",
       "include_taxes": "Skatt er inkludert.",
