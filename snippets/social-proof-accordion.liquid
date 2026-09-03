@@ -444,6 +444,8 @@
     -webkit-overflow-scrolling: touch;
     touch-action: pan-x;
     cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
     padding-right: {{ block.settings.answer_padding_horizontal_desktop }}px;
     padding-bottom:10px;
   }
@@ -470,6 +472,8 @@
     background: #ffffff;
     border: 1px solid #d4d4d4;
     border-radius: 16px;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   @media screen and (max-width: 749px) {
@@ -544,6 +548,8 @@
     -webkit-overflow-scrolling: touch;
     touch-action: pan-x;
     cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
     padding: 0 16px;
     box-sizing: border-box;
   }
@@ -636,6 +642,8 @@
     max-width: none !important;
     object-fit: cover;
     display: block;
+    -webkit-user-drag: none;
+    pointer-events: none;
   }
 
   .spa-{{ spa_id }} .spa-dialog__placeholder {
@@ -824,6 +832,8 @@
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
   }
@@ -1047,20 +1057,12 @@
 
     init() {
       if (!this.control || !this.afterImage) return;
-      this.wrapper.addEventListener('mousedown', this.startDrag.bind(this));
+      this.control.addEventListener('mousedown', this.startDrag.bind(this));
       document.addEventListener('mousemove', this.onDrag.bind(this));
       document.addEventListener('mouseup', this.stopDrag.bind(this));
       this.wrapper.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: true });
       this.wrapper.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false });
       this.wrapper.addEventListener('touchend', this.handleTouchEnd.bind(this));
-      this.wrapper.addEventListener('click', this.handleClick.bind(this));
-    }
-
-    handleClick(e) {
-      if (e.type === 'click' && e.detail === 0) return;
-      const rect = this.wrapper.getBoundingClientRect();
-      const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-      this.updateSlider(percentage);
     }
 
     handleTouchStart(e) {
@@ -1091,6 +1093,8 @@
     }
 
     startDrag(e) {
+      e.preventDefault();
+      e.stopPropagation();
       this.isDragging = true;
       const rect = this.wrapper.getBoundingClientRect();
       const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
@@ -1305,13 +1309,16 @@
 
       scroller.addEventListener('mousedown', function(e) {
         if (e.button !== 0) return;
-        if (e.target.closest('[data-spa-slider], [data-spa-atc], button, a, select')) return;
+        if (e.target.closest('[data-spa-handle], [data-spa-atc], button, a, select, input, textarea')) return;
         if (scroller.hasAttribute('data-spa-products') === false && e.target.closest('[data-spa-products]')) return;
+        e.preventDefault();
         isDown = true;
         moved = false;
         startX = e.pageX;
         startScrollLeft = scroller.scrollLeft;
         scroller.classList.add('is-dragging');
+        document.body.style.userSelect = 'none';
+        document.body.style.cursor = 'grabbing';
       });
 
       document.addEventListener('mousemove', function(e) {
@@ -1326,6 +1333,8 @@
         if (!isDown) return;
         isDown = false;
         scroller.classList.remove('is-dragging');
+        document.body.style.userSelect = '';
+        document.body.style.cursor = '';
       });
 
       scroller.addEventListener('click', function(e) {
