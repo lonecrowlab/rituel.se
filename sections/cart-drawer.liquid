@@ -1368,6 +1368,65 @@
 },
 {
 "type": "header",
+"content": "Discount total"
+},
+{
+"type": "checkbox",
+"id": "display_discount_total",
+"label": "Display discount total",
+"default": false,
+"info": "Shows total discount amount from all line-item and cart-level discounts. Use [discount_total] in the texts below."
+},
+{
+"type": "paragraph",
+"content": "Use [discount_total] to display the discount total amount."
+},
+{
+"type": "inline_richtext",
+"id": "discount_total_left_text",
+"label": "Left text",
+"default": "<strong>Discount:</strong>"
+},
+{
+"type": "inline_richtext",
+"id": "discount_total_right_text",
+"label": "Right text",
+"default": "-[discount_total]"
+},
+{
+"type": "color",
+"id": "discount_total_title_color",
+"label": "Left text color",
+"default": "#b8576e"
+},
+{
+"type": "range",
+"id": "discount_total_title_size",
+"min": 10,
+"max": 30,
+"step": 1,
+"unit": "px",
+"default": 16,
+"label": "Left text font size"
+},
+{
+"type": "color",
+"id": "discount_total_price_color",
+"label": "Right text color",
+"default": "#b8576e"
+},
+{
+"type": "range",
+"id": "discount_total_price_size",
+"min": 10,
+"max": 30,
+"step": 1,
+"unit": "px",
+"default": 16,
+"label": "Right text font size"
+},
+{
+"type": "header",
 "content": "Discount badges"
 },
 {

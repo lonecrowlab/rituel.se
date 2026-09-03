@@ -1225,7 +1225,8 @@
                                             endif
 
                                             assign savings_percent = per_unit_savings | times: 100 | divided_by: badge_compare_price
-                                            assign price_savings_formatted = total_savings | money_without_trailing_zeros
+                                            assign price_savings_whole = total_savings | divided_by: 100 | times: 100
+                                            assign price_savings_formatted = price_savings_whole | money_without_trailing_zeros
                                             assign badge_display_text = badge_text_template | replace: '[percentage]', savings_percent | replace: '[price]', price_savings_formatted
                                           -%}
                                           <div class="cart-item__savings-badge" style="
@@ -3159,6 +3160,24 @@
                     </p>
                   {% endif %}
                 </div>
+                {%- if block.settings.display_discount_total -%}
+                  {%- assign discount_total_amount = 0 -%}
+                  {%- for item in cart.items -%}
+                    {%- for discount in item.discounts -%}
+                      {%- assign discount_total_amount = discount_total_amount | plus: discount.amount -%}
+                    {%- endfor -%}
+                  {%- endfor -%}
+                  {%- for discount in cart.cart_level_discount_applications -%}
+                    {%- assign discount_total_amount = discount_total_amount | plus: discount.total_allocated_amount -%}
+                  {%- endfor -%}
+                  {%- if discount_total_amount > 0 -%}
+                    {%- assign discount_total_formatted = discount_total_amount | money -%}
+                    <p class='cart-drawer__totals__row cart-drawer__totals__row--{{ block.settings.subtotal_alignment }}' style='--text-size:{{ block.settings.discount_total_title_size | default: 16 | divided_by: 10.0 }}rem;'>
+                      <span style="color: {{ block.settings.discount_total_title_color | default: '#b8576e' }}; font-size: {{ block.settings.discount_total_title_size | default: 16 }}px;">{{ block.settings.discount_total_left_text | default: '<strong>Discount:</strong>' | replace: '[discount_total]', discount_total_formatted }}</span>
+                      <span style="color: {{ block.settings.discount_total_price_color | default: '#b8576e' }}; font-size: {{ block.settings.discount_total_price_size | default: 16 }}px;">{{ block.settings.discount_total_right_text | default: '-[discount_total]' | replace: '[discount_total]', discount_total_formatted }}</span>
+                    </p>
+                  {%- endif -%}
+                {%- endif -%}
                 {%- if block.settings.display_discounts and cart.cart_level_discount_applications.size > 0 -%}
                   <div class="cart-drawer__discounts cart-drawer__footer__discounts list-unstyled" style='--alignment:{{ block.settings.discounts_alignment }};' role="list" aria-label="{{ 'customer.order.discount' | t }}">
                     <span class='cart-drawer__discounts__label'>{{ block.settings.discounts_label }}</span>
@@ -3706,8 +3725,8 @@
         style: 'currency',
         currency: window.Shopify?.currency?.active || 'USD',
         minimumFractionDigits: 0,
-        maximumFractionDigits: 2
-      }).format(totalSavings / 100);
+        maximumFractionDigits: 0
+      }).format(Math.round(totalSavings / 100));
 
       // Replace placeholders in badge text
       const badgeDisplayText = badgeTextTemplate
