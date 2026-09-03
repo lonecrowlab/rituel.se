@@ -3159,25 +3159,29 @@
                       <span style="color: {{ block.settings.subtotal_title_color }}; font-size: {{ block.settings.subtotal_title_size | default: 20 }}px;">{{ block.settings.subtotal_left_text | replace: '[subtotal]', subtotal_money }}</span><span style="color: {{ block.settings.subtotal_price_color }}; font-size: {{ block.settings.subtotal_price_size | default: 20 }}px;">{{ block.settings.subtotal_right_text | replace: '[subtotal]', subtotal_money }}</span>
                     </p>
                   {% endif %}
-                </div>
-                {%- if block.settings.display_discount_total -%}
-                  {%- assign discount_total_amount = 0 -%}
-                  {%- for item in cart.items -%}
-                    {%- for discount in item.discounts -%}
-                      {%- assign discount_total_amount = discount_total_amount | plus: discount.amount -%}
+                  {%- if block.settings.display_discount_total or block.settings.display_discounts -%}
+                    {%- assign discount_total_amount = 0 -%}
+                    {%- for item in cart.items -%}
+                      {%- assign item_compare_unit = 0 -%}
+                      {%- if item.variant.compare_at_price > item.final_price -%}
+                        {%- assign item_compare_unit = item.variant.compare_at_price -%}
+                      {%- elsif item.original_price > item.final_price -%}
+                        {%- assign item_compare_unit = item.original_price -%}
+                      {%- endif -%}
+                      {%- if item_compare_unit > 0 -%}
+                        {%- assign item_savings = item_compare_unit | minus: item.final_price | times: item.quantity -%}
+                        {%- assign discount_total_amount = discount_total_amount | plus: item_savings -%}
+                      {%- endif -%}
                     {%- endfor -%}
-                  {%- endfor -%}
-                  {%- for discount in cart.cart_level_discount_applications -%}
-                    {%- assign discount_total_amount = discount_total_amount | plus: discount.total_allocated_amount -%}
-                  {%- endfor -%}
-                  {%- if discount_total_amount > 0 -%}
-                    {%- assign discount_total_formatted = discount_total_amount | money -%}
-                    <p class='cart-drawer__totals__row cart-drawer__totals__row--{{ block.settings.subtotal_alignment }}' style='--text-size:{{ block.settings.discount_total_title_size | default: 16 | divided_by: 10.0 }}rem;'>
-                      <span style="color: {{ block.settings.discount_total_title_color | default: '#b8576e' }}; font-size: {{ block.settings.discount_total_title_size | default: 16 }}px;">{{ block.settings.discount_total_left_text | default: '<strong>Discount:</strong>' | replace: '[discount_total]', discount_total_formatted }}</span>
-                      <span style="color: {{ block.settings.discount_total_price_color | default: '#b8576e' }}; font-size: {{ block.settings.discount_total_price_size | default: 16 }}px;">{{ block.settings.discount_total_right_text | default: '-[discount_total]' | replace: '[discount_total]', discount_total_formatted }}</span>
-                    </p>
+                    {%- if discount_total_amount > 0 -%}
+                      {%- assign discount_total_formatted = discount_total_amount | money -%}
+                      <p class='cart-drawer__totals__row cart-drawer__totals__row--{{ block.settings.subtotal_alignment }} cart-drawer__totals__row--discount' style='--text-size:{{ block.settings.discount_total_title_size | default: 16 | divided_by: 10.0 }}rem;'>
+                        <span style="color: {{ block.settings.discount_total_title_color | default: '#b8576e' }}; font-size: {{ block.settings.discount_total_title_size | default: 16 }}px;">{{ block.settings.discount_total_left_text | default: '<strong>Discount:</strong>' | replace: '[discount_total]', discount_total_formatted }}</span>
+                        <span style="color: {{ block.settings.discount_total_price_color | default: '#b8576e' }}; font-size: {{ block.settings.discount_total_price_size | default: 16 }}px;">{{ block.settings.discount_total_right_text | default: '-[discount_total]' | replace: '[discount_total]', discount_total_formatted }}</span>
+                      </p>
+                    {%- endif -%}
                   {%- endif -%}
-                {%- endif -%}
+                </div>
                 {%- if block.settings.display_discounts and cart.cart_level_discount_applications.size > 0 -%}
                   <div class="cart-drawer__discounts cart-drawer__footer__discounts list-unstyled" style='--alignment:{{ block.settings.discounts_alignment }};' role="list" aria-label="{{ 'customer.order.discount' | t }}">
                     <span class='cart-drawer__discounts__label'>{{ block.settings.discounts_label }}</span>

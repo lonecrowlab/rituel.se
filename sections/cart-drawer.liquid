@@ -1374,8 +1374,8 @@
 "type": "checkbox",
 "id": "display_discount_total",
 "label": "Display discount total",
-"default": false,
-"info": "Shows total discount amount from all line-item and cart-level discounts. Use [discount_total] in the texts below."
+"default": true,
+"info": "Shows total savings from compare-at prices and product discounts (the same amount as the item savings badges). Use [discount_total] in the texts below."
 },
 {
 "type": "paragraph",
@@ -1433,7 +1433,8 @@
 "type": "checkbox",
 "id": "display_discounts",
 "label": "Display cart discount badges",
-"default": true
+"default": true,
+"info": "Shows Shopify discount codes and automatic discounts only. Sale/compare-at savings use Discount total above."
 },
 {
 "type": "inline_richtext",
