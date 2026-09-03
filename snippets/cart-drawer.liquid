@@ -3174,7 +3174,8 @@
                       {%- endif -%}
                     {%- endfor -%}
                     {%- if discount_total_amount > 0 -%}
-                      {%- assign discount_total_formatted = discount_total_amount | money -%}
+                      {%- assign discount_total_whole = discount_total_amount | divided_by: 100 | times: 100 -%}
+                      {%- assign discount_total_formatted = discount_total_whole | money_without_trailing_zeros -%}
                       <p class='cart-drawer__totals__row cart-drawer__totals__row--{{ block.settings.subtotal_alignment }} cart-drawer__totals__row--discount' style='--text-size:{{ block.settings.discount_total_title_size | default: 16 | divided_by: 10.0 }}rem;'>
                         <span style="color: {{ block.settings.discount_total_title_color | default: '#b8576e' }}; font-size: {{ block.settings.discount_total_title_size | default: 16 }}px;">{{ block.settings.discount_total_left_text | default: '<strong>Discount:</strong>' | replace: '[discount_total]', discount_total_formatted }}</span>
                         <span style="color: {{ block.settings.discount_total_price_color | default: '#b8576e' }}; font-size: {{ block.settings.discount_total_price_size | default: 16 }}px;">{{ block.settings.discount_total_right_text | default: '-[discount_total]' | replace: '[discount_total]', discount_total_formatted }}</span>
@@ -3188,7 +3189,7 @@
                     {%- for discount in cart.cart_level_discount_applications -%}
                       <div class="badge">
                         {%- render 'icon-discount' -%}
-                        <span>{{ discount.title }} (-{{ discount.total_allocated_amount | money }})</span>
+                        <span>{{ discount.title }} (-{{ discount.total_allocated_amount | divided_by: 100 | times: 100 | money_without_trailing_zeros }})</span>
                       </div>
                     {%- endfor -%}
                   </div>
