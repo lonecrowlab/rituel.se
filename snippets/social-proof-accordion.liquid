@@ -327,6 +327,13 @@
 {%- endif -%}
 
 <style>
+  body.spa-is-dragging,
+  body.spa-is-dragging * {
+    cursor: grabbing !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+  }
+
   .spa-{{ spa_id }} {
     width: 100%;
     margin-top: var(--margin-top, 2rem);
@@ -599,9 +606,18 @@
     border-radius: 16px 16px 0 0;
     user-select: none;
     touch-action: pan-y pinch-zoom;
-    cursor: ew-resize;
+    cursor: grab;
     background: #e8e4df;
     flex-shrink: 0;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__slider[data-spa-slider] {
+    cursor: grab;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__control,
+  .spa-{{ spa_id }} .spa-dialog__handle {
+    cursor: ew-resize;
   }
 
   .spa-{{ spa_id }} .spa-dialog__slider--static {
@@ -1294,72 +1310,78 @@
     const dialog = document.getElementById('SpaDialog-' + blockId);
     const mode = accordion.dataset.spaMode || 'poster';
 
-    function initSpaCardDrag() {
-      if (document.body.dataset.spaCardDrag === 'true') return;
-      document.body.dataset.spaCardDrag = 'true';
+    function initDesktopCardDrag(scroller) {
+      if (!scroller || scroller.dataset.spaDesktopDrag === 'true') return;
+      scroller.dataset.spaDesktopDrag = 'true';
 
-      var drag = null;
+      var isDown = false;
+      var startX = 0;
+      var startScrollLeft = 0;
+      var moved = false;
 
-      document.addEventListener('pointerdown', function(e) {
-        if (e.pointerType === 'touch') return;
-        if (e.button !== 0) return;
-        if (e.target.closest('[data-spa-handle], [data-spa-atc], button, select, input, textarea')) return;
-        var scroller = e.target.closest('[data-spa-viewport]');
-        if (!scroller) return;
-
-        drag = {
-          scroller: scroller,
-          startX: e.clientX,
-          startScroll: scroller.scrollLeft,
-          moved: false,
-          pointerId: e.pointerId
-        };
-        scroller.classList.add('is-dragging');
-        document.body.style.userSelect = 'none';
-        document.body.style.cursor = 'grabbing';
-        try { scroller.setPointerCapture(e.pointerId); } catch (err) {}
+      function onMove(e) {
+        if (!isDown) return;
         e.preventDefault();
-      }, true);
-
-      document.addEventListener('pointermove', function(e) {
-        if (!drag) return;
-        e.preventDefault();
-        var walk = e.clientX - drag.startX;
-        if (Math.abs(walk) > 3) drag.moved = true;
-        drag.scroller.scrollLeft = drag.startScroll - walk;
-      }, true);
-
-      function endDrag() {
-        if (!drag) return;
-        var scroller = drag.scroller;
-        if (drag.moved) scroller.dataset.spaSuppressClick = 'true';
-        scroller.classList.remove('is-dragging');
-        document.body.style.userSelect = '';
-        document.body.style.cursor = '';
-        try { scroller.releasePointerCapture(drag.pointerId); } catch (err) {}
-        drag = null;
+        e.stopPropagation();
+        var walk = e.pageX - startX;
+        if (Math.abs(walk) > 2) moved = true;
+        scroller.scrollLeft = startScrollLeft - walk;
       }
 
-      document.addEventListener('pointerup', endDrag);
-      document.addEventListener('pointercancel', endDrag);
+      function onUp(e) {
+        if (!isDown) return;
+        isDown = false;
+        scroller.classList.remove('is-dragging');
+        document.body.classList.remove('spa-is-dragging');
+        window.removeEventListener('mousemove', onMove, true);
+        window.removeEventListener('mouseup', onUp, true);
+        if (moved) {
+          scroller.dataset.spaSuppressClick = 'true';
+          window.setTimeout(function() {
+            scroller.dataset.spaSuppressClick = 'false';
+          }, 50);
+        }
+      }
 
-      document.addEventListener('click', function(e) {
-        var scroller = e.target.closest('[data-spa-viewport]');
-        if (!scroller || scroller.dataset.spaSuppressClick !== 'true') return;
+      scroller.addEventListener('mousedown', function(e) {
+        if (e.button !== 0) return;
+        // Only the innermost viewport should handle this drag
+        if (e.target.closest('[data-spa-viewport]') !== scroller) return;
+        if (e.target.closest('[data-spa-handle], [data-spa-atc], button, select, input, textarea')) return;
+
+        isDown = true;
+        moved = false;
+        startX = e.pageX;
+        startScrollLeft = scroller.scrollLeft;
+        scroller.classList.add('is-dragging');
+        document.body.classList.add('spa-is-dragging');
+        window.addEventListener('mousemove', onMove, true);
+        window.addEventListener('mouseup', onUp, true);
+        e.preventDefault();
+        e.stopPropagation();
+      }, true);
+
+      scroller.addEventListener('click', function(e) {
+        if (scroller.dataset.spaSuppressClick !== 'true') return;
         scroller.dataset.spaSuppressClick = 'false';
         e.preventDefault();
         e.stopPropagation();
       }, true);
 
-      document.addEventListener('dragstart', function(e) {
-        if (e.target.closest('[data-spa-viewport]')) e.preventDefault();
+      scroller.addEventListener('dragstart', function(e) {
+        e.preventDefault();
       }, true);
+    }
+
+    function bindViewports(root) {
+      if (!root) return;
+      root.querySelectorAll('[data-spa-viewport]').forEach(initDesktopCardDrag);
     }
 
     accordion.querySelectorAll('[data-spa-slider]').forEach(function(slider) {
       new SpaSlider(slider);
     });
-    initSpaCardDrag();
+    bindViewports(accordion);
     initSpaProductsAtc();
 
     if (!dialog) return;
@@ -1367,6 +1389,7 @@
     dialog.querySelectorAll('[data-spa-slider]').forEach(function(slider) {
       new SpaSlider(slider);
     });
+    bindViewports(dialog);
 
     const viewport = dialog.querySelector('[data-spa-viewport]:not([data-spa-products])');
     const openBtn = accordion.querySelector('[data-spa-open]');
@@ -1378,6 +1401,7 @@
       } else {
         dialog.setAttribute('open', '');
       }
+      bindViewports(dialog);
       if (viewport) viewport.scrollLeft = 0;
     }
 
