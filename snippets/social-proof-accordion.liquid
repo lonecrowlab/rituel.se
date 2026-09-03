@@ -744,8 +744,8 @@
     z-index: 4;
     pointer-events: none;
     padding: 6px 12px;
-    background: #c4b5a8;
-    color: #ffffff;
+    background: {{ block.settings.day_label_bg_color | default: '#c4b5a8' }};
+    color: {{ block.settings.day_label_text_color | default: '#ffffff' }};
     font-size: 12px;
     font-weight: 500;
     border-radius: 20px;
@@ -814,11 +814,11 @@
   .spa-{{ spa_id }} .spa-dialog__star {
     width: 14px;
     height: 14px;
-    fill: #e5e0d8;
+    fill: {{ block.settings.stars_empty_color | default: '#e5e0d8' }};
   }
 
   .spa-{{ spa_id }} .spa-dialog__star--filled {
-    fill: #c9a227;
+    fill: {{ block.settings.stars_color | default: '#c9a227' }};
   }
 
   .spa-{{ spa_id }} .spa-dialog__card-title {
