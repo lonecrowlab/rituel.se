@@ -448,6 +448,11 @@
     -webkit-user-select: none;
     padding-right: {{ block.settings.answer_padding_horizontal_desktop }}px;
     padding-bottom:10px;
+    scrollbar-width: none;
+  }
+
+  .spa-{{ spa_id }} .spa-slider-viewport::-webkit-scrollbar {
+    display: none;
   }
 
   .spa-{{ spa_id }} .spa-slider-viewport.is-dragging {
@@ -552,24 +557,15 @@
     -webkit-user-select: none;
     padding: 0 16px;
     box-sizing: border-box;
+    scrollbar-width: none;
+  }
+
+  #SpaDialog-{{ spa_id }} .spa-dialog__viewport::-webkit-scrollbar {
+    height: 0;
   }
 
   #SpaDialog-{{ spa_id }} .spa-dialog__viewport.is-dragging {
     cursor: grabbing;
-  }
-
-  #SpaDialog-{{ spa_id }} .spa-dialog__viewport::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  #SpaDialog-{{ spa_id }} .spa-dialog__viewport::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 999px;
-  }
-
-  #SpaDialog-{{ spa_id }} .spa-dialog__viewport::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 999px;
   }
 
   #SpaDialog-{{ spa_id }} .spa-dialog__track {
@@ -1298,62 +1294,72 @@
     const dialog = document.getElementById('SpaDialog-' + blockId);
     const mode = accordion.dataset.spaMode || 'poster';
 
-    function initNativeScrollDrag(scroller) {
-      if (!scroller || scroller.dataset.scrollDrag === 'true') return;
-      scroller.dataset.scrollDrag = 'true';
+    function initSpaCardDrag() {
+      if (document.body.dataset.spaCardDrag === 'true') return;
+      document.body.dataset.spaCardDrag = 'true';
 
-      let isDown = false;
-      let startX = 0;
-      let startScrollLeft = 0;
-      let moved = false;
+      var drag = null;
 
-      scroller.addEventListener('mousedown', function(e) {
+      document.addEventListener('pointerdown', function(e) {
+        if (e.pointerType === 'touch') return;
         if (e.button !== 0) return;
-        if (e.target.closest('[data-spa-handle], [data-spa-atc], button, a, select, input, textarea')) return;
-        if (scroller.hasAttribute('data-spa-products') === false && e.target.closest('[data-spa-products]')) return;
-        e.preventDefault();
-        isDown = true;
-        moved = false;
-        startX = e.pageX;
-        startScrollLeft = scroller.scrollLeft;
+        if (e.target.closest('[data-spa-handle], [data-spa-atc], button, select, input, textarea')) return;
+        var scroller = e.target.closest('[data-spa-viewport]');
+        if (!scroller) return;
+
+        drag = {
+          scroller: scroller,
+          startX: e.clientX,
+          startScroll: scroller.scrollLeft,
+          moved: false,
+          pointerId: e.pointerId
+        };
         scroller.classList.add('is-dragging');
         document.body.style.userSelect = 'none';
         document.body.style.cursor = 'grabbing';
-      });
-
-      document.addEventListener('mousemove', function(e) {
-        if (!isDown) return;
+        try { scroller.setPointerCapture(e.pointerId); } catch (err) {}
         e.preventDefault();
-        const walk = e.pageX - startX;
-        if (Math.abs(walk) > 3) moved = true;
-        scroller.scrollLeft = startScrollLeft - walk;
-      });
+      }, true);
 
-      document.addEventListener('mouseup', function() {
-        if (!isDown) return;
-        isDown = false;
+      document.addEventListener('pointermove', function(e) {
+        if (!drag) return;
+        e.preventDefault();
+        var walk = e.clientX - drag.startX;
+        if (Math.abs(walk) > 3) drag.moved = true;
+        drag.scroller.scrollLeft = drag.startScroll - walk;
+      }, true);
+
+      function endDrag() {
+        if (!drag) return;
+        var scroller = drag.scroller;
+        if (drag.moved) scroller.dataset.spaSuppressClick = 'true';
         scroller.classList.remove('is-dragging');
         document.body.style.userSelect = '';
         document.body.style.cursor = '';
-      });
+        try { scroller.releasePointerCapture(drag.pointerId); } catch (err) {}
+        drag = null;
+      }
 
-      scroller.addEventListener('click', function(e) {
-        if (!moved) return;
-        if (e.target.closest('[data-spa-slider], [data-spa-atc]')) return;
+      document.addEventListener('pointerup', endDrag);
+      document.addEventListener('pointercancel', endDrag);
+
+      document.addEventListener('click', function(e) {
+        var scroller = e.target.closest('[data-spa-viewport]');
+        if (!scroller || scroller.dataset.spaSuppressClick !== 'true') return;
+        scroller.dataset.spaSuppressClick = 'false';
         e.preventDefault();
         e.stopPropagation();
-        moved = false;
       }, true);
 
-      scroller.addEventListener('dragstart', function(e) {
-        e.preventDefault();
-      });
+      document.addEventListener('dragstart', function(e) {
+        if (e.target.closest('[data-spa-viewport]')) e.preventDefault();
+      }, true);
     }
 
     accordion.querySelectorAll('[data-spa-slider]').forEach(function(slider) {
       new SpaSlider(slider);
     });
-    accordion.querySelectorAll('[data-spa-viewport]').forEach(initNativeScrollDrag);
+    initSpaCardDrag();
     initSpaProductsAtc();
 
     if (!dialog) return;
@@ -1361,7 +1367,6 @@
     dialog.querySelectorAll('[data-spa-slider]').forEach(function(slider) {
       new SpaSlider(slider);
     });
-    dialog.querySelectorAll('[data-spa-viewport]').forEach(initNativeScrollDrag);
 
     const viewport = dialog.querySelector('[data-spa-viewport]:not([data-spa-products])');
     const openBtn = accordion.querySelector('[data-spa-open]');
