@@ -63,6 +63,7 @@
       endif
     -%}
     {%- if before_image != blank or after_image != blank or reviewer_name != blank or review_text_raw != blank or review_title != blank -%}
+      <li class="splide__slide">
       <article class="spa-dialog__slide" data-spa-slide>
         {%- if after_image != blank -%}
           <div class="spa-dialog__slider" data-spa-slider>
@@ -243,6 +244,7 @@
 
         </div>
       </article>
+      </li>
     {%- endif -%}
   {%- endfor -%}
 {%- endcapture -%}
@@ -274,11 +276,32 @@
       <div class="spa__answer" id="SpaAnswer-{{ spa_id }}" data-accordion-content>
         <div class="spa__answer-inner{% if display_mode == 'slider' %} spa__answer-inner--slider{% endif %}">
           {%- if display_mode == 'slider' -%}
-            <div class="spa-slider-viewport" data-spa-viewport>
-              <div class="spa-slider-track">
-                {{ spa_slides }}
+            <splide-component
+              class="spa-reviews-splide-wrap"
+              data-type="slide"
+              data-autoplay="false"
+              data-slides-desktop="1"
+              data-slides-mobile="1"
+              data-auto-width="true"
+              data-gap-desktop="12"
+              data-gap-mobile="12"
+              data-arrows="false"
+              data-pagination="false"
+              data-drag="true"
+              data-trim-space="false"
+              data-destroy-mobile="true"
+              data-padding-calc-desktop="true"
+              data-side-padding-desktop="{{ block.settings.answer_padding_horizontal_desktop }}"
+              data-side-padding-mobile="{{ block.settings.answer_padding_horizontal_mobile }}"
+            >
+              <div class="splide spa-reviews-splide">
+                <div class="splide__track">
+                  <ul class="splide__list">
+                    {{ spa_slides }}
+                  </ul>
+                </div>
               </div>
-            </div>
+            </splide-component>
           {%- else -%}
             <button
               type="button"
@@ -318,22 +341,37 @@
       <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
     </svg>
   </button>
-  <div class="spa-dialog__viewport" data-spa-viewport>
-    <div class="spa-dialog__track">
-      {{ spa_slides }}
-    </div>
+  <div class="spa-dialog__viewport">
+    <splide-component
+      class="spa-reviews-splide-wrap spa-reviews-splide-wrap--dialog"
+      data-type="slide"
+      data-autoplay="false"
+      data-slides-desktop="4"
+      data-slides-mobile="1"
+      data-auto-width="true"
+      data-gap-desktop="16"
+      data-gap-mobile="12"
+      data-arrows="false"
+      data-pagination="false"
+      data-drag="true"
+      data-trim-space="false"
+      data-destroy-mobile="true"
+      data-side-padding-desktop="16"
+      data-side-padding-mobile="12"
+    >
+      <div class="splide spa-reviews-splide spa-reviews-splide--dialog">
+        <div class="splide__track">
+          <ul class="splide__list">
+            {{ spa_slides }}
+          </ul>
+        </div>
+      </div>
+    </splide-component>
   </div>
 </dialog>
 {%- endif -%}
 
 <style>
-  body.spa-is-dragging,
-  body.spa-is-dragging * {
-    cursor: grabbing !important;
-    user-select: none !important;
-    -webkit-user-select: none !important;
-  }
-
   .spa-{{ spa_id }} {
     width: 100%;
     margin-top: var(--margin-top, 2rem);
@@ -444,41 +482,37 @@
     height: auto;
   }
 
-  .spa-{{ spa_id }} .spa-slider-viewport {
+  .spa-{{ spa_id }} .spa-reviews-splide-wrap {
+    display: block;
     width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
+  }
+
+  .spa-{{ spa_id }} .spa-reviews-splide {
+    visibility: visible;
+  }
+
+  .spa-{{ spa_id }} .spa-reviews-splide .splide__track {
+    overflow: hidden;
     cursor: grab;
-    user-select: none;
-    -webkit-user-select: none;
-    padding-right: {{ block.settings.answer_padding_horizontal_desktop }}px;
-    padding-bottom:10px;
-    scrollbar-width: none;
   }
 
-  .spa-{{ spa_id }} .spa-slider-viewport::-webkit-scrollbar {
-    display: none;
-  }
-
-  .spa-{{ spa_id }} .spa-slider-viewport.is-dragging {
+  .spa-{{ spa_id }} .spa-reviews-splide.is-dragging .splide__track,
+  .spa-{{ spa_id }} .spa-reviews-splide .splide__track:active {
     cursor: grabbing;
   }
 
-  .spa-{{ spa_id }} .spa-slider-track {
-    display: flex;
+  .spa-{{ spa_id }} .spa-reviews-splide .splide__list {
     align-items: stretch;
-    gap: 12px;
-    min-width: 100%;
   }
 
-  .spa-{{ spa_id }} .spa-slider-track .spa-dialog__slide {
+  .spa-{{ spa_id }} .spa-reviews-splide .splide__slide {
+    width: 90.9%;
+  }
+
+  .spa-{{ spa_id }} .spa-reviews-splide .spa-dialog__slide {
     display: flex;
     flex-direction: column;
-    flex: 0 0 88%;
-    width: 88%;
-    max-width: 88%;
+    height: 100%;
     min-width: 0;
     overflow: hidden;
     background: #ffffff;
@@ -486,6 +520,11 @@
     border-radius: 16px;
     user-select: none;
     -webkit-user-select: none;
+  }
+
+  .spa-{{ spa_id }} .spa-reviews-splide .splide__slide.is-active .spa-dialog__slide,
+  .spa-{{ spa_id }} .spa-reviews-splide .splide__slide.is-visible .spa-dialog__slide {
+    height: 100%;
   }
 
   @media screen and (max-width: 749px) {
@@ -502,14 +541,34 @@
       padding-right: 0;
     }
 
-    .spa-{{ spa_id }} .spa-slider-viewport {
+    /* Native overflow scroll when Splide is destroyed on mobile */
+    .spa-{{ spa_id }} .spa-reviews-splide .splide__track {
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-x;
       padding-right: {{ block.settings.answer_padding_horizontal_mobile }}px;
+      scrollbar-width: none;
     }
 
-    .spa-{{ spa_id }} .spa-slider-track .spa-dialog__slide {
-      flex: 0 0 94%;
-      width: 94%;
+    .spa-{{ spa_id }} .spa-reviews-splide .splide__track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .spa-{{ spa_id }} .spa-reviews-splide .splide__list {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      gap: 12px;
+      transform: none !important;
+      width: max-content !important;
+      margin: 0 !important;
+    }
+
+    .spa-{{ spa_id }} .spa-reviews-splide .splide__slide {
+      width: 94vw;
       max-width: 94%;
+      flex: 0 0 94%;
+      transform: none !important;
     }
   }
 
@@ -555,47 +614,48 @@
   #SpaDialog-{{ spa_id }} .spa-dialog__viewport {
     width: 100%;
     max-height: calc(100vh - 80px);
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
-    cursor: grab;
-    user-select: none;
-    -webkit-user-select: none;
-    padding: 0 16px;
-    box-sizing: border-box;
-    scrollbar-width: none;
-  }
-
-  #SpaDialog-{{ spa_id }} .spa-dialog__viewport::-webkit-scrollbar {
-    height: 0;
-  }
-
-  #SpaDialog-{{ spa_id }} .spa-dialog__viewport.is-dragging {
-    cursor: grabbing;
-  }
-
-  #SpaDialog-{{ spa_id }} .spa-dialog__track {
-    display: flex;
-    align-items: stretch;
-    gap: 16px;
-    min-width: 100%;
-    padding-right: 16px;
-    box-sizing: border-box;
-  }
-
-  #SpaDialog-{{ spa_id }} .spa-dialog__slide {
-    display: flex;
-    flex-direction: column;
-    flex: 0 0 22%;
-    width: 22%;
-    max-width: 22%;
-    min-width: 0;
-    max-height: 100%;
     overflow: hidden;
-    background: #ffffff;
-    border: 1px solid #d4d4d4;
-    border-radius: 16px;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__slide {
+    width: 22%;
+  }
+
+  #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .spa-dialog__slide {
+    max-height: calc(100vh - 100px);
+  }
+
+  @media screen and (max-width: 749px) {
+    #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__track {
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-x;
+      padding-right: 12px;
+      scrollbar-width: none;
+    }
+
+    #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__track::-webkit-scrollbar {
+      display: none;
+    }
+
+    #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__list {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      gap: 12px;
+      transform: none !important;
+      width: max-content !important;
+      margin: 0 !important;
+    }
+
+    #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__slide {
+      width: 85vw;
+      max-width: 85%;
+      flex: 0 0 85%;
+      transform: none !important;
+    }
   }
 
   .spa-{{ spa_id }} .spa-dialog__slider {
@@ -1010,10 +1070,8 @@
   }
 
   @media screen and (min-width: 750px) and (max-width: 989px) {
-    #SpaDialog-{{ spa_id }} .spa-dialog__slide {
-      flex: 0 0 45%;
+    #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__slide {
       width: 45%;
-      max-width: 45%;
     }
   }
 
@@ -1024,12 +1082,6 @@
 
     #SpaDialog-{{ spa_id }} .spa-dialog__viewport {
       padding: 0 12px;
-    }
-
-    #SpaDialog-{{ spa_id }} .spa-dialog__slide {
-      flex: 0 0 85%;
-      width: 85%;
-      max-width: 85%;
     }
 
     .spa-{{ spa_id }} .spa-dialog__card-title {
@@ -1272,11 +1324,107 @@
     const content = accordion.querySelector('[data-accordion-content]');
     const inner = accordion.querySelector('.spa__answer-inner');
 
+    function refreshReviewsSplide(root) {
+      if (!root) return;
+      root.querySelectorAll('splide-component').forEach(function(el) {
+        if (!el.splide || typeof el.splide.refresh !== 'function') return;
+        try {
+          el.splide.refresh();
+        } catch (err) {}
+      });
+    }
+
+    function isolateNestedScroll(root) {
+      if (!root || root.dataset.spaNestedScroll === 'true') return;
+      root.dataset.spaNestedScroll = 'true';
+      root.addEventListener('pointerdown', function(e) {
+        if (e.target.closest('[data-spa-handle], [data-spa-atc]')) {
+          e.stopPropagation();
+        }
+      }, true);
+      root.addEventListener('mousedown', function(e) {
+        if (e.target.closest('[data-spa-handle], [data-spa-atc]')) {
+          e.stopPropagation();
+        }
+      }, true);
+      root.addEventListener('touchstart', function(e) {
+        if (e.target.closest('[data-spa-handle], [data-spa-atc]')) {
+          e.stopPropagation();
+        }
+      }, { capture: true, passive: true });
+    }
+
+    function bindProductsDesktopDrag(root) {
+      if (!root || root.dataset.spaProductsDrag === 'true') return;
+      root.dataset.spaProductsDrag = 'true';
+
+      var dragState = null;
+
+      function onMove(e) {
+        if (!dragState) return;
+        e.preventDefault();
+        var walk = e.pageX - dragState.startX;
+        if (Math.abs(walk) > 2) dragState.moved = true;
+        dragState.scroller.scrollLeft = dragState.startScrollLeft - walk;
+      }
+
+      function onUp() {
+        if (!dragState) return;
+        var scroller = dragState.scroller;
+        var moved = dragState.moved;
+        dragState = null;
+        scroller.classList.remove('is-dragging');
+        window.removeEventListener('mousemove', onMove, true);
+        window.removeEventListener('mouseup', onUp, true);
+        if (moved) {
+          scroller.dataset.spaSuppressClick = 'true';
+          window.setTimeout(function() {
+            scroller.dataset.spaSuppressClick = 'false';
+          }, 50);
+        }
+      }
+
+      root.addEventListener('mousedown', function(e) {
+        if (e.button !== 0) return;
+        if (e.target.closest('[data-spa-atc], button, a, select, input, textarea')) return;
+        var scroller = e.target.closest('[data-spa-products]');
+        if (!scroller || !root.contains(scroller)) return;
+
+        dragState = {
+          scroller: scroller,
+          startX: e.pageX,
+          startScrollLeft: scroller.scrollLeft,
+          moved: false
+        };
+        scroller.classList.add('is-dragging');
+        window.addEventListener('mousemove', onMove, true);
+        window.addEventListener('mouseup', onUp, true);
+        e.preventDefault();
+        e.stopPropagation();
+      }, true);
+
+      root.addEventListener('pointerdown', function(e) {
+        if (e.target.closest('[data-spa-products]')) e.stopPropagation();
+      }, true);
+
+      root.addEventListener('click', function(e) {
+        var scroller = e.target.closest('[data-spa-products]');
+        if (!scroller || scroller.dataset.spaSuppressClick !== 'true') return;
+        scroller.dataset.spaSuppressClick = 'false';
+        e.preventDefault();
+        e.stopPropagation();
+      }, true);
+    }
+
     function setOpen(open) {
       if (!trigger || !content) return;
       trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
       if (open) {
         content.style.maxHeight = content.scrollHeight + 'px';
+        requestAnimationFrame(function() {
+          refreshReviewsSplide(accordion);
+          content.style.maxHeight = content.scrollHeight + 'px';
+        });
       } else {
         content.style.maxHeight = content.scrollHeight + 'px';
         requestAnimationFrame(function() {
@@ -1293,6 +1441,9 @@
 
       if (trigger.getAttribute('aria-expanded') === 'true') {
         content.style.maxHeight = content.scrollHeight + 'px';
+        requestAnimationFrame(function() {
+          refreshReviewsSplide(accordion);
+        });
       } else {
         content.style.maxHeight = '0';
       }
@@ -1310,75 +1461,11 @@
     const dialog = document.getElementById('SpaDialog-' + blockId);
     const mode = accordion.dataset.spaMode || 'poster';
 
-    function bindDesktopDragRoot(root) {
-      if (!root || root.dataset.spaDesktopDragRoot === 'true') return;
-      root.dataset.spaDesktopDragRoot = 'true';
-
-      var dragState = null;
-
-      function onMove(e) {
-        if (!dragState) return;
-        e.preventDefault();
-        e.stopPropagation();
-        var walk = e.pageX - dragState.startX;
-        if (Math.abs(walk) > 2) dragState.moved = true;
-        dragState.scroller.scrollLeft = dragState.startScrollLeft - walk;
-      }
-
-      function onUp() {
-        if (!dragState) return;
-        var scroller = dragState.scroller;
-        var moved = dragState.moved;
-        dragState = null;
-        scroller.classList.remove('is-dragging');
-        document.body.classList.remove('spa-is-dragging');
-        window.removeEventListener('mousemove', onMove, true);
-        window.removeEventListener('mouseup', onUp, true);
-        if (moved) {
-          scroller.dataset.spaSuppressClick = 'true';
-          window.setTimeout(function() {
-            scroller.dataset.spaSuppressClick = 'false';
-          }, 50);
-        }
-      }
-
-      root.addEventListener('mousedown', function(e) {
-        if (e.button !== 0) return;
-        if (e.target.closest('[data-spa-handle], [data-spa-atc], button, select, input, textarea')) return;
-        var scroller = e.target.closest('[data-spa-viewport]');
-        if (!scroller || !root.contains(scroller)) return;
-
-        dragState = {
-          scroller: scroller,
-          startX: e.pageX,
-          startScrollLeft: scroller.scrollLeft,
-          moved: false
-        };
-        scroller.classList.add('is-dragging');
-        document.body.classList.add('spa-is-dragging');
-        window.addEventListener('mousemove', onMove, true);
-        window.addEventListener('mouseup', onUp, true);
-        e.preventDefault();
-        e.stopPropagation();
-      }, true);
-
-      root.addEventListener('click', function(e) {
-        var scroller = e.target.closest('[data-spa-viewport]');
-        if (!scroller || scroller.dataset.spaSuppressClick !== 'true') return;
-        scroller.dataset.spaSuppressClick = 'false';
-        e.preventDefault();
-        e.stopPropagation();
-      }, true);
-
-      root.addEventListener('dragstart', function(e) {
-        if (e.target.closest('[data-spa-viewport]')) e.preventDefault();
-      }, true);
-    }
-
     accordion.querySelectorAll('[data-spa-slider]').forEach(function(slider) {
       new SpaSlider(slider);
     });
-    bindDesktopDragRoot(accordion);
+    isolateNestedScroll(accordion);
+    bindProductsDesktopDrag(accordion);
     initSpaProductsAtc();
 
     if (!dialog) return;
@@ -1386,9 +1473,9 @@
     dialog.querySelectorAll('[data-spa-slider]').forEach(function(slider) {
       new SpaSlider(slider);
     });
-    bindDesktopDragRoot(dialog);
+    isolateNestedScroll(dialog);
+    bindProductsDesktopDrag(dialog);
 
-    const viewport = dialog.querySelector('[data-spa-viewport]:not([data-spa-products])');
     const openBtn = accordion.querySelector('[data-spa-open]');
     const closeBtn = dialog.querySelector('[data-spa-close]');
 
@@ -1398,7 +1485,9 @@
       } else {
         dialog.setAttribute('open', '');
       }
-      if (viewport) viewport.scrollLeft = 0;
+      requestAnimationFrame(function() {
+        refreshReviewsSplide(dialog);
+      });
     }
 
     function closeDialog() {
