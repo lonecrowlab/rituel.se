@@ -276,23 +276,12 @@
       <div class="spa__answer" id="SpaAnswer-{{ spa_id }}" data-accordion-content>
         <div class="spa__answer-inner{% if display_mode == 'slider' %} spa__answer-inner--slider{% endif %}">
           {%- if display_mode == 'slider' -%}
-            <splide-component
+            <div
               class="spa-reviews-splide-wrap"
-              data-type="slide"
-              data-autoplay="false"
-              data-slides-desktop="1"
-              data-slides-mobile="1"
-              data-auto-width="true"
-              data-gap-desktop="12"
-              data-gap-mobile="12"
-              data-arrows="false"
-              data-pagination="false"
-              data-drag="true"
-              data-trim-space="false"
-              data-destroy-mobile="true"
-              data-padding-calc-desktop="true"
-              data-side-padding-desktop="{{ block.settings.answer_padding_horizontal_desktop }}"
-              data-side-padding-mobile="{{ block.settings.answer_padding_horizontal_mobile }}"
+              data-spa-reviews-splide
+              data-spa-gap="12"
+              data-spa-padding-right="{{ block.settings.answer_padding_horizontal_desktop }}"
+              data-spa-peek="10"
             >
               <div class="splide spa-reviews-splide">
                 <div class="splide__track">
@@ -301,7 +290,7 @@
                   </ul>
                 </div>
               </div>
-            </splide-component>
+            </div>
           {%- else -%}
             <button
               type="button"
@@ -342,22 +331,13 @@
     </svg>
   </button>
   <div class="spa-dialog__viewport">
-    <splide-component
+    <div
       class="spa-reviews-splide-wrap spa-reviews-splide-wrap--dialog"
-      data-type="slide"
-      data-autoplay="false"
-      data-slides-desktop="4"
-      data-slides-mobile="1"
-      data-auto-width="true"
-      data-gap-desktop="16"
-      data-gap-mobile="12"
-      data-arrows="false"
-      data-pagination="false"
-      data-drag="true"
-      data-trim-space="false"
-      data-destroy-mobile="true"
-      data-side-padding-desktop="16"
-      data-side-padding-mobile="12"
+      data-spa-reviews-splide
+      data-spa-gap="16"
+      data-spa-padding-right="16"
+      data-spa-peek="12"
+      data-spa-per-page="4"
     >
       <div class="splide spa-reviews-splide spa-reviews-splide--dialog">
         <div class="splide__track">
@@ -366,7 +346,7 @@
           </ul>
         </div>
       </div>
-    </splide-component>
+    </div>
   </div>
 </dialog>
 {%- endif -%}
@@ -503,10 +483,15 @@
 
   .spa-{{ spa_id }} .spa-reviews-splide .splide__list {
     align-items: stretch;
+    display: flex;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .spa-{{ spa_id }} .spa-reviews-splide .splide__slide {
-    width: 90.9%;
+    list-style: none;
+    flex-shrink: 0;
+    min-width: 0;
   }
 
   .spa-{{ spa_id }} .spa-reviews-splide .spa-dialog__slide {
@@ -522,11 +507,7 @@
     -webkit-user-select: none;
   }
 
-  .spa-{{ spa_id }} .spa-reviews-splide .splide__slide.is-active .spa-dialog__slide,
-  .spa-{{ spa_id }} .spa-reviews-splide .splide__slide.is-visible .spa-dialog__slide {
-    height: 100%;
-  }
-
+  /* Mobile: native overflow scroll (no Splide) */
   @media screen and (max-width: 749px) {
     .spa-{{ spa_id }} .spa__question {
       font-size: {{ block.settings.question_font_size_mobile }}px;
@@ -541,7 +522,6 @@
       padding-right: 0;
     }
 
-    /* Native overflow scroll when Splide is destroyed on mobile */
     .spa-{{ spa_id }} .spa-reviews-splide .splide__track {
       overflow-x: auto;
       overflow-y: hidden;
@@ -549,6 +529,7 @@
       touch-action: pan-x;
       padding-right: {{ block.settings.answer_padding_horizontal_mobile }}px;
       scrollbar-width: none;
+      cursor: auto;
     }
 
     .spa-{{ spa_id }} .spa-reviews-splide .splide__track::-webkit-scrollbar {
@@ -561,6 +542,7 @@
       gap: 12px;
       transform: none !important;
       width: max-content !important;
+      height: auto !important;
       margin: 0 !important;
     }
 
@@ -569,6 +551,7 @@
       max-width: 94%;
       flex: 0 0 94%;
       transform: none !important;
+      margin: 0 !important;
     }
   }
 
@@ -619,10 +602,6 @@
     box-sizing: border-box;
   }
 
-  #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__slide {
-    width: 22%;
-  }
-
   #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .spa-dialog__slide {
     max-height: calc(100vh - 100px);
   }
@@ -635,6 +614,7 @@
       touch-action: pan-x;
       padding-right: 12px;
       scrollbar-width: none;
+      cursor: auto;
     }
 
     #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__track::-webkit-scrollbar {
@@ -647,6 +627,7 @@
       gap: 12px;
       transform: none !important;
       width: max-content !important;
+      height: auto !important;
       margin: 0 !important;
     }
 
@@ -655,6 +636,7 @@
       max-width: 85%;
       flex: 0 0 85%;
       transform: none !important;
+      margin: 0 !important;
     }
   }
 
@@ -1069,12 +1051,6 @@
     to { transform: rotate(360deg); }
   }
 
-  @media screen and (min-width: 750px) and (max-width: 989px) {
-    #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__slide {
-      width: 45%;
-    }
-  }
-
   @media screen and (max-width: 749px) {
     #SpaDialog-{{ spa_id }} {
       padding: 52px 0 16px;
@@ -1324,13 +1300,110 @@
     const content = accordion.querySelector('[data-accordion-content]');
     const inner = accordion.querySelector('.spa__answer-inner');
 
-    function refreshReviewsSplide(root) {
+    function whenSplideReady(callback) {
+      if (typeof window.Splide !== 'undefined') {
+        callback();
+        return;
+      }
+      var tries = 0;
+      var timer = window.setInterval(function() {
+        tries += 1;
+        if (typeof window.Splide !== 'undefined') {
+          window.clearInterval(timer);
+          callback();
+        } else if (tries > 40) {
+          window.clearInterval(timer);
+        }
+      }, 50);
+    }
+
+    function isDesktopSpa() {
+      return window.matchMedia('(min-width: 750px)').matches;
+    }
+
+    function destroyReviewsSplide(root) {
       if (!root) return;
-      root.querySelectorAll('splide-component').forEach(function(el) {
-        if (!el.splide || typeof el.splide.refresh !== 'function') return;
+      root.querySelectorAll('[data-spa-reviews-splide]').forEach(function(wrap) {
+        var el = wrap.querySelector('.splide');
+        if (el && el._spaSplide) {
+          try { el._spaSplide.destroy(true); } catch (err) {}
+          el._spaSplide = null;
+        }
+      });
+    }
+
+    function mountReviewsSplide(root) {
+      if (!root || !isDesktopSpa() || typeof window.Splide === 'undefined') return;
+
+      root.querySelectorAll('[data-spa-reviews-splide]').forEach(function(wrap) {
+        var el = wrap.querySelector('.splide');
+        if (!el || el.offsetWidth < 10) return;
+
+        if (el._spaSplide) {
+          try {
+            el._spaSplide.refresh();
+          } catch (err) {
+            try { el._spaSplide.destroy(true); } catch (e2) {}
+            el._spaSplide = null;
+          }
+          if (el._spaSplide) return;
+        }
+
+        var gap = parseInt(wrap.getAttribute('data-spa-gap'), 10);
+        if (isNaN(gap)) gap = 12;
+        var edgePad = parseInt(wrap.getAttribute('data-spa-padding-right'), 10);
+        if (isNaN(edgePad)) edgePad = 0;
+        var peek = parseInt(wrap.getAttribute('data-spa-peek'), 10);
+        if (isNaN(peek)) peek = 10;
+        var perPage = parseInt(wrap.getAttribute('data-spa-per-page'), 10);
+        if (isNaN(perPage) || perPage < 1) perPage = 1;
+
+        var rightPadding = edgePad;
+        if (perPage === 1) {
+          rightPadding = Math.max(edgePad, Math.round(el.offsetWidth * (peek / 100)));
+        }
+
+        var config = {
+          type: 'slide',
+          perPage: perPage,
+          perMove: 1,
+          gap: gap,
+          drag: true,
+          arrows: false,
+          pagination: false,
+          trimSpace: false,
+          focus: 0,
+          padding: { left: 0, right: rightPadding },
+          breakpoints: {
+            989: {
+              perPage: perPage > 1 ? 2 : 1,
+              padding: {
+                left: 0,
+                right: perPage > 1
+                  ? edgePad
+                  : Math.max(edgePad, Math.round(el.offsetWidth * (peek / 100)))
+              }
+            }
+          }
+        };
+
         try {
-          el.splide.refresh();
-        } catch (err) {}
+          var splide = new window.Splide(el, config);
+          splide.mount();
+          el._spaSplide = splide;
+        } catch (err) {
+          el._spaSplide = null;
+        }
+      });
+    }
+
+    function ensureReviewsSplide(root) {
+      whenSplideReady(function() {
+        if (isDesktopSpa()) {
+          mountReviewsSplide(root);
+        } else {
+          destroyReviewsSplide(root);
+        }
       });
     }
 
@@ -1338,20 +1411,10 @@
       if (!root || root.dataset.spaNestedScroll === 'true') return;
       root.dataset.spaNestedScroll = 'true';
       root.addEventListener('pointerdown', function(e) {
-        if (e.target.closest('[data-spa-handle], [data-spa-atc]')) {
+        if (e.target.closest('[data-spa-handle], [data-spa-atc], [data-spa-products]')) {
           e.stopPropagation();
         }
       }, true);
-      root.addEventListener('mousedown', function(e) {
-        if (e.target.closest('[data-spa-handle], [data-spa-atc]')) {
-          e.stopPropagation();
-        }
-      }, true);
-      root.addEventListener('touchstart', function(e) {
-        if (e.target.closest('[data-spa-handle], [data-spa-atc]')) {
-          e.stopPropagation();
-        }
-      }, { capture: true, passive: true });
     }
 
     function bindProductsDesktopDrag(root) {
@@ -1403,10 +1466,6 @@
         e.stopPropagation();
       }, true);
 
-      root.addEventListener('pointerdown', function(e) {
-        if (e.target.closest('[data-spa-products]')) e.stopPropagation();
-      }, true);
-
       root.addEventListener('click', function(e) {
         var scroller = e.target.closest('[data-spa-products]');
         if (!scroller || scroller.dataset.spaSuppressClick !== 'true') return;
@@ -1422,8 +1481,12 @@
       if (open) {
         content.style.maxHeight = content.scrollHeight + 'px';
         requestAnimationFrame(function() {
-          refreshReviewsSplide(accordion);
+          ensureReviewsSplide(accordion);
           content.style.maxHeight = content.scrollHeight + 'px';
+          window.setTimeout(function() {
+            ensureReviewsSplide(accordion);
+            content.style.maxHeight = content.scrollHeight + 'px';
+          }, 320);
         });
       } else {
         content.style.maxHeight = content.scrollHeight + 'px';
@@ -1442,7 +1505,7 @@
       if (trigger.getAttribute('aria-expanded') === 'true') {
         content.style.maxHeight = content.scrollHeight + 'px';
         requestAnimationFrame(function() {
-          refreshReviewsSplide(accordion);
+          ensureReviewsSplide(accordion);
         });
       } else {
         content.style.maxHeight = '0';
@@ -1457,6 +1520,14 @@
         observer.observe(inner);
       }
     }
+
+    window.addEventListener('resize', function() {
+      if (trigger && trigger.getAttribute('aria-expanded') === 'true') {
+        ensureReviewsSplide(accordion);
+      }
+      var openDialog = document.getElementById('SpaDialog-' + blockId);
+      if (openDialog && openDialog.open) ensureReviewsSplide(openDialog);
+    });
 
     const dialog = document.getElementById('SpaDialog-' + blockId);
     const mode = accordion.dataset.spaMode || 'poster';
@@ -1486,7 +1557,7 @@
         dialog.setAttribute('open', '');
       }
       requestAnimationFrame(function() {
-        refreshReviewsSplide(dialog);
+        ensureReviewsSplide(dialog);
       });
     }
 
