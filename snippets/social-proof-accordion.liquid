@@ -522,9 +522,15 @@
       padding-right: 0;
     }
 
+    .spa-{{ spa_id }} .spa-reviews-splide.is-initialized,
+    .spa-{{ spa_id }} .spa-reviews-splide.is-active,
+    .spa-{{ spa_id }} .spa-reviews-splide.is-rendered {
+      visibility: visible;
+    }
+
     .spa-{{ spa_id }} .spa-reviews-splide .splide__track {
-      overflow-x: auto;
-      overflow-y: hidden;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
       -webkit-overflow-scrolling: touch;
       touch-action: pan-x;
       padding-right: {{ block.settings.answer_padding_horizontal_mobile }}px;
@@ -539,19 +545,29 @@
     .spa-{{ spa_id }} .spa-reviews-splide .splide__list {
       display: flex !important;
       flex-wrap: nowrap !important;
+      align-items: stretch !important;
       gap: 12px;
       transform: none !important;
-      width: max-content !important;
+      width: 100% !important;
+      min-width: 100% !important;
       height: auto !important;
       margin: 0 !important;
+      padding: 0 !important;
     }
 
     .spa-{{ spa_id }} .spa-reviews-splide .splide__slide {
-      width: 94vw;
-      max-width: 94%;
-      flex: 0 0 94%;
+      flex: 0 0 82% !important;
+      width: 82% !important;
+      max-width: 82% !important;
       transform: none !important;
       margin: 0 !important;
+      left: auto !important;
+    }
+
+    .spa-{{ spa_id }} .spa-dialog__slider,
+    .spa-{{ spa_id }} .spa-dialog__slider--static {
+      aspect-ratio: 1 / 1;
+      max-height: 260px;
     }
   }
 
@@ -608,8 +624,8 @@
 
   @media screen and (max-width: 749px) {
     #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__track {
-      overflow-x: auto;
-      overflow-y: hidden;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
       -webkit-overflow-scrolling: touch;
       touch-action: pan-x;
       padding-right: 12px;
@@ -626,17 +642,25 @@
       flex-wrap: nowrap !important;
       gap: 12px;
       transform: none !important;
-      width: max-content !important;
+      width: 100% !important;
+      min-width: 100% !important;
       height: auto !important;
       margin: 0 !important;
+      padding: 0 !important;
     }
 
     #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__slide {
-      width: 85vw;
-      max-width: 85%;
-      flex: 0 0 85%;
+      flex: 0 0 82% !important;
+      width: 82% !important;
+      max-width: 82% !important;
       transform: none !important;
       margin: 0 !important;
+      left: auto !important;
+    }
+
+    #SpaDialog-{{ spa_id }} .spa-dialog__slider,
+    #SpaDialog-{{ spa_id }} .spa-dialog__slider--static {
+      max-height: 260px;
     }
   }
 
@@ -1325,10 +1349,21 @@
       if (!root) return;
       root.querySelectorAll('[data-spa-reviews-splide]').forEach(function(wrap) {
         var el = wrap.querySelector('.splide');
-        if (el && el._spaSplide) {
+        if (!el) return;
+        if (el._spaSplide) {
           try { el._spaSplide.destroy(true); } catch (err) {}
           el._spaSplide = null;
         }
+        el.classList.remove('is-initialized', 'is-active', 'is-rendered', 'is-draggable');
+        el.classList.add('is-native-scroll');
+        var list = el.querySelector('.splide__list');
+        if (list) list.removeAttribute('style');
+        el.querySelectorAll('.splide__slide').forEach(function(slide) {
+          slide.removeAttribute('style');
+          slide.classList.remove('is-active', 'is-visible', 'is-prev', 'is-next');
+        });
+        var track = el.querySelector('.splide__track');
+        if (track) track.removeAttribute('style');
       });
     }
 
@@ -1338,6 +1373,7 @@
       root.querySelectorAll('[data-spa-reviews-splide]').forEach(function(wrap) {
         var el = wrap.querySelector('.splide');
         if (!el || el.offsetWidth < 10) return;
+        el.classList.remove('is-native-scroll');
 
         if (el._spaSplide) {
           try {
@@ -1538,6 +1574,10 @@
     isolateNestedScroll(accordion);
     bindProductsDesktopDrag(accordion);
     initSpaProductsAtc();
+
+    if (!isDesktopSpa()) {
+      destroyReviewsSplide(accordion);
+    }
 
     if (!dialog) return;
 
