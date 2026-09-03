@@ -78,7 +78,13 @@
 
   .spa-{{ spa_id }} .spa__answer {
     overflow: hidden;
+    max-height: 0;
     transition: max-height 0.3s ease-in-out;
+  }
+
+  /* Prevent open/close flash before JS hydrates */
+  .spa-{{ spa_id }} .spa__answer:not(.spa-ready) {
+    transition: none !important;
   }
 
   .spa-{{ spa_id }} .spa__answer-inner {
@@ -157,6 +163,23 @@
     list-style: none;
     flex-shrink: 0;
     min-width: 0;
+  }
+
+  /* Desktop: keep cards sized before Splide mounts (avoids oversized flash) */
+  @media screen and (min-width: 750px) {
+    .spa-{{ spa_id }} .spa-reviews-splide:not(.is-initialized) .splide__list {
+      width: 100%;
+    }
+
+    .spa-{{ spa_id }} .spa-reviews-splide:not(.is-initialized) .splide__slide {
+      flex: 0 0 90%;
+      width: 90%;
+      max-width: 90%;
+    }
+
+    .spa-{{ spa_id }} .spa-reviews-splide:not(.is-initialized) .splide__track {
+      overflow: hidden;
+    }
   }
 
   .spa-{{ spa_id }} .spa-reviews-splide .spa-dialog__slide {
@@ -1026,7 +1049,16 @@
           </svg>
         </span>
       </button>
-      <div class="spa__answer" id="SpaAnswer-{{ spa_id }}" data-accordion-content>
+      <div
+        class="spa__answer{% if open_default %} is-open{% endif %}"
+        id="SpaAnswer-{{ spa_id }}"
+        data-accordion-content
+        {% if open_default %}
+          style="max-height: none;"
+        {% else %}
+          style="max-height: 0;"
+        {% endif %}
+      >
         <div class="spa__answer-inner{% if display_mode == 'slider' %} spa__answer-inner--slider{% endif %}">
           {%- if display_mode == 'slider' -%}
             <div
@@ -1515,12 +1547,14 @@
     function setOpen(open) {
       if (!trigger || !content) return;
       trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      content.classList.toggle('is-open', open);
       if (open) {
         content.style.maxHeight = content.scrollHeight + 'px';
         requestAnimationFrame(function() {
           ensureReviewsSplide(accordion);
           content.style.maxHeight = content.scrollHeight + 'px';
           window.setTimeout(function() {
+            if (trigger.getAttribute('aria-expanded') !== 'true') return;
             ensureReviewsSplide(accordion);
             content.style.maxHeight = content.scrollHeight + 'px';
           }, 320);
@@ -1539,14 +1573,22 @@
         setOpen(!isOpen);
       });
 
-      if (trigger.getAttribute('aria-expanded') === 'true') {
+      var shouldStartOpen = trigger.getAttribute('aria-expanded') === 'true';
+      if (shouldStartOpen) {
         content.style.maxHeight = content.scrollHeight + 'px';
+        content.classList.add('is-open');
         requestAnimationFrame(function() {
           ensureReviewsSplide(accordion);
         });
       } else {
         content.style.maxHeight = '0';
+        content.classList.remove('is-open');
       }
+
+      // Enable accordion animation only after the initial closed/open state is applied
+      requestAnimationFrame(function() {
+        content.classList.add('spa-ready');
+      });
 
       if (inner && typeof ResizeObserver !== 'undefined') {
         const observer = new ResizeObserver(function() {
@@ -1576,6 +1618,7 @@
     bindProductsDesktopDrag(accordion);
     initSpaProductsAtc();
 
+    // Never init Splide while accordion is closed; on mobile always force native scroll
     if (!isDesktopSpa()) {
       destroyReviewsSplide(accordion);
     }
