@@ -1310,27 +1310,26 @@
     const dialog = document.getElementById('SpaDialog-' + blockId);
     const mode = accordion.dataset.spaMode || 'poster';
 
-    function initDesktopCardDrag(scroller) {
-      if (!scroller || scroller.dataset.spaDesktopDrag === 'true') return;
-      scroller.dataset.spaDesktopDrag = 'true';
+    function bindDesktopDragRoot(root) {
+      if (!root || root.dataset.spaDesktopDragRoot === 'true') return;
+      root.dataset.spaDesktopDragRoot = 'true';
 
-      var isDown = false;
-      var startX = 0;
-      var startScrollLeft = 0;
-      var moved = false;
+      var dragState = null;
 
       function onMove(e) {
-        if (!isDown) return;
+        if (!dragState) return;
         e.preventDefault();
         e.stopPropagation();
-        var walk = e.pageX - startX;
-        if (Math.abs(walk) > 2) moved = true;
-        scroller.scrollLeft = startScrollLeft - walk;
+        var walk = e.pageX - dragState.startX;
+        if (Math.abs(walk) > 2) dragState.moved = true;
+        dragState.scroller.scrollLeft = dragState.startScrollLeft - walk;
       }
 
-      function onUp(e) {
-        if (!isDown) return;
-        isDown = false;
+      function onUp() {
+        if (!dragState) return;
+        var scroller = dragState.scroller;
+        var moved = dragState.moved;
+        dragState = null;
         scroller.classList.remove('is-dragging');
         document.body.classList.remove('spa-is-dragging');
         window.removeEventListener('mousemove', onMove, true);
@@ -1343,16 +1342,18 @@
         }
       }
 
-      scroller.addEventListener('mousedown', function(e) {
+      root.addEventListener('mousedown', function(e) {
         if (e.button !== 0) return;
-        // Only the innermost viewport should handle this drag
-        if (e.target.closest('[data-spa-viewport]') !== scroller) return;
         if (e.target.closest('[data-spa-handle], [data-spa-atc], button, select, input, textarea')) return;
+        var scroller = e.target.closest('[data-spa-viewport]');
+        if (!scroller || !root.contains(scroller)) return;
 
-        isDown = true;
-        moved = false;
-        startX = e.pageX;
-        startScrollLeft = scroller.scrollLeft;
+        dragState = {
+          scroller: scroller,
+          startX: e.pageX,
+          startScrollLeft: scroller.scrollLeft,
+          moved: false
+        };
         scroller.classList.add('is-dragging');
         document.body.classList.add('spa-is-dragging');
         window.addEventListener('mousemove', onMove, true);
@@ -1361,27 +1362,23 @@
         e.stopPropagation();
       }, true);
 
-      scroller.addEventListener('click', function(e) {
-        if (scroller.dataset.spaSuppressClick !== 'true') return;
+      root.addEventListener('click', function(e) {
+        var scroller = e.target.closest('[data-spa-viewport]');
+        if (!scroller || scroller.dataset.spaSuppressClick !== 'true') return;
         scroller.dataset.spaSuppressClick = 'false';
         e.preventDefault();
         e.stopPropagation();
       }, true);
 
-      scroller.addEventListener('dragstart', function(e) {
-        e.preventDefault();
+      root.addEventListener('dragstart', function(e) {
+        if (e.target.closest('[data-spa-viewport]')) e.preventDefault();
       }, true);
-    }
-
-    function bindViewports(root) {
-      if (!root) return;
-      root.querySelectorAll('[data-spa-viewport]').forEach(initDesktopCardDrag);
     }
 
     accordion.querySelectorAll('[data-spa-slider]').forEach(function(slider) {
       new SpaSlider(slider);
     });
-    bindViewports(accordion);
+    bindDesktopDragRoot(accordion);
     initSpaProductsAtc();
 
     if (!dialog) return;
@@ -1389,7 +1386,7 @@
     dialog.querySelectorAll('[data-spa-slider]').forEach(function(slider) {
       new SpaSlider(slider);
     });
-    bindViewports(dialog);
+    bindDesktopDragRoot(dialog);
 
     const viewport = dialog.querySelector('[data-spa-viewport]:not([data-spa-products])');
     const openBtn = accordion.querySelector('[data-spa-open]');
@@ -1401,7 +1398,6 @@
       } else {
         dialog.setAttribute('open', '');
       }
-      bindViewports(dialog);
       if (viewport) viewport.scrollLeft = 0;
     }
 
