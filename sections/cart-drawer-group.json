@@ -350,6 +350,7 @@
         },
         "subtotals_p6XGjr": {
           "type": "subtotals",
+          "disabled": true,
           "settings": {
             "display_subtotal": false,
             "subtotal_left_text": "<strong>Subtotal: </strong>",
@@ -454,7 +455,7 @@
         "heading_alignment": "flex-start",
         "heading_text_color": "#000000",
         "cart_badge_bg_color": "#000000",
-        "cart_badge_text_color": "#ffffff",
+        "cart_badge_text_color": "#FFFFFF",
         "cart_badge_border_color": "#000000",
         "cart_badge_font_size": 13,
         "cart_badge_font_weight": 600,
