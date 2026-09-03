@@ -365,15 +365,15 @@
             "display_discount_total": true,
             "discount_total_left_text": "<strong>Rabatter:</strong>",
             "discount_total_right_text": "-[discount_total]",
-            "discount_total_title_color": "#b8576e",
+            "discount_total_title_color": "#000000",
             "discount_total_title_size": 16,
-            "discount_total_price_color": "#b8576e",
+            "discount_total_price_color": "#000000",
             "discount_total_price_size": 16,
             "display_discounts": true,
             "discounts_label": "Rabatter:",
             "discounts_alignment": "flex-start",
             "margin_top": 15,
-            "margin_bottom": 15
+            "margin_bottom": 0
           }
         },
         "0935e47c-9604-4faa-b47a-d61ca49c0c16": {
