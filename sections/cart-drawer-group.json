@@ -363,7 +363,7 @@
             "compare_price_color": "#999999",
             "compare_price_size": 16,
             "display_discount_total": true,
-            "discount_total_left_text": "Rabatter:",
+            "discount_total_left_text": "<strong>Rabatter:</strong>",
             "discount_total_right_text": "-[discount_total]",
             "discount_total_title_color": "#b8576e",
             "discount_total_title_size": 16,
