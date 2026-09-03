@@ -133,6 +133,9 @@
             {%- if before_day != blank -%}
               <span class="spa-dialog__day spa-dialog__day--before">{{ before_day }}</span>
             {%- endif -%}
+            {%- if after_day != blank -%}
+              <span class="spa-dialog__day spa-dialog__day--after">{{ after_day }}</span>
+            {%- endif -%}
           </div>
         {%- endif -%}
         <div class="spa-dialog__content">
@@ -439,6 +442,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
     cursor: grab;
     padding-right: {{ block.settings.answer_padding_horizontal_desktop }}px;
     padding-bottom:10px;
@@ -538,6 +542,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
     cursor: grab;
     padding: 0 16px;
     box-sizing: border-box;
@@ -598,9 +603,15 @@
   }
 
   .spa-{{ spa_id }} .spa-dialog__slider--static {
-    cursor: default;
-    touch-action: auto;
-    user-select: auto;
+    cursor: grab;
+    touch-action: pan-x;
+    user-select: none;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__slider--static .spa-dialog__img,
+  .spa-{{ spa_id }} .spa-dialog__slider--static .spa-dialog__placeholder {
+    pointer-events: none;
+    -webkit-user-drag: none;
   }
 
   .spa-{{ spa_id }} .spa-dialog__image {
