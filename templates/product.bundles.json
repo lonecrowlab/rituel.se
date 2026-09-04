@@ -14,6 +14,7 @@
       "blocks": {
         "rating_stars_neWaWD": {
           "type": "rating_stars",
+          "disabled": true,
           "settings": {
             "stars_rating_source": "original",
             "rating": 4.4,
@@ -41,6 +42,7 @@
         },
         "popup_rating_KMyYPi": {
           "type": "popup_rating",
+          "disabled": true,
           "settings": {
             "attachment_type": "custom_rating_block",
             "trigger_selector": ".rating-stars",
@@ -66,7 +68,6 @@
         },
         "trustwill_trustoo_star_rating_widget_CCjHME": {
           "type": "shopify://apps/cwilltrustoo-reviews/blocks/star-rating-widget/c8f15077-6475-4e86-ad06-b66038d5ba2c",
-          "disabled": true,
           "settings": {
             "star_size": 15,
             "font_size": 14,
@@ -566,6 +567,7 @@
             "review_5_name": "Eva. B, 68",
             "products_used_heading": "De använde:",
             "products_used_button_text": "Lägg i kundvagn",
+            "products_used": [],
             "question_bg_color": "#ffffff",
             "question_bg_color_hover": "#f5f5f5",
             "question_bg_color_active": "#ffffff",
