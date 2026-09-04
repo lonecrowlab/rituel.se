@@ -1284,6 +1284,12 @@
         "disclaimer": {
           "privacy_policy": "Integritetspolicy",
           "terms_of_service": "Bruksvilkår"
+        },
+        "accept_whatsapp_marketing_checkbox_label": "Send nyheter og tilbud til meg via WhatsApp",
+        "whatsapp": {
+          "disclaimer": {
+            "description_html": "Ved å registrere deg via WhatsApp samtykker du til å motta markedsføringsmeldinger via WhatsApp på det oppgitte telefonnummeret. Samtykke er ikke et krav for kjøp. Svar STOPP for å avslutte abonnementet. Meldingsfrekvensen varierer. Kostnader for meldinger og datatrafikk kan påløpe. Les vår %{privacy_policy_link} og våre %{terms_of_service_link}."
+          }
         }
       },
       "localized_fields": {
@@ -1388,6 +1394,12 @@
             "one": "{{count}} feil i {{section}}",
             "other": "{{count}} feil i {{section}}"
           }
+        },
+        "delivery_address_validation_errors_banner": {
+          "title": "Leveringsadressen er ugyldig",
+          "text_html": "%{contact_us} for å redigere adressen",
+          "contact_us": "Kontakt oss",
+          "use_different_address": "Bruk en annen leveringsadresse"
         }
       },
       "marketplaces": {
@@ -1743,7 +1755,8 @@
         },
         "product_disclosures": {
           "title": "Produktopplysninger"
-        }
+        },
+        "discount_title_with_position": "Rabatt %{position}"
       },
       "payment": {
         "amazon_payments_label": "Amazon Pay",
@@ -2024,7 +2037,31 @@
           "oxxo": {
             "pay": "Betal %{amount}",
             "expiry_date_time": "%{date} kl. %{time}",
-            "reference_number": "Referansenummer:"
+            "reference_number": "Referansenummer:",
+            "label": "OXXO",
+            "number": "Referansenummer",
+            "steps": {
+              "1": "Skann strekkoden på nærmeste OXXO.",
+              "2": "Betal det nøyaktige beløpet kontant i kassen."
+            },
+            "print_voucher": "Skriv ut kupong",
+            "barcode_alt": "Strekkode for OXXO-kupong med referansenummer %{reference_number}",
+            "expires_at": "Utløper %{date}",
+            "expires_when_unknown": "Bruk før kupongen utløper",
+            "print": {
+              "instructions_title": "Instruksjoner for OXXO-betaling:",
+              "important_details_title": "Viktig informasjon:"
+            },
+            "important_details": {
+              "canceled_by_expiry": "Bestillingen din blir kansellert hvis betalingen ikke er mottatt senest %{date}.",
+              "canceled_when_expired": "Bestillingen din blir kansellert hvis betalingen ikke er mottatt før kupongen utløper.",
+              "non_refundable": "OXXO-bestillinger kan ikke refunderes.",
+              "tracking_after_payment": "Du får sporingsinformasjon for forsendelsen innen én virkedag etter gjennomført betaling."
+            },
+            "days_left": {
+              "one": "%{count} dag",
+              "other": "%{count} dager"
+            }
           }
         },
         "purchase_options_agreement_label": "En eller flere artikler i handlekurven din er et utsatt eller tilbakevendende kjøp. Ved å fortsette betalingen godtar du at betalingsmetoden din automatisk belastes med den prisen og frekvensen som er angitt på denne siden, inntil det avsluttes eller du avbryter. For alle avbestillinger gjelder %{cancellation_policy_label}.",
@@ -2167,7 +2204,19 @@
         "payment_method_loading_error": "Denne betalingsmetoden lastes fortsatt inn. Prøv igjen om noen sekunder.",
         "bank_payment_method_label": "Betalingsmetode for bankbetaling",
         "set_as_default_card": "Angi som standardkort",
-        "loading": "Laster inn betaling..."
+        "loading": "Laster inn betaling...",
+        "lpm": {
+          "oxxo": {
+            "voucher": {
+              "label": "OXXO",
+              "number": "Referansenummer",
+              "steps": {
+                "scan_barcode_at_oxxo": "Skann strekkoden på din nærmeste OXXO."
+              },
+              "barcode_alt": "Strekkoden til OXXO-verdibeviset for referansenummeret %{reference_number}"
+            }
+          }
+        }
       },
       "payment_errors": {
         "generic_error": "Det oppstod en feil under behandlingen av betalingen. Prøv igjen eller bruk en annen betalingsmetode.",
@@ -2235,7 +2284,9 @@
         "shipping_company_required_error": "{{shopName}} krever et firmanavn for leveringsadressen.",
         "payment_credential_delegation_error": "Det oppstod et problem med behandlingen av betalingen din. Velg en ny betalingsmetode.",
         "missing_cvc": "Angi en sikkerhetskode",
-        "custom_redeemable_no_longer_available": "Dette tilbudet er ikke lenger tilgjengelig."
+        "custom_redeemable_no_longer_available": "Dette tilbudet er ikke lenger tilgjengelig.",
+        "local_payment_method_amount_out_of_range": "%{payment_method} kan kun brukes til betalinger mellom %{minimum} og %{maximum}.",
+        "local_payment_method_unavailable": "%{payment_method} er ikke tilgjengelig"
       },
       "payment_challenge_modal": {
         "instructions": "Fullfør kjøpet med din {{paymentMethod}}-kode",
@@ -2728,6 +2779,10 @@
         "unbranded_description_with_fulfillment_weeks": {
           "one": "Sendes innen %{count} uke",
           "other": "Sendes innen %{count} uker"
+        },
+        "split_shipping_shipment_count_notice_one_time_purchase": {
+          "one": "Bestillingen din kommer i %{count} leveranser",
+          "other": "Bestillingen din kommer i %{count} leveranser"
         }
       },
       "session_errors": {
