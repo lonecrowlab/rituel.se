@@ -161,7 +161,7 @@
         "load_video": "Afspil videoen {{ index }} i gallerivisning",
         "image_available": "Billedet {{ index }} er nu tilgængeligt i gallerivisning",
         "see_it_in_action": "Se den i aktion",
-        "see_before_after": "Se de virkelige resultater"
+        "see_before_after": "Se vores kunderesultater"
       },
       "view_full_details": "Se komplette oplysninger",
       "include_taxes": "Inklusive skat.",
