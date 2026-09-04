@@ -160,7 +160,9 @@
         "load_image": "Chargement de l'image {{ index }} dans la vue galerie",
         "load_model": "Charger le modèle 3D {{ index }} en mode galerie",
         "load_video": "Lire la vidéo {{ index }} en mode galerie",
-        "image_available": "L'image {{ index }} est maintenant disponible en mode galerie"
+        "image_available": "L'image {{ index }} est maintenant disponible en mode galerie",
+        "see_it_in_action": "Voyez-le en action",
+        "see_before_after": "Voir les résultats réels"
       },
       "view_full_details": "Afficher toutes les données",
       "include_taxes": "Taxes incluses.",
