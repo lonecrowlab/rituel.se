@@ -358,7 +358,6 @@
         },
         "rapi_rapi_bundle_KmgXWT": {
           "type": "shopify://apps/rapi-bundle/blocks/rapi-bundle/99617c17-a32b-4e70-a883-7a155610d032",
-          "disabled": true,
           "settings": {
             "product": "pdrn-collagen-volume-balm"
           }
