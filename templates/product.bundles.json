@@ -766,7 +766,7 @@
             "background_gradient": "linear-gradient(133deg, rgba(250, 220, 54, 1) 11%, rgba(254, 98, 146, 1) 49%, rgba(250, 220, 54, 1) 87%)",
             "background_opacity": 50,
             "backdrop_blur": 0,
-            "function": "scroll_#ProductInfo-id",
+            "function": "add_to_cart",
             "button_label": "Lägg i Kundvagn",
             "button_note": "60 dagars nöjdhetsgaranti",
             "button_note_color": "#f0f0f0",
