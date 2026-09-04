@@ -58,7 +58,7 @@
         "heading_k3aVKe": {
           "type": "heading",
           "settings": {
-            "heading_before": "6 anledningar till varför kvinnor över 40 säger upp sina filler-tider",
+            "heading_before": "6 anledningar till varför kvinnor över 40 säger upp botox tider",
             "highlighted_text": "",
             "heading_after": "",
             "highlight_position": "inline_second",
@@ -300,7 +300,7 @@
         "body_text_eTHJ3U": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Med åren tappar hyn sin fyllighet. Det synsförst där huden är tunnast, under ögonen, vid mungiporna, runt läpparna. Intesom bara en rynka. Som en tomhet.</p><p>Det är därför krämerna inte hjälpt. De fyller inte i något. De ligger ovanpå.</p><p>Volufiline är en fransk ingrediens som får hyn att se fylligare och mer spänstig ut, i det lager där fylligheten faktiskt syns.</p><p>Resultat: en hud som ser fylligare, mjukare och mer levande ut.</p><p>Många ser skillnad efter en vecka. Inte bara i en före/efter-bild. I spegeln, på en tisdagsmorgon, när du inte letade efter den.</p>",
+            "body_text": "<p>Med åren tappar hyn sin fyllighet. Det syns först där huden är tunnast, under ögonen, vid mungiporna, runt läpparna. Inte bara som en rynka. Som en tomhet.</p><p>Det är därför krämerna inte hjälpt. De fyller inte i något. De ligger ovanpå.</p><p>Volufiline är en fransk ingrediens som får hyn att se fylligare och mer spänstig ut, i det lager där fylligheten faktiskt syns.</p><p>Resultat: en hud som ser fylligare, mjukare och mer levande ut.</p><p>Många ser skillnad efter en vecka. Inte bara i en före/efter-bild. I spegeln, på en tisdagsmorgon, när du inte letade efter den.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -340,7 +340,7 @@
             "quote_weight": "400",
             "quote_color": "#000000",
             "highlight_color": "#fbbf24",
-            "bg_color": "#EDEDED",
+            "bg_color": "#ededed",
             "enable_gradient": false,
             "gradient_bg": "",
             "padding": 20,
@@ -727,7 +727,7 @@
             "quote_weight": "400",
             "quote_color": "#000000",
             "highlight_color": "#fbbf24",
-            "bg_color": "#EDEDED",
+            "bg_color": "#ededed",
             "enable_gradient": false,
             "gradient_bg": "",
             "padding": 20,
