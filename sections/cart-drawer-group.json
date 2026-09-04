@@ -348,6 +348,34 @@
             "margin_bottom": 2
           }
         },
+        "subtotals_nfrbq8": {
+          "type": "subtotals",
+          "settings": {
+            "display_subtotal": false,
+            "subtotal_left_text": "<strong>Subtotal: </strong>",
+            "subtotal_right_text": "<strong>[subtotal]</strong>",
+            "subtotal_alignment": "spaced",
+            "subtotal_title_color": "#000000",
+            "subtotal_title_size": 20,
+            "subtotal_price_color": "#000000",
+            "subtotal_price_size": 20,
+            "show_compare_price": false,
+            "compare_price_color": "#999999",
+            "compare_price_size": 16,
+            "display_discount_total": true,
+            "discount_total_left_text": "<strong>Rabatter:</strong>",
+            "discount_total_right_text": "<strong>-[discount_total]</strong>",
+            "discount_total_title_color": "#000000",
+            "discount_total_title_size": 16,
+            "discount_total_price_color": "#000000",
+            "discount_total_price_size": 16,
+            "display_discounts": true,
+            "discounts_label": "Rabatter:",
+            "discounts_alignment": "flex-start",
+            "margin_top": 15,
+            "margin_bottom": 0
+          }
+        },
         "0935e47c-9604-4faa-b47a-d61ca49c0c16": {
           "type": "checkout_btn",
           "settings": {
@@ -422,6 +450,7 @@
         "097b7b4f-c0b8-4073-a06b-e6d49a5aad20",
         "product_upsells_6DyfY8",
         "delivery_date_cPJVBk",
+        "subtotals_nfrbq8",
         "0935e47c-9604-4faa-b47a-d61ca49c0c16",
         "guarantee_badge_Nb4tMY",
         "payment_badges_LwJbRV"
