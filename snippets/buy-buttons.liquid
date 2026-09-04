@@ -232,12 +232,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Always prevent default for product forms we're handling
-    // Bail out BEFORE preventDefault if the submit control can't be used
-    const submitButton = form.querySelector('[type="submit"]');
-    if (!submitButton || submitButton.disabled) {
-      return;
-    }
-
     e.preventDefault();
     e.stopPropagation();
 
@@ -247,6 +241,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Handle regular add to cart
+    const submitButton = form.querySelector('[type="submit"]');
+    if (!submitButton || submitButton.disabled) {
+      return;
+    }
+
     isSubmitting = true;
 
     // Check if skip cart is enabled — redirect directly to checkout
