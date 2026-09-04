@@ -14134,104 +14134,29 @@
         },
         {
           "type": "header",
-          "content": "Products used"
-        },
-        {
-          "type": "text",
-          "id": "products_used_heading",
-          "label": "Heading",
-          "default": "PRODUCTS USED"
-        },
-        {
-          "type": "text",
-          "id": "products_used_button_text",
-          "label": "Button text",
-          "default": "Lägg i kundvagn"
-        },
-        {
-          "type": "text",
-          "id": "verified_text",
-          "label": "Verified buyer text",
-          "default": "Verifierad köpare"
-        },
-        {
-          "type": "header",
-          "content": "Review card colors"
-        },
-        {
-          "type": "color",
-          "id": "stars_color",
-          "label": "Stars color",
-          "default": "#c9a227"
-        },
-        {
-          "type": "color",
-          "id": "stars_empty_color",
-          "label": "Empty stars color",
-          "default": "#e5e0d8"
-        },
-        {
-          "type": "color",
-          "id": "day_label_bg_color",
-          "label": "Before/after label background",
-          "default": "#c4b5a8"
-        },
-        {
-          "type": "color",
-          "id": "day_label_text_color",
-          "label": "Before/after label text",
-          "default": "#ffffff"
-        },
-        {
-          "type": "header",
-          "content": "Review Source"
-        },
-        {
-          "type": "select",
-          "id": "review_source",
-          "label": "Review Source",
-          "options": [
-            { "value": "custom", "label": "Custom (manual settings)" },
-            { "value": "metafield", "label": "Metafield (custom_reviews metaobject)" }
-          ],
-          "default": "custom",
-          "info": "Custom: fill in fields below manually. Metafield: pick a custom_reviews metaobject entry per review slot."
-        },
-        {
-          "type": "header",
           "content": "Review 1"
-        },
-        {
-          "type": "metaobject",
-          "id": "review_1_entry",
-          "label": "Review 1 — Metaobject entry",
-          "metaobject_type": "custom_reviews"
         },
         {
           "type": "image_picker",
           "id": "review_1_before_image",
-          "label": "Before image",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "label": "Before image"
         },
         {
           "type": "text",
           "id": "review_1_before_day",
           "label": "Before day",
-          "default": "Dag 1",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Dag 1"
         },
         {
           "type": "image_picker",
           "id": "review_1_after_image",
-          "label": "After image",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "label": "After image"
         },
         {
           "type": "text",
           "id": "review_1_after_day",
           "label": "After day",
-          "default": "Dag 21",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Dag 21"
         },
         {
           "type": "range",
@@ -14241,70 +14166,51 @@
           "step": 1,
           "label": "Stars",
           "default": 5,
-          "info": "Set to 0 to hide stars",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "info": "Set to 0 to hide stars"
         },
         {
           "type": "text",
           "id": "review_1_title",
           "label": "Title",
-          "default": "Synliga resultat på mogen hud",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Synliga resultat på mogen hud"
         },
         {
           "type": "textarea",
           "id": "review_1_review",
           "label": "Review",
-          "default": "Jag var skeptisk efter att ha provat allt. Men efter 3 veckor frågade min syster vad jag gjort, hon trodde jag hade injicerat. Det här är det första som faktiskt fungerar för mogen hud.",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Jag var skeptisk efter att ha provat allt. Men efter 3 veckor frågade min syster vad jag gjort, hon trodde jag hade injicerat. Det här är det första som faktiskt fungerar för mogen hud."
         },
         {
           "type": "text",
           "id": "review_1_name",
           "label": "Reviewer name",
-          "default": "Emma. N, 56",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
-        },
-        {
-          "type": "product_list",
-          "id": "review_1_products",
-          "label": "Review 1 — Products used"
+          "default": "Emma. N, 56"
         },
         {
           "type": "header",
           "content": "Review 2"
         },
         {
-          "type": "metaobject",
-          "id": "review_2_entry",
-          "label": "Review 2 — Metaobject entry",
-          "metaobject_type": "custom_reviews"
-        },
-        {
           "type": "image_picker",
           "id": "review_2_before_image",
-          "label": "Before image",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "label": "Before image"
         },
         {
           "type": "text",
           "id": "review_2_before_day",
           "label": "Before day",
-          "default": "Dag 1",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Dag 1"
         },
         {
           "type": "image_picker",
           "id": "review_2_after_image",
-          "label": "After image",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "label": "After image"
         },
         {
           "type": "text",
           "id": "review_2_after_day",
           "label": "After day",
-          "default": "Dag 42",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Dag 42"
         },
         {
           "type": "range",
@@ -14314,70 +14220,51 @@
           "step": 1,
           "label": "Stars",
           "default": 5,
-          "info": "Set to 0 to hide stars",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "info": "Set to 0 to hide stars"
         },
         {
           "type": "text",
           "id": "review_2_title",
           "label": "Title",
-          "default": "Mjukare textur & slätare panna",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Mjukare textur & slätare panna"
         },
         {
           "type": "textarea",
           "id": "review_2_review",
           "label": "Review",
-          "default": "Det första jag märkte var inte det jag väntade mig, det var hudens textur. Den känns mjukare, mer levande. Som om huden tar upp näring igen istället för att bara torka ut. Sen, efter 6 veckor, började även pannan se slätare ut.",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Det första jag märkte var inte det jag väntade mig, det var hudens textur. Den känns mjukare, mer levande. Som om huden tar upp näring igen istället för att bara torka ut. Sen, efter 6 veckor, började även pannan se slätare ut."
         },
         {
           "type": "text",
           "id": "review_2_name",
           "label": "Reviewer name",
-          "default": "Anna. B, 49",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
-        },
-        {
-          "type": "product_list",
-          "id": "review_2_products",
-          "label": "Review 2 — Products used"
+          "default": "Anna. B, 49"
         },
         {
           "type": "header",
           "content": "Review 3"
         },
         {
-          "type": "metaobject",
-          "id": "review_3_entry",
-          "label": "Review 3 — Metaobject entry",
-          "metaobject_type": "custom_reviews"
-        },
-        {
           "type": "image_picker",
           "id": "review_3_before_image",
-          "label": "Before image",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "label": "Before image"
         },
         {
           "type": "text",
           "id": "review_3_before_day",
           "label": "Before day",
-          "default": "Dag 1",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Dag 1"
         },
         {
           "type": "image_picker",
           "id": "review_3_after_image",
-          "label": "After image",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "label": "After image"
         },
         {
           "type": "text",
           "id": "review_3_after_day",
           "label": "After day",
-          "default": "Dag 30",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Dag 30"
         },
         {
           "type": "range",
@@ -14387,70 +14274,51 @@
           "step": 1,
           "label": "Stars",
           "default": 5,
-          "info": "Set to 0 to hide stars",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "info": "Set to 0 to hide stars"
         },
         {
           "type": "text",
           "id": "review_3_title",
           "label": "Title",
-          "default": "Mindre synliga fina linjer",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Mindre synliga fina linjer"
         },
         {
           "type": "textarea",
           "id": "review_3_review",
           "label": "Review",
-          "default": "Jag har testat ungefär allt och är ganska trött på produkter som lovar runt. Den här är första gången på länge jag faktiskt ser skillnad, även på de fina linjerna.",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Jag har testat ungefär allt och är ganska trött på produkter som lovar runt. Den här är första gången på länge jag faktiskt ser skillnad, även på de fina linjerna."
         },
         {
           "type": "text",
           "id": "review_3_name",
           "label": "Reviewer name",
-          "default": "Maja. L, 44",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
-        },
-        {
-          "type": "product_list",
-          "id": "review_3_products",
-          "label": "Review 3 — Products used"
+          "default": "Maja. L, 44"
         },
         {
           "type": "header",
           "content": "Review 4"
         },
         {
-          "type": "metaobject",
-          "id": "review_4_entry",
-          "label": "Review 4 — Metaobject entry",
-          "metaobject_type": "custom_reviews"
-        },
-        {
           "type": "image_picker",
           "id": "review_4_before_image",
-          "label": "Before image",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "label": "Before image"
         },
         {
           "type": "text",
           "id": "review_4_before_day",
           "label": "Before day",
-          "default": "Dag 1",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Dag 1"
         },
         {
           "type": "image_picker",
           "id": "review_4_after_image",
-          "label": "After image",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "label": "After image"
         },
         {
           "type": "text",
           "id": "review_4_after_day",
           "label": "After day",
-          "default": "Dag 21",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Dag 21"
         },
         {
           "type": "range",
@@ -14460,70 +14328,51 @@
           "step": 1,
           "label": "Stars",
           "default": 5,
-          "info": "Set to 0 to hide stars",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "info": "Set to 0 to hide stars"
         },
         {
           "type": "text",
           "id": "review_4_title",
           "label": "Title",
-          "default": "Synlig skillnad under ögonen",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Synlig skillnad under ögonen"
         },
         {
           "type": "textarea",
           "id": "review_4_review",
           "label": "Review",
-          "default": "Har provat alla krämer som finns på marknaden. Trodde inte längre på underverk. Men efter 3 veckor med PDRN-balmen är skillnaden så tydlig att jag inte längre behöver foundation under ögonen.",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Har provat alla krämer som finns på marknaden. Trodde inte längre på underverk. Men efter 3 veckor med PDRN-balmen är skillnaden så tydlig att jag inte längre behöver foundation under ögonen."
         },
         {
           "type": "text",
           "id": "review_4_name",
           "label": "Reviewer name",
-          "default": "Sofia. H, 52",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
-        },
-        {
-          "type": "product_list",
-          "id": "review_4_products",
-          "label": "Review 4 — Products used"
+          "default": "Sofia. H, 52"
         },
         {
           "type": "header",
           "content": "Review 5"
         },
         {
-          "type": "metaobject",
-          "id": "review_5_entry",
-          "label": "Review 5 — Metaobject entry",
-          "metaobject_type": "custom_reviews"
-        },
-        {
           "type": "image_picker",
           "id": "review_5_before_image",
-          "label": "Before image",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "label": "Before image"
         },
         {
           "type": "text",
           "id": "review_5_before_day",
           "label": "Before day",
-          "default": "Dag 1",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Dag 1"
         },
         {
           "type": "image_picker",
           "id": "review_5_after_image",
-          "label": "After image",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "label": "After image"
         },
         {
           "type": "text",
           "id": "review_5_after_day",
           "label": "After day",
-          "default": "Dag 60",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Dag 60"
         },
         {
           "type": "range",
@@ -14533,34 +14382,25 @@
           "step": 1,
           "label": "Stars",
           "default": 5,
-          "info": "Set to 0 to hide stars",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "info": "Set to 0 to hide stars"
         },
         {
           "type": "text",
           "id": "review_5_title",
           "label": "Title",
-          "default": "Huden känns verkligt annorlunda",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Huden känns verkligt annorlunda"
         },
         {
           "type": "textarea",
           "id": "review_5_review",
           "label": "Review",
-          "default": "Jag hade gett upp hoppet, apotekshyllan, dyra behandlingar, inget höll vad det lovade. Så skepsisen var på topp. Men två månader in kan jag inte förneka det längre: huden känns annorlunda.",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
+          "default": "Jag hade gett upp hoppet, apotekshyllan, dyra behandlingar, inget höll vad det lovade. Så skepsisen var på topp. Men två månader in kan jag inte förneka det längre: huden känns annorlunda."
         },
         {
           "type": "text",
           "id": "review_5_name",
           "label": "Reviewer name",
-          "default": "Eva. B, 68",
-          "visible_if": "{{ block.settings.review_source == 'custom' }}"
-        },
-        {
-          "type": "product_list",
-          "id": "review_5_products",
-          "label": "Review 5 — Products used"
+          "default": "Eva. B, 68"
         },
         {
           "type": "header",
