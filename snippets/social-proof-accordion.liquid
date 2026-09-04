@@ -11,274 +11,16 @@
   assign spa_id = block.id
   assign display_mode = block.settings.display_mode | default: 'poster'
   assign poster_image = block.settings.poster_image
-  assign products_used_list = block.settings.products_used
-  assign products_used_heading = block.settings.products_used_heading
+  assign review_source = block.settings.review_source | default: 'custom'
+  assign products_used_heading = block.settings.products_used_heading | default: 'PRODUCTS USED'
   assign products_used_button = block.settings.products_used_button_text | default: 'Lägg i kundvagn'
-  assign products_used_count = 0
-  if products_used_list != blank
-    assign products_used_count = products_used_list.size
-  endif
+  assign verified_text = block.settings.verified_text | default: 'Verifierad köpare'
 -%}
-
-{%- capture spa_slides -%}
-  {%- for i in (1..5) -%}
-    {%- liquid
-      assign before_key = 'review_' | append: i | append: '_before_image'
-      assign after_key = 'review_' | append: i | append: '_after_image'
-      assign before_day_key = 'review_' | append: i | append: '_before_day'
-      assign after_day_key = 'review_' | append: i | append: '_after_day'
-      assign stars_key = 'review_' | append: i | append: '_stars'
-      assign title_key = 'review_' | append: i | append: '_title'
-      assign review_key = 'review_' | append: i | append: '_review'
-      assign name_key = 'review_' | append: i | append: '_name'
-
-      assign before_image = block.settings[before_key]
-      assign after_image = block.settings[after_key]
-      assign before_day = block.settings[before_day_key]
-      assign after_day = block.settings[after_day_key]
-      assign stars = block.settings[stars_key] | default: 5
-      assign review_title = block.settings[title_key]
-      assign review_text = block.settings[review_key]
-      assign reviewer_name = block.settings[name_key]
-    -%}
-    {%- if before_image != blank or after_image != blank or review_text != blank or reviewer_name != blank or review_title != blank -%}
-      <article class="spa-dialog__slide" data-spa-slide>
-        <div class="spa-dialog__slider" data-spa-slider>
-          <div class="spa-dialog__image spa-dialog__image--before">
-            {%- if before_image != blank -%}
-              {{
-                before_image
-                | image_url: width: 1200
-                | image_tag:
-                  loading: 'lazy',
-                  class: 'spa-dialog__img',
-                  widths: '480, 640, 800, 1000, 1200',
-                  sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
-              }}
-            {%- else -%}
-              <div class="spa-dialog__placeholder">
-                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-              </div>
-            {%- endif -%}
-          </div>
-          <div class="spa-dialog__image spa-dialog__image--after">
-            {%- if after_image != blank -%}
-              {{
-                after_image
-                | image_url: width: 1200
-                | image_tag:
-                  loading: 'lazy',
-                  class: 'spa-dialog__img',
-                  widths: '480, 640, 800, 1000, 1200',
-                  sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
-              }}
-            {%- else -%}
-              <div class="spa-dialog__placeholder">
-                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-              </div>
-            {%- endif -%}
-          </div>
-          {%- if before_day != blank -%}
-            <span class="spa-dialog__day spa-dialog__day--before">{{ before_day }}</span>
-          {%- endif -%}
-          {%- if after_day != blank -%}
-            <span class="spa-dialog__day spa-dialog__day--after">{{ after_day }}</span>
-          {%- endif -%}
-          <div class="spa-dialog__control" data-spa-handle>
-            <div class="spa-dialog__handle" aria-hidden="true">
-              <svg class="spa-dialog__chevron spa-dialog__chevron--left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
-                <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <svg class="spa-dialog__chevron spa-dialog__chevron--right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
-                <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </div>
-        </div>
-        <div class="spa-dialog__content">
-          {%- if stars > 0 -%}
-            <div class="spa-dialog__stars" role="img" aria-label="{{ stars }} out of 5 stars">
-              {%- for s in (1..5) -%}
-                <svg
-                  class="spa-dialog__star{% if s <= stars %} spa-dialog__star--filled{% endif %}"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 576 512"
-                  aria-hidden="true"
-                  focusable="false"
-                >
-                  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
-                </svg>
-              {%- endfor -%}
-            </div>
-          {%- endif -%}
-          {%- if review_title != blank -%}
-            <h3 class="spa-dialog__card-title">{{ review_title }}</h3>
-          {%- endif -%}
-          {%- if review_text != blank -%}
-            <p class="spa-dialog__review">“{{ review_text | escape | strip }}”</p>
-          {%- endif -%}
-          {%- if reviewer_name != blank -%}
-            <div class="spa-dialog__meta">
-              <p class="spa-dialog__reviewer">— {{ reviewer_name }}</p>
-              <div class="spa-dialog__verified">
-                <svg class="spa-dialog__verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M9.5924 3.20027C9.34888 3.4078 9.22711 3.51158 9.09706 3.59874C8.79896 3.79854 8.46417 3.93721 8.1121 4.00672C7.95851 4.03705 7.79903 4.04977 7.48008 4.07522C6.6787 4.13918 6.278 4.17115 5.94371 4.28923C5.17051 4.56233 4.56233 5.17051 4.28923 5.94371C4.17115 6.278 4.13918 6.6787 4.07522 7.48008C4.04977 7.79903 4.03705 7.95851 4.00672 8.1121C3.93721 8.46417 3.79854 8.79896 3.59874 9.09706C3.51158 9.22711 3.40781 9.34887 3.20027 9.5924C2.67883 10.2043 2.4181 10.5102 2.26522 10.8301C1.91159 11.57 1.91159 12.43 2.26522 13.1699C2.41811 13.4898 2.67883 13.7957 3.20027 14.4076C3.40778 14.6511 3.51158 14.7729 3.59874 14.9029C3.79854 15.201 3.93721 15.5358 4.00672 15.8879C4.03705 16.0415 4.04977 16.201 4.07522 16.5199C4.13918 17.3213 4.17115 17.722 4.28923 18.0563C4.56233 18.8295 5.17051 19.4377 5.94371 19.7108C6.278 19.8288 6.6787 19.8608 7.48008 19.9248C7.79903 19.9502 7.95851 19.963 8.1121 19.9933C8.46417 20.0628 8.79896 20.2015 9.09706 20.4013C9.22711 20.4884 9.34887 20.5922 9.5924 20.7997C10.2043 21.3212 10.5102 21.5819 10.8301 21.7348C11.57 22.0884 12.43 22.0884 13.1699 21.7348C13.4898 21.5819 13.7957 21.3212 14.4076 20.7997C14.6511 20.5922 14.7729 20.4884 14.9029 20.4013C15.201 20.2015 15.5358 20.0628 15.8879 19.9933C16.0415 19.963 16.201 19.9502 16.5199 19.9248C17.3213 19.8608 17.722 19.8288 18.0563 19.7108C18.8295 19.4377 19.4377 18.8295 19.7108 18.0563C19.8288 17.722 19.8608 17.3213 19.9248 16.5199C19.9502 16.201 19.963 16.0415 19.9933 15.8879C20.0628 15.5358 20.2015 15.201 20.4013 14.9029C20.4884 14.7729 20.5922 14.6511 20.7997 14.4076C21.3212 13.7957 21.5819 13.4898 21.7348 13.1699C22.0884 12.43 22.0884 11.57 21.7348 10.8301C21.5819 10.5102 21.3212 10.2043 20.7997 9.5924C20.5922 9.34887 20.4884 9.22711 20.4013 9.09706C20.2015 8.79896 20.0628 8.46417 19.9933 8.1121C19.963 7.95851 19.9502 7.79903 19.9248 7.48008C19.8608 6.6787 19.8288 6.278 19.7108 5.94371C19.4377 5.17051 18.8295 4.56233 18.0563 4.28923C17.722 4.17115 17.3213 4.13918 16.5199 4.07522C16.201 4.04977 16.0415 4.03705 15.8879 4.00672C15.5358 3.93721 15.201 3.79854 14.9029 3.59874C14.7729 3.51158 14.6511 3.40781 14.4076 3.20027C13.7957 2.67883 13.4898 2.41811 13.1699 2.26522C12.43 1.91159 11.57 1.91159 10.8301 2.26522C10.5102 2.4181 10.2043 2.67883 9.5924 3.20027ZM16.3735 9.86314C16.6913 9.5453 16.6913 9.03 16.3735 8.71216C16.0557 8.39433 15.5403 8.39433 15.2225 8.71216L10.3723 13.5624L8.77746 11.9676C8.45963 11.6498 7.94432 11.6498 7.62649 11.9676C7.30866 12.2854 7.30866 12.8007 7.62649 13.1186L9.79678 15.2889C10.1146 15.6067 10.6299 15.6067 10.9478 15.2889L16.3735 9.86314Z" fill="currentColor"/>
-                </svg>
-                <span class="spa-dialog__verified-text">Verifierad köpare</span>
-              </div>
-            </div>
-          {%- endif -%}
-        </div>
-      </article>
-    {%- endif -%}
-  {%- endfor -%}
-{%- endcapture -%}
-
-{%- capture spa_products -%}
-  {%- if products_used_count > 0 -%}
-    <div class="spa-products">
-      {%- if products_used_heading != blank -%}
-        <p class="spa-products__heading">{{ products_used_heading | escape }}</p>
-      {%- endif -%}
-      <div class="spa-products__viewport" data-spa-viewport>
-        <div class="spa-products__track{% if products_used_count == 1 %} spa-products__track--single{% endif %}">
-          {%- for used_product in products_used_list -%}
-            {%- assign used_variant = used_product.selected_or_first_available_variant -%}
-            <article class="spa-products__card">
-              <a class="spa-products__image" href="{{ used_product.url }}">
-                {%- if used_product.featured_image != blank -%}
-                  {{
-                    used_product.featured_image
-                    | image_url: width: 240
-                    | image_tag:
-                      loading: 'lazy',
-                      class: 'spa-products__img',
-                      widths: '120, 160, 240',
-                      sizes: '88px',
-                      alt: used_product.title
-                  }}
-                {%- else -%}
-                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                {%- endif -%}
-              </a>
-              <div class="spa-products__info">
-                <a class="spa-products__title" href="{{ used_product.url }}">{{ used_product.title | escape }}</a>
-                {%- if used_variant != blank -%}
-                  <p class="spa-products__price">{{ used_variant.price | money }}</p>
-                  <button
-                    type="button"
-                    class="spa-products__atc"
-                    data-spa-atc
-                    data-variant-id="{{ used_variant.id }}"
-                    data-add-label="{{ products_used_button | escape }}"
-                    data-added-label="Tillagd"
-                    {% unless used_variant.available %}disabled{% endunless %}
-                  >
-                    <span class="spa-products__spinner" aria-hidden="true"></span>
-                    <span class="spa-products__atc-text">
-                      {%- if used_variant.available -%}
-                        {{ products_used_button | escape }}
-                      {%- else -%}
-                        Slutsåld
-                      {%- endif -%}
-                    </span>
-                  </button>
-                {%- endif -%}
-              </div>
-            </article>
-          {%- endfor -%}
-        </div>
-      </div>
-    </div>
-  {%- endif -%}
-{%- endcapture -%}
-
-{%- if question != blank and spa_slides != blank -%}
-<div
-  class="spa spa-{{ spa_id }}"
-  data-spa="{{ spa_id }}"
-  data-spa-mode="{{ display_mode }}"
-  {{ block.shopify_attributes }}
-  style="--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;--spa-pad-x-desktop: {{ block.settings.answer_padding_horizontal_desktop }}px;--spa-pad-x-mobile: {{ block.settings.answer_padding_horizontal_mobile }}px;"
->
-  <div class="spa__items">
-    <div class="spa__item" data-accordion-item>
-      <button
-        class="spa__question"
-        type="button"
-        aria-expanded="{% if open_default %}true{% else %}false{% endif %}"
-        aria-controls="SpaAnswer-{{ spa_id }}"
-        data-accordion-trigger
-      >
-        <span class="spa__question-text">{{ question }}</span>
-        <span class="spa__icon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-      </button>
-      <div class="spa__answer" id="SpaAnswer-{{ spa_id }}" data-accordion-content>
-        <div class="spa__answer-inner{% if display_mode == 'slider' %} spa__answer-inner--slider{% endif %}{% if spa_products != blank %} spa__answer-inner--has-products{% endif %}">
-          {%- if display_mode == 'slider' -%}
-            <div class="spa-slider-viewport" data-spa-viewport>
-              <div class="spa-slider-track">
-                {{ spa_slides }}
-              </div>
-            </div>
-          {%- else -%}
-            <button
-              type="button"
-              class="spa__poster"
-              data-spa-open
-              aria-label="{{ question | escape }}"
-            >
-              {%- if poster_image != blank -%}
-                {{
-                  poster_image
-                  | image_url: width: 1400
-                  | image_tag:
-                    loading: 'lazy',
-                    class: 'spa__poster-img',
-                    widths: '400, 600, 800, 1000, 1200, 1400',
-                    sizes: '(min-width: 990px) 420px, 92vw',
-                    alt: question
-                }}
-              {%- else -%}
-                <span class="spa__poster-placeholder">
-                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                </span>
-              {%- endif -%}
-            </button>
-          {%- endif -%}
-          {{ spa_products }}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-{%- if display_mode == 'poster' -%}
-<dialog class="spa-dialog spa-{{ spa_id }}" id="SpaDialog-{{ spa_id }}" aria-labelledby="SpaDialogTitle-{{ spa_id }}">
-  <h2 class="visually-hidden" id="SpaDialogTitle-{{ spa_id }}">{{ question }}</h2>
-  <button type="button" class="spa-dialog__close" data-spa-close aria-label="Stäng">
-    <svg width="18" height="18" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
-  </button>
-  <div class="spa-dialog__viewport" data-spa-viewport>
-    <div class="spa-dialog__track">
-      {{ spa_slides }}
-    </div>
-  </div>
-</dialog>
-{%- endif -%}
-
 <style>
   .spa-{{ spa_id }} {
     width: 100%;
     margin-top: var(--margin-top, 2rem);
     margin-bottom: var(--margin-bottom, 2rem);
-    --spa-pad-x: var(--spa-pad-x-desktop, 20px);
   }
 
   .spa-{{ spa_id }} .spa__items {
@@ -336,7 +78,13 @@
 
   .spa-{{ spa_id }} .spa__answer {
     overflow: hidden;
+    max-height: 0;
     transition: max-height 0.3s ease-in-out;
+  }
+
+  /* Prevent open/close flash before JS hydrates */
+  .spa-{{ spa_id }} .spa__answer:not(.spa-ready) {
+    transition: none !important;
   }
 
   .spa-{{ spa_id }} .spa__answer-inner {
@@ -385,39 +133,69 @@
     height: auto;
   }
 
-  .spa-{{ spa_id }} .spa-slider-viewport {
+  .spa-{{ spa_id }} .spa-reviews-splide-wrap {
+    display: block;
     width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    cursor: grab;
-    padding-right: {{ block.settings.answer_padding_horizontal_desktop }}px;
   }
 
-  .spa-{{ spa_id }} .spa-slider-viewport.is-dragging {
+  .spa-{{ spa_id }} .spa-reviews-splide {
+    visibility: visible;
+  }
+
+  .spa-{{ spa_id }} .spa-reviews-splide .splide__track {
+    overflow: hidden;
+    cursor: grab;
+  }
+
+  .spa-{{ spa_id }} .spa-reviews-splide.is-dragging .splide__track,
+  .spa-{{ spa_id }} .spa-reviews-splide .splide__track:active {
     cursor: grabbing;
   }
 
-  .spa-{{ spa_id }} .spa-slider-track {
-    display: flex;
+  .spa-{{ spa_id }} .spa-reviews-splide .splide__list {
     align-items: stretch;
-    gap: 12px;
-    min-width: 100%;
+    display: flex;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  .spa-{{ spa_id }} .spa-slider-track .spa-dialog__slide {
+  .spa-{{ spa_id }} .spa-reviews-splide .splide__slide {
+    list-style: none;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+
+  /* Desktop: keep cards sized before Splide mounts (avoids oversized flash) */
+  @media screen and (min-width: 750px) {
+    .spa-{{ spa_id }} .spa-reviews-splide:not(.is-initialized) .splide__list {
+      width: 100%;
+    }
+
+    .spa-{{ spa_id }} .spa-reviews-splide:not(.is-initialized) .splide__slide {
+      flex: 0 0 90%;
+      width: 90%;
+      max-width: 90%;
+    }
+
+    .spa-{{ spa_id }} .spa-reviews-splide:not(.is-initialized) .splide__track {
+      overflow: hidden;
+    }
+  }
+
+  .spa-{{ spa_id }} .spa-reviews-splide .spa-dialog__slide {
     display: flex;
     flex-direction: column;
-    flex: 0 0 70%;
-    width: 70%;
-    max-width: 70%;
+    height: 100%;
     min-width: 0;
     overflow: hidden;
     background: #ffffff;
     border: 1px solid #d4d4d4;
     border-radius: 16px;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
+  /* Mobile: native overflow scroll (no Splide) */
   @media screen and (max-width: 749px) {
     .spa-{{ spa_id }} .spa__question {
       font-size: {{ block.settings.question_font_size_mobile }}px;
@@ -432,29 +210,52 @@
       padding-right: 0;
     }
 
-    .spa-{{ spa_id }} .spa-slider-viewport {
+    .spa-{{ spa_id }} .spa-reviews-splide.is-initialized,
+    .spa-{{ spa_id }} .spa-reviews-splide.is-active,
+    .spa-{{ spa_id }} .spa-reviews-splide.is-rendered {
+      visibility: visible;
+    }
+
+    .spa-{{ spa_id }} .spa-reviews-splide .splide__track {
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-x;
       padding-right: {{ block.settings.answer_padding_horizontal_mobile }}px;
+      scrollbar-width: none;
+      cursor: auto;
     }
 
-    .spa-{{ spa_id }} .spa-slider-track .spa-dialog__slide {
-      flex: 0 0 85%;
-      width: 85%;
-      max-width: 85%;
+    .spa-{{ spa_id }} .spa-reviews-splide .splide__track::-webkit-scrollbar {
+      display: none;
     }
 
-    .spa-{{ spa_id }} .spa-products__image {
-      flex: 0 0 72px;
-      width: 72px;
-      height: 72px;
+    .spa-{{ spa_id }} .spa-reviews-splide .splide__list {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      align-items: stretch !important;
+      gap: 12px;
+      transform: none !important;
+      width: 100% !important;
+      min-width: 100% !important;
+      height: auto !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
 
-    .spa-{{ spa_id }} .spa-products__title {
-      font-size: 14px;
+    .spa-{{ spa_id }} .spa-reviews-splide .splide__slide {
+      flex: 0 0 82% !important;
+      width: 82% !important;
+      max-width: 82% !important;
+      transform: none !important;
+      margin: 0 !important;
+      left: auto !important;
     }
 
-    .spa-{{ spa_id }} .spa-products__atc {
-      font-size: 12px;
-      padding: 9px 14px;
+    .spa-{{ spa_id }} .spa-dialog__slider,
+    .spa-{{ spa_id }} .spa-dialog__slider--static {
+      aspect-ratio: 1 / 1;
+      max-height: 260px;
     }
   }
 
@@ -500,53 +301,55 @@
   #SpaDialog-{{ spa_id }} .spa-dialog__viewport {
     width: 100%;
     max-height: calc(100vh - 80px);
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    cursor: grab;
-    padding: 0 16px;
-    box-sizing: border-box;
-  }
-
-  #SpaDialog-{{ spa_id }} .spa-dialog__viewport.is-dragging {
-    cursor: grabbing;
-  }
-
-  #SpaDialog-{{ spa_id }} .spa-dialog__viewport::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  #SpaDialog-{{ spa_id }} .spa-dialog__viewport::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 999px;
-  }
-
-  #SpaDialog-{{ spa_id }} .spa-dialog__viewport::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 999px;
-  }
-
-  #SpaDialog-{{ spa_id }} .spa-dialog__track {
-    display: flex;
-    align-items: stretch;
-    gap: 16px;
-    min-width: 100%;
-    padding-right: 16px;
-    box-sizing: border-box;
-  }
-
-  #SpaDialog-{{ spa_id }} .spa-dialog__slide {
-    display: flex;
-    flex-direction: column;
-    flex: 0 0 22%;
-    width: 22%;
-    max-width: 22%;
-    min-width: 0;
-    max-height: 100%;
     overflow: hidden;
-    background: #ffffff;
-    border: 1px solid #d4d4d4;
-    border-radius: 16px;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .spa-dialog__slide {
+    max-height: calc(100vh - 100px);
+  }
+
+  @media screen and (max-width: 749px) {
+    #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__track {
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-x;
+      padding-right: 12px;
+      scrollbar-width: none;
+      cursor: auto;
+    }
+
+    #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__track::-webkit-scrollbar {
+      display: none;
+    }
+
+    #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__list {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      gap: 12px;
+      transform: none !important;
+      width: 100% !important;
+      min-width: 100% !important;
+      height: auto !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    #SpaDialog-{{ spa_id }} .spa-reviews-splide--dialog .splide__slide {
+      flex: 0 0 82% !important;
+      width: 82% !important;
+      max-width: 82% !important;
+      transform: none !important;
+      margin: 0 !important;
+      left: auto !important;
+    }
+
+    #SpaDialog-{{ spa_id }} .spa-dialog__slider,
+    #SpaDialog-{{ spa_id }} .spa-dialog__slider--static {
+      max-height: 260px;
+    }
   }
 
   .spa-{{ spa_id }} .spa-dialog__slider {
@@ -557,9 +360,30 @@
     border-radius: 16px 16px 0 0;
     user-select: none;
     touch-action: pan-y pinch-zoom;
-    cursor: ew-resize;
+    cursor: grab;
     background: #e8e4df;
     flex-shrink: 0;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__slider[data-spa-slider] {
+    cursor: grab;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__control,
+  .spa-{{ spa_id }} .spa-dialog__handle {
+    cursor: ew-resize;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__slider--static {
+    cursor: grab;
+    touch-action: pan-x;
+    user-select: none;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__slider--static .spa-dialog__img,
+  .spa-{{ spa_id }} .spa-dialog__slider--static .spa-dialog__placeholder {
+    pointer-events: none;
+    -webkit-user-drag: none;
   }
 
   .spa-{{ spa_id }} .spa-dialog__image {
@@ -584,6 +408,8 @@
     max-width: none !important;
     object-fit: cover;
     display: block;
+    -webkit-user-drag: none;
+    pointer-events: none;
   }
 
   .spa-{{ spa_id }} .spa-dialog__placeholder {
@@ -606,8 +432,8 @@
     z-index: 4;
     pointer-events: none;
     padding: 6px 12px;
-    background: #c4b5a8;
-    color: #ffffff;
+    background: {{ block.settings.day_label_bg_color | default: '#c4b5a8' }};
+    color: {{ block.settings.day_label_text_color | default: '#ffffff' }};
     font-size: 12px;
     font-weight: 500;
     border-radius: 20px;
@@ -663,7 +489,8 @@
     flex-direction: column;
     gap: 8px;
     flex: 1 1 auto;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .spa-{{ spa_id }} .spa-dialog__stars {
@@ -675,11 +502,11 @@
   .spa-{{ spa_id }} .spa-dialog__star {
     width: 14px;
     height: 14px;
-    fill: #e5e0d8;
+    fill: {{ block.settings.stars_empty_color | default: '#e5e0d8' }};
   }
 
   .spa-{{ spa_id }} .spa-dialog__star--filled {
-    fill: #c9a227;
+    fill: {{ block.settings.stars_color | default: '#c9a227' }};
   }
 
   .spa-{{ spa_id }} .spa-dialog__card-title {
@@ -697,6 +524,21 @@
     font-weight: 400;
     line-height: 1.55;
     margin: 0;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__review--rich {
+    font-style: normal;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__review--rich p {
+    margin: 0 0 0.5em;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #3a3a3a;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__review--rich p:last-child {
+    margin-bottom: 0;
   }
 
   .spa-{{ spa_id }} .spa-dialog__reviewer {
@@ -735,122 +577,85 @@
     line-height: 1.2;
   }
 
-  @media screen and (min-width: 750px) and (max-width: 989px) {
-    #SpaDialog-{{ spa_id }} .spa-dialog__slide {
-      flex: 0 0 45%;
-      width: 45%;
-      max-width: 45%;
-    }
+  .spa-{{ spa_id }} .spa-dialog__products {
+    margin-top: 4px;
+    padding-top: 12px;
+    border-top: 1px solid #ece8e3;
   }
 
-  @media screen and (max-width: 749px) {
-    #SpaDialog-{{ spa_id }} {
-      padding: 52px 0 16px;
-    }
-
-    #SpaDialog-{{ spa_id }} .spa-dialog__viewport {
-      padding: 0 12px;
-    }
-
-    #SpaDialog-{{ spa_id }} .spa-dialog__slide {
-      flex: 0 0 85%;
-      width: 85%;
-      max-width: 85%;
-    }
-
-    .spa-{{ spa_id }} .spa-dialog__card-title {
-      font-size: 17px;
-    }
-
-    .spa-{{ spa_id }} {
-      --spa-pad-x: var(--spa-pad-x-mobile);
-    }
-  }
-
-  .spa-{{ spa_id }} .spa-products {
-    margin-top: 16px;
-  }
-
-  .spa-{{ spa_id }} .spa-products__heading {
-    margin: 0 0 12px;
-    color: #1a1a1a;
+  .spa-{{ spa_id }} .spa-dialog__products-title {
+    margin: 0 0 10px;
     font-size: 13px;
     font-weight: 700;
+    color: #1a1a1a;
+    text-transform: uppercase;
     letter-spacing: 0.06em;
     line-height: 1.2;
-    text-transform: uppercase;
   }
 
-  .spa-{{ spa_id }} .spa__answer-inner--slider .spa-products__heading {
-    padding-right: var(--spa-pad-x);
-  }
-
-  .spa-{{ spa_id }} .spa-products__viewport {
-    width: calc(100% + var(--spa-pad-x));
+  .spa-{{ spa_id }} .spa-dialog__products-viewport {
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     cursor: grab;
-    padding-right: var(--spa-pad-x);
+    user-select: none;
+    -webkit-user-select: none;
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
   }
 
-  .spa-{{ spa_id }} .spa__answer-inner--slider .spa-products__viewport {
-    width: 100%;
-  }
-
-  .spa-{{ spa_id }} .spa-products__viewport::-webkit-scrollbar {
+  .spa-{{ spa_id }} .spa-dialog__products-viewport::-webkit-scrollbar {
     display: none;
   }
 
-  .spa-{{ spa_id }} .spa-products__viewport.is-dragging {
+  .spa-{{ spa_id }} .spa-dialog__products-viewport.is-dragging {
     cursor: grabbing;
   }
 
-  .spa-{{ spa_id }} .spa-products__track {
+  .spa-{{ spa_id }} .spa-dialog__products-track {
     display: flex;
     flex-wrap: nowrap;
     align-items: stretch;
-    gap: 12px;
+    gap: 10px;
     width: 100%;
   }
 
-  .spa-{{ spa_id }} .spa-products__card {
+  .spa-{{ spa_id }} .spa-dialog__product-card {
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    flex: 0 0 calc((100% - 12px) / 1.2);
-    width: calc((100% - 12px) / 1.2);
-    max-width: calc((100% - 12px) / 1.2);
+    flex: 0 0 calc((100% - 10px) / 1.1);
+    width: calc((100% - 10px) / 1.1);
+    max-width: calc((100% - 10px) / 1.1);
     min-width: 0;
     gap: 12px;
-    padding: 12px;
+    padding: 5px;
     background: #ffffff;
     border: 1px solid #d4d4d4;
-    border-radius: 16px;
+    border-radius: 6px;
     box-sizing: border-box;
     scroll-snap-align: start;
   }
 
-  .spa-{{ spa_id }} .spa-products__track--single .spa-products__card {
+  .spa-{{ spa_id }} .spa-dialog__products-track--single .spa-dialog__product-card {
     flex: 0 0 100%;
     width: 100%;
     max-width: 100%;
   }
 
-  .spa-{{ spa_id }} .spa-products__image {
-    flex: 0 0 88px;
-    width: 88px;
-    height: 88px;
+  .spa-{{ spa_id }} .spa-dialog__product-image {
+    flex: 0 0 72px;
+    width: 72px;
+    height: 72px;
     border-radius: 10px;
     overflow: hidden;
     background: #f4f1ed;
     align-self: center;
   }
 
-  .spa-{{ spa_id }} .spa-products__img,
-  .spa-{{ spa_id }} .spa-products__image svg {
+  .spa-{{ spa_id }} .spa-dialog__product-img,
+  .spa-{{ spa_id }} .spa-dialog__product-image svg,
+  .spa-{{ spa_id }} .spa-dialog__product-img-placeholder svg {
     width: 100% !important;
     height: 100% !important;
     max-width: none !important;
@@ -858,7 +663,16 @@
     display: block;
   }
 
-  .spa-{{ spa_id }} .spa-products__info {
+  .spa-{{ spa_id }} .spa-dialog__product-img-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: #ece8e3;
+  }
+
+  .spa-{{ spa_id }} .spa-dialog__product-info {
     flex: 1;
     min-width: 0;
     display: flex;
@@ -868,9 +682,10 @@
     gap: 4px;
   }
 
-  .spa-{{ spa_id }} .spa-products__title {
+  .spa-{{ spa_id }} .spa-dialog__product-title {
+    margin: 0;
     color: #1a1a1a;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     line-height: 1.25;
     text-decoration: none;
@@ -881,23 +696,23 @@
     overflow: hidden;
   }
 
-  .spa-{{ spa_id }} .spa-products__price {
+  .spa-{{ spa_id }} .spa-dialog__product-price {
     margin: 0;
     color: #8a8a8a;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 400;
     line-height: 1.3;
   }
 
-  .spa-{{ spa_id }} .spa-products__atc {
+  .spa-{{ spa_id }} .spa-dialog__product-atc {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-top: 6px;
+    margin-top: 4px;
     padding: 10px 16px;
     border: 0;
-    border-radius: 8px;
+    border-radius: 4px;
     background: #111111;
     color: #ffffff;
     font-size: 13px;
@@ -908,20 +723,20 @@
     white-space: nowrap;
   }
 
-  .spa-{{ spa_id }} .spa-products__atc:hover:not(:disabled) {
+  .spa-{{ spa_id }} .spa-dialog__product-atc:hover:not(:disabled) {
     opacity: 0.88;
   }
 
-  .spa-{{ spa_id }} .spa-products__atc:disabled {
+  .spa-{{ spa_id }} .spa-dialog__product-atc:disabled {
     opacity: 0.55;
     cursor: not-allowed;
   }
 
-  .spa-{{ spa_id }} .spa-products__atc.loading {
+  .spa-{{ spa_id }} .spa-dialog__product-atc.loading {
     pointer-events: none;
   }
 
-  .spa-{{ spa_id }} .spa-products__spinner {
+  .spa-{{ spa_id }} .spa-dialog__product-spinner {
     display: none;
     position: absolute;
     top: 50%;
@@ -936,18 +751,392 @@
     animation: spa-atc-spin 0.8s linear infinite;
   }
 
-  .spa-{{ spa_id }} .spa-products__atc.loading .spa-products__spinner {
+  .spa-{{ spa_id }} .spa-dialog__product-atc.loading .spa-dialog__product-spinner {
     display: block;
   }
 
-  .spa-{{ spa_id }} .spa-products__atc.loading .spa-products__atc-text {
+  .spa-{{ spa_id }} .spa-dialog__product-atc.loading .spa-dialog__product-atc-text {
     opacity: 0;
   }
 
   @keyframes spa-atc-spin {
     to { transform: rotate(360deg); }
   }
+
+  @media screen and (max-width: 749px) {
+    #SpaDialog-{{ spa_id }} {
+      padding: 52px 0 16px;
+    }
+
+    #SpaDialog-{{ spa_id }} .spa-dialog__viewport {
+      padding: 0 12px;
+    }
+
+    .spa-{{ spa_id }} .spa-dialog__card-title {
+      font-size: 17px;
+    }
+
+    .spa-{{ spa_id }} .spa-dialog__product-image {
+      flex: 0 0 64px;
+      width: 64px;
+      height: 64px;
+    }
+
+    .spa-{{ spa_id }} .spa-dialog__product-title {
+      font-size: 13px;
+    }
+
+    .spa-{{ spa_id }} .spa-dialog__product-atc {
+      font-size: 12px;
+      padding: 9px 14px;
+    }
+  }
 </style>
+{%- capture spa_slides -%}
+  {%- for i in (1..5) -%}
+    {%- liquid
+      if review_source == 'metafield'
+        assign entry_key = 'review_' | append: i | append: '_entry'
+        assign entry = block.settings[entry_key]
+
+        if entry == blank
+          continue
+        endif
+
+        assign before_image    = entry.before_image.value
+        assign after_image     = entry.after_date.value
+        assign before_day      = entry.before_date.value
+        assign after_day       = entry.result_day.value
+        assign stars           = entry.stars_count.value | plus: 0
+        assign review_title    = blank
+        assign review_text_raw = entry.review_message.value
+        assign reviewer_name   = entry.name.value
+        assign reviewer_age    = entry.age.value
+        assign is_verified     = entry.verified.value
+        assign review_products = entry.products_used.value
+      else
+        assign before_key   = 'review_' | append: i | append: '_before_image'
+        assign after_key    = 'review_' | append: i | append: '_after_image'
+        assign before_day_key = 'review_' | append: i | append: '_before_day'
+        assign after_day_key  = 'review_' | append: i | append: '_after_day'
+        assign stars_key    = 'review_' | append: i | append: '_stars'
+        assign title_key    = 'review_' | append: i | append: '_title'
+        assign review_key   = 'review_' | append: i | append: '_review'
+        assign name_key     = 'review_' | append: i | append: '_name'
+        assign products_key = 'review_' | append: i | append: '_products'
+
+        assign before_image    = block.settings[before_key]
+        assign after_image     = block.settings[after_key]
+        assign before_day      = block.settings[before_day_key]
+        assign after_day       = block.settings[after_day_key]
+        assign stars           = block.settings[stars_key] | default: 5
+        assign review_title    = block.settings[title_key]
+        assign review_text_raw = blank
+        assign reviewer_name   = block.settings[name_key]
+        assign reviewer_age    = blank
+        assign is_verified     = true
+        assign review_products = block.settings[products_key]
+      endif
+    -%}
+    {%- if before_image != blank or after_image != blank or reviewer_name != blank or review_text_raw != blank or review_title != blank -%}
+      <li class="splide__slide">
+      <article class="spa-dialog__slide" data-spa-slide>
+        {%- if after_image != blank -%}
+          <div class="spa-dialog__slider" data-spa-slider>
+            <div class="spa-dialog__image spa-dialog__image--before">
+              {%- if before_image != blank -%}
+                {{
+                  before_image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'spa-dialog__img',
+                    widths: '480, 640, 800, 1000, 1200',
+                    sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
+                }}
+              {%- else -%}
+                <div class="spa-dialog__placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+            </div>
+            <div class="spa-dialog__image spa-dialog__image--after">
+              {{
+                after_image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  class: 'spa-dialog__img',
+                  widths: '480, 640, 800, 1000, 1200',
+                  sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
+              }}
+            </div>
+            {%- if before_day != blank -%}
+              <span class="spa-dialog__day spa-dialog__day--before">{{ before_day }}</span>
+            {%- endif -%}
+            {%- if after_day != blank -%}
+              <span class="spa-dialog__day spa-dialog__day--after">{{ after_day }}</span>
+            {%- endif -%}
+            <div class="spa-dialog__control" data-spa-handle>
+              <div class="spa-dialog__handle" aria-hidden="true">
+                <svg class="spa-dialog__chevron spa-dialog__chevron--left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                  <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <svg class="spa-dialog__chevron spa-dialog__chevron--right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                  <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        {%- else -%}
+          <div class="spa-dialog__slider spa-dialog__slider--static">
+            <div class="spa-dialog__image spa-dialog__image--single">
+              {%- if before_image != blank -%}
+                {{
+                  before_image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'spa-dialog__img',
+                    widths: '480, 640, 800, 1000, 1200',
+                    sizes: '(min-width: 990px) 22vw, (min-width: 750px) 50vw, 85vw'
+                }}
+              {%- else -%}
+                <div class="spa-dialog__placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+            </div>
+            {%- if before_day != blank -%}
+              <span class="spa-dialog__day spa-dialog__day--before">{{ before_day }}</span>
+            {%- endif -%}
+            {%- if after_day != blank -%}
+              <span class="spa-dialog__day spa-dialog__day--after">{{ after_day }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        <div class="spa-dialog__content">
+          {%- if stars > 0 -%}
+            <div class="spa-dialog__stars" role="img" aria-label="{{ stars }} out of 5 stars">
+              {%- for s in (1..5) -%}
+                <svg
+                  class="spa-dialog__star{% if s <= stars %} spa-dialog__star--filled{% endif %}"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 576 512"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/>
+                </svg>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+          {%- if review_title != blank -%}
+            <h3 class="spa-dialog__card-title">{{ review_title }}</h3>
+          {%- endif -%}
+          {%- if review_source == 'metafield' and review_text_raw != blank -%}
+            <div class="spa-dialog__review spa-dialog__review--rich">{{ review_text_raw }}</div>
+          {%- elsif review_source == 'custom' -%}
+            {%- assign review_text_custom = block.settings[review_key] -%}
+            {%- if review_text_custom != blank -%}
+              <p class="spa-dialog__review">"{{ review_text_custom | escape | strip }}"</p>
+            {%- endif -%}
+          {%- endif -%}
+          {%- if reviewer_name != blank -%}
+            <div class="spa-dialog__meta">
+              <p class="spa-dialog__reviewer">
+                — {{ reviewer_name }}
+                {%- if reviewer_age != blank %} {{ reviewer_age }}{%- endif -%}
+              </p>
+              {%- if is_verified -%}
+                <div class="spa-dialog__verified">
+                  <svg class="spa-dialog__verified-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.5924 3.20027C9.34888 3.4078 9.22711 3.51158 9.09706 3.59874C8.79896 3.79854 8.46417 3.93721 8.1121 4.00672C7.95851 4.03705 7.79903 4.04977 7.48008 4.07522C6.6787 4.13918 6.278 4.17115 5.94371 4.28923C5.17051 4.56233 4.56233 5.17051 4.28923 5.94371C4.17115 6.278 4.13918 6.6787 4.07522 7.48008C4.04977 7.79903 4.03705 7.95851 4.00672 8.1121C3.93721 8.46417 3.79854 8.79896 3.59874 9.09706C3.51158 9.22711 3.40781 9.34887 3.20027 9.5924C2.67883 10.2043 2.4181 10.5102 2.26522 10.8301C1.91159 11.57 1.91159 12.43 2.26522 13.1699C2.41811 13.4898 2.67883 13.7957 3.20027 14.4076C3.40778 14.6511 3.51158 14.7729 3.59874 14.9029C3.79854 15.201 3.93721 15.5358 4.00672 15.8879C4.03705 16.0415 4.04977 16.201 4.07522 16.5199C4.13918 17.3213 4.17115 17.722 4.28923 18.0563C4.56233 18.8295 5.17051 19.4377 5.94371 19.7108C6.278 19.8288 6.6787 19.8608 7.48008 19.9248C7.79903 19.9502 7.95851 19.963 8.1121 19.9933C8.46417 20.0628 8.79896 20.2015 9.09706 20.4013C9.22711 20.4884 9.34887 20.5922 9.5924 20.7997C10.2043 21.3212 10.5102 21.5819 10.8301 21.7348C11.57 22.0884 12.43 22.0884 13.1699 21.7348C13.4898 21.5819 13.7957 21.3212 14.4076 20.7997C14.6511 20.5922 14.7729 20.4884 14.9029 20.4013C15.201 20.2015 15.5358 20.0628 15.8879 19.9933C16.0415 19.963 16.201 19.9502 16.5199 19.9248C17.3213 19.8608 17.722 19.8288 18.0563 19.7108C18.8295 19.4377 19.4377 18.8295 19.7108 18.0563C19.8288 17.722 19.8608 17.3213 19.9248 16.5199C19.9502 16.201 19.963 16.0415 19.9933 15.8879C20.0628 15.5358 20.2015 15.201 20.4013 14.9029C20.4884 14.7729 20.5922 14.6511 20.7997 14.4076C21.3212 13.7957 21.5819 13.4898 21.7348 13.1699C22.0884 12.43 22.0884 11.57 21.7348 10.8301C21.5819 10.5102 21.3212 10.2043 20.7997 9.5924C20.5922 9.34887 20.4884 9.22711 20.4013 9.09706C20.2015 8.79896 20.0628 8.46417 19.9933 8.1121C19.963 7.95851 19.9502 7.79903 19.9248 7.48008C19.8608 6.6787 19.8288 6.278 19.7108 5.94371C19.4377 5.17051 18.8295 4.56233 18.0563 4.28923C17.722 4.17115 17.3213 4.13918 16.5199 4.07522C16.201 4.04977 16.0415 4.03705 15.8879 4.00672C15.5358 3.93721 15.201 3.79854 14.9029 3.59874C14.7729 3.51158 14.6511 3.40781 14.4076 3.20027C13.7957 2.67883 13.4898 2.41811 13.1699 2.26522C12.43 1.91159 11.57 1.91159 10.8301 2.26522C10.5102 2.4181 10.2043 2.67883 9.5924 3.20027ZM16.3735 9.86314C16.6913 9.5453 16.6913 9.03 16.3735 8.71216C16.0557 8.39433 15.5403 8.39433 15.2225 8.71216L10.3723 13.5624L8.77746 11.9676C8.45963 11.6498 7.94432 11.6498 7.62649 11.9676C7.30866 12.2854 7.30866 12.8007 7.62649 13.1186L9.79678 15.2889C10.1146 15.6067 10.6299 15.6067 10.9478 15.2889L16.3735 9.86314Z" fill="currentColor"/>
+                  </svg>
+                  <span class="spa-dialog__verified-text">{{ verified_text | escape }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if review_products != blank and review_products.size > 0 -%}
+            <div class="spa-dialog__products">
+              {%- if products_used_heading != blank -%}
+                <p class="spa-dialog__products-title">{{ products_used_heading | escape }}</p>
+              {%- endif -%}
+              <div class="spa-dialog__products-viewport" data-spa-viewport data-spa-products>
+                <div class="spa-dialog__products-track{% if review_products.size == 1 %} spa-dialog__products-track--single{% endif %}">
+                  {%- for p in review_products -%}
+                    {%- assign p_variant = p.selected_or_first_available_variant -%}
+                    <article class="spa-dialog__product-card">
+                      <a class="spa-dialog__product-image" href="{{ p.url }}" aria-label="{{ p.title | escape }}">
+                        {%- if p.featured_image != blank -%}
+                          {{
+                            p.featured_image
+                            | image_url: width: 240
+                            | image_tag:
+                              loading: 'lazy',
+                              class: 'spa-dialog__product-img',
+                              widths: '120, 160, 240',
+                              sizes: '72px',
+                              alt: p.title
+                          }}
+                        {%- else -%}
+                          <span class="spa-dialog__product-img-placeholder">
+                            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                          </span>
+                        {%- endif -%}
+                      </a>
+                      <div class="spa-dialog__product-info">
+                        <a class="spa-dialog__product-title" href="{{ p.url }}">{{ p.title | escape }}</a>
+                        {%- if p_variant != blank -%}
+                          <p class="spa-dialog__product-price">{{ p_variant.price | money }}</p>
+                          <button
+                            type="button"
+                            class="spa-dialog__product-atc"
+                            data-spa-atc
+                            data-variant-id="{{ p_variant.id }}"
+                            data-add-label="{{ products_used_button | escape }}"
+                            data-added-label="Tillagd"
+                            {% unless p_variant.available %}disabled{% endunless %}
+                          >
+                            <span class="spa-dialog__product-spinner" aria-hidden="true"></span>
+                            <span class="spa-dialog__product-atc-text">
+                              {%- if p_variant.available -%}
+                                {{ products_used_button | escape }}
+                              {%- else -%}
+                                Slutsåld
+                              {%- endif -%}
+                            </span>
+                          </button>
+                        {%- endif -%}
+                      </div>
+                    </article>
+                  {%- endfor -%}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+
+        </div>
+      </article>
+      </li>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if question != blank and spa_slides != blank -%}
+<div
+  class="spa spa-{{ spa_id }}"
+  data-spa="{{ spa_id }}"
+  data-spa-mode="{{ display_mode }}"
+  {{ block.shopify_attributes }}
+  style="--margin-top: {{ block.settings.margin_top | divided_by: 10.0 }}rem;--margin-bottom: {{ block.settings.margin_bottom | divided_by: 10.0 }}rem;"
+>
+  <div class="spa__items">
+    <div class="spa__item" data-accordion-item>
+      <button
+        class="spa__question"
+        type="button"
+        aria-expanded="{% if open_default %}true{% else %}false{% endif %}"
+        aria-controls="SpaAnswer-{{ spa_id }}"
+        data-accordion-trigger
+      >
+        <span class="spa__question-text">{{ question }}</span>
+        <span class="spa__icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </button>
+      <div
+        class="spa__answer{% if open_default %} is-open{% endif %}"
+        id="SpaAnswer-{{ spa_id }}"
+        data-accordion-content
+        {% if open_default %}
+          style="max-height: none;"
+        {% else %}
+          style="max-height: 0;"
+        {% endif %}
+      >
+        <div class="spa__answer-inner{% if display_mode == 'slider' %} spa__answer-inner--slider{% endif %}">
+          {%- if display_mode == 'slider' -%}
+            <div
+              class="spa-reviews-splide-wrap"
+              data-spa-reviews-splide
+              data-spa-gap="12"
+              data-spa-padding-right="{{ block.settings.answer_padding_horizontal_desktop }}"
+              data-spa-peek="10"
+            >
+              <div class="splide spa-reviews-splide">
+                <div class="splide__track">
+                  <ul class="splide__list">
+                    {{ spa_slides }}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          {%- else -%}
+            <button
+              type="button"
+              class="spa__poster"
+              data-spa-open
+              aria-label="{{ question | escape }}"
+            >
+              {%- if poster_image != blank -%}
+                {{
+                  poster_image
+                  | image_url: width: 1400
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'spa__poster-img',
+                    widths: '400, 600, 800, 1000, 1200, 1400',
+                    sizes: '(min-width: 990px) 420px, 92vw',
+                    alt: question
+                }}
+              {%- else -%}
+                <span class="spa__poster-placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </span>
+              {%- endif -%}
+            </button>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- if display_mode == 'poster' -%}
+<dialog class="spa-dialog spa-{{ spa_id }}" id="SpaDialog-{{ spa_id }}" aria-labelledby="SpaDialogTitle-{{ spa_id }}">
+  <h2 class="visually-hidden" id="SpaDialogTitle-{{ spa_id }}">{{ question }}</h2>
+  <button type="button" class="spa-dialog__close" data-spa-close aria-label="Stäng">
+    <svg width="18" height="18" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <div class="spa-dialog__viewport">
+    <div
+      class="spa-reviews-splide-wrap spa-reviews-splide-wrap--dialog"
+      data-spa-reviews-splide
+      data-spa-gap="16"
+      data-spa-padding-right="16"
+      data-spa-peek="12"
+      data-spa-per-page="4"
+    >
+      <div class="splide spa-reviews-splide spa-reviews-splide--dialog">
+        <div class="splide__track">
+          <ul class="splide__list">
+            {{ spa_slides }}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>
+{%- endif -%}
+
+
 
 <script>
 (function() {
@@ -965,20 +1154,12 @@
 
     init() {
       if (!this.control || !this.afterImage) return;
-      this.wrapper.addEventListener('mousedown', this.startDrag.bind(this));
+      this.control.addEventListener('mousedown', this.startDrag.bind(this));
       document.addEventListener('mousemove', this.onDrag.bind(this));
       document.addEventListener('mouseup', this.stopDrag.bind(this));
       this.wrapper.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: true });
       this.wrapper.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false });
       this.wrapper.addEventListener('touchend', this.handleTouchEnd.bind(this));
-      this.wrapper.addEventListener('click', this.handleClick.bind(this));
-    }
-
-    handleClick(e) {
-      if (e.type === 'click' && e.detail === 0) return;
-      const rect = this.wrapper.getBoundingClientRect();
-      const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
-      this.updateSlider(percentage);
     }
 
     handleTouchStart(e) {
@@ -1009,6 +1190,8 @@
     }
 
     startDrag(e) {
+      e.preventDefault();
+      e.stopPropagation();
       this.isDragging = true;
       const rect = this.wrapper.getBoundingClientRect();
       const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
@@ -1105,13 +1288,13 @@
       });
   }
 
-  function initSpaProductsAtc(accordion) {
-    if (!accordion || accordion.dataset.spaAtc === 'true') return;
-    accordion.dataset.spaAtc = 'true';
+  function initSpaProductsAtc() {
+    if (document.body.dataset.spaAtc === 'true') return;
+    document.body.dataset.spaAtc = 'true';
 
-    accordion.addEventListener('click', function(e) {
+    document.addEventListener('click', function(e) {
       var button = e.target.closest('[data-spa-atc]');
-      if (!button || !accordion.contains(button) || button.disabled) return;
+      if (!button || button.disabled) return;
 
       e.preventDefault();
       e.stopPropagation();
@@ -1119,7 +1302,7 @@
       var variantId = parseInt(button.getAttribute('data-variant-id'), 10);
       if (!variantId) return;
 
-      var textEl = button.querySelector('.spa-products__atc-text');
+      var textEl = button.querySelector('.spa-dialog__product-atc-text');
       var originalText = button.getAttribute('data-add-label') || (textEl ? textEl.textContent : '');
       var addedText = button.getAttribute('data-added-label') || 'Tillagd';
 
@@ -1174,11 +1357,208 @@
     const content = accordion.querySelector('[data-accordion-content]');
     const inner = accordion.querySelector('.spa__answer-inner');
 
+    function whenSplideReady(callback) {
+      if (typeof window.Splide !== 'undefined') {
+        callback();
+        return;
+      }
+      var tries = 0;
+      var timer = window.setInterval(function() {
+        tries += 1;
+        if (typeof window.Splide !== 'undefined') {
+          window.clearInterval(timer);
+          callback();
+        } else if (tries > 40) {
+          window.clearInterval(timer);
+        }
+      }, 50);
+    }
+
+    function isDesktopSpa() {
+      return window.matchMedia('(min-width: 750px)').matches;
+    }
+
+    function destroyReviewsSplide(root) {
+      if (!root) return;
+      root.querySelectorAll('[data-spa-reviews-splide]').forEach(function(wrap) {
+        var el = wrap.querySelector('.splide');
+        if (!el) return;
+        if (el._spaSplide) {
+          try { el._spaSplide.destroy(true); } catch (err) {}
+          el._spaSplide = null;
+        }
+        el.classList.remove('is-initialized', 'is-active', 'is-rendered', 'is-draggable');
+        el.classList.add('is-native-scroll');
+        var list = el.querySelector('.splide__list');
+        if (list) list.removeAttribute('style');
+        el.querySelectorAll('.splide__slide').forEach(function(slide) {
+          slide.removeAttribute('style');
+          slide.classList.remove('is-active', 'is-visible', 'is-prev', 'is-next');
+        });
+        var track = el.querySelector('.splide__track');
+        if (track) track.removeAttribute('style');
+      });
+    }
+
+    function mountReviewsSplide(root) {
+      if (!root || !isDesktopSpa() || typeof window.Splide === 'undefined') return;
+
+      root.querySelectorAll('[data-spa-reviews-splide]').forEach(function(wrap) {
+        var el = wrap.querySelector('.splide');
+        if (!el || el.offsetWidth < 10) return;
+        el.classList.remove('is-native-scroll');
+
+        if (el._spaSplide) {
+          try {
+            el._spaSplide.refresh();
+          } catch (err) {
+            try { el._spaSplide.destroy(true); } catch (e2) {}
+            el._spaSplide = null;
+          }
+          if (el._spaSplide) return;
+        }
+
+        var gap = parseInt(wrap.getAttribute('data-spa-gap'), 10);
+        if (isNaN(gap)) gap = 12;
+        var edgePad = parseInt(wrap.getAttribute('data-spa-padding-right'), 10);
+        if (isNaN(edgePad)) edgePad = 0;
+        var peek = parseInt(wrap.getAttribute('data-spa-peek'), 10);
+        if (isNaN(peek)) peek = 10;
+        var perPage = parseInt(wrap.getAttribute('data-spa-per-page'), 10);
+        if (isNaN(perPage) || perPage < 1) perPage = 1;
+
+        var rightPadding = edgePad;
+        if (perPage === 1) {
+          rightPadding = Math.max(edgePad, Math.round(el.offsetWidth * (peek / 100)));
+        }
+
+        var config = {
+          type: 'slide',
+          perPage: perPage,
+          perMove: 1,
+          gap: gap,
+          drag: true,
+          arrows: false,
+          pagination: false,
+          trimSpace: false,
+          focus: 0,
+          padding: { left: 0, right: rightPadding },
+          breakpoints: {
+            989: {
+              perPage: perPage > 1 ? 2 : 1,
+              padding: {
+                left: 0,
+                right: perPage > 1
+                  ? edgePad
+                  : Math.max(edgePad, Math.round(el.offsetWidth * (peek / 100)))
+              }
+            }
+          }
+        };
+
+        try {
+          var splide = new window.Splide(el, config);
+          splide.mount();
+          el._spaSplide = splide;
+        } catch (err) {
+          el._spaSplide = null;
+        }
+      });
+    }
+
+    function ensureReviewsSplide(root) {
+      whenSplideReady(function() {
+        if (isDesktopSpa()) {
+          mountReviewsSplide(root);
+        } else {
+          destroyReviewsSplide(root);
+        }
+      });
+    }
+
+    function isolateNestedScroll(root) {
+      if (!root || root.dataset.spaNestedScroll === 'true') return;
+      root.dataset.spaNestedScroll = 'true';
+      root.addEventListener('pointerdown', function(e) {
+        if (e.target.closest('[data-spa-handle], [data-spa-atc], [data-spa-products]')) {
+          e.stopPropagation();
+        }
+      }, true);
+    }
+
+    function bindProductsDesktopDrag(root) {
+      if (!root || root.dataset.spaProductsDrag === 'true') return;
+      root.dataset.spaProductsDrag = 'true';
+
+      var dragState = null;
+
+      function onMove(e) {
+        if (!dragState) return;
+        e.preventDefault();
+        var walk = e.pageX - dragState.startX;
+        if (Math.abs(walk) > 2) dragState.moved = true;
+        dragState.scroller.scrollLeft = dragState.startScrollLeft - walk;
+      }
+
+      function onUp() {
+        if (!dragState) return;
+        var scroller = dragState.scroller;
+        var moved = dragState.moved;
+        dragState = null;
+        scroller.classList.remove('is-dragging');
+        window.removeEventListener('mousemove', onMove, true);
+        window.removeEventListener('mouseup', onUp, true);
+        if (moved) {
+          scroller.dataset.spaSuppressClick = 'true';
+          window.setTimeout(function() {
+            scroller.dataset.spaSuppressClick = 'false';
+          }, 50);
+        }
+      }
+
+      root.addEventListener('mousedown', function(e) {
+        if (e.button !== 0) return;
+        if (e.target.closest('[data-spa-atc], button, a, select, input, textarea')) return;
+        var scroller = e.target.closest('[data-spa-products]');
+        if (!scroller || !root.contains(scroller)) return;
+
+        dragState = {
+          scroller: scroller,
+          startX: e.pageX,
+          startScrollLeft: scroller.scrollLeft,
+          moved: false
+        };
+        scroller.classList.add('is-dragging');
+        window.addEventListener('mousemove', onMove, true);
+        window.addEventListener('mouseup', onUp, true);
+        e.preventDefault();
+        e.stopPropagation();
+      }, true);
+
+      root.addEventListener('click', function(e) {
+        var scroller = e.target.closest('[data-spa-products]');
+        if (!scroller || scroller.dataset.spaSuppressClick !== 'true') return;
+        scroller.dataset.spaSuppressClick = 'false';
+        e.preventDefault();
+        e.stopPropagation();
+      }, true);
+    }
+
     function setOpen(open) {
       if (!trigger || !content) return;
       trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      content.classList.toggle('is-open', open);
       if (open) {
         content.style.maxHeight = content.scrollHeight + 'px';
+        requestAnimationFrame(function() {
+          ensureReviewsSplide(accordion);
+          content.style.maxHeight = content.scrollHeight + 'px';
+          window.setTimeout(function() {
+            if (trigger.getAttribute('aria-expanded') !== 'true') return;
+            ensureReviewsSplide(accordion);
+            content.style.maxHeight = content.scrollHeight + 'px';
+          }, 320);
+        });
       } else {
         content.style.maxHeight = content.scrollHeight + 'px';
         requestAnimationFrame(function() {
@@ -1193,11 +1573,22 @@
         setOpen(!isOpen);
       });
 
-      if (trigger.getAttribute('aria-expanded') === 'true') {
+      var shouldStartOpen = trigger.getAttribute('aria-expanded') === 'true';
+      if (shouldStartOpen) {
         content.style.maxHeight = content.scrollHeight + 'px';
+        content.classList.add('is-open');
+        requestAnimationFrame(function() {
+          ensureReviewsSplide(accordion);
+        });
       } else {
         content.style.maxHeight = '0';
+        content.classList.remove('is-open');
       }
+
+      // Enable accordion animation only after the initial closed/open state is applied
+      requestAnimationFrame(function() {
+        content.classList.add('spa-ready');
+      });
 
       if (inner && typeof ResizeObserver !== 'undefined') {
         const observer = new ResizeObserver(function() {
@@ -1209,72 +1600,39 @@
       }
     }
 
+    window.addEventListener('resize', function() {
+      if (trigger && trigger.getAttribute('aria-expanded') === 'true') {
+        ensureReviewsSplide(accordion);
+      }
+      var openDialog = document.getElementById('SpaDialog-' + blockId);
+      if (openDialog && openDialog.open) ensureReviewsSplide(openDialog);
+    });
+
     const dialog = document.getElementById('SpaDialog-' + blockId);
     const mode = accordion.dataset.spaMode || 'poster';
-
-    function initNativeScrollDrag(scroller) {
-      if (!scroller || scroller.dataset.scrollDrag === 'true') return;
-      scroller.dataset.scrollDrag = 'true';
-
-      let isDown = false;
-      let startX = 0;
-      let startScrollLeft = 0;
-      let moved = false;
-
-      scroller.addEventListener('mousedown', function(e) {
-        if (e.button !== 0) return;
-        if (e.target.closest('[data-spa-slider], [data-spa-atc], button, a, select')) return;
-        isDown = true;
-        moved = false;
-        startX = e.pageX;
-        startScrollLeft = scroller.scrollLeft;
-        scroller.classList.add('is-dragging');
-      });
-
-      document.addEventListener('mousemove', function(e) {
-        if (!isDown) return;
-        e.preventDefault();
-        const walk = e.pageX - startX;
-        if (Math.abs(walk) > 3) moved = true;
-        scroller.scrollLeft = startScrollLeft - walk;
-      });
-
-      document.addEventListener('mouseup', function() {
-        if (!isDown) return;
-        isDown = false;
-        scroller.classList.remove('is-dragging');
-      });
-
-      scroller.addEventListener('click', function(e) {
-        if (!moved) return;
-        if (e.target.closest('[data-spa-slider], [data-spa-atc]')) return;
-        e.preventDefault();
-        e.stopPropagation();
-        moved = false;
-      }, true);
-
-      scroller.addEventListener('dragstart', function(e) {
-        e.preventDefault();
-      });
-    }
 
     accordion.querySelectorAll('[data-spa-slider]').forEach(function(slider) {
       new SpaSlider(slider);
     });
-    accordion.querySelectorAll('[data-spa-viewport]').forEach(initNativeScrollDrag);
-    initSpaProductsAtc(accordion);
+    isolateNestedScroll(accordion);
+    bindProductsDesktopDrag(accordion);
+    initSpaProductsAtc();
+
+    // Never init Splide while accordion is closed; on mobile always force native scroll
+    if (!isDesktopSpa()) {
+      destroyReviewsSplide(accordion);
+    }
 
     if (!dialog) return;
 
     dialog.querySelectorAll('[data-spa-slider]').forEach(function(slider) {
       new SpaSlider(slider);
     });
+    isolateNestedScroll(dialog);
+    bindProductsDesktopDrag(dialog);
 
-    const viewport = dialog.querySelector('[data-spa-viewport]');
     const openBtn = accordion.querySelector('[data-spa-open]');
     const closeBtn = dialog.querySelector('[data-spa-close]');
-
-    if (viewport) initNativeScrollDrag(viewport);
 
     function openDialog() {
       if (typeof dialog.showModal === 'function') {
@@ -1282,7 +1640,9 @@
       } else {
         dialog.setAttribute('open', '');
       }
-      if (viewport) viewport.scrollLeft = 0;
+      requestAnimationFrame(function() {
+        ensureReviewsSplide(dialog);
+      });
     }
 
     function closeDialog() {

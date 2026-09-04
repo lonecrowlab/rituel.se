@@ -676,7 +676,8 @@
                               endif
 
                               assign savings_percent = per_unit_savings | times: 100 | divided_by: compare_price
-                              assign price_savings_formatted = total_savings | money_without_trailing_zeros
+                              assign price_savings_whole = total_savings | divided_by: 100 | times: 100
+                              assign price_savings_formatted = price_savings_whole | money_without_trailing_zeros
                               assign badge_display_text = badge_text_template | replace: '[percentage]', savings_percent | replace: '[price]', price_savings_formatted
                             -%}
                           <div class="cart-item__savings-badge" style="
