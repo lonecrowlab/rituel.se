@@ -169,7 +169,7 @@
             "custom_width_desktop": 300,
             "custom_width_mobile": 230,
             "margin_top": 0,
-            "margin_bottom": 4
+            "margin_bottom": -2
           }
         },
         "image_RxM8iD": {
@@ -181,7 +181,7 @@
             "aspect_ratio_mobile": "auto",
             "border_radius": 0,
             "max_width": 100,
-            "margin_top": 4,
+            "margin_top": 0,
             "margin_bottom": 0
           }
         }
@@ -203,8 +203,8 @@
         "heading_position": "top-content",
         "vertical_alignment": "flex-start",
         "background_color": "#faf8f6",
-        "section_padding_top": 25,
-        "section_padding_bottom": 30,
+        "section_padding_top": 10,
+        "section_padding_bottom": 20,
         "block_spacing_mobile": 20,
         "block_spacing_desktop": 0,
         "content_block_spacing_mobile": 12,
