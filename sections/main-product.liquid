@@ -855,7 +855,8 @@
                       -%}
                       <button
                         id='SectionAtcBtn-{{ section.id }}'
-                        type="button"
+                        type="submit"
+                        name="add"
                         class="button main-product-atc button--has-spinner"
                         form="{{ product_form_id }}"
                         {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %}

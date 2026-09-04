@@ -753,14 +753,34 @@
     </script>
 
     <script>
-      const productForm = document.querySelector('product-form[data-main="true"]');
-      if (productForm) {
-        document.querySelectorAll('[id^="SectionAtcBtn-"]').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            productForm.handleSubmit(e);
-          })
-        })
-      }
+      (function () {
+        function bindStickyAtcButtons() {
+          var productForm = document.querySelector('product-form[data-main="true"]');
+          var formEl = productForm && (productForm.querySelector('form[action*="/cart/add"]') || productForm.querySelector('form'));
+          document.querySelectorAll('[id^="SectionAtcBtn-"]').forEach(function (btn) {
+            if (btn.dataset.stickyAtcBound === 'true') return;
+            btn.dataset.stickyAtcBound = 'true';
+            btn.addEventListener('click', function (e) {
+              // type=submit + form= already submits the product form; only fall back for older markup
+              if (btn.getAttribute('type') === 'submit' && btn.getAttribute('form')) return;
+              e.preventDefault();
+              if (productForm && typeof productForm.handleSubmit === 'function') {
+                productForm.handleSubmit(e);
+                return;
+              }
+              if (formEl) {
+                if (typeof formEl.requestSubmit === 'function') formEl.requestSubmit();
+                else formEl.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+              }
+            });
+          });
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', bindStickyAtcButtons);
+        } else {
+          bindStickyAtcButtons();
+        }
+      })();
 
       {% if settings.enable_scroll_animations %}
         const stickyAtc = document.querySelector('.sticky-atc');
