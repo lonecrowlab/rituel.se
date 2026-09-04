@@ -231,20 +231,23 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    // Always prevent default for product forms we're handling
-    e.preventDefault();
-    e.stopPropagation();
-
-    // Prevent double submission
-    if (isSubmitting) {
-      return;
-    }
-
-    // Handle regular add to cart
-    const submitButton = form.querySelector('[type="submit"]');
+    // Bail out BEFORE preventDefault — otherwise a disabled/missing submit
+    // swallows the event and the main Buy button appears "broken".
+    const submitButton = form.querySelector('[type="submit"][name="add"], [type="submit"]');
     if (!submitButton || submitButton.disabled) {
       return;
     }
+
+    // Prevent double submission
+    if (isSubmitting) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+
+    // Always prevent default for product forms we're handling
+    e.preventDefault();
+    e.stopPropagation();
 
     isSubmitting = true;
 
