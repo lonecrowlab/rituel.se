@@ -1,0 +1,218 @@
+<section class="listicle-froya-guarantee section-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="lf-wrap">
+    <div class="lfg-box">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'icon' %}
+            <div class="lfg-icon lfg-block-{{ block.id }}" {{ block.shopify_attributes }}>
+              {% if block.settings.icon_image != blank %}
+                {{ block.settings.icon_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+              {% else %}
+                {% liquid
+                  assign guarantee_icon = block.settings.icon_name
+                  if guarantee_icon == blank
+                    assign guarantee_icon = 'shield_check'
+                  endif
+                %}
+                {% render 'icons', icon: guarantee_icon %}
+              {% endif %}
+            </div>
+          {% when 'heading' %}
+            {% if block.settings.text != blank %}
+              <h2 class="lfg-heading lfg-block-{{ block.id }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</h2>
+            {% endif %}
+          {% when 'text' %}
+            {% if block.settings.text != blank %}
+              <div class="lfg-text rte lfg-block-{{ block.id }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+            {% endif %}
+          {% when 'button' %}
+            {% if block.settings.label != blank %}
+              <a class="lfg-btn lfg-block-{{ block.id }}" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+            {% endif %}
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% render 'listicle-froya-section-base', section: section %}
+
+<style>
+  .section-{{ section.id }} .lfg-box {
+    display: flex;
+    flex-direction: column;
+    align-items: {{ section.settings.content_align }};
+    text-align: {{ section.settings.text_align }};
+    gap: 12px;
+    background: {{ section.settings.box_bg_color }};
+    border: {{ section.settings.box_border_width }}px solid {{ section.settings.box_border_color }};
+    border-radius: {{ section.settings.box_border_radius }}px;
+    padding: {{ section.settings.box_padding_mobile }}px;
+  }
+
+  .section-{{ section.id }} .lfg-icon {
+    width: {{ section.settings.icon_size_mobile }}px;
+    height: {{ section.settings.icon_size_mobile }}px;
+    color: {{ section.settings.icon_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .section-{{ section.id }} .lfg-icon img,
+  .section-{{ section.id }} .lfg-icon svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .section-{{ section.id }} .lfg-heading {
+    font-size: {{ section.settings.heading_font_size_mobile }}px;
+    font-weight: {{ section.settings.heading_font_weight }};
+    color: {{ section.settings.heading_color }};
+    margin: 0;
+    line-height: 1.25;
+  }
+
+  .section-{{ section.id }} .lfg-text {
+    font-size: {{ section.settings.body_font_size_mobile }}px;
+    color: {{ section.settings.body_color }};
+    line-height: 1.55;
+    max-width: {{ section.settings.text_max_width }}px;
+  }
+
+  .section-{{ section.id }} .lfg-btn {
+    display: inline-flex;
+    padding: 12px 28px;
+    background: {{ section.settings.button_bg_color }};
+    color: {{ section.settings.button_text_color }};
+    border-radius: 8px;
+    font-size: {{ section.settings.button_font_size_mobile }}px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} .lfg-box {
+      padding: {{ section.settings.box_padding_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfg-icon {
+      width: {{ section.settings.icon_size_desktop }}px;
+      height: {{ section.settings.icon_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfg-heading {
+      font-size: {{ section.settings.heading_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfg-text {
+      font-size: {{ section.settings.body_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfg-btn {
+      font-size: {{ section.settings.button_font_size_desktop }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Listicle Froya – Guarantee",
+  "tag": "section",
+  "class": "section-listicle-froya-guarantee",
+  "settings": [
+    { "type": "select", "id": "text_align", "label": "Text alignment", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" }
+    ], "default": "center" },
+    { "type": "select", "id": "content_align", "label": "Content alignment", "options": [
+      { "value": "flex-start", "label": "Left" },
+      { "value": "center", "label": "Center" }
+    ], "default": "center" },
+    { "type": "color", "id": "box_bg_color", "label": "Box background", "default": "#faf8f6" },
+    { "type": "range", "id": "box_border_width", "min": 0, "max": 4, "step": 1, "unit": "px", "label": "Box border width", "default": 0 },
+    { "type": "color", "id": "box_border_color", "label": "Box border color", "default": "#e5e7eb" },
+    { "type": "range", "id": "box_border_radius", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Box radius", "default": 16 },
+    { "type": "range", "id": "box_padding_mobile", "min": 16, "max": 48, "step": 4, "unit": "px", "label": "Box padding (mobile)", "default": 24 },
+    { "type": "range", "id": "box_padding_desktop", "min": 24, "max": 64, "step": 4, "unit": "px", "label": "Box padding (desktop)", "default": 32 },
+    { "type": "range", "id": "icon_size_mobile", "min": 32, "max": 80, "step": 4, "unit": "px", "label": "Icon size (mobile)", "default": 48 },
+    { "type": "range", "id": "icon_size_desktop", "min": 40, "max": 96, "step": 4, "unit": "px", "label": "Icon size (desktop)", "default": 56 },
+    { "type": "color", "id": "icon_color", "label": "Icon color", "default": "#cc667c" },
+    { "type": "range", "id": "text_max_width", "min": 320, "max": 800, "step": 20, "unit": "px", "label": "Text max width", "default": 560 },
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "heading_font_size_mobile", "min": 20, "max": 40, "step": 2, "unit": "px", "label": "Heading size (mobile)", "default": 24 },
+    { "type": "range", "id": "heading_font_size_desktop", "min": 24, "max": 48, "step": 2, "unit": "px", "label": "Heading size (desktop)", "default": 32 },
+    { "type": "select", "id": "heading_font_weight", "label": "Heading weight", "options": [
+      { "value": "500", "label": "Medium" },
+      { "value": "600", "label": "Semibold" },
+      { "value": "700", "label": "Bold" }
+    ], "default": "600" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#1f2937" },
+    { "type": "range", "id": "body_font_size_mobile", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Body size (mobile)", "default": 15 },
+    { "type": "range", "id": "body_font_size_desktop", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Body size (desktop)", "default": 16 },
+    { "type": "color", "id": "body_color", "label": "Body color", "default": "#4b5563" },
+    { "type": "header", "content": "Button" },
+    { "type": "color", "id": "button_bg_color", "label": "Button background", "default": "#000000" },
+    { "type": "color", "id": "button_text_color", "label": "Button text", "default": "#ffffff" },
+    { "type": "range", "id": "button_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Button size (mobile)", "default": 14 },
+    { "type": "range", "id": "button_font_size_desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Button size (desktop)", "default": 16 },
+    { "type": "header", "content": "Section style" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#ffffff" },
+    { "type": "checkbox", "id": "gradient_enabled", "label": "Use gradient background", "default": false },
+    { "type": "color_background", "id": "gradient_background", "label": "Gradient", "default": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#000000" },
+    { "type": "range", "id": "container_max_width", "min": 600, "max": 1000, "step": 10, "unit": "px", "label": "Container max width", "default": 800 },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (mobile)", "default": 32 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (mobile)", "default": 32 },
+    { "type": "range", "id": "padding_top_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (desktop)", "default": 48 },
+    { "type": "range", "id": "padding_bottom_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (desktop)", "default": 48 }
+  ],
+  "blocks": [
+    {
+      "type": "icon",
+      "name": "Icon",
+      "limit": 1,
+      "settings": [
+        { "type": "image_picker", "id": "icon_image", "label": "Custom icon image" },
+        { "type": "text", "id": "icon_name", "label": "Theme icon name", "default": "shield_check", "info": "Used when no custom icon image is set." }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Heading", "default": "60-day money-back guarantee" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Try it risk-free. If you're not satisfied, we'll refund you.</p>" }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Shop now" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Listicle Froya – Guarantee",
+      "blocks": [
+        { "type": "icon" },
+        { "type": "heading" },
+        { "type": "text" },
+        { "type": "button" }
+      ]
+    }
+  ]
+}
+{% endschema %}

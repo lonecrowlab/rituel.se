@@ -1,0 +1,417 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "font_override_froya": {
+      "type": "font-override",
+      "name": "Page Font Override",
+      "settings": {
+        "custom_font": "serif"
+      }
+    },
+    "custom_liquid_hide_header": {
+      "type": "custom-liquid",
+      "name": "Hide header & footer",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "custom_liquid": "<style>\n:root {\n  --font-heading-family: \"New York\", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol !important;\n}\n.h0, .h1, .h2, .h3, .h4, .h5, h1, h2, h3, h4, h5 {\n  font-family: \"New York\", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol !important;\n}\nsticky-header,\n.shopify-section-group-footer-group {\n  display: none !important;\n}\n</style>",
+        "color_scheme": "background-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "listicle_froya_hero_top": {
+      "type": "listicle-froya-hero",
+      "blocks": {
+        "review_badge_1": {
+          "type": "review_badge",
+          "settings": {
+            "show_stars": true,
+            "star_rating": 5,
+            "text": "4.9/5 from 2,000+ reviews"
+          }
+        },
+        "heading_1": {
+          "type": "heading",
+          "settings": {
+            "text": "Your hero headline",
+            "tag": "h1"
+          }
+        },
+        "text_1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Add supporting copy here.</p>"
+          }
+        },
+        "button_1": {
+          "type": "button",
+          "settings": {
+            "label": "Shop now",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "review_badge_1",
+        "heading_1",
+        "text_1",
+        "button_1"
+      ],
+      "settings": {
+        "image_position": "right",
+        "vertical_alignment": "center",
+        "text_align": "left"
+      }
+    },
+    "listicle_froya_icons_1": {
+      "type": "listicle-froya-featured-icons",
+      "blocks": {
+        "heading_icons_1": {
+          "type": "heading",
+          "settings": {
+            "text": "Beauty in relief",
+            "tag": "h2"
+          }
+        },
+        "icon_item_1": {
+          "type": "icon_item",
+          "settings": {
+            "icon_level": "first",
+            "title": "Feature title",
+            "text": "<p>Short supporting description.</p>"
+          }
+        },
+        "icon_item_2": {
+          "type": "icon_item",
+          "settings": {
+            "icon_level": "first",
+            "title": "Feature title",
+            "text": "<p>Short supporting description.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_icons_1",
+        "icon_item_1",
+        "icon_item_2"
+      ],
+      "settings": {
+        "text_align": "center"
+      }
+    },
+    "listicle_froya_brands": {
+      "type": "listicle-froya-brands",
+      "blocks": {
+        "brand_1": { "type": "brand", "settings": {} },
+        "brand_2": { "type": "brand", "settings": {} },
+        "brand_3": { "type": "brand", "settings": {} },
+        "brand_4": { "type": "brand", "settings": {} }
+      },
+      "block_order": [
+        "brand_1",
+        "brand_2",
+        "brand_3",
+        "brand_4"
+      ],
+      "settings": {
+        "heading": "Featured in",
+        "enable_marquee": true
+      }
+    },
+    "listicle_froya_review_slider": {
+      "type": "listicle-froya-review-slider",
+      "blocks": {
+        "review_1": { "type": "review", "settings": {} },
+        "review_2": { "type": "review", "settings": {} },
+        "review_3": { "type": "review", "settings": {} }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3"
+      ],
+      "settings": {
+        "heading": "What customers say",
+        "show_arrows": true
+      }
+    },
+    "listicle_froya_system_steps": {
+      "type": "listicle-froya-system-steps",
+      "blocks": {
+        "step_1": { "type": "step", "settings": { "title": "Step 1", "text": "<p>Describe this step.</p>" } },
+        "step_2": { "type": "step", "settings": { "title": "Step 2", "text": "<p>Describe this step.</p>" } },
+        "step_3": { "type": "step", "settings": { "title": "Step 3", "text": "<p>Describe this step.</p>" } }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
+      "settings": {
+        "heading": "How the system works",
+        "mobile_slider": true
+      }
+    },
+    "listicle_froya_result_progress": {
+      "type": "listicle-froya-result-progress",
+      "blocks": {
+        "progress_1": { "type": "progress_item", "settings": { "progress_label": "Week 2", "progress_percent": 40 } },
+        "progress_2": { "type": "progress_item", "settings": { "progress_label": "Week 4", "progress_percent": 75 } },
+        "progress_3": { "type": "progress_item", "settings": { "progress_label": "Week 8", "progress_percent": 100 } }
+      },
+      "block_order": [
+        "progress_1",
+        "progress_2",
+        "progress_3"
+      ],
+      "settings": {
+        "heading": "Real results over time"
+      }
+    },
+    "listicle_froya_quick_buy": {
+      "type": "listicle-froya-quick-buy",
+      "blocks": {
+        "qb_heading": { "type": "heading", "settings": { "text": "Ready to try it?" } },
+        "qb_text": { "type": "text", "settings": { "text": "<p>Add to cart and start your ritual today.</p>" } },
+        "qb_badge": { "type": "badge", "settings": { "text": "60-day guarantee" } }
+      },
+      "block_order": [
+        "qb_heading",
+        "qb_text",
+        "qb_badge"
+      ],
+      "settings": {
+        "button_label": "Add to cart"
+      }
+    },
+    "listicle_froya_hero_mid": {
+      "type": "listicle-froya-hero",
+      "blocks": {
+        "review_badge_2": {
+          "type": "review_badge",
+          "settings": {
+            "show_stars": true,
+            "star_rating": 5,
+            "text": "Trusted by thousands"
+          }
+        },
+        "heading_2": {
+          "type": "heading",
+          "settings": {
+            "text": "Flipped hero section",
+            "tag": "h2"
+          }
+        },
+        "text_2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Reuse this section with image on the opposite side.</p>"
+          }
+        },
+        "button_2": {
+          "type": "button",
+          "settings": {
+            "label": "Learn more",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "review_badge_2",
+        "heading_2",
+        "text_2",
+        "button_2"
+      ],
+      "settings": {
+        "image_position": "left",
+        "vertical_alignment": "center",
+        "text_align": "left"
+      }
+    },
+    "listicle_froya_icons_2": {
+      "type": "listicle-froya-featured-icons",
+      "blocks": {
+        "icon_small_1": {
+          "type": "icon_item",
+          "settings": {
+            "icon_level": "second",
+            "title": "Small icon",
+            "text": "<p>Secondary feature detail.</p>"
+          }
+        },
+        "icon_small_2": {
+          "type": "icon_item",
+          "settings": {
+            "icon_level": "second",
+            "title": "Small icon",
+            "text": "<p>Secondary feature detail.</p>"
+          }
+        },
+        "icon_small_3": {
+          "type": "icon_item",
+          "settings": {
+            "icon_level": "second",
+            "title": "Small icon",
+            "text": "<p>Secondary feature detail.</p>"
+          }
+        },
+        "icon_small_4": {
+          "type": "icon_item",
+          "settings": {
+            "icon_level": "second",
+            "title": "Small icon",
+            "text": "<p>Secondary feature detail.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "icon_small_1",
+        "icon_small_2",
+        "icon_small_3",
+        "icon_small_4"
+      ],
+      "settings": {
+        "text_align": "left"
+      }
+    },
+    "listicle_froya_guarantee_1": {
+      "type": "listicle-froya-guarantee",
+      "blocks": {
+        "g_icon_1": { "type": "icon", "settings": { "icon_name": "shield_check" } },
+        "g_heading_1": { "type": "heading", "settings": { "text": "60-day money-back guarantee" } },
+        "g_text_1": { "type": "text", "settings": { "text": "<p>Try it risk-free. If you're not satisfied, we'll refund you.</p>" } },
+        "g_button_1": { "type": "button", "settings": { "label": "Shop now", "link": "" } }
+      },
+      "block_order": [
+        "g_icon_1",
+        "g_heading_1",
+        "g_text_1",
+        "g_button_1"
+      ],
+      "settings": {}
+    },
+    "listicle_froya_media": {
+      "type": "listicle-froya-media",
+      "blocks": {
+        "media_heading": { "type": "heading", "settings": { "text": "See it in action" } }
+      },
+      "block_order": [
+        "media_heading"
+      ],
+      "settings": {
+        "media_type": "gif"
+      }
+    },
+    "listicle_froya_timeline": {
+      "type": "listicle-froya-timeline",
+      "blocks": {
+        "timeline_1": { "type": "timeline_step", "settings": { "label": "Week 1", "title": "First signs of change" } },
+        "timeline_2": { "type": "timeline_step", "settings": { "label": "Week 4", "title": "Visible improvement" } },
+        "timeline_3": { "type": "timeline_step", "settings": { "label": "Week 8", "title": "Full results" } }
+      },
+      "block_order": [
+        "timeline_1",
+        "timeline_2",
+        "timeline_3"
+      ],
+      "settings": {
+        "heading": "Your transformation timeline"
+      }
+    },
+    "listicle_froya_ingredients": {
+      "type": "listicle-froya-ingredients",
+      "blocks": {
+        "ingredient_1": { "type": "ingredient", "settings": { "level": "high", "name": "PDRN", "percent": "5%" } },
+        "ingredient_2": { "type": "ingredient", "settings": { "level": "medium", "name": "Volufiline", "percent": "3%", "level_label": "Active" } },
+        "ingredient_3": { "type": "ingredient", "settings": { "level": "low", "name": "Collagen", "percent": "2%", "level_label": "Support" } }
+      },
+      "block_order": [
+        "ingredient_1",
+        "ingredient_2",
+        "ingredient_3"
+      ],
+      "settings": {
+        "heading": "Key ingredients"
+      }
+    },
+    "listicle_froya_hero_bottom": {
+      "type": "listicle-froya-hero",
+      "blocks": {
+        "heading_3": {
+          "type": "heading",
+          "settings": {
+            "text": "Final call to action",
+            "tag": "h2"
+          }
+        },
+        "text_3": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Close the page with a strong offer.</p>"
+          }
+        },
+        "button_3": {
+          "type": "button",
+          "settings": {
+            "label": "Shop now",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "heading_3",
+        "text_3",
+        "button_3"
+      ],
+      "settings": {
+        "image_position": "right",
+        "vertical_alignment": "center",
+        "text_align": "left"
+      }
+    },
+    "listicle_froya_guarantee_2": {
+      "type": "listicle-froya-guarantee",
+      "blocks": {
+        "g_icon_2": { "type": "icon", "settings": { "icon_name": "shield_check" } },
+        "g_heading_2": { "type": "heading", "settings": { "text": "60-day money-back guarantee" } },
+        "g_text_2": { "type": "text", "settings": { "text": "<p>Try it risk-free. If you're not satisfied, we'll refund you.</p>" } },
+        "g_button_2": { "type": "button", "settings": { "label": "Shop now", "link": "" } }
+      },
+      "block_order": [
+        "g_icon_2",
+        "g_heading_2",
+        "g_text_2",
+        "g_button_2"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "font_override_froya",
+    "custom_liquid_hide_header",
+    "listicle_froya_hero_top",
+    "listicle_froya_icons_1",
+    "listicle_froya_brands",
+    "listicle_froya_review_slider",
+    "listicle_froya_system_steps",
+    "listicle_froya_result_progress",
+    "listicle_froya_quick_buy",
+    "listicle_froya_hero_mid",
+    "listicle_froya_icons_2",
+    "listicle_froya_guarantee_1",
+    "listicle_froya_media",
+    "listicle_froya_timeline",
+    "listicle_froya_ingredients",
+    "listicle_froya_hero_bottom",
+    "listicle_froya_guarantee_2"
+  ]
+}

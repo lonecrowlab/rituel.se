@@ -1,0 +1,238 @@
+{% liquid
+  assign drag_value = 'true'
+  if section.settings.lock_drag
+    assign drag_value = 'false'
+  endif
+%}
+
+<section class="listicle-froya-review-slider section-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="lf-wrap">
+    {% if section.settings.heading != blank %}
+      <h2 class="lfrs-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <splide-component
+        data-type="{{ section.settings.slider_type }}"
+        data-autoplay="{{ section.settings.autoplay }}"
+        data-autoplay-speed="{{ section.settings.autoplay_speed }}"
+        data-slides-desktop="{{ section.settings.columns_desktop }}"
+        data-slides-mobile="{{ section.settings.columns_mobile }}"
+        data-gap-desktop="{{ section.settings.gap_desktop }}"
+        data-gap-mobile="{{ section.settings.gap_mobile }}"
+        data-arrows="{{ section.settings.show_arrows }}"
+        data-pagination="{{ section.settings.show_pagination }}"
+        data-drag="{{ drag_value }}"
+      >
+        <div class="splide lfrs-splide">
+          <div class="splide__track">
+            <ul class="splide__list">
+              {% for block in section.blocks %}
+                {% if block.type == 'review' %}
+                  <li class="splide__slide lfrs-slide-{{ block.id }}" {{ block.shopify_attributes }}>
+                    <div class="lfrs-card">
+                      {% if block.settings.image != blank %}
+                        <div class="lfrs-card__image-wrap">
+                          {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'lfrs-card__image', alt: block.settings.name }}
+                        </div>
+                      {% endif %}
+                      <div class="lfrs-card__content">
+                        {% if block.settings.show_stars %}
+                          <div class="lfrs-card__stars" aria-label="{{ block.settings.star_rating }} stars">
+                            {% for i in (1..block.settings.star_rating) %}★{% endfor %}
+                          </div>
+                        {% endif %}
+                        {% if block.settings.quote != blank %}
+                          <div class="lfrs-card__quote rte">{{ block.settings.quote }}</div>
+                        {% endif %}
+                        {% if block.settings.name != blank %}
+                          <div class="lfrs-card__name">{{ block.settings.name }}</div>
+                        {% endif %}
+                        {% if block.settings.product_label != blank %}
+                          <div class="lfrs-card__product">{{ block.settings.product_label }}</div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </splide-component>
+    {% endif %}
+  </div>
+</section>
+
+{% render 'listicle-froya-section-base', section: section %}
+
+<style>
+  .section-{{ section.id }} .lfrs-heading {
+    font-size: {{ section.settings.heading_font_size_mobile }}px;
+    font-weight: {{ section.settings.heading_font_weight }};
+    color: {{ section.settings.heading_color }};
+    text-align: {{ section.settings.text_align }};
+    margin: 0 0 20px;
+    line-height: 1.25;
+  }
+
+  .section-{{ section.id }} .lfrs-card {
+    background: {{ section.settings.card_bg_color }};
+    border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+    border-radius: {{ section.settings.card_border_radius }}px;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .section-{{ section.id }} .lfrs-card__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .section-{{ section.id }} .lfrs-card__content {
+    padding: 16px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__stars {
+    color: {{ section.settings.star_color }};
+    font-size: {{ section.settings.star_size_mobile }}px;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__quote {
+    font-size: {{ section.settings.quote_font_size_mobile }}px;
+    color: {{ section.settings.quote_color }};
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__name {
+    font-size: {{ section.settings.name_font_size_mobile }}px;
+    font-weight: 600;
+    color: {{ section.settings.name_color }};
+  }
+
+  .section-{{ section.id }} .lfrs-card__product {
+    font-size: {{ section.settings.label_font_size_mobile }}px;
+    color: {{ section.settings.label_color }};
+    margin-top: 4px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} .lfrs-heading {
+      font-size: {{ section.settings.heading_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfrs-card__stars {
+      font-size: {{ section.settings.star_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfrs-card__quote {
+      font-size: {{ section.settings.quote_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfrs-card__name {
+      font-size: {{ section.settings.name_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfrs-card__product {
+      font-size: {{ section.settings.label_font_size_desktop }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Listicle Froya – Review Slider",
+  "tag": "section",
+  "class": "section-listicle-froya-review-slider",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What customers say" },
+    { "type": "select", "id": "text_align", "label": "Heading alignment", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" },
+      { "value": "right", "label": "Right" }
+    ], "default": "center" },
+    { "type": "header", "content": "Slider" },
+    { "type": "select", "id": "slider_type", "label": "Type", "options": [
+      { "value": "slide", "label": "Slide" },
+      { "value": "loop", "label": "Loop" }
+    ], "default": "slide" },
+    { "type": "checkbox", "id": "autoplay", "label": "Autoplay", "default": false },
+    { "type": "range", "id": "autoplay_speed", "min": 2, "max": 10, "step": 1, "unit": "s", "label": "Autoplay speed", "default": 5 },
+    { "type": "checkbox", "id": "lock_drag", "label": "Lock drag", "default": false },
+    { "type": "range", "id": "columns_mobile", "min": 1, "max": 2, "step": 1, "label": "Slides (mobile)", "default": 1 },
+    { "type": "range", "id": "columns_desktop", "min": 1, "max": 4, "step": 1, "label": "Slides (desktop)", "default": 3 },
+    { "type": "range", "id": "gap_mobile", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Gap (mobile)", "default": 16 },
+    { "type": "range", "id": "gap_desktop", "min": 0, "max": 60, "step": 2, "unit": "px", "label": "Gap (desktop)", "default": 24 },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show arrows", "default": true },
+    { "type": "checkbox", "id": "show_pagination", "label": "Show pagination", "default": false },
+    { "type": "header", "content": "Card style" },
+    { "type": "color", "id": "card_bg_color", "label": "Card background", "default": "#ffffff" },
+    { "type": "range", "id": "card_border_width", "min": 0, "max": 4, "step": 1, "unit": "px", "label": "Border width", "default": 1 },
+    { "type": "color", "id": "card_border_color", "label": "Border color", "default": "#e5e7eb" },
+    { "type": "range", "id": "card_border_radius", "min": 0, "max": 24, "step": 1, "unit": "px", "label": "Border radius", "default": 8 },
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "heading_font_size_mobile", "min": 20, "max": 48, "step": 2, "unit": "px", "label": "Heading size (mobile)", "default": 28 },
+    { "type": "range", "id": "heading_font_size_desktop", "min": 24, "max": 56, "step": 2, "unit": "px", "label": "Heading size (desktop)", "default": 40 },
+    { "type": "select", "id": "heading_font_weight", "label": "Heading weight", "options": [
+      { "value": "500", "label": "Medium" },
+      { "value": "600", "label": "Semibold" },
+      { "value": "700", "label": "Bold" }
+    ], "default": "600" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#1f2937" },
+    { "type": "color", "id": "star_color", "label": "Star color", "default": "#fba124" },
+    { "type": "range", "id": "star_size_mobile", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Star size (mobile)", "default": 14 },
+    { "type": "range", "id": "star_size_desktop", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Star size (desktop)", "default": 16 },
+    { "type": "range", "id": "quote_font_size_mobile", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Quote size (mobile)", "default": 15 },
+    { "type": "range", "id": "quote_font_size_desktop", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Quote size (desktop)", "default": 16 },
+    { "type": "color", "id": "quote_color", "label": "Quote color", "default": "#374151" },
+    { "type": "range", "id": "name_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Name size (mobile)", "default": 14 },
+    { "type": "range", "id": "name_font_size_desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Name size (desktop)", "default": 15 },
+    { "type": "color", "id": "name_color", "label": "Name color", "default": "#111827" },
+    { "type": "range", "id": "label_font_size_mobile", "min": 10, "max": 16, "step": 1, "unit": "px", "label": "Product label size (mobile)", "default": 12 },
+    { "type": "range", "id": "label_font_size_desktop", "min": 10, "max": 16, "step": 1, "unit": "px", "label": "Product label size (desktop)", "default": 13 },
+    { "type": "color", "id": "label_color", "label": "Product label color", "default": "#9ca3af" },
+    { "type": "header", "content": "Section style" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#faf8f6" },
+    { "type": "checkbox", "id": "gradient_enabled", "label": "Use gradient background", "default": false },
+    { "type": "color_background", "id": "gradient_background", "label": "Gradient", "default": "linear-gradient(180deg, rgba(250,248,246,1), rgba(255,255,255,1) 100%)" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#000000" },
+    { "type": "color", "id": "body_color", "label": "Body color", "default": "#374151" },
+    { "type": "range", "id": "body_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Body size (mobile)", "default": 16 },
+    { "type": "range", "id": "body_font_size_desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Body size (desktop)", "default": 16 },
+    { "type": "range", "id": "container_max_width", "min": 600, "max": 1400, "step": 10, "unit": "px", "label": "Container max width", "default": 1100 },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (mobile)", "default": 32 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (mobile)", "default": 32 },
+    { "type": "range", "id": "padding_top_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (desktop)", "default": 48 },
+    { "type": "range", "id": "padding_bottom_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (desktop)", "default": 48 }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "checkbox", "id": "show_stars", "label": "Show stars", "default": true },
+        { "type": "range", "id": "star_rating", "min": 1, "max": 5, "step": 1, "label": "Star rating", "default": 5 },
+        { "type": "richtext", "id": "quote", "label": "Quote", "default": "<p>\"Amazing results in just a few weeks.\"</p>" },
+        { "type": "text", "id": "name", "label": "Customer name", "default": "Verified buyer" },
+        { "type": "text", "id": "product_label", "label": "Product label" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Listicle Froya – Review Slider",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}

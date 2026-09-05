@@ -1,0 +1,63 @@
+{% comment %}
+  Shared section shell styles for listicle-froya sections.
+  Accepts: section (required)
+{% endcomment %}
+<style>
+  .section-{{ section.id }} {
+    {% if section.settings.gradient_enabled %}
+      background: {{ section.settings.gradient_background }};
+    {% else %}
+      background-color: {{ section.settings.bg_color }};
+    {% endif %}
+    color: {{ section.settings.text_color }};
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  .section-{{ section.id }} .lf-wrap {
+    max-width: {{ section.settings.container_max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .section-{{ section.id }} .lf-heading {
+    font-size: {{ section.settings.heading_font_size_mobile }}px;
+    font-weight: {{ section.settings.heading_font_weight }};
+    color: {{ section.settings.heading_color }};
+    line-height: 1.25;
+    margin: 0 0 12px;
+    text-align: {{ section.settings.text_align }};
+  }
+
+  .section-{{ section.id }} .lf-body {
+    font-size: {{ section.settings.body_font_size_mobile }}px;
+    color: {{ section.settings.body_color }};
+    line-height: 1.55;
+  }
+
+  .section-{{ section.id }} .lf-body p {
+    margin: 0 0 0.75em;
+  }
+
+  .section-{{ section.id }} .lf-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lf-heading {
+      font-size: {{ section.settings.heading_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lf-body {
+      font-size: {{ section.settings.body_font_size_desktop }}px;
+    }
+  }
+</style>

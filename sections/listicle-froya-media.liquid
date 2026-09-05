@@ -1,0 +1,166 @@
+<section class="listicle-froya-media section-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="lf-wrap">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'heading' %}
+          {% if block.settings.text != blank %}
+            <h2 class="lfm-heading lfm-block-{{ block.id }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</h2>
+          {% endif %}
+        {% when 'text' %}
+          {% if block.settings.text != blank %}
+            <div class="lfm-text rte lfm-block-{{ block.id }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+          {% endif %}
+      {% endcase %}
+    {% endfor %}
+
+    <div class="lfm-media" style="aspect-ratio: {{ section.settings.aspect_ratio }};">
+      {% if section.settings.media_type == 'video' and section.settings.video_url != blank %}
+        {% if section.settings.video_url contains 'youtube.com' or section.settings.video_url contains 'youtu.be' %}
+          {% assign video_id = section.settings.video_url | split: 'v=' | last | split: '&' | first %}
+          {% if section.settings.video_url contains 'youtu.be' %}
+            {% assign video_id = section.settings.video_url | split: '.be/' | last | split: '?' | first %}
+          {% endif %}
+          <iframe
+            class="lfm-media__iframe"
+            src="https://www.youtube.com/embed/{{ video_id }}?rel=0"
+            title="Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        {% else %}
+          <video class="lfm-media__video" controls playsinline {% if section.settings.poster != blank %}poster="{{ section.settings.poster | image_url: width: 1200 }}"{% endif %}>
+            <source src="{{ section.settings.video_url }}" type="video/mp4">
+          </video>
+        {% endif %}
+      {% elsif section.settings.gif_image != blank %}
+        {{ section.settings.gif_image | image_url: width: 1400 | image_tag: loading: 'lazy', class: 'lfm-media__image', alt: section.settings.media_alt }}
+      {% elsif section.settings.poster != blank %}
+        {{ section.settings.poster | image_url: width: 1400 | image_tag: loading: 'lazy', class: 'lfm-media__image', alt: section.settings.media_alt }}
+      {% else %}
+        {{ 'lifestyle-2' | placeholder_svg_tag: 'lfm-media__placeholder' }}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% render 'listicle-froya-section-base', section: section %}
+
+<style>
+  .section-{{ section.id }} .lfm-heading {
+    font-size: {{ section.settings.heading_font_size_mobile }}px;
+    font-weight: {{ section.settings.heading_font_weight }};
+    color: {{ section.settings.heading_color }};
+    text-align: {{ section.settings.text_align }};
+    margin: 0 0 8px;
+  }
+
+  .section-{{ section.id }} .lfm-text {
+    font-size: {{ section.settings.body_font_size_mobile }}px;
+    color: {{ section.settings.body_color }};
+    text-align: {{ section.settings.text_align }};
+    margin: 0 0 16px;
+    line-height: 1.55;
+  }
+
+  .section-{{ section.id }} .lfm-media {
+    width: 100%;
+    border-radius: {{ section.settings.media_border_radius }}px;
+    overflow: hidden;
+    background: {{ section.settings.media_bg_color }};
+    position: relative;
+  }
+
+  .section-{{ section.id }} .lfm-media__image,
+  .section-{{ section.id }} .lfm-media__video,
+  .section-{{ section.id }} .lfm-media__iframe,
+  .section-{{ section.id }} .lfm-media__placeholder {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} .lfm-heading {
+      font-size: {{ section.settings.heading_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfm-text {
+      font-size: {{ section.settings.body_font_size_desktop }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Listicle Froya – Media",
+  "tag": "section",
+  "class": "section-listicle-froya-media",
+  "settings": [
+    { "type": "select", "id": "media_type", "label": "Media type", "options": [
+      { "value": "gif", "label": "GIF / image" },
+      { "value": "video", "label": "Video URL" }
+    ], "default": "gif" },
+    { "type": "image_picker", "id": "gif_image", "label": "GIF or image" },
+    { "type": "text", "id": "video_url", "label": "Video URL", "info": "MP4 direct URL or YouTube link" },
+    { "type": "image_picker", "id": "poster", "label": "Poster / fallback image" },
+    { "type": "text", "id": "media_alt", "label": "Media alt text" },
+    { "type": "text", "id": "aspect_ratio", "label": "Aspect ratio", "default": "16 / 9" },
+    { "type": "select", "id": "text_align", "label": "Text alignment", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" }
+    ], "default": "center" },
+    { "type": "color", "id": "media_bg_color", "label": "Media background", "default": "#f3f4f6" },
+    { "type": "range", "id": "media_border_radius", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Media radius", "default": 12 },
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "heading_font_size_mobile", "min": 20, "max": 48, "step": 2, "unit": "px", "label": "Heading size (mobile)", "default": 28 },
+    { "type": "range", "id": "heading_font_size_desktop", "min": 24, "max": 56, "step": 2, "unit": "px", "label": "Heading size (desktop)", "default": 40 },
+    { "type": "select", "id": "heading_font_weight", "label": "Heading weight", "options": [
+      { "value": "500", "label": "Medium" },
+      { "value": "600", "label": "Semibold" },
+      { "value": "700", "label": "Bold" }
+    ], "default": "600" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#1f2937" },
+    { "type": "range", "id": "body_font_size_mobile", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Body size (mobile)", "default": 15 },
+    { "type": "range", "id": "body_font_size_desktop", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Body size (desktop)", "default": 16 },
+    { "type": "color", "id": "body_color", "label": "Body color", "default": "#6b7280" },
+    { "type": "header", "content": "Section style" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#ffffff" },
+    { "type": "checkbox", "id": "gradient_enabled", "label": "Use gradient background", "default": false },
+    { "type": "color_background", "id": "gradient_background", "label": "Gradient", "default": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#000000" },
+    { "type": "range", "id": "container_max_width", "min": 600, "max": 1200, "step": 10, "unit": "px", "label": "Container max width", "default": 900 },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (mobile)", "default": 32 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (mobile)", "default": 32 },
+    { "type": "range", "id": "padding_top_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (desktop)", "default": 48 },
+    { "type": "range", "id": "padding_bottom_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (desktop)", "default": 48 }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Heading", "default": "See it in action" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        { "type": "richtext", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Listicle Froya – Media",
+      "blocks": [
+        { "type": "heading" }
+      ]
+    }
+  ]
+}
+{% endschema %}
