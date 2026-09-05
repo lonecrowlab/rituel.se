@@ -20,12 +20,52 @@
     align-items: center !important;
     justify-content: center !important;
     gap: var(--atc-icon-gap, 8px) !important;
+    position: relative;
   }
 
   #ProductSubmitButton-{{ section_id }} > * {
     display: inline-flex;
     align-items: center;
     vertical-align: middle;
+  }
+
+  /* Upsell-style loading spinner on main ATC */
+  #ProductSubmitButton-{{ section_id }} .btn-spinner {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2.5px solid rgba(255, 255, 255, 0.3);
+    border-top-color: currentColor;
+    border-radius: 50%;
+    animation: atc-smooth-spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    box-sizing: border-box;
+    z-index: 2;
+  }
+
+  #ProductSubmitButton-{{ section_id }}.loading {
+    opacity: 0.85;
+    pointer-events: none;
+    cursor: wait;
+  }
+
+  #ProductSubmitButton-{{ section_id }}.loading .btn-spinner {
+    display: block;
+  }
+
+  #ProductSubmitButton-{{ section_id }}.loading .main-atc__label,
+  #ProductSubmitButton-{{ section_id }}.loading .atc-button__icon-svg,
+  #ProductSubmitButton-{{ section_id }}.loading .material-icon,
+  #ProductSubmitButton-{{ section_id }}.loading .loading-overlay__spinner {
+    opacity: 0;
+  }
+
+  @keyframes atc-smooth-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 
   #ProductSubmitButton-{{ section_id }} .material-icon {
@@ -879,6 +919,7 @@ document.addEventListener('DOMContentLoaded', function() {
               data-required-fields="0"
               data-valid-fields="0"
             >
+              <span class="btn-spinner" aria-hidden="true"></span>
               <span class="main-atc__error" style="display:none;"></span>
               {% if block.settings.button_icon_position == 'before' %}
                 {% if block.settings.button_custom_icon != blank %}
