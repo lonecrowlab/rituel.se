@@ -1,4 +1,4 @@
-<section class="listicle-froya-ingredients section-{{ section.id }}" data-section-id="{{ section.id }}">
+<section class="ltl-fry-ingredients section-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="lf-wrap">
     {% if section.settings.heading != blank %}
       <h2 class="lfi2-heading">{{ section.settings.heading }}</h2>
@@ -42,7 +42,7 @@
   </div>
 </section>
 
-{% render 'listicle-froya-section-base', section: section %}
+{% render 'ltl-fry-section-base', section: section %}
 
 <style>
   .section-{{ section.id }} .lfi2-heading {
@@ -178,9 +178,9 @@
 
 {% schema %}
 {
-  "name": "Listicle Froya – Ingredients",
+  "name": "ltl-fry-ingredients",
   "tag": "section",
-  "class": "section-listicle-froya-ingredients",
+  "class": "section-ltl-fry-ingredients",
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Key ingredients" },
     { "type": "textarea", "id": "subheading", "label": "Subheading" },
@@ -261,7 +261,7 @@
   ],
   "presets": [
     {
-      "name": "Listicle Froya – Ingredients",
+      "name": "ltl-fry-ingredients",
       "blocks": [
         { "type": "ingredient", "settings": { "level": "high" } },
         { "type": "ingredient", "settings": { "level": "medium" } },

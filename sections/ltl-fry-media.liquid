@@ -1,4 +1,4 @@
-<section class="listicle-froya-media section-{{ section.id }}" data-section-id="{{ section.id }}">
+<section class="ltl-fry-media section-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="lf-wrap">
     {% for block in section.blocks %}
       {% case block.type %}
@@ -44,7 +44,7 @@
   </div>
 </section>
 
-{% render 'listicle-froya-section-base', section: section %}
+{% render 'ltl-fry-section-base', section: section %}
 
 <style>
   .section-{{ section.id }} .lfm-heading {
@@ -95,9 +95,9 @@
 
 {% schema %}
 {
-  "name": "Listicle Froya – Media",
+  "name": "ltl-fry-media",
   "tag": "section",
-  "class": "section-listicle-froya-media",
+  "class": "section-ltl-fry-media",
   "settings": [
     { "type": "select", "id": "media_type", "label": "Media type", "options": [
       { "value": "gif", "label": "GIF / image" },
@@ -156,7 +156,7 @@
   ],
   "presets": [
     {
-      "name": "Listicle Froya – Media",
+      "name": "ltl-fry-media",
       "blocks": [
         { "type": "heading" }
       ]

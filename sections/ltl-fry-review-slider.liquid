@@ -5,7 +5,7 @@
   endif
 %}
 
-<section class="listicle-froya-review-slider section-{{ section.id }}" data-section-id="{{ section.id }}">
+<section class="ltl-fry-review-slider section-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="lf-wrap">
     {% if section.settings.heading != blank %}
       <h2 class="lfrs-heading">{{ section.settings.heading }}</h2>
@@ -64,7 +64,7 @@
   </div>
 </section>
 
-{% render 'listicle-froya-section-base', section: section %}
+{% render 'ltl-fry-section-base', section: section %}
 
 <style>
   .section-{{ section.id }} .lfrs-heading {
@@ -146,9 +146,9 @@
 
 {% schema %}
 {
-  "name": "Listicle Froya – Review Slider",
+  "name": "ltl-fry-review-slider",
   "tag": "section",
-  "class": "section-listicle-froya-review-slider",
+  "class": "section-ltl-fry-review-slider",
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "What customers say" },
     { "type": "select", "id": "text_align", "label": "Heading alignment", "options": [
@@ -226,7 +226,7 @@
   ],
   "presets": [
     {
-      "name": "Listicle Froya – Review Slider",
+      "name": "ltl-fry-review-slider",
       "blocks": [
         { "type": "review" },
         { "type": "review" },

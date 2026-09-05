@@ -6,7 +6,7 @@
   endif
 %}
 
-<section class="listicle-froya-system-steps section-{{ section.id }}" data-section-id="{{ section.id }}">
+<section class="ltl-fry-system-steps section-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="lf-wrap">
     {% if section.settings.heading != blank %}
       <h2 class="lfss-heading">{{ section.settings.heading }}</h2>
@@ -98,7 +98,7 @@
   </div>
 </section>
 
-{% render 'listicle-froya-section-base', section: section %}
+{% render 'ltl-fry-section-base', section: section %}
 
 <style>
   .section-{{ section.id }} .lfss-heading {
@@ -207,9 +207,9 @@
 
 {% schema %}
 {
-  "name": "Listicle Froya – System Steps",
+  "name": "ltl-fry-system-steps",
   "tag": "section",
-  "class": "section-listicle-froya-system-steps",
+  "class": "section-ltl-fry-system-steps",
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "How the system works" },
     { "type": "textarea", "id": "subheading", "label": "Subheading" },
@@ -278,7 +278,7 @@
   ],
   "presets": [
     {
-      "name": "Listicle Froya – System Steps",
+      "name": "ltl-fry-system-steps",
       "blocks": [
         { "type": "step" },
         { "type": "step" },

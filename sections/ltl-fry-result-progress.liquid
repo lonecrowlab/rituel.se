@@ -1,4 +1,4 @@
-<section class="listicle-froya-result-progress section-{{ section.id }}" data-section-id="{{ section.id }}">
+<section class="ltl-fry-result-progress section-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="lf-wrap">
     {% if section.settings.heading != blank %}
       <h2 class="lfrp-heading">{{ section.settings.heading }}</h2>
@@ -39,7 +39,7 @@
   </div>
 </section>
 
-{% render 'listicle-froya-section-base', section: section %}
+{% render 'ltl-fry-section-base', section: section %}
 
 <style>
   .section-{{ section.id }} .lfrp-heading {
@@ -160,9 +160,9 @@
 
 {% schema %}
 {
-  "name": "Listicle Froya – Result Progress",
+  "name": "ltl-fry-result-progress",
   "tag": "section",
-  "class": "section-listicle-froya-result-progress",
+  "class": "section-ltl-fry-result-progress",
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Real results over time" },
     { "type": "textarea", "id": "subheading", "label": "Subheading" },
@@ -233,7 +233,7 @@
   ],
   "presets": [
     {
-      "name": "Listicle Froya – Result Progress",
+      "name": "ltl-fry-result-progress",
       "blocks": [
         { "type": "progress_item" },
         { "type": "progress_item" },

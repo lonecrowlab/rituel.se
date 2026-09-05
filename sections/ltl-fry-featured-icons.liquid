@@ -1,4 +1,4 @@
-<section class="listicle-froya-featured-icons section-{{ section.id }}" data-section-id="{{ section.id }}">
+<section class="ltl-fry-featured-icons section-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="lf-wrap">
     {% for block in section.blocks %}
       {% case block.type %}
@@ -31,7 +31,7 @@
   </div>
 </section>
 
-{% render 'listicle-froya-section-base', section: section %}
+{% render 'ltl-fry-section-base', section: section %}
 
 <style>
   .section-{{ section.id }} .lfi-section-heading {
@@ -177,9 +177,9 @@
 
 {% schema %}
 {
-  "name": "Listicle Froya – Featured Icons",
+  "name": "ltl-fry-featured-icons",
   "tag": "section",
-  "class": "section-listicle-froya-featured-icons",
+  "class": "section-ltl-fry-featured-icons",
   "settings": [
     { "type": "select", "id": "text_align", "label": "Text alignment", "options": [
       { "value": "left", "label": "Left" },
@@ -284,7 +284,7 @@
   ],
   "presets": [
     {
-      "name": "Listicle Froya – Featured Icons",
+      "name": "ltl-fry-featured-icons",
       "blocks": [
         { "type": "heading" },
         { "type": "icon_item", "settings": { "icon_level": "first" } },

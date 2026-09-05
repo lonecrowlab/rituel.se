@@ -3,7 +3,7 @@
   assign selected_variant = product.selected_or_first_available_variant
 %}
 
-<section class="listicle-froya-quick-buy section-{{ section.id }}" data-section-id="{{ section.id }}">
+<section class="ltl-fry-quick-buy section-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="lf-wrap">
     <div class="lfqb-grid">
       <div class="lfqb-content">
@@ -68,7 +68,7 @@
   </div>
 </section>
 
-{% render 'listicle-froya-section-base', section: section %}
+{% render 'ltl-fry-section-base', section: section %}
 
 <style>
   .section-{{ section.id }} .lfqb-grid {
@@ -204,9 +204,9 @@
 
 {% schema %}
 {
-  "name": "Listicle Froya – Quick Buy",
+  "name": "ltl-fry-quick-buy",
   "tag": "section",
-  "class": "section-listicle-froya-quick-buy",
+  "class": "section-ltl-fry-quick-buy",
   "settings": [
     { "type": "product", "id": "product", "label": "Product" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" },
@@ -292,7 +292,7 @@
   ],
   "presets": [
     {
-      "name": "Listicle Froya – Quick Buy",
+      "name": "ltl-fry-quick-buy",
       "blocks": [
         { "type": "heading" },
         { "type": "text" },

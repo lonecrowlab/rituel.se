@@ -1,4 +1,4 @@
-<section class="listicle-froya-brands section-{{ section.id }}" data-section-id="{{ section.id }}">
+<section class="ltl-fry-brands section-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="lf-wrap">
     {% if section.settings.heading != blank %}
       <p class="lfb-heading">{{ section.settings.heading }}</p>
@@ -43,7 +43,7 @@
   </div>
 </section>
 
-{% render 'listicle-froya-section-base', section: section %}
+{% render 'ltl-fry-section-base', section: section %}
 
 <style>
   .section-{{ section.id }} .lfb-heading {
@@ -114,9 +114,9 @@
 
 {% schema %}
 {
-  "name": "Listicle Froya – Brands",
+  "name": "ltl-fry-brands",
   "tag": "section",
-  "class": "section-listicle-froya-brands",
+  "class": "section-ltl-fry-brands",
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Featured in" },
     { "type": "select", "id": "text_align", "label": "Alignment", "options": [
@@ -168,7 +168,7 @@
   ],
   "presets": [
     {
-      "name": "Listicle Froya – Brands",
+      "name": "ltl-fry-brands",
       "blocks": [
         { "type": "brand" },
         { "type": "brand" },

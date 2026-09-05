@@ -1,4 +1,4 @@
-<section class="listicle-froya-guarantee section-{{ section.id }}" data-section-id="{{ section.id }}">
+<section class="ltl-fry-guarantee section-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="lf-wrap">
     <div class="lfg-box">
       {% for block in section.blocks %}
@@ -35,7 +35,7 @@
   </div>
 </section>
 
-{% render 'listicle-froya-section-base', section: section %}
+{% render 'ltl-fry-section-base', section: section %}
 
 <style>
   .section-{{ section.id }} .lfg-box {
@@ -118,9 +118,9 @@
 
 {% schema %}
 {
-  "name": "Listicle Froya – Guarantee",
+  "name": "ltl-fry-guarantee",
   "tag": "section",
-  "class": "section-listicle-froya-guarantee",
+  "class": "section-ltl-fry-guarantee",
   "settings": [
     { "type": "select", "id": "text_align", "label": "Text alignment", "options": [
       { "value": "left", "label": "Left" },
@@ -205,7 +205,7 @@
   ],
   "presets": [
     {
-      "name": "Listicle Froya – Guarantee",
+      "name": "ltl-fry-guarantee",
       "blocks": [
         { "type": "icon" },
         { "type": "heading" },

@@ -13,7 +13,7 @@
   endif
 %}
 
-<section class="listicle-froya-hero section-{{ section.id }}" data-section-id="{{ section.id }}">
+<section class="ltl-fry-hero section-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="lf-wrap">
     <div class="lfh-grid lfh-grid--image-{{ section.settings.image_position }}">
       <div class="lfh-media">
@@ -69,7 +69,7 @@
   </div>
 </section>
 
-{% render 'listicle-froya-section-base', section: section %}
+{% render 'ltl-fry-section-base', section: section %}
 
 <style>
   .section-{{ section.id }} .lfh-grid {
@@ -182,9 +182,9 @@
 
 {% schema %}
 {
-  "name": "Listicle Froya – Hero",
+  "name": "ltl-fry-hero",
   "tag": "section",
-  "class": "section-listicle-froya-hero",
+  "class": "section-ltl-fry-hero",
   "settings": [
     { "type": "header", "content": "Layout" },
     {
@@ -336,7 +336,7 @@
   ],
   "presets": [
     {
-      "name": "Listicle Froya – Hero",
+      "name": "ltl-fry-hero",
       "blocks": [
         { "type": "review_badge" },
         { "type": "heading" },

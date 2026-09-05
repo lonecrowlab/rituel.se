@@ -1,4 +1,4 @@
-<section class="listicle-froya-timeline section-{{ section.id }}" data-section-id="{{ section.id }}">
+<section class="ltl-fry-timeline section-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="lf-wrap">
     {% if section.settings.heading != blank %}
       <h2 class="lft-heading">{{ section.settings.heading }}</h2>
@@ -38,7 +38,7 @@
   </div>
 </section>
 
-{% render 'listicle-froya-section-base', section: section %}
+{% render 'ltl-fry-section-base', section: section %}
 
 <style>
   .section-{{ section.id }} .lft-heading {
@@ -159,9 +159,9 @@
 
 {% schema %}
 {
-  "name": "Listicle Froya – Timeline",
+  "name": "ltl-fry-timeline",
   "tag": "section",
-  "class": "section-listicle-froya-timeline",
+  "class": "section-ltl-fry-timeline",
   "settings": [
     { "type": "text", "id": "heading", "label": "Heading", "default": "Your transformation timeline" },
     { "type": "textarea", "id": "subheading", "label": "Subheading" },
@@ -229,7 +229,7 @@
   ],
   "presets": [
     {
-      "name": "Listicle Froya – Timeline",
+      "name": "ltl-fry-timeline",
       "blocks": [
         { "type": "timeline_step" },
         { "type": "timeline_step" },
