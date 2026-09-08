@@ -333,29 +333,65 @@
         "brand_1": {
           "type": "brand",
           "settings": {
-            "name": "",
-            "alt": ""
+            "name": "CBS",
+            "alt": "CBS",
+            "caption": "Packs an extra punch when it comes to healing skin!"
           }
         },
         "brand_2": {
           "type": "brand",
           "settings": {
-            "name": "",
-            "alt": ""
+            "name": "Yahoo",
+            "alt": "Yahoo",
+            "caption": "This brand is taking off in the US"
           }
         },
         "brand_3": {
           "type": "brand",
           "settings": {
-            "name": "",
-            "alt": ""
+            "name": "Women's Health",
+            "alt": "Women's Health",
+            "caption": "Frøya is the #1 skincare trend right now."
           }
         },
         "brand_4": {
           "type": "brand",
           "settings": {
-            "name": "",
-            "alt": ""
+            "name": "GQ",
+            "alt": "GQ",
+            "caption": "In an industry dominated by synthetics, Frøya is revolutionizing skincare."
+          }
+        },
+        "brand_5": {
+          "type": "brand",
+          "settings": {
+            "name": "Glamour",
+            "alt": "Glamour",
+            "caption": "Frøya has created a new standard with pure, natural ingredients."
+          }
+        },
+        "brand_6": {
+          "type": "brand",
+          "settings": {
+            "name": "Bazaar",
+            "alt": "Bazaar",
+            "caption": "Revolutionising the shift to natural skincare."
+          }
+        },
+        "brand_7": {
+          "type": "brand",
+          "settings": {
+            "name": "Cosmopolitan",
+            "alt": "Cosmopolitan",
+            "caption": "Clean, natural skincare that delivers fast results!"
+          }
+        },
+        "brand_8": {
+          "type": "brand",
+          "settings": {
+            "name": "Marie Claire",
+            "alt": "Marie Claire",
+            "caption": "Clinical studies demonstrate the effectiveness of Frøya"
           }
         }
       },
@@ -363,26 +399,44 @@
         "brand_1",
         "brand_2",
         "brand_3",
-        "brand_4"
+        "brand_4",
+        "brand_5",
+        "brand_6",
+        "brand_7",
+        "brand_8"
       ],
       "settings": {
-        "heading": "Featured in",
+        "heading": "FRØYA IS HANDS DOWN THE #1 SKINCARE FOR MATURE WOMEN'S SKIN",
         "text_align": "center",
+        "display_type": "slider",
         "enable_marquee": true,
         "marquee_speed": 30,
+        "slider_type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "lock_drag": false,
+        "columns_desktop": 8,
+        "columns_mobile": "2",
+        "show_arrows": false,
+        "show_pagination": true,
         "logo_gap_mobile": 24,
-        "logo_gap_desktop": 40,
+        "logo_gap_desktop": 32,
         "logo_height_mobile": 28,
         "logo_height_desktop": 36,
-        "logo_opacity": 70,
+        "logo_opacity": 100,
         "heading_font_size_mobile": 12,
         "heading_font_size_desktop": 13,
         "heading_font_weight": "600",
-        "heading_color": "#9ca3af",
+        "heading_color": "#111827",
         "name_font_size_mobile": 14,
         "name_font_size_desktop": 15,
         "name_color": "#6b7280",
-        "bg_color": "#ffffff",
+        "caption_font_size_mobile": 12,
+        "caption_font_size_desktop": 12,
+        "caption_color": "#374151",
+        "pagination_active_color": "#111827",
+        "pagination_inactive_color": "#d1d5db",
+        "bg_color": "#f3ecec",
         "gradient_enabled": false,
         "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
         "text_color": "#000000",

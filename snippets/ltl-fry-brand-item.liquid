@@ -1,0 +1,25 @@
+{% liquid
+  assign brand_alt = block.settings.alt
+  if brand_alt == blank
+    assign brand_alt = block.settings.name
+  endif
+
+  if duplicate
+    assign brand_alt = ''
+  endif
+%}
+
+<div class="lfb-brand">
+  <div class="lfb-brand__logo-wrap">
+    {% if block.settings.logo != blank %}
+      {{ block.settings.logo | image_url: width: 300 | image_tag: loading: 'lazy', class: 'lfb-brand__logo', alt: brand_alt }}
+    {% elsif block.settings.name != blank %}
+      <span class="lfb-brand__name">{{ block.settings.name }}</span>
+    {% endif %}
+  </div>
+  {% if block.settings.caption != blank and duplicate != true %}
+    <p class="lfb-brand__caption">{{ block.settings.caption }}</p>
+  {% elsif block.settings.caption != blank and duplicate == true %}
+    <p class="lfb-brand__caption" aria-hidden="true">{{ block.settings.caption }}</p>
+  {% endif %}
+</div>

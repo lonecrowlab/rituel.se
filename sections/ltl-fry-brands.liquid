@@ -1,44 +1,115 @@
-<section class="ltl-fry-brands section-{{ section.id }}" data-section-id="{{ section.id }}">
+{% liquid
+  assign display_type = section.settings.display_type | default: 'scroll'
+  assign enable_marquee = false
+  if display_type == 'scroll' and section.settings.enable_marquee
+    assign enable_marquee = true
+  endif
+
+  assign columns_mobile = section.settings.columns_mobile | default: '2'
+  assign columns_mobile_css = columns_mobile
+  assign columns_mobile_splide = columns_mobile
+  if columns_mobile == '1.8'
+    assign columns_mobile_splide = 1
+  endif
+
+  assign drag_value = 'true'
+  if section.settings.lock_drag
+    assign drag_value = 'false'
+  endif
+
+  assign heading_align = 'center'
+  case section.settings.text_align
+    when 'flex-start'
+      assign heading_align = 'left'
+    when 'flex-end'
+      assign heading_align = 'right'
+    else
+      assign heading_align = 'center'
+  endcase
+%}
+
+<section
+  class="ltl-fry-brands section-{{ section.id }} lfb--{{ display_type }}{% if columns_mobile == '1.8' %} lfb--mobile-peek{% endif %}"
+  data-section-id="{{ section.id }}"
+>
   <div class="lf-wrap">
     {% if section.settings.heading != blank %}
       <p class="lfb-heading">{{ section.settings.heading }}</p>
     {% endif %}
 
     {% if section.blocks.size > 0 %}
-      <div class="lfb-track-wrap">
-        <div class="lfb-track{% if section.settings.enable_marquee %} lfb-track--marquee{% endif %}">
+      {% if display_type == 'slider' %}
+        <splide-component
+          data-type="{{ section.settings.slider_type }}"
+          data-autoplay="{{ section.settings.autoplay }}"
+          data-autoplay-speed="{{ section.settings.autoplay_speed }}"
+          data-slides-desktop="{{ section.settings.columns_desktop }}"
+          data-slides-mobile="{{ columns_mobile_splide }}"
+          data-gap-desktop="{{ section.settings.logo_gap_desktop }}"
+          data-gap-mobile="{{ section.settings.logo_gap_mobile }}"
+          data-arrows="{{ section.settings.show_arrows }}"
+          data-pagination="{{ section.settings.show_pagination }}"
+          data-drag="{{ drag_value }}"
+          style="--columns-desktop: {{ section.settings.columns_desktop }}; --columns-mobile: {{ columns_mobile_css }}; --gap-desktop: {{ section.settings.logo_gap_desktop }}px; --gap-mobile: {{ section.settings.logo_gap_mobile }}px;"
+        >
+          <div class="splide lfb-splide splide--precalc-width splide--precalc-width-mobile splide--precalc-width-desktop splide--small-pagination splide--desktop-dots-under splide--mobile-dots-under">
+            <div class="splide__track">
+              <ul class="splide__list">
+                {% for block in section.blocks %}
+                  {% if block.type == 'brand' %}
+                    <li class="splide__slide lfb-slide-{{ block.id }}" {{ block.shopify_attributes }}>
+                      <div class="splide__slide__container">
+                        {% render 'ltl-fry-brand-item', block: block, section: section %}
+                      </div>
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+            {% if section.settings.show_pagination %}
+              <div class="splide__dots-and-arrows">
+                <ul class="splide__pagination"></ul>
+              </div>
+            {% endif %}
+          </div>
+        </splide-component>
+
+      {% elsif display_type == 'none' %}
+        <div
+          class="lfb-grid"
+          style="--lfb-cols-desktop: {{ section.settings.columns_desktop }}; --lfb-cols-mobile: {% if columns_mobile == '1.8' %}2{% else %}{{ columns_mobile }}{% endif %};"
+        >
           {% for block in section.blocks %}
             {% if block.type == 'brand' %}
-              <div class="lfb-brand lfb-block-{{ block.id }}" {{ block.shopify_attributes }}>
-                {% if block.settings.logo != blank %}
-                  {% liquid
-                    assign brand_alt = block.settings.alt
-                    if brand_alt == blank
-                      assign brand_alt = block.settings.name
-                    endif
-                  %}
-                  {{ block.settings.logo | image_url: width: 300 | image_tag: loading: 'lazy', class: 'lfb-brand__logo', alt: brand_alt }}
-                {% elsif block.settings.name != blank %}
-                  <span class="lfb-brand__name">{{ block.settings.name }}</span>
-                {% endif %}
+              <div class="lfb-brand-wrap lfb-block-{{ block.id }}" {{ block.shopify_attributes }}>
+                {% render 'ltl-fry-brand-item', block: block, section: section %}
               </div>
             {% endif %}
           {% endfor %}
-          {% if section.settings.enable_marquee %}
+        </div>
+
+      {% else %}
+        <div class="lfb-track-wrap{% unless enable_marquee %} lfb-track-wrap--scroll{% endunless %}">
+          <div class="lfb-track{% if enable_marquee %} lfb-track--marquee{% endif %}">
             {% for block in section.blocks %}
               {% if block.type == 'brand' %}
-                <div class="lfb-brand lfb-brand--dup" aria-hidden="true">
-                  {% if block.settings.logo != blank %}
-                    {{ block.settings.logo | image_url: width: 300 | image_tag: loading: 'lazy', class: 'lfb-brand__logo', alt: '' }}
-                  {% elsif block.settings.name != blank %}
-                    <span class="lfb-brand__name">{{ block.settings.name }}</span>
-                  {% endif %}
+                <div class="lfb-brand-wrap lfb-block-{{ block.id }}" {{ block.shopify_attributes }}>
+                  {% render 'ltl-fry-brand-item', block: block, section: section %}
                 </div>
               {% endif %}
             {% endfor %}
-          {% endif %}
+            {% if enable_marquee %}
+              {% for block in section.blocks %}
+                {% if block.type == 'brand' %}
+                  <div class="lfb-brand-wrap lfb-brand-wrap--dup" aria-hidden="true">
+                    {% render 'ltl-fry-brand-item', block: block, section: section, duplicate: true %}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
         </div>
-      </div>
+      {% endif %}
     {% endif %}
   </div>
 </section>
@@ -50,38 +121,33 @@
     font-size: {{ section.settings.heading_font_size_mobile }}px;
     font-weight: {{ section.settings.heading_font_weight }};
     color: {{ section.settings.heading_color }};
-    text-align: {{ section.settings.text_align }};
-    margin: 0 0 16px;
+    text-align: {{ heading_align }};
+    margin: 0 0 20px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+    line-height: 1.35;
   }
 
-  .section-{{ section.id }} .lfb-track-wrap {
-    overflow: hidden;
+  .section-{{ section.id }} .lfb-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    min-width: 0;
   }
 
-  .section-{{ section.id }} .lfb-track {
+  .section-{{ section.id }} .lfb-brand__logo-wrap {
     display: flex;
     align-items: center;
-    justify-content: {{ section.settings.text_align }};
-    flex-wrap: wrap;
-    gap: {{ section.settings.logo_gap_mobile }}px;
-  }
-
-  .section-{{ section.id }} .lfb-track--marquee {
-    flex-wrap: nowrap;
-    width: max-content;
-    animation: lfb-marquee-{{ section.id }} {{ section.settings.marquee_speed }}s linear infinite;
-  }
-
-  @keyframes lfb-marquee-{{ section.id }} {
-    0% { transform: translate3d(0, 0, 0); }
-    100% { transform: translate3d(-50%, 0, 0); }
+    justify-content: center;
+    min-height: {{ section.settings.logo_height_mobile }}px;
   }
 
   .section-{{ section.id }} .lfb-brand__logo {
     height: {{ section.settings.logo_height_mobile }}px;
     width: auto;
+    max-width: 100%;
     display: block;
     object-fit: contain;
     opacity: {{ section.settings.logo_opacity | divided_by: 100.0 }};
@@ -91,15 +157,108 @@
     font-size: {{ section.settings.name_font_size_mobile }}px;
     color: {{ section.settings.name_color }};
     font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .section-{{ section.id }} .lfb-brand__caption {
+    font-size: {{ section.settings.caption_font_size_mobile }}px;
+    color: {{ section.settings.caption_color }};
+    line-height: 1.4;
+    margin: 0;
+    max-width: 18ch;
+  }
+
+  .section-{{ section.id }} .lfb-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--lfb-cols-mobile), minmax(0, 1fr));
+    gap: {{ section.settings.logo_gap_mobile }}px {{ section.settings.logo_gap_mobile | divided_by: 2 }}px;
+    justify-items: center;
+  }
+
+  .section-{{ section.id }} .lfb-track-wrap {
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }} .lfb-track-wrap--scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .section-{{ section.id }} .lfb-track-wrap--scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .section-{{ section.id }} .lfb-track {
+    display: flex;
+    align-items: flex-start;
+    justify-content: {{ section.settings.text_align }};
+    flex-wrap: wrap;
+    gap: {{ section.settings.logo_gap_mobile }}px;
+  }
+
+  .section-{{ section.id }} .lfb-track-wrap--scroll .lfb-track {
+    flex-wrap: nowrap;
+    width: max-content;
+    padding-bottom: 4px;
+  }
+
+  .section-{{ section.id }} .lfb-track--marquee {
+    flex-wrap: nowrap;
+    width: max-content;
+    animation: lfb-marquee-{{ section.id }} {{ section.settings.marquee_speed }}s linear infinite;
+  }
+
+  .section-{{ section.id }} .lfb-track-wrap--scroll .lfb-brand-wrap {
+    flex: 0 0 auto;
+    width: clamp(140px, 42vw, 220px);
+  }
+
+  @keyframes lfb-marquee-{{ section.id }} {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+  }
+
+  .section-{{ section.id }} .lfb-splide .splide__slide__container {
+    height: 100%;
+  }
+
+  .section-{{ section.id }} .lfb-splide .splide__dots-and-arrows {
+    margin-top: 20px;
+  }
+
+  .section-{{ section.id }} .lfb-splide .splide__pagination {
+    position: static;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 0;
+  }
+
+  .section-{{ section.id }} .lfb-splide .splide__pagination__page {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: {{ section.settings.pagination_inactive_color }};
+    opacity: 1;
+    margin: 0;
+    transition: width 0.2s ease, background 0.2s ease;
+  }
+
+  .section-{{ section.id }} .lfb-splide .splide__pagination__page.is-active {
+    width: 28px;
+    background: {{ section.settings.pagination_active_color }};
   }
 
   @media screen and (min-width: 750px) {
     .section-{{ section.id }} .lfb-heading {
       font-size: {{ section.settings.heading_font_size_desktop }}px;
+      margin-bottom: 24px;
     }
 
-    .section-{{ section.id }} .lfb-track {
-      gap: {{ section.settings.logo_gap_desktop }}px;
+    .section-{{ section.id }} .lfb-brand__logo-wrap {
+      min-height: {{ section.settings.logo_height_desktop }}px;
     }
 
     .section-{{ section.id }} .lfb-brand__logo {
@@ -108,6 +267,24 @@
 
     .section-{{ section.id }} .lfb-brand__name {
       font-size: {{ section.settings.name_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfb-brand__caption {
+      font-size: {{ section.settings.caption_font_size_desktop }}px;
+      max-width: 16ch;
+    }
+
+    .section-{{ section.id }} .lfb-grid {
+      grid-template-columns: repeat(var(--lfb-cols-desktop), minmax(0, 1fr));
+      gap: {{ section.settings.logo_gap_desktop }}px {{ section.settings.logo_gap_desktop | divided_by: 2 }}px;
+    }
+
+    .section-{{ section.id }} .lfb-track {
+      gap: {{ section.settings.logo_gap_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfb-track-wrap--scroll .lfb-brand-wrap {
+      width: clamp(120px, calc(100% / {{ section.settings.columns_desktop }}), 180px);
     }
   }
 </style>
@@ -118,31 +295,60 @@
   "tag": "section",
   "class": "section-ltl-fry-brands",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Featured in" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "FRØYA IS HANDS DOWN THE #1 SKINCARE FOR MATURE WOMEN'S SKIN" },
     { "type": "select", "id": "text_align", "label": "Alignment", "options": [
       { "value": "flex-start", "label": "Left" },
       { "value": "center", "label": "Center" },
       { "value": "flex-end", "label": "Right" }
     ], "default": "center" },
-    { "type": "checkbox", "id": "enable_marquee", "label": "Enable marquee scroll", "default": true },
+    { "type": "header", "content": "Display" },
+    { "type": "select", "id": "display_type", "label": "Display type", "options": [
+      { "value": "scroll", "label": "Scroll" },
+      { "value": "slider", "label": "Slider" },
+      { "value": "none", "label": "None" }
+    ], "default": "slider" },
+    { "type": "checkbox", "id": "enable_marquee", "label": "Enable marquee scroll", "default": true, "info": "Scroll mode only. Disable for manual horizontal scroll." },
     { "type": "range", "id": "marquee_speed", "min": 10, "max": 80, "step": 5, "unit": "s", "label": "Marquee speed", "default": 30 },
+    { "type": "header", "content": "Slider" },
+    { "type": "select", "id": "slider_type", "label": "Slider type", "options": [
+      { "value": "slide", "label": "Slide" },
+      { "value": "loop", "label": "Loop" }
+    ], "default": "slide" },
+    { "type": "checkbox", "id": "autoplay", "label": "Autoplay", "default": false },
+    { "type": "range", "id": "autoplay_speed", "min": 2, "max": 10, "step": 1, "unit": "s", "label": "Autoplay speed", "default": 5 },
+    { "type": "checkbox", "id": "lock_drag", "label": "Lock drag", "default": false },
+    { "type": "range", "id": "columns_desktop", "min": 1, "max": 8, "step": 1, "label": "Columns (desktop)", "default": 8 },
+    { "type": "select", "id": "columns_mobile", "label": "Columns (mobile)", "options": [
+      { "value": "1", "label": "1" },
+      { "value": "1.8", "label": "1.8 (peek)" },
+      { "value": "2", "label": "2" }
+    ], "default": "2" },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show arrows", "default": false },
+    { "type": "checkbox", "id": "show_pagination", "label": "Show pagination", "default": true },
+    { "type": "header", "content": "Logos" },
     { "type": "range", "id": "logo_gap_mobile", "min": 12, "max": 60, "step": 4, "unit": "px", "label": "Logo gap (mobile)", "default": 24 },
-    { "type": "range", "id": "logo_gap_desktop", "min": 16, "max": 80, "step": 4, "unit": "px", "label": "Logo gap (desktop)", "default": 40 },
+    { "type": "range", "id": "logo_gap_desktop", "min": 16, "max": 80, "step": 4, "unit": "px", "label": "Logo gap (desktop)", "default": 32 },
     { "type": "range", "id": "logo_height_mobile", "min": 16, "max": 60, "step": 2, "unit": "px", "label": "Logo height (mobile)", "default": 28 },
     { "type": "range", "id": "logo_height_desktop", "min": 20, "max": 80, "step": 2, "unit": "px", "label": "Logo height (desktop)", "default": 36 },
-    { "type": "range", "id": "logo_opacity", "min": 30, "max": 100, "step": 5, "unit": "%", "label": "Logo opacity", "default": 70 },
-    { "type": "range", "id": "heading_font_size_mobile", "min": 10, "max": 20, "step": 1, "unit": "px", "label": "Heading size (mobile)", "default": 12 },
-    { "type": "range", "id": "heading_font_size_desktop", "min": 10, "max": 20, "step": 1, "unit": "px", "label": "Heading size (desktop)", "default": 13 },
+    { "type": "range", "id": "logo_opacity", "min": 30, "max": 100, "step": 5, "unit": "%", "label": "Logo opacity", "default": 100 },
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "heading_font_size_mobile", "min": 10, "max": 24, "step": 1, "unit": "px", "label": "Heading size (mobile)", "default": 12 },
+    { "type": "range", "id": "heading_font_size_desktop", "min": 10, "max": 24, "step": 1, "unit": "px", "label": "Heading size (desktop)", "default": 13 },
     { "type": "select", "id": "heading_font_weight", "label": "Heading weight", "options": [
       { "value": "500", "label": "Medium" },
       { "value": "600", "label": "Semibold" }
     ], "default": "600" },
-    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#9ca3af" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#111827" },
     { "type": "range", "id": "name_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Name size (mobile)", "default": 14 },
     { "type": "range", "id": "name_font_size_desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Name size (desktop)", "default": 15 },
     { "type": "color", "id": "name_color", "label": "Name color", "default": "#6b7280" },
+    { "type": "range", "id": "caption_font_size_mobile", "min": 10, "max": 18, "step": 1, "unit": "px", "label": "Caption size (mobile)", "default": 12 },
+    { "type": "range", "id": "caption_font_size_desktop", "min": 10, "max": 18, "step": 1, "unit": "px", "label": "Caption size (desktop)", "default": 12 },
+    { "type": "color", "id": "caption_color", "label": "Caption color", "default": "#374151" },
+    { "type": "color", "id": "pagination_active_color", "label": "Pagination active", "default": "#111827" },
+    { "type": "color", "id": "pagination_inactive_color", "label": "Pagination inactive", "default": "#d1d5db" },
     { "type": "header", "content": "Section style" },
-    { "type": "color", "id": "bg_color", "label": "Background", "default": "#ffffff" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#f3ecec" },
     { "type": "checkbox", "id": "gradient_enabled", "label": "Use gradient background", "default": false },
     { "type": "color_background", "id": "gradient_background", "label": "Gradient", "default": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)" },
     { "type": "color", "id": "text_color", "label": "Text color", "default": "#000000" },
@@ -162,7 +368,8 @@
       "settings": [
         { "type": "image_picker", "id": "logo", "label": "Logo" },
         { "type": "text", "id": "name", "label": "Brand name (fallback)" },
-        { "type": "text", "id": "alt", "label": "Alt text" }
+        { "type": "text", "id": "alt", "label": "Alt text" },
+        { "type": "textarea", "id": "caption", "label": "Caption", "default": "Packs an extra punch when it comes to healing skin!" }
       ]
     }
   ],
@@ -170,6 +377,10 @@
     {
       "name": "ltl-fry-brands",
       "blocks": [
+        { "type": "brand" },
+        { "type": "brand" },
+        { "type": "brand" },
+        { "type": "brand" },
         { "type": "brand" },
         { "type": "brand" },
         { "type": "brand" },
