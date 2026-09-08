@@ -192,6 +192,21 @@
           margin-top: {{ block.settings.margin_top | default: 0 }}px !important;
           margin-bottom: {{ block.settings.margin_bottom | default: 24 }}px !important;
         }
+        .custom-hero__benefits[data-block-id="{{ block.id }}"] .custom-hero__benefit-item {
+          font-size: {{ block.settings.font_size_desktop | default: 16 }}px !important;
+          font-weight: {{ block.settings.font_weight | default: '500' }} !important;
+          font-style: {{ block.settings.font_style | default: 'normal' }} !important;
+          {% if block.settings.font_family == 'heading' %}
+            font-family: var(--font-heading-family) !important;
+          {% elsif block.settings.font_family == 'serif' %}
+            font-family: "New York", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif !important;
+          {% endif %}
+        }
+        @media (max-width: 768px) {
+          .custom-hero__benefits[data-block-id="{{ block.id }}"] .custom-hero__benefit-item {
+            font-size: {{ block.settings.font_size_mobile | default: 14 }}px !important;
+          }
+        }
       {% when 'button' %}
         .custom-hero__button-wrapper[data-block-id="{{ block.id }}"] {
           margin-top: {{ block.settings.margin_top | default: 0 }}px !important;
@@ -1282,67 +1297,73 @@
               {% when 'benefits' %}
                 <div class="custom-hero__benefits{% if block.settings.benefits_flex_layout %} flex-layout{% endif %}" data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
                   {% if block.settings.benefit_1_text != blank %}
-                    <div class="custom-hero__benefit-item">
-                      <span class="custom-hero__benefit-icon">
-                        {% case block.settings.benefit_1_icon %}
-                          {% when 'check' %}
-                            {{ checkmark_icon }}
-                          {% when 'badge_check' %}
-                            {{ badge_checkmark_icon }}
-                          {% when 'circle_check' %}
-                            {{ circle_checkmark_icon }}
-                          {% when 'filled_circle_check' %}
-                            {{ filled_circle_checkmark_icon }}
-                          {% when 'check_mark' %}
-                            {{ check_icon }}
-                          {% when 'custom' %}
-                            {{ block.settings.benefit_1_custom_svg }}
-                        {% endcase %}
-                      </span>
+                    <div class="custom-hero__benefit-item{% if block.settings.benefit_1_icon == 'none' %} custom-hero__benefit-item--no-icon{% endif %}">
+                      {% unless block.settings.benefit_1_icon == 'none' %}
+                        <span class="custom-hero__benefit-icon">
+                          {% case block.settings.benefit_1_icon %}
+                            {% when 'check' %}
+                              {{ checkmark_icon }}
+                            {% when 'badge_check' %}
+                              {{ badge_checkmark_icon }}
+                            {% when 'circle_check' %}
+                              {{ circle_checkmark_icon }}
+                            {% when 'filled_circle_check' %}
+                              {{ filled_circle_checkmark_icon }}
+                            {% when 'check_mark' %}
+                              {{ check_icon }}
+                            {% when 'custom' %}
+                              {{ block.settings.benefit_1_custom_svg }}
+                          {% endcase %}
+                        </span>
+                      {% endunless %}
                       <span>{{ block.settings.benefit_1_text }}</span>
                     </div>
                   {% endif %}
 
                   {% if block.settings.benefit_2_text != blank %}
-                    <div class="custom-hero__benefit-item">
-                      <span class="custom-hero__benefit-icon">
-                        {% case block.settings.benefit_2_icon %}
-                          {% when 'check' %}
-                            {{ checkmark_icon }}
-                          {% when 'badge_check' %}
-                            {{ badge_checkmark_icon }}
-                          {% when 'circle_check' %}
-                            {{ circle_checkmark_icon }}
-                          {% when 'filled_circle_check' %}
-                            {{ filled_circle_checkmark_icon }}
-                          {% when 'check_mark' %}
-                            {{ check_icon }}
-                          {% when 'custom' %}
-                            {{ block.settings.benefit_2_custom_svg }}
-                        {% endcase %}
-                      </span>
+                    <div class="custom-hero__benefit-item{% if block.settings.benefit_2_icon == 'none' %} custom-hero__benefit-item--no-icon{% endif %}">
+                      {% unless block.settings.benefit_2_icon == 'none' %}
+                        <span class="custom-hero__benefit-icon">
+                          {% case block.settings.benefit_2_icon %}
+                            {% when 'check' %}
+                              {{ checkmark_icon }}
+                            {% when 'badge_check' %}
+                              {{ badge_checkmark_icon }}
+                            {% when 'circle_check' %}
+                              {{ circle_checkmark_icon }}
+                            {% when 'filled_circle_check' %}
+                              {{ filled_circle_checkmark_icon }}
+                            {% when 'check_mark' %}
+                              {{ check_icon }}
+                            {% when 'custom' %}
+                              {{ block.settings.benefit_2_custom_svg }}
+                          {% endcase %}
+                        </span>
+                      {% endunless %}
                       <span>{{ block.settings.benefit_2_text }}</span>
                     </div>
                   {% endif %}
 
                   {% if block.settings.benefit_3_text != blank %}
-                    <div class="custom-hero__benefit-item">
-                      <span class="custom-hero__benefit-icon">
-                        {% case block.settings.benefit_3_icon %}
-                          {% when 'check' %}
-                            {{ checkmark_icon }}
-                          {% when 'badge_check' %}
-                            {{ badge_checkmark_icon }}
-                          {% when 'circle_check' %}
-                            {{ circle_checkmark_icon }}
-                          {% when 'filled_circle_check' %}
-                            {{ filled_circle_checkmark_icon }}
-                          {% when 'check_mark' %}
-                            {{ check_icon }}
-                          {% when 'custom' %}
-                            {{ block.settings.benefit_3_custom_svg }}
-                        {% endcase %}
-                      </span>
+                    <div class="custom-hero__benefit-item{% if block.settings.benefit_3_icon == 'none' %} custom-hero__benefit-item--no-icon{% endif %}">
+                      {% unless block.settings.benefit_3_icon == 'none' %}
+                        <span class="custom-hero__benefit-icon">
+                          {% case block.settings.benefit_3_icon %}
+                            {% when 'check' %}
+                              {{ checkmark_icon }}
+                            {% when 'badge_check' %}
+                              {{ badge_checkmark_icon }}
+                            {% when 'circle_check' %}
+                              {{ circle_checkmark_icon }}
+                            {% when 'filled_circle_check' %}
+                              {{ filled_circle_checkmark_icon }}
+                            {% when 'check_mark' %}
+                              {{ check_icon }}
+                            {% when 'custom' %}
+                              {{ block.settings.benefit_3_custom_svg }}
+                          {% endcase %}
+                        </span>
+                      {% endunless %}
                       <span>{{ block.settings.benefit_3_text }}</span>
                     </div>
                   {% endif %}
@@ -1912,8 +1933,29 @@
  {"type":"paragraph","content":"**Benefits List** - Add up to 3 benefit points"},
  {"type":"checkbox","id":"benefits_flex_layout","label":"Use Flex Layout","default": false
  },
+ {"type":"header","content":"Typography"},
+ {"type":"range","id":"font_size_desktop","min": 12,"max": 24,"step": 1,"unit":"px","label":"Font Size (Desktop)","default": 16
+ },
+ {"type":"range","id":"font_size_mobile","min": 12,"max": 22,"step": 1,"unit":"px","label":"Font Size (Mobile)","default": 14
+ },
+ {"type":"select","id":"font_weight","label":"Font Weight","options": [
+ {"value":"400","label":"Normal"},
+ {"value":"500","label":"Medium"},
+ {"value":"600","label":"Semi Bold"},
+ {"value":"700","label":"Bold"}
+ ],"default":"500"},
+ {"type":"select","id":"font_style","label":"Font Style","options": [
+ {"value":"normal","label":"Normal"},
+ {"value":"italic","label":"Italic"}
+ ],"default":"normal"},
+ {"type":"select","id":"font_family","label":"Font Family","options": [
+ {"value":"inherit","label":"Theme default"},
+ {"value":"heading","label":"Heading font"},
+ {"value":"serif","label":"Serif stack"}
+ ],"default":"inherit"},
  {"type":"header","content":"Benefit 1"},
  {"type":"select","id":"benefit_1_icon","label":"Icon","options": [
+ {"value":"none","label":"None"},
  {"value":"check","label":"Check"},
  {"value":"badge_check","label":"Badge Check"},
  {"value":"circle_check","label":"Circle Check"},
@@ -1925,6 +1967,7 @@
  {"type":"text","id":"benefit_1_text","label":"Text","default":"Benefit 1"},
  {"type":"header","content":"Benefit 2"},
  {"type":"select","id":"benefit_2_icon","label":"Icon","options": [
+ {"value":"none","label":"None"},
  {"value":"check","label":"Check"},
  {"value":"badge_check","label":"Badge Check"},
  {"value":"circle_check","label":"Circle Check"},
@@ -1936,6 +1979,7 @@
  {"type":"text","id":"benefit_2_text","label":"Text","default":"Benefit 2"},
  {"type":"header","content":"Benefit 3"},
  {"type":"select","id":"benefit_3_icon","label":"Icon","options": [
+ {"value":"none","label":"None"},
  {"value":"check","label":"Check"},
  {"value":"badge_check","label":"Badge Check"},
  {"value":"circle_check","label":"Circle Check"},

@@ -1,33 +1,82 @@
+{% liquid
+  assign in_second_grid = false
+%}
+
 <section class="ltl-fry-featured-icons section-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="lf-wrap">
     {% for block in section.blocks %}
-      {% case block.type %}
-        {% when 'heading' %}
-          {% if block.settings.text != blank %}
-            <{{ block.settings.tag | default: 'h2' }} class="lfi-section-heading lfi-block-{{ block.id }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</{{ block.settings.tag | default: 'h2' }}>
-          {% endif %}
-        {% when 'icon_item' %}
-          <div class="lfi-item lfi-item--{{ block.settings.icon_level }} lfi-block-{{ block.id }}" {{ block.shopify_attributes }}>
-            {% if block.settings.icon != blank %}
+      {% if block.type == 'icon_item' and block.settings.icon_level == 'second' %}
+        {% unless in_second_grid %}
+          {% assign in_second_grid = true %}
+          <div class="lfi-grid lfi-grid--second">
+        {% endunless %}
+        <div class="lfi-item lfi-item--second lfi-block-{{ block.id }}" {{ block.shopify_attributes }}>
+          {% if block.settings.icon != blank %}
+            <div class="lfi-item__icon-circle">
               <div class="lfi-item__icon">
-                {{ block.settings.icon | image_url: width: 200 | image_tag: loading: 'lazy', alt: block.settings.title }}
+                {{ block.settings.icon | image_url: width: 120 | image_tag: loading: 'lazy', alt: block.settings.line_1 | default: block.settings.title }}
               </div>
-            {% endif %}
-            <div class="lfi-item__content">
-              {% if block.settings.title != blank %}
-                <div class="lfi-item__title">{{ block.settings.title }}</div>
-              {% endif %}
-              {% if block.settings.text != blank %}
-                <div class="lfi-item__text rte">{{ block.settings.text }}</div>
-              {% endif %}
             </div>
-          </div>
-        {% when 'button' %}
-          {% if block.settings.label != blank %}
-            <a class="lfi-btn lfi-block-{{ block.id }}" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
           {% endif %}
-      {% endcase %}
+          <div class="lfi-item__content">
+            {% assign line_1 = block.settings.line_1 | default: block.settings.title %}
+            {% assign line_2 = block.settings.line_2 %}
+            {% if line_2 == blank and block.settings.text != blank %}
+              {% assign line_2 = block.settings.text | strip_html %}
+            {% endif %}
+            {% if line_1 != blank %}
+              <div class="lfi-item__line1">{{ line_1 }}</div>
+            {% endif %}
+            {% if line_2 != blank %}
+              <div class="lfi-item__line2">{{ line_2 }}</div>
+            {% endif %}
+          </div>
+        </div>
+      {% else %}
+        {% if in_second_grid %}
+          </div>
+          {% assign in_second_grid = false %}
+        {% endif %}
+
+        {% case block.type %}
+          {% when 'heading' %}
+            {% if block.settings.text != blank %}
+              <{{ block.settings.tag | default: 'h2' }} class="lfi-section-heading lfi-block-{{ block.id }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</{{ block.settings.tag | default: 'h2' }}>
+            {% endif %}
+          {% when 'icon_item' %}
+            <div class="lfi-item lfi-item--first lfi-block-{{ block.id }}" {{ block.shopify_attributes }}>
+              {% if block.settings.icon != blank %}
+                <div class="lfi-item__icon-circle lfi-item__icon-circle--large">
+                  <div class="lfi-item__icon">
+                    {{ block.settings.icon | image_url: width: 200 | image_tag: loading: 'lazy', alt: block.settings.line_1 | default: block.settings.title }}
+                  </div>
+                </div>
+              {% endif %}
+              <div class="lfi-item__content">
+                {% assign line_1 = block.settings.line_1 | default: block.settings.title %}
+                {% assign line_2 = block.settings.line_2 %}
+                {% if line_2 == blank and block.settings.text != blank %}
+                  {% assign line_2 = block.settings.text | strip_html %}
+                {% endif %}
+                {% if line_1 != blank %}
+                  <div class="lfi-item__line1">{{ line_1 }}</div>
+                {% endif %}
+                {% if line_2 != blank %}
+                  <div class="lfi-item__line2">{{ line_2 }}</div>
+                {% endif %}
+              </div>
+            </div>
+          {% when 'button' %}
+            {% if block.settings.label != blank %}
+              <a class="lfi-btn lfi-block-{{ block.id }}" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+            {% endif %}
+        {% endcase %}
+      {% endif %}
     {% endfor %}
+
+    {% if in_second_grid %}
+      </div>
+    {% endif %}
   </div>
 </section>
 
@@ -43,65 +92,97 @@
     line-height: 1.25;
   }
 
-  .section-{{ section.id }} .lfi-item {
+  .section-{{ section.id }} .lfi-grid--second {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.level2_columns_mobile }}, minmax(0, 1fr));
+    gap: {{ section.settings.level2_grid_gap_mobile }}px;
+    width: 100%;
+  }
+
+  .section-{{ section.id }} .lfi-item--second {
     display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    margin-bottom: {{ section.settings.item_spacing_mobile }}px;
+    align-items: center;
+    gap: {{ section.settings.level2_icon_text_gap }}px;
+    text-align: left;
   }
 
-  .section-{{ section.id }} .lfi-item:last-child {
-    margin-bottom: 0;
+  .section-{{ section.id }} .lfi-item--second .lfi-item__icon-circle {
+    width: {{ section.settings.level2_circle_size_mobile }}px;
+    height: {{ section.settings.level2_circle_size_mobile }}px;
+    border-radius: 50%;
+    background: {{ section.settings.level2_circle_bg_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
 
-  .section-{{ section.id }} .lfi-item__icon img {
-    display: block;
+  .section-{{ section.id }} .lfi-item--second .lfi-item__icon img {
+    width: {{ section.settings.level2_icon_size_mobile }}px;
+    height: {{ section.settings.level2_icon_size_mobile }}px;
     object-fit: contain;
+    display: block;
+  }
+
+  .section-{{ section.id }} .lfi-item--second .lfi-item__line1,
+  .section-{{ section.id }} .lfi-item--second .lfi-item__line2 {
+    display: block;
+    line-height: 1.35;
+  }
+
+  .section-{{ section.id }} .lfi-item--second .lfi-item__line1 {
+    font-size: {{ section.settings.level2_line1_size_mobile }}px;
+    font-weight: {{ section.settings.level2_line1_weight }};
+    color: {{ section.settings.level2_line1_color }};
+  }
+
+  .section-{{ section.id }} .lfi-item--second .lfi-item__line2 {
+    font-size: {{ section.settings.level2_line2_size_mobile }}px;
+    font-weight: {{ section.settings.level2_line2_weight }};
+    color: {{ section.settings.level2_line2_color }};
   }
 
   .section-{{ section.id }} .lfi-item--first {
+    display: flex;
     flex-direction: column;
     text-align: {{ section.settings.text_align }};
     align-items: {% if section.settings.text_align == 'center' %}center{% elsif section.settings.text_align == 'right' %}flex-end{% else %}flex-start{% endif %};
     padding: {{ section.settings.level1_padding }}px;
     background: {{ section.settings.level1_bg_color }};
     border-radius: {{ section.settings.level1_border_radius }}px;
+    margin-bottom: {{ section.settings.item_spacing_mobile }}px;
+  }
+
+  .section-{{ section.id }} .lfi-item--first .lfi-item__icon-circle--large {
+    width: {{ section.settings.level1_circle_size_mobile }}px;
+    height: {{ section.settings.level1_circle_size_mobile }}px;
+    border-radius: 50%;
+    background: {{ section.settings.level1_circle_bg_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
   }
 
   .section-{{ section.id }} .lfi-item--first .lfi-item__icon img {
     width: {{ section.settings.level1_icon_size_mobile }}px;
     height: {{ section.settings.level1_icon_size_mobile }}px;
+    object-fit: contain;
+    display: block;
   }
 
-  .section-{{ section.id }} .lfi-item--first .lfi-item__title {
+  .section-{{ section.id }} .lfi-item--first .lfi-item__line1 {
     font-size: {{ section.settings.level1_title_size_mobile }}px;
     font-weight: {{ section.settings.level1_title_weight }};
     color: {{ section.settings.level1_title_color }};
     margin-bottom: 8px;
+    line-height: 1.25;
   }
 
-  .section-{{ section.id }} .lfi-item--first .lfi-item__text {
+  .section-{{ section.id }} .lfi-item--first .lfi-item__line2 {
     font-size: {{ section.settings.level1_text_size_mobile }}px;
     color: {{ section.settings.level1_text_color }};
     line-height: 1.5;
-  }
-
-  .section-{{ section.id }} .lfi-item--second .lfi-item__icon img {
-    width: {{ section.settings.level2_icon_size_mobile }}px;
-    height: {{ section.settings.level2_icon_size_mobile }}px;
-  }
-
-  .section-{{ section.id }} .lfi-item--second .lfi-item__title {
-    font-size: {{ section.settings.level2_title_size_mobile }}px;
-    font-weight: {{ section.settings.level2_title_weight }};
-    color: {{ section.settings.level2_title_color }};
-    margin-bottom: 4px;
-  }
-
-  .section-{{ section.id }} .lfi-item--second .lfi-item__text {
-    font-size: {{ section.settings.level2_text_size_mobile }}px;
-    color: {{ section.settings.level2_text_color }};
-    line-height: 1.45;
   }
 
   .section-{{ section.id }} .lfi-btn {
@@ -121,39 +202,14 @@
       font-size: {{ section.settings.heading_font_size_desktop }}px;
     }
 
-    .section-{{ section.id }} .lfi-item {
-      margin-bottom: {{ section.settings.item_spacing_desktop }}px;
+    .section-{{ section.id }} .lfi-grid--second {
+      grid-template-columns: repeat({{ section.settings.level2_columns_desktop }}, minmax(0, 1fr));
+      gap: {{ section.settings.level2_grid_gap_desktop }}px;
     }
 
-    .section-{{ section.id }} .lfi-item--first .lfi-item__icon img {
-      width: {{ section.settings.level1_icon_size_desktop }}px;
-      height: {{ section.settings.level1_icon_size_desktop }}px;
-    }
-
-    .section-{{ section.id }} .lfi-item--first .lfi-item__title {
-      font-size: {{ section.settings.level1_title_size_desktop }}px;
-    }
-
-    .section-{{ section.id }} .lfi-item--first .lfi-item__text {
-      font-size: {{ section.settings.level1_text_size_desktop }}px;
-    }
-
-    .section-{{ section.id }} .lfi-item--second {
-      display: inline-flex;
-      width: calc(50% - 12px);
-      vertical-align: top;
-    }
-
-    .section-{{ section.id }} .lf-wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
-    }
-
-    .section-{{ section.id }} .lfi-section-heading,
-    .section-{{ section.id }} .lfi-item--first,
-    .section-{{ section.id }} .lfi-btn {
-      width: 100%;
+    .section-{{ section.id }} .lfi-item--second .lfi-item__icon-circle {
+      width: {{ section.settings.level2_circle_size_desktop }}px;
+      height: {{ section.settings.level2_circle_size_desktop }}px;
     }
 
     .section-{{ section.id }} .lfi-item--second .lfi-item__icon img {
@@ -161,12 +217,34 @@
       height: {{ section.settings.level2_icon_size_desktop }}px;
     }
 
-    .section-{{ section.id }} .lfi-item--second .lfi-item__title {
-      font-size: {{ section.settings.level2_title_size_desktop }}px;
+    .section-{{ section.id }} .lfi-item--second .lfi-item__line1 {
+      font-size: {{ section.settings.level2_line1_size_desktop }}px;
     }
 
-    .section-{{ section.id }} .lfi-item--second .lfi-item__text {
-      font-size: {{ section.settings.level2_text_size_desktop }}px;
+    .section-{{ section.id }} .lfi-item--second .lfi-item__line2 {
+      font-size: {{ section.settings.level2_line2_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfi-item--first {
+      margin-bottom: {{ section.settings.item_spacing_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfi-item--first .lfi-item__icon-circle--large {
+      width: {{ section.settings.level1_circle_size_desktop }}px;
+      height: {{ section.settings.level1_circle_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfi-item--first .lfi-item__icon img {
+      width: {{ section.settings.level1_icon_size_desktop }}px;
+      height: {{ section.settings.level1_icon_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfi-item--first .lfi-item__line1 {
+      font-size: {{ section.settings.level1_title_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfi-item--first .lfi-item__line2 {
+      font-size: {{ section.settings.level1_text_size_desktop }}px;
     }
 
     .section-{{ section.id }} .lfi-btn {
@@ -197,54 +275,71 @@
     { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#1f2937" },
     { "type": "header", "content": "Level 1 (large)" },
     { "type": "color", "id": "level1_bg_color", "label": "Background", "default": "#faf8f6" },
+    { "type": "color", "id": "level1_circle_bg_color", "label": "Icon circle background", "default": "#c4939a" },
     { "type": "range", "id": "level1_padding", "min": 16, "max": 60, "step": 4, "unit": "px", "label": "Padding", "default": 32 },
     { "type": "range", "id": "level1_border_radius", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Border radius", "default": 12 },
-    { "type": "range", "id": "level1_icon_size_mobile", "min": 40, "max": 120, "step": 4, "unit": "px", "label": "Icon size (mobile)", "default": 64 },
-    { "type": "range", "id": "level1_icon_size_desktop", "min": 48, "max": 160, "step": 4, "unit": "px", "label": "Icon size (desktop)", "default": 80 },
-    { "type": "range", "id": "level1_title_size_mobile", "min": 18, "max": 40, "step": 1, "unit": "px", "label": "Title size (mobile)", "default": 24 },
-    { "type": "range", "id": "level1_title_size_desktop", "min": 20, "max": 48, "step": 1, "unit": "px", "label": "Title size (desktop)", "default": 32 },
-    { "type": "select", "id": "level1_title_weight", "label": "Title weight", "options": [
+    { "type": "range", "id": "level1_circle_size_mobile", "min": 48, "max": 120, "step": 4, "unit": "px", "label": "Circle size (mobile)", "default": 72 },
+    { "type": "range", "id": "level1_circle_size_desktop", "min": 56, "max": 140, "step": 4, "unit": "px", "label": "Circle size (desktop)", "default": 80 },
+    { "type": "range", "id": "level1_icon_size_mobile", "min": 24, "max": 72, "step": 2, "unit": "px", "label": "Icon size (mobile)", "default": 40 },
+    { "type": "range", "id": "level1_icon_size_desktop", "min": 28, "max": 80, "step": 2, "unit": "px", "label": "Icon size (desktop)", "default": 44 },
+    { "type": "range", "id": "level1_title_size_mobile", "min": 18, "max": 40, "step": 1, "unit": "px", "label": "Line 1 size (mobile)", "default": 24 },
+    { "type": "range", "id": "level1_title_size_desktop", "min": 20, "max": 48, "step": 1, "unit": "px", "label": "Line 1 size (desktop)", "default": 32 },
+    { "type": "select", "id": "level1_title_weight", "label": "Line 1 weight", "options": [
       { "value": "500", "label": "Medium" },
       { "value": "600", "label": "Semibold" },
       { "value": "700", "label": "Bold" }
     ], "default": "600" },
-    { "type": "color", "id": "level1_title_color", "label": "Title color", "default": "#1f2937" },
-    { "type": "range", "id": "level1_text_size_mobile", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Text size (mobile)", "default": 15 },
-    { "type": "range", "id": "level1_text_size_desktop", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Text size (desktop)", "default": 16 },
-    { "type": "color", "id": "level1_text_color", "label": "Text color", "default": "#4b5563" },
-    { "type": "header", "content": "Level 2 (small)" },
-    { "type": "range", "id": "level2_icon_size_mobile", "min": 24, "max": 64, "step": 2, "unit": "px", "label": "Icon size (mobile)", "default": 40 },
-    { "type": "range", "id": "level2_icon_size_desktop", "min": 28, "max": 72, "step": 2, "unit": "px", "label": "Icon size (desktop)", "default": 48 },
-    { "type": "range", "id": "level2_title_size_mobile", "min": 14, "max": 24, "step": 1, "unit": "px", "label": "Title size (mobile)", "default": 16 },
-    { "type": "range", "id": "level2_title_size_desktop", "min": 14, "max": 24, "step": 1, "unit": "px", "label": "Title size (desktop)", "default": 18 },
-    { "type": "select", "id": "level2_title_weight", "label": "Title weight", "options": [
+    { "type": "color", "id": "level1_title_color", "label": "Line 1 color", "default": "#1f2937" },
+    { "type": "range", "id": "level1_text_size_mobile", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Line 2 size (mobile)", "default": 15 },
+    { "type": "range", "id": "level1_text_size_desktop", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Line 2 size (desktop)", "default": 16 },
+    { "type": "color", "id": "level1_text_color", "label": "Line 2 color", "default": "#4b5563" },
+    { "type": "header", "content": "Level 2 (small row)" },
+    { "type": "range", "id": "level2_columns_desktop", "min": 2, "max": 4, "step": 1, "label": "Columns (desktop)", "default": 4 },
+    { "type": "range", "id": "level2_columns_mobile", "min": 1, "max": 3, "step": 1, "label": "Columns (mobile)", "default": 2 },
+    { "type": "range", "id": "level2_grid_gap_mobile", "min": 12, "max": 40, "step": 4, "unit": "px", "label": "Grid gap (mobile)", "default": 16 },
+    { "type": "range", "id": "level2_grid_gap_desktop", "min": 16, "max": 48, "step": 4, "unit": "px", "label": "Grid gap (desktop)", "default": 24 },
+    { "type": "range", "id": "level2_icon_text_gap", "min": 8, "max": 24, "step": 2, "unit": "px", "label": "Icon to text gap", "default": 12 },
+    { "type": "color", "id": "level2_circle_bg_color", "label": "Icon circle background", "default": "#c4939a" },
+    { "type": "range", "id": "level2_circle_size_mobile", "min": 40, "max": 72, "step": 2, "unit": "px", "label": "Circle size (mobile)", "default": 52 },
+    { "type": "range", "id": "level2_circle_size_desktop", "min": 44, "max": 80, "step": 2, "unit": "px", "label": "Circle size (desktop)", "default": 56 },
+    { "type": "range", "id": "level2_icon_size_mobile", "min": 20, "max": 40, "step": 2, "unit": "px", "label": "Icon size (mobile)", "default": 28 },
+    { "type": "range", "id": "level2_icon_size_desktop", "min": 22, "max": 44, "step": 2, "unit": "px", "label": "Icon size (desktop)", "default": 30 },
+    { "type": "range", "id": "level2_line1_size_mobile", "min": 12, "max": 18, "step": 1, "unit": "px", "label": "Line 1 size (mobile)", "default": 14 },
+    { "type": "range", "id": "level2_line1_size_desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Line 1 size (desktop)", "default": 15 },
+    { "type": "select", "id": "level2_line1_weight", "label": "Line 1 weight", "options": [
+      { "value": "400", "label": "Regular" },
       { "value": "500", "label": "Medium" },
       { "value": "600", "label": "Semibold" }
-    ], "default": "600" },
-    { "type": "color", "id": "level2_title_color", "label": "Title color", "default": "#1f2937" },
-    { "type": "range", "id": "level2_text_size_mobile", "min": 12, "max": 18, "step": 1, "unit": "px", "label": "Text size (mobile)", "default": 14 },
-    { "type": "range", "id": "level2_text_size_desktop", "min": 12, "max": 18, "step": 1, "unit": "px", "label": "Text size (desktop)", "default": 15 },
-    { "type": "color", "id": "level2_text_color", "label": "Text color", "default": "#6b7280" },
-    { "type": "range", "id": "item_spacing_mobile", "min": 8, "max": 48, "step": 4, "unit": "px", "label": "Item spacing (mobile)", "default": 16 },
-    { "type": "range", "id": "item_spacing_desktop", "min": 8, "max": 48, "step": 4, "unit": "px", "label": "Item spacing (desktop)", "default": 20 },
+    ], "default": "500" },
+    { "type": "color", "id": "level2_line1_color", "label": "Line 1 color", "default": "#1f2937" },
+    { "type": "range", "id": "level2_line2_size_mobile", "min": 12, "max": 18, "step": 1, "unit": "px", "label": "Line 2 size (mobile)", "default": 14 },
+    { "type": "range", "id": "level2_line2_size_desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Line 2 size (desktop)", "default": 15 },
+    { "type": "select", "id": "level2_line2_weight", "label": "Line 2 weight", "options": [
+      { "value": "400", "label": "Regular" },
+      { "value": "500", "label": "Medium" },
+      { "value": "600", "label": "Semibold" }
+    ], "default": "500" },
+    { "type": "color", "id": "level2_line2_color", "label": "Line 2 color", "default": "#1f2937" },
+    { "type": "range", "id": "item_spacing_mobile", "min": 8, "max": 48, "step": 4, "unit": "px", "label": "Level 1 spacing (mobile)", "default": 16 },
+    { "type": "range", "id": "item_spacing_desktop", "min": 8, "max": 48, "step": 4, "unit": "px", "label": "Level 1 spacing (desktop)", "default": 20 },
     { "type": "header", "content": "Button" },
     { "type": "color", "id": "button_bg_color", "label": "Button background", "default": "#000000" },
     { "type": "color", "id": "button_text_color", "label": "Button text", "default": "#ffffff" },
     { "type": "range", "id": "button_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Button size (mobile)", "default": 14 },
     { "type": "range", "id": "button_font_size_desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Button size (desktop)", "default": 16 },
     { "type": "header", "content": "Section style" },
-    { "type": "color", "id": "bg_color", "label": "Background", "default": "#ffffff" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#f3ecec" },
     { "type": "checkbox", "id": "gradient_enabled", "label": "Use gradient background", "default": false },
-    { "type": "color_background", "id": "gradient_background", "label": "Gradient", "default": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)" },
+    { "type": "color_background", "id": "gradient_background", "label": "Gradient", "default": "linear-gradient(180deg, rgba(243,236,236,1), rgba(250,248,246,1) 100%)" },
     { "type": "color", "id": "text_color", "label": "Text color", "default": "#000000" },
     { "type": "color", "id": "body_color", "label": "Body color", "default": "#374151" },
     { "type": "range", "id": "body_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Body size (mobile)", "default": 16 },
     { "type": "range", "id": "body_font_size_desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Body size (desktop)", "default": 16 },
-    { "type": "range", "id": "container_max_width", "min": 600, "max": 1400, "step": 10, "unit": "px", "label": "Container max width", "default": 1000 },
-    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (mobile)", "default": 32 },
-    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (mobile)", "default": 32 },
-    { "type": "range", "id": "padding_top_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (desktop)", "default": 48 },
-    { "type": "range", "id": "padding_bottom_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (desktop)", "default": 48 }
+    { "type": "range", "id": "container_max_width", "min": 600, "max": 1400, "step": 10, "unit": "px", "label": "Container max width", "default": 1200 },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (mobile)", "default": 24 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (mobile)", "default": 24 },
+    { "type": "range", "id": "padding_top_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (desktop)", "default": 32 },
+    { "type": "range", "id": "padding_bottom_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (desktop)", "default": 32 }
   ],
   "blocks": [
     {
@@ -265,11 +360,13 @@
       "settings": [
         { "type": "select", "id": "icon_level", "label": "Icon level", "options": [
           { "value": "first", "label": "1st level (large)" },
-          { "value": "second", "label": "2nd level (small)" }
-        ], "default": "first" },
+          { "value": "second", "label": "2nd level (small row)" }
+        ], "default": "second" },
         { "type": "image_picker", "id": "icon", "label": "Icon" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Feature title" },
-        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Short supporting description.</p>" }
+        { "type": "text", "id": "line_1", "label": "Line 1", "default": "Wrinkles visibly" },
+        { "type": "text", "id": "line_2", "label": "Line 2", "default": "smoothed" },
+        { "type": "text", "id": "title", "label": "Title (legacy fallback)" },
+        { "type": "richtext", "id": "text", "label": "Text (legacy fallback)" }
       ]
     },
     {
@@ -286,10 +383,10 @@
     {
       "name": "ltl-fry-featured-icons",
       "blocks": [
-        { "type": "heading" },
-        { "type": "icon_item", "settings": { "icon_level": "first" } },
-        { "type": "icon_item", "settings": { "icon_level": "second" } },
-        { "type": "icon_item", "settings": { "icon_level": "second" } }
+        { "type": "icon_item", "settings": { "icon_level": "second", "line_1": "Wrinkles visibly", "line_2": "smoothed" } },
+        { "type": "icon_item", "settings": { "icon_level": "second", "line_1": "Redness & irritation", "line_2": "soothed" } },
+        { "type": "icon_item", "settings": { "icon_level": "second", "line_1": "Skin looks firmer &", "line_2": "glowy" } },
+        { "type": "icon_item", "settings": { "icon_level": "second", "line_1": "Confidence back in", "line_2": "2 weeks" } }
       ]
     }
   ]

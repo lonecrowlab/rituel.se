@@ -118,6 +118,10 @@
   margin-bottom: 12px;
 }
 
+.custom-hero__benefit-item--no-icon {
+  gap: 0;
+}
+
 .custom-hero__benefit-item:last-child {
   margin-bottom: 0;
 }
