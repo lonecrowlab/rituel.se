@@ -237,42 +237,56 @@
     "listicle_froya_icons_1": {
       "type": "ltl-fry-featured-icons",
       "blocks": {
-        "heading_icons_1": {
-          "type": "heading",
-          "settings": {
-            "text": "Beauty in relief",
-            "tag": "h2"
-          }
-        },
         "icon_item_1": {
           "type": "icon_item",
           "settings": {
             "icon_level": "first",
-            "title": "Feature title",
-            "text": "<p>Short supporting description.</p>"
+            "icon": "shopify://shop_images/wrinkles_visible.svg",
+            "title": "",
+            "text": "<p>Wrinkles visibly smoothed<br/><br/></p>"
           }
         },
         "icon_item_2": {
           "type": "icon_item",
           "settings": {
             "icon_level": "first",
-            "title": "Feature title",
-            "text": "<p>Short supporting description.</p>"
+            "icon": "shopify://shop_images/Redness_irritation_soothed.svg",
+            "title": "",
+            "text": "<h5>Redness & irritation soothed</h5>"
+          }
+        },
+        "icon_item_jbLcAn": {
+          "type": "icon_item",
+          "settings": {
+            "icon_level": "first",
+            "icon": "shopify://shop_images/skin_looks_firmer.svg",
+            "title": "",
+            "text": "<p>Skin looks firmer & glowy</p>"
+          }
+        },
+        "icon_item_jLPz9e": {
+          "type": "icon_item",
+          "settings": {
+            "icon_level": "first",
+            "icon": "shopify://shop_images/confidence.svg",
+            "title": "",
+            "text": "<p>Confidence back in 2 weeks</p>"
           }
         }
       },
       "block_order": [
-        "heading_icons_1",
         "icon_item_1",
-        "icon_item_2"
+        "icon_item_2",
+        "icon_item_jbLcAn",
+        "icon_item_jLPz9e"
       ],
       "settings": {
-        "text_align": "center",
+        "text_align": "left",
         "heading_font_size_mobile": 28,
         "heading_font_size_desktop": 40,
         "heading_font_weight": "600",
         "heading_color": "#1f2937",
-        "level1_bg_color": "#faf8f6",
+        "level1_bg_color": "#F4F0F2",
         "level1_padding": 32,
         "level1_border_radius": 12,
         "level1_icon_size_mobile": 64,
