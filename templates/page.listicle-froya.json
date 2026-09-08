@@ -358,6 +358,7 @@
         "brand_1": {
           "type": "brand",
           "settings": {
+            "logo": "shopify://shop_images/elle.png",
             "name": "",
             "alt": ""
           }
@@ -365,6 +366,7 @@
         "brand_2": {
           "type": "brand",
           "settings": {
+            "logo": "shopify://shop_images/cosmopolitan-logo_1.png",
             "name": "",
             "alt": ""
           }
@@ -372,6 +374,7 @@
         "brand_3": {
           "type": "brand",
           "settings": {
+            "logo": "shopify://shop_images/cbs_news.png",
             "name": "",
             "alt": ""
           }
@@ -379,6 +382,55 @@
         "brand_4": {
           "type": "brand",
           "settings": {
+            "logo": "shopify://shop_images/yahoo.png",
+            "name": "",
+            "alt": ""
+          }
+        },
+        "brand_hfEp74": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/glamour.png",
+            "name": "\"Frøya has created a newstandard with pure. naturalingredients. •",
+            "alt": "\"Frøya has created a newstandard with pure. naturalingredients. •"
+          }
+        },
+        "brand_qhRyNG": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/105_marie_claire_logo.png",
+            "name": "",
+            "alt": ""
+          }
+        },
+        "brand_DQUhXm": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/bazaar.png",
+            "name": "",
+            "alt": ""
+          }
+        },
+        "brand_bX6zGn": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/gq.png",
+            "name": "",
+            "alt": ""
+          }
+        },
+        "brand_g7Mny6": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/the_new_knew.png",
+            "name": "",
+            "alt": ""
+          }
+        },
+        "brand_m7G8bm": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/abc_news.png",
             "name": "",
             "alt": ""
           }
@@ -388,7 +440,13 @@
         "brand_1",
         "brand_2",
         "brand_3",
-        "brand_4"
+        "brand_4",
+        "brand_hfEp74",
+        "brand_qhRyNG",
+        "brand_DQUhXm",
+        "brand_bX6zGn",
+        "brand_g7Mny6",
+        "brand_m7G8bm"
       ],
       "settings": {
         "heading": "Featured in",
@@ -409,7 +467,7 @@
         "name_color": "#6b7280",
         "bg_color": "#ffffff",
         "gradient_enabled": false,
-        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "gradient_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(250, 248, 246, 1) 100%)",
         "text_color": "#000000",
         "body_color": "#374151",
         "body_font_size_mobile": 16,
