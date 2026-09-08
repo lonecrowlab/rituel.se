@@ -28,48 +28,210 @@
         "padding_bottom": 0
       }
     },
-    "listicle_froya_hero_top": {
-      "type": "ltl-fry-hero",
+    "custom_hero_CVjkwi": {
+      "type": "custom-hero",
       "blocks": {
-        "review_badge_1": {
-          "type": "review_badge",
+        "rating_BBMFhn": {
+          "type": "rating",
           "settings": {
-            "show_stars": true,
-            "star_rating": 5,
-            "text": "4.9/5 from 2,000+ reviews"
+            "rating_text": "<p>583,000 Women Said Goodbye to Wrinkles (4.9/5)</p>",
+            "enable_container_background": false,
+            "container_background_color": "#f8f9fa",
+            "container_padding_vertical": 12,
+            "container_padding_horizontal": 20,
+            "container_border_radius": 8,
+            "enable_container_border": false,
+            "container_border_color": "#e9ecef",
+            "container_border_width": 1,
+            "rating_text_color": "#000000",
+            "star_color": "#CC667C",
+            "margin_top": 0,
+            "margin_bottom": 16
           }
         },
-        "heading_1": {
+        "badge_VCMMcQ": {
+          "type": "badge",
+          "settings": {
+            "badge_text_1": "NEW ARRIVAL",
+            "badge_bg_1": "",
+            "badge_text_color_1": "",
+            "badge_border_color_1": "",
+            "badge_text_2": "",
+            "badge_bg_2": "",
+            "badge_text_color_2": "",
+            "badge_border_color_2": "",
+            "badge_text_3": "",
+            "badge_bg_3": "",
+            "badge_text_color_3": "",
+            "badge_border_color_3": "",
+            "badge_text_4": "",
+            "badge_bg_4": "",
+            "badge_text_color_4": "",
+            "badge_border_color_4": "",
+            "badge_text_5": "",
+            "badge_bg_5": "",
+            "badge_text_color_5": "",
+            "badge_border_color_5": "",
+            "global_badge_bg": "#000000",
+            "global_badge_bg_opacity": 100,
+            "global_badge_text_color": "#ffffff",
+            "global_badge_font_size": 14,
+            "global_badge_font_weight": "600",
+            "global_badge_padding_vertical": 8,
+            "global_badge_padding_horizontal": 16,
+            "global_badge_border_radius": 20,
+            "global_badge_border_color": "rgba(0,0,0,0)",
+            "global_badge_border_width": 0,
+            "global_badge_backdrop_blur": 0,
+            "equal_width_badges": false,
+            "badge_width": 150,
+            "enable_container_background": false,
+            "container_background_color": "#f8f9fa",
+            "container_padding_vertical": 8,
+            "container_padding_horizontal": 16,
+            "container_border_radius": 20,
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "heading_ThbrWU": {
           "type": "heading",
           "settings": {
-            "text": "Your hero headline",
-            "tag": "h1"
+            "heading": "Visibly Glowing Skin in as Little as ",
+            "heading_accent": "48 Hours",
+            "highlight_position": "inline_last",
+            "use_theme_colors": false,
+            "font_size_desktop": 48,
+            "font_size_mobile": 32,
+            "line_height": 1.2,
+            "font_weight": "400",
+            "letter_spacing": 0,
+            "text_transform": "none",
+            "heading_color": "#000000",
+            "highlight_color": "#000000",
+            "use_highlight_gradient": false,
+            "highlight_gradient": "",
+            "highlight_font_size_desktop": 48,
+            "highlight_font_size_mobile": 32,
+            "highlight_font_weight": "400",
+            "margin_top": 0,
+            "margin_bottom": 16
           }
         },
-        "text_1": {
-          "type": "text",
+        "subtitle_gLNd3d": {
+          "type": "subtitle",
           "settings": {
-            "text": "<p>Add supporting copy here.</p>"
+            "subtitle": "<p>Clinically proven Arctic botanicals, smoothing wrinkles for over 583,000 women. No synthetics, no prescriptions. Just plants that work from the very first use…</p>",
+            "text_color": "#000000",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "margin_top": 0,
+            "margin_bottom": 24
           }
         },
-        "button_1": {
+        "button_UCgGBc": {
           "type": "button",
           "settings": {
-            "label": "Shop now",
-            "link": ""
+            "button_text": "TRY IT RISK-FREE - SAVE 40%",
+            "button_link": "",
+            "scroll_to_section": "",
+            "use_custom_styles": true,
+            "button_text_color": "#FFFFFF",
+            "button_bg_color": "#CC667C",
+            "use_gradient": false,
+            "button_gradient": "",
+            "button_text_color_hover": "#FFFFFF",
+            "button_bg_color_hover": "#333333",
+            "border_width": 0,
+            "border_color": "#000000",
+            "border_radius": 4,
+            "font_size_desktop": 16,
+            "font_size_mobile": 14,
+            "font_weight": "600",
+            "text_transform": "uppercase",
+            "letter_spacing": 1,
+            "padding_vertical": 12,
+            "padding_horizontal": 24,
+            "full_width": false,
+            "full_width_mobile_only": false,
+            "margin_top": 0,
+            "margin_bottom": 24
+          }
+        },
+        "benefits_hkXVzz": {
+          "type": "benefits",
+          "settings": {
+            "benefits_flex_layout": false,
+            "benefit_1_icon": "check",
+            "benefit_1_custom_svg": "",
+            "benefit_1_text": "RESULTS WITHIN 24-48 HOURS OF USE",
+            "benefit_2_icon": "check",
+            "benefit_2_custom_svg": "",
+            "benefit_2_text": "YOUNGER SKIN OR YOUR MONEY BACK",
+            "benefit_3_icon": "check",
+            "benefit_3_custom_svg": "",
+            "benefit_3_text": "1M+ JARS SOLD WORLDWIDE",
+            "margin_top": 0,
+            "margin_bottom": 24
           }
         }
       },
       "block_order": [
-        "review_badge_1",
-        "heading_1",
-        "text_1",
-        "button_1"
+        "rating_BBMFhn",
+        "badge_VCMMcQ",
+        "heading_ThbrWU",
+        "subtitle_gLNd3d",
+        "button_UCgGBc",
+        "benefits_hkXVzz"
       ],
+      "name": "Custom Hero",
       "settings": {
-        "image_position": "right",
-        "vertical_alignment": "center",
-        "text_align": "left"
+        "use_theme_colors": true,
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "hero_image": "shopify://shop_images/froya_hero.webp",
+        "image_position": "left",
+        "fit_image_to_height": true,
+        "overlay_content_desktop": false,
+        "overlay_content_mobile": false,
+        "overlay_position_desktop": "center",
+        "overlay_position_mobile": "center",
+        "overlay_padding": 24,
+        "desktop_aspect_ratio": "auto",
+        "mobile_aspect_ratio": "auto",
+        "enable_image_fade_mask": false,
+        "image_fade_mask_height": 50,
+        "section_padding_vertical": 60,
+        "section_padding_horizontal": 40,
+        "section_padding_vertical_mobile": 40,
+        "section_padding_horizontal_mobile": 20,
+        "content_padding_vertical": 20,
+        "content_padding_horizontal": 20,
+        "content_padding_mobile": 15,
+        "section_bg": "#F5F5F5",
+        "enable_gradient": false,
+        "section_gradient_background": "linear-gradient(135deg, rgba(247, 245, 252, 1), rgba(230, 225, 249, 1) 100%)",
+        "contain_section": false,
+        "container_max_width": 1200,
+        "container_bg_color": "#FFFFFF",
+        "enable_container_gradient": false,
+        "container_gradient_background": "linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(248, 248, 248, 1) 100%)",
+        "container_padding_top": 40,
+        "container_padding_right": 40,
+        "container_padding_bottom": 40,
+        "container_padding_left": 40,
+        "container_padding_top_mobile": 30,
+        "container_padding_right_mobile": 20,
+        "container_padding_bottom_mobile": 30,
+        "container_padding_left_mobile": 20,
+        "enable_border": false,
+        "border_width": 1,
+        "border_style": "solid",
+        "border_color": "#E5E7EB",
+        "border_radius": 8,
+        "enable_shadow": false
       }
     },
     "listicle_froya_icons_1": {
@@ -105,16 +267,83 @@
         "icon_item_2"
       ],
       "settings": {
-        "text_align": "center"
+        "text_align": "center",
+        "heading_font_size_mobile": 28,
+        "heading_font_size_desktop": 40,
+        "heading_font_weight": "600",
+        "heading_color": "#1f2937",
+        "level1_bg_color": "#faf8f6",
+        "level1_padding": 32,
+        "level1_border_radius": 12,
+        "level1_icon_size_mobile": 64,
+        "level1_icon_size_desktop": 80,
+        "level1_title_size_mobile": 24,
+        "level1_title_size_desktop": 32,
+        "level1_title_weight": "600",
+        "level1_title_color": "#1f2937",
+        "level1_text_size_mobile": 15,
+        "level1_text_size_desktop": 16,
+        "level1_text_color": "#4b5563",
+        "level2_icon_size_mobile": 40,
+        "level2_icon_size_desktop": 48,
+        "level2_title_size_mobile": 16,
+        "level2_title_size_desktop": 18,
+        "level2_title_weight": "600",
+        "level2_title_color": "#1f2937",
+        "level2_text_size_mobile": 14,
+        "level2_text_size_desktop": 15,
+        "level2_text_color": "#6b7280",
+        "item_spacing_mobile": 16,
+        "item_spacing_desktop": 20,
+        "button_bg_color": "#000000",
+        "button_text_color": "#ffffff",
+        "button_font_size_mobile": 14,
+        "button_font_size_desktop": 16,
+        "bg_color": "#ffffff",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(250, 248, 246, 1) 100%)",
+        "text_color": "#000000",
+        "body_color": "#374151",
+        "body_font_size_mobile": 16,
+        "body_font_size_desktop": 16,
+        "container_max_width": 1000,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
       }
     },
     "listicle_froya_brands": {
       "type": "ltl-fry-brands",
       "blocks": {
-        "brand_1": { "type": "brand", "settings": {} },
-        "brand_2": { "type": "brand", "settings": {} },
-        "brand_3": { "type": "brand", "settings": {} },
-        "brand_4": { "type": "brand", "settings": {} }
+        "brand_1": {
+          "type": "brand",
+          "settings": {
+            "name": "",
+            "alt": ""
+          }
+        },
+        "brand_2": {
+          "type": "brand",
+          "settings": {
+            "name": "",
+            "alt": ""
+          }
+        },
+        "brand_3": {
+          "type": "brand",
+          "settings": {
+            "name": "",
+            "alt": ""
+          }
+        },
+        "brand_4": {
+          "type": "brand",
+          "settings": {
+            "name": "",
+            "alt": ""
+          }
+        }
       },
       "block_order": [
         "brand_1",
@@ -124,15 +353,68 @@
       ],
       "settings": {
         "heading": "Featured in",
-        "enable_marquee": true
+        "text_align": "center",
+        "enable_marquee": true,
+        "marquee_speed": 30,
+        "logo_gap_mobile": 24,
+        "logo_gap_desktop": 40,
+        "logo_height_mobile": 28,
+        "logo_height_desktop": 36,
+        "logo_opacity": 70,
+        "heading_font_size_mobile": 12,
+        "heading_font_size_desktop": 13,
+        "heading_font_weight": "600",
+        "heading_color": "#9ca3af",
+        "name_font_size_mobile": 14,
+        "name_font_size_desktop": 15,
+        "name_color": "#6b7280",
+        "bg_color": "#ffffff",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "text_color": "#000000",
+        "body_color": "#374151",
+        "body_font_size_mobile": 16,
+        "body_font_size_desktop": 16,
+        "container_max_width": 1200,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24,
+        "padding_top_desktop": 32,
+        "padding_bottom_desktop": 32
       }
     },
     "listicle_froya_review_slider": {
       "type": "ltl-fry-review-slider",
       "blocks": {
-        "review_1": { "type": "review", "settings": {} },
-        "review_2": { "type": "review", "settings": {} },
-        "review_3": { "type": "review", "settings": {} }
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "show_stars": true,
+            "star_rating": 5,
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "name": "Verified buyer",
+            "product_label": ""
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "show_stars": true,
+            "star_rating": 5,
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "name": "Verified buyer",
+            "product_label": ""
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "show_stars": true,
+            "star_rating": 5,
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "name": "Verified buyer",
+            "product_label": ""
+          }
+        }
       },
       "block_order": [
         "review_1",
@@ -141,15 +423,75 @@
       ],
       "settings": {
         "heading": "What customers say",
-        "show_arrows": true
+        "text_align": "center",
+        "slider_type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "lock_drag": false,
+        "columns_mobile": 1,
+        "columns_desktop": 3,
+        "gap_mobile": 16,
+        "gap_desktop": 24,
+        "show_arrows": true,
+        "show_pagination": false,
+        "card_bg_color": "#ffffff",
+        "card_border_width": 1,
+        "card_border_color": "#e5e7eb",
+        "card_border_radius": 8,
+        "heading_font_size_mobile": 28,
+        "heading_font_size_desktop": 40,
+        "heading_font_weight": "600",
+        "heading_color": "#1f2937",
+        "star_color": "#fba124",
+        "star_size_mobile": 14,
+        "star_size_desktop": 16,
+        "quote_font_size_mobile": 15,
+        "quote_font_size_desktop": 16,
+        "quote_color": "#374151",
+        "name_font_size_mobile": 14,
+        "name_font_size_desktop": 15,
+        "name_color": "#111827",
+        "label_font_size_mobile": 12,
+        "label_font_size_desktop": 13,
+        "label_color": "#9ca3af",
+        "bg_color": "#faf8f6",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(250,248,246,1), rgba(255,255,255,1) 100%)",
+        "text_color": "#000000",
+        "body_color": "#374151",
+        "body_font_size_mobile": 16,
+        "body_font_size_desktop": 16,
+        "container_max_width": 1100,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
       }
     },
     "listicle_froya_system_steps": {
       "type": "ltl-fry-system-steps",
       "blocks": {
-        "step_1": { "type": "step", "settings": { "title": "Step 1", "text": "<p>Describe this step.</p>" } },
-        "step_2": { "type": "step", "settings": { "title": "Step 2", "text": "<p>Describe this step.</p>" } },
-        "step_3": { "type": "step", "settings": { "title": "Step 3", "text": "<p>Describe this step.</p>" } }
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Step 1",
+            "text": "<p>Describe this step.</p>"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Step 2",
+            "text": "<p>Describe this step.</p>"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Step 3",
+            "text": "<p>Describe this step.</p>"
+          }
+        }
       },
       "block_order": [
         "step_1",
@@ -158,15 +500,77 @@
       ],
       "settings": {
         "heading": "How the system works",
-        "mobile_slider": true
+        "subheading": "",
+        "text_align": "center",
+        "columns_desktop": 3,
+        "gap_desktop": 24,
+        "mobile_slider": true,
+        "step_bg_color": "#faf8f6",
+        "step_border_radius": 12,
+        "image_border_radius": 8,
+        "number_size": 36,
+        "number_bg_color": "#cc667c",
+        "number_text_color": "#ffffff",
+        "number_font_size_mobile": 14,
+        "number_font_size_desktop": 15,
+        "heading_font_size_mobile": 28,
+        "heading_font_size_desktop": 40,
+        "heading_font_weight": "600",
+        "heading_color": "#1f2937",
+        "subheading_font_size_mobile": 15,
+        "subheading_font_size_desktop": 16,
+        "subheading_color": "#6b7280",
+        "step_title_size_mobile": 18,
+        "step_title_size_desktop": 20,
+        "step_title_weight": "600",
+        "step_title_color": "#111827",
+        "step_text_size_mobile": 14,
+        "step_text_size_desktop": 15,
+        "step_text_color": "#4b5563",
+        "bg_color": "#ffffff",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "text_color": "#000000",
+        "body_color": "#374151",
+        "body_font_size_mobile": 16,
+        "body_font_size_desktop": 16,
+        "container_max_width": 1100,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
       }
     },
     "listicle_froya_result_progress": {
       "type": "ltl-fry-result-progress",
       "blocks": {
-        "progress_1": { "type": "progress_item", "settings": { "progress_label": "Week 2", "progress_percent": 40 } },
-        "progress_2": { "type": "progress_item", "settings": { "progress_label": "Week 4", "progress_percent": 75 } },
-        "progress_3": { "type": "progress_item", "settings": { "progress_label": "Week 8", "progress_percent": 100 } }
+        "progress_1": {
+          "type": "progress_item",
+          "settings": {
+            "progress_label": "Week 2",
+            "progress_percent": 40,
+            "title": "Visible improvement",
+            "text": "<p>Describe the result at this stage.</p>"
+          }
+        },
+        "progress_2": {
+          "type": "progress_item",
+          "settings": {
+            "progress_label": "Week 4",
+            "progress_percent": 75,
+            "title": "Visible improvement",
+            "text": "<p>Describe the result at this stage.</p>"
+          }
+        },
+        "progress_3": {
+          "type": "progress_item",
+          "settings": {
+            "progress_label": "Week 8",
+            "progress_percent": 100,
+            "title": "Visible improvement",
+            "text": "<p>Describe the result at this stage.</p>"
+          }
+        }
       },
       "block_order": [
         "progress_1",
@@ -174,15 +578,70 @@
         "progress_3"
       ],
       "settings": {
-        "heading": "Real results over time"
+        "heading": "Real results over time",
+        "subheading": "",
+        "text_align": "center",
+        "item_gap_mobile": 16,
+        "item_gap_desktop": 24,
+        "item_bg_color": "#faf8f6",
+        "item_border_radius": 12,
+        "image_border_radius": 8,
+        "label_bg_color": "#cc667c",
+        "label_text_color": "#ffffff",
+        "label_font_size_mobile": 12,
+        "label_font_size_desktop": 13,
+        "bar_height": 8,
+        "bar_bg_color": "#e5e7eb",
+        "bar_fill_color": "#cc667c",
+        "heading_font_size_mobile": 28,
+        "heading_font_size_desktop": 40,
+        "heading_font_weight": "600",
+        "heading_color": "#1f2937",
+        "subheading_font_size_mobile": 15,
+        "subheading_font_size_desktop": 16,
+        "subheading_color": "#6b7280",
+        "item_title_size_mobile": 18,
+        "item_title_size_desktop": 22,
+        "item_title_weight": "600",
+        "item_title_color": "#111827",
+        "item_text_size_mobile": 14,
+        "item_text_size_desktop": 15,
+        "item_text_color": "#4b5563",
+        "bg_color": "#ffffff",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "text_color": "#000000",
+        "body_color": "#374151",
+        "body_font_size_mobile": 16,
+        "body_font_size_desktop": 16,
+        "container_max_width": 1000,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
       }
     },
     "listicle_froya_quick_buy": {
       "type": "ltl-fry-quick-buy",
       "blocks": {
-        "qb_heading": { "type": "heading", "settings": { "text": "Ready to try it?" } },
-        "qb_text": { "type": "text", "settings": { "text": "<p>Add to cart and start your ritual today.</p>" } },
-        "qb_badge": { "type": "badge", "settings": { "text": "60-day guarantee" } }
+        "qb_heading": {
+          "type": "heading",
+          "settings": {
+            "text": "Ready to try it?"
+          }
+        },
+        "qb_text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Add to cart and start your ritual today.</p>"
+          }
+        },
+        "qb_badge": {
+          "type": "badge",
+          "settings": {
+            "text": "60-day guarantee"
+          }
+        }
       },
       "block_order": [
         "qb_heading",
@@ -190,7 +649,47 @@
         "qb_badge"
       ],
       "settings": {
-        "button_label": "Add to cart"
+        "product": "",
+        "button_label": "Add to cart",
+        "text_align": "left",
+        "buy_box_bg_color": "#ffffff",
+        "buy_box_border_width": 1,
+        "buy_box_border_color": "#e5e7eb",
+        "buy_box_border_radius": 12,
+        "heading_font_size_mobile": 28,
+        "heading_font_size_desktop": 40,
+        "heading_font_weight": "600",
+        "heading_color": "#1f2937",
+        "body_font_size_mobile": 15,
+        "body_font_size_desktop": 16,
+        "body_color": "#374151",
+        "badge_font_size_mobile": 12,
+        "badge_font_size_desktop": 13,
+        "badge_bg_color": "#cc667c",
+        "badge_text_color": "#ffffff",
+        "product_title_size_mobile": 18,
+        "product_title_size_desktop": 20,
+        "product_title_color": "#111827",
+        "product_price_size_mobile": 16,
+        "product_price_size_desktop": 18,
+        "product_price_color": "#111827",
+        "button_bg_color": "#000000",
+        "button_text_color": "#ffffff",
+        "button_font_size_mobile": 14,
+        "button_font_size_desktop": 16,
+        "button_font_weight": "600",
+        "button_border_radius": 8,
+        "button_padding_vertical": 14,
+        "button_padding_horizontal": 24,
+        "bg_color": "#faf8f6",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(250,248,246,1), rgba(255,255,255,1) 100%)",
+        "text_color": "#000000",
+        "container_max_width": 1000,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
       }
     },
     "listicle_froya_hero_mid": {
@@ -234,7 +733,41 @@
       "settings": {
         "image_position": "left",
         "vertical_alignment": "center",
-        "text_align": "left"
+        "text_align": "left",
+        "column_gap_mobile": 24,
+        "column_gap_desktop": 48,
+        "block_spacing_mobile": 12,
+        "block_spacing_desktop": 16,
+        "image_border_radius": 8,
+        "eyebrow_font_size_mobile": 12,
+        "eyebrow_font_size_desktop": 13,
+        "eyebrow_color": "#666666",
+        "heading_font_size_mobile": 32,
+        "heading_font_size_desktop": 48,
+        "heading_font_weight": "600",
+        "heading_color": "#1f2937",
+        "body_font_size_mobile": 16,
+        "body_font_size_desktop": 18,
+        "body_color": "#374151",
+        "star_color": "#fba124",
+        "button_font_size_mobile": 14,
+        "button_font_size_desktop": 16,
+        "button_font_weight": "600",
+        "button_bg_color": "#000000",
+        "button_text_color": "#ffffff",
+        "button_border_radius": 8,
+        "button_padding_vertical": 14,
+        "button_padding_horizontal": 32,
+        "button_full_width": false,
+        "bg_color": "#ffffff",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "text_color": "#000000",
+        "container_max_width": 1200,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60
       }
     },
     "listicle_froya_icons_2": {
@@ -280,16 +813,80 @@
         "icon_small_4"
       ],
       "settings": {
-        "text_align": "left"
+        "text_align": "left",
+        "heading_font_size_mobile": 28,
+        "heading_font_size_desktop": 40,
+        "heading_font_weight": "600",
+        "heading_color": "#1f2937",
+        "level1_bg_color": "#faf8f6",
+        "level1_padding": 32,
+        "level1_border_radius": 12,
+        "level1_icon_size_mobile": 64,
+        "level1_icon_size_desktop": 80,
+        "level1_title_size_mobile": 24,
+        "level1_title_size_desktop": 32,
+        "level1_title_weight": "600",
+        "level1_title_color": "#1f2937",
+        "level1_text_size_mobile": 15,
+        "level1_text_size_desktop": 16,
+        "level1_text_color": "#4b5563",
+        "level2_icon_size_mobile": 40,
+        "level2_icon_size_desktop": 48,
+        "level2_title_size_mobile": 16,
+        "level2_title_size_desktop": 18,
+        "level2_title_weight": "600",
+        "level2_title_color": "#1f2937",
+        "level2_text_size_mobile": 14,
+        "level2_text_size_desktop": 15,
+        "level2_text_color": "#6b7280",
+        "item_spacing_mobile": 16,
+        "item_spacing_desktop": 20,
+        "button_bg_color": "#000000",
+        "button_text_color": "#ffffff",
+        "button_font_size_mobile": 14,
+        "button_font_size_desktop": 16,
+        "bg_color": "#ffffff",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "text_color": "#000000",
+        "body_color": "#374151",
+        "body_font_size_mobile": 16,
+        "body_font_size_desktop": 16,
+        "container_max_width": 1000,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
       }
     },
     "listicle_froya_guarantee_1": {
       "type": "ltl-fry-guarantee",
       "blocks": {
-        "g_icon_1": { "type": "icon", "settings": { "icon_name": "shield_check" } },
-        "g_heading_1": { "type": "heading", "settings": { "text": "60-day money-back guarantee" } },
-        "g_text_1": { "type": "text", "settings": { "text": "<p>Try it risk-free. If you're not satisfied, we'll refund you.</p>" } },
-        "g_button_1": { "type": "button", "settings": { "label": "Shop now", "link": "" } }
+        "g_icon_1": {
+          "type": "icon",
+          "settings": {
+            "icon_name": "shield_check"
+          }
+        },
+        "g_heading_1": {
+          "type": "heading",
+          "settings": {
+            "text": "60-day money-back guarantee"
+          }
+        },
+        "g_text_1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Try it risk-free. If you're not satisfied, we'll refund you.</p>"
+          }
+        },
+        "g_button_1": {
+          "type": "button",
+          "settings": {
+            "label": "Shop now",
+            "link": ""
+          }
+        }
       },
       "block_order": [
         "g_icon_1",
@@ -297,26 +894,107 @@
         "g_text_1",
         "g_button_1"
       ],
-      "settings": {}
+      "settings": {
+        "text_align": "center",
+        "content_align": "center",
+        "box_bg_color": "#faf8f6",
+        "box_border_width": 0,
+        "box_border_color": "#e5e7eb",
+        "box_border_radius": 16,
+        "box_padding_mobile": 24,
+        "box_padding_desktop": 32,
+        "icon_size_mobile": 48,
+        "icon_size_desktop": 56,
+        "icon_color": "#cc667c",
+        "text_max_width": 560,
+        "heading_font_size_mobile": 24,
+        "heading_font_size_desktop": 32,
+        "heading_font_weight": "600",
+        "heading_color": "#1f2937",
+        "body_font_size_mobile": 15,
+        "body_font_size_desktop": 16,
+        "body_color": "#4b5563",
+        "button_bg_color": "#000000",
+        "button_text_color": "#ffffff",
+        "button_font_size_mobile": 14,
+        "button_font_size_desktop": 16,
+        "bg_color": "#ffffff",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "text_color": "#000000",
+        "container_max_width": 800,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
+      }
     },
     "listicle_froya_media": {
       "type": "ltl-fry-media",
       "blocks": {
-        "media_heading": { "type": "heading", "settings": { "text": "See it in action" } }
+        "media_heading": {
+          "type": "heading",
+          "settings": {
+            "text": "See it in action"
+          }
+        }
       },
       "block_order": [
         "media_heading"
       ],
       "settings": {
-        "media_type": "gif"
+        "media_type": "gif",
+        "video_url": "",
+        "media_alt": "",
+        "aspect_ratio": "16 / 9",
+        "text_align": "center",
+        "media_bg_color": "#f3f4f6",
+        "media_border_radius": 12,
+        "heading_font_size_mobile": 28,
+        "heading_font_size_desktop": 40,
+        "heading_font_weight": "600",
+        "heading_color": "#1f2937",
+        "body_font_size_mobile": 15,
+        "body_font_size_desktop": 16,
+        "body_color": "#6b7280",
+        "bg_color": "#ffffff",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "text_color": "#000000",
+        "container_max_width": 900,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
       }
     },
     "listicle_froya_timeline": {
       "type": "ltl-fry-timeline",
       "blocks": {
-        "timeline_1": { "type": "timeline_step", "settings": { "label": "Week 1", "title": "First signs of change" } },
-        "timeline_2": { "type": "timeline_step", "settings": { "label": "Week 4", "title": "Visible improvement" } },
-        "timeline_3": { "type": "timeline_step", "settings": { "label": "Week 8", "title": "Full results" } }
+        "timeline_1": {
+          "type": "timeline_step",
+          "settings": {
+            "label": "Week 1",
+            "title": "First signs of change",
+            "text": "<p>Describe what happens at this stage.</p>"
+          }
+        },
+        "timeline_2": {
+          "type": "timeline_step",
+          "settings": {
+            "label": "Week 4",
+            "title": "Visible improvement",
+            "text": "<p>Describe what happens at this stage.</p>"
+          }
+        },
+        "timeline_3": {
+          "type": "timeline_step",
+          "settings": {
+            "label": "Week 8",
+            "title": "Full results",
+            "text": "<p>Describe what happens at this stage.</p>"
+          }
+        }
       },
       "block_order": [
         "timeline_1",
@@ -324,15 +1002,80 @@
         "timeline_3"
       ],
       "settings": {
-        "heading": "Your transformation timeline"
+        "heading": "Your transformation timeline",
+        "subheading": "",
+        "text_align": "center",
+        "line_offset": 48,
+        "line_width": 3,
+        "line_color": "#e5e7eb",
+        "marker_bg_color": "#cc667c",
+        "marker_text_color": "#ffffff",
+        "marker_font_size_mobile": 12,
+        "marker_font_size_desktop": 13,
+        "image_border_radius": 8,
+        "step_spacing_mobile": 24,
+        "step_spacing_desktop": 32,
+        "heading_font_size_mobile": 28,
+        "heading_font_size_desktop": 40,
+        "heading_font_weight": "600",
+        "heading_color": "#1f2937",
+        "subheading_font_size_mobile": 15,
+        "subheading_font_size_desktop": 16,
+        "subheading_color": "#6b7280",
+        "step_title_size_mobile": 18,
+        "step_title_size_desktop": 22,
+        "step_title_weight": "600",
+        "step_title_color": "#111827",
+        "step_text_size_mobile": 14,
+        "step_text_size_desktop": 15,
+        "step_text_color": "#4b5563",
+        "bg_color": "#ffffff",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "text_color": "#000000",
+        "body_color": "#374151",
+        "body_font_size_mobile": 16,
+        "body_font_size_desktop": 16,
+        "container_max_width": 800,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
       }
     },
     "listicle_froya_ingredients": {
       "type": "ltl-fry-ingredients",
       "blocks": {
-        "ingredient_1": { "type": "ingredient", "settings": { "level": "high", "name": "PDRN", "percent": "5%" } },
-        "ingredient_2": { "type": "ingredient", "settings": { "level": "medium", "name": "Volufiline", "percent": "3%", "level_label": "Active" } },
-        "ingredient_3": { "type": "ingredient", "settings": { "level": "low", "name": "Collagen", "percent": "2%", "level_label": "Support" } }
+        "ingredient_1": {
+          "type": "ingredient",
+          "settings": {
+            "level": "high",
+            "level_label": "Hero ingredient",
+            "name": "PDRN",
+            "percent": "5%",
+            "description": "<p>Describe this ingredient and its benefits.</p>"
+          }
+        },
+        "ingredient_2": {
+          "type": "ingredient",
+          "settings": {
+            "level": "medium",
+            "level_label": "Active",
+            "name": "Volufiline",
+            "percent": "3%",
+            "description": "<p>Describe this ingredient and its benefits.</p>"
+          }
+        },
+        "ingredient_3": {
+          "type": "ingredient",
+          "settings": {
+            "level": "low",
+            "level_label": "Support",
+            "name": "Collagen",
+            "percent": "2%",
+            "description": "<p>Describe this ingredient and its benefits.</p>"
+          }
+        }
       },
       "block_order": [
         "ingredient_1",
@@ -340,7 +1083,52 @@
         "ingredient_3"
       ],
       "settings": {
-        "heading": "Key ingredients"
+        "heading": "Key ingredients",
+        "subheading": "",
+        "text_align": "center",
+        "columns_desktop": 2,
+        "item_gap_mobile": 16,
+        "item_gap_desktop": 24,
+        "item_bg_color": "#ffffff",
+        "item_border_color": "#e5e7eb",
+        "item_border_radius": 12,
+        "ingredient_image_size_mobile": 48,
+        "ingredient_image_size_desktop": 56,
+        "level_high_color": "#cc667c",
+        "level_medium_color": "#d4a574",
+        "level_low_color": "#9ca3af",
+        "bar_bg_color": "#e5e7eb",
+        "heading_font_size_mobile": 28,
+        "heading_font_size_desktop": 40,
+        "heading_font_weight": "600",
+        "heading_color": "#1f2937",
+        "subheading_font_size_mobile": 15,
+        "subheading_font_size_desktop": 16,
+        "subheading_color": "#6b7280",
+        "level_font_size_mobile": 11,
+        "level_font_size_desktop": 12,
+        "name_font_size_mobile": 16,
+        "name_font_size_desktop": 18,
+        "name_font_weight": "600",
+        "name_color": "#111827",
+        "percent_font_size_mobile": 14,
+        "percent_font_size_desktop": 15,
+        "percent_color": "#6b7280",
+        "desc_font_size_mobile": 14,
+        "desc_font_size_desktop": 15,
+        "desc_color": "#4b5563",
+        "bg_color": "#faf8f6",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(250,248,246,1), rgba(255,255,255,1) 100%)",
+        "text_color": "#000000",
+        "body_color": "#374151",
+        "body_font_size_mobile": 16,
+        "body_font_size_desktop": 16,
+        "container_max_width": 1000,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
       }
     },
     "listicle_froya_hero_bottom": {
@@ -375,16 +1163,71 @@
       "settings": {
         "image_position": "right",
         "vertical_alignment": "center",
-        "text_align": "left"
+        "text_align": "left",
+        "column_gap_mobile": 24,
+        "column_gap_desktop": 48,
+        "block_spacing_mobile": 12,
+        "block_spacing_desktop": 16,
+        "image_border_radius": 8,
+        "eyebrow_font_size_mobile": 12,
+        "eyebrow_font_size_desktop": 13,
+        "eyebrow_color": "#666666",
+        "heading_font_size_mobile": 32,
+        "heading_font_size_desktop": 48,
+        "heading_font_weight": "600",
+        "heading_color": "#1f2937",
+        "body_font_size_mobile": 16,
+        "body_font_size_desktop": 18,
+        "body_color": "#374151",
+        "star_color": "#fba124",
+        "button_font_size_mobile": 14,
+        "button_font_size_desktop": 16,
+        "button_font_weight": "600",
+        "button_bg_color": "#000000",
+        "button_text_color": "#ffffff",
+        "button_border_radius": 8,
+        "button_padding_vertical": 14,
+        "button_padding_horizontal": 32,
+        "button_full_width": false,
+        "bg_color": "#ffffff",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "text_color": "#000000",
+        "container_max_width": 1200,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 60
       }
     },
     "listicle_froya_guarantee_2": {
       "type": "ltl-fry-guarantee",
       "blocks": {
-        "g_icon_2": { "type": "icon", "settings": { "icon_name": "shield_check" } },
-        "g_heading_2": { "type": "heading", "settings": { "text": "60-day money-back guarantee" } },
-        "g_text_2": { "type": "text", "settings": { "text": "<p>Try it risk-free. If you're not satisfied, we'll refund you.</p>" } },
-        "g_button_2": { "type": "button", "settings": { "label": "Shop now", "link": "" } }
+        "g_icon_2": {
+          "type": "icon",
+          "settings": {
+            "icon_name": "shield_check"
+          }
+        },
+        "g_heading_2": {
+          "type": "heading",
+          "settings": {
+            "text": "60-day money-back guarantee"
+          }
+        },
+        "g_text_2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Try it risk-free. If you're not satisfied, we'll refund you.</p>"
+          }
+        },
+        "g_button_2": {
+          "type": "button",
+          "settings": {
+            "label": "Shop now",
+            "link": ""
+          }
+        }
       },
       "block_order": [
         "g_icon_2",
@@ -392,13 +1235,46 @@
         "g_text_2",
         "g_button_2"
       ],
-      "settings": {}
+      "settings": {
+        "text_align": "center",
+        "content_align": "center",
+        "box_bg_color": "#faf8f6",
+        "box_border_width": 0,
+        "box_border_color": "#e5e7eb",
+        "box_border_radius": 16,
+        "box_padding_mobile": 24,
+        "box_padding_desktop": 32,
+        "icon_size_mobile": 48,
+        "icon_size_desktop": 56,
+        "icon_color": "#cc667c",
+        "text_max_width": 560,
+        "heading_font_size_mobile": 24,
+        "heading_font_size_desktop": 32,
+        "heading_font_weight": "600",
+        "heading_color": "#1f2937",
+        "body_font_size_mobile": 15,
+        "body_font_size_desktop": 16,
+        "body_color": "#4b5563",
+        "button_bg_color": "#000000",
+        "button_text_color": "#ffffff",
+        "button_font_size_mobile": 14,
+        "button_font_size_desktop": 16,
+        "bg_color": "#ffffff",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "text_color": "#000000",
+        "container_max_width": 800,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
+      }
     }
   },
   "order": [
     "font_override_froya",
     "custom_liquid_hide_header",
-    "listicle_froya_hero_top",
+    "custom_hero_CVjkwi",
     "listicle_froya_icons_1",
     "listicle_froya_brands",
     "listicle_froya_review_slider",
