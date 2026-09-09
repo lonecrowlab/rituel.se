@@ -1,0 +1,543 @@
+{% comment %}
+  Listicle sticky CTA — full-width bar styled like product sticky ATC.
+  Shows when no in-page CTA (.iwb-button / [data-listicle-cta]) is in the viewport.
+{% endcomment %}
+
+{%- liquid
+  assign button_label = section.settings.button_label | default: 'Se mer'
+  assign button_note = section.settings.button_note | default: '60 Dagars nöjdhetsgaranti'
+  assign button_link = section.settings.button_link
+  assign cta_selector = section.settings.cta_selector | default: '.iwb-button, [data-listicle-cta]'
+-%}
+
+<div
+  id="ListicleStickyCta-{{ section.id }}"
+  class="listicle-sticky-cta"
+  data-section-id="{{ section.id }}"
+  data-cta-selector="{{ cta_selector | escape }}"
+  aria-hidden="true"
+>
+  <div class="listicle-sticky-cta__inner page-width">
+    <a
+      href="{{ button_link | default: '#' }}"
+      class="listicle-sticky-cta__button"
+      {% if button_link == blank %}aria-disabled="true"{% endif %}
+    >
+      <span class="listicle-sticky-cta__label">
+        <span class="listicle-sticky-cta__label-main">{{ button_label }}</span>
+        {%- if button_note != blank -%}
+          <span class="listicle-sticky-cta__note">{{ button_note }}</span>
+        {%- endif -%}
+      </span>
+    </a>
+  </div>
+</div>
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    position: static !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  #ListicleStickyCta-{{ section.id }} {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: {{ section.settings.z_index | default: 9900 }};
+    padding: {{ section.settings.bar_padding_mobile }}px 16px;
+    {%- assign sticky_bar_alpha = section.settings.bar_opacity | divided_by: 100.0 -%}
+    background-color: {{ section.settings.bar_background | color_modify: 'alpha', sticky_bar_alpha }};
+    backdrop-filter: blur({{ section.settings.backdrop_blur }}px);
+    -webkit-backdrop-filter: blur({{ section.settings.backdrop_blur }}px);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+    transform: translate3d(0, 100%, 0);
+    transition: transform 0.3s ease;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  #ListicleStickyCta-{{ section.id }}.is-visible {
+    transform: translate3d(0, 0, 0);
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  #ListicleStickyCta-{{ section.id }} .listicle-sticky-cta__inner {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  #ListicleStickyCta-{{ section.id }} .listicle-sticky-cta__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-decoration: none;
+    text-align: center;
+    box-sizing: border-box;
+    min-height: auto !important;
+    height: auto !important;
+    padding: {{ section.settings.button_padding_vertical_mobile }}px {{ section.settings.button_padding_horizontal_mobile }}px !important;
+    border-radius: {{ section.settings.button_border_radius }}px !important;
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }} !important;
+    background: {% if section.settings.enable_button_gradient %}{{ section.settings.button_gradient }}{% else %}{{ section.settings.button_bg_color }}{% endif %} !important;
+    color: {{ section.settings.button_text_color }} !important;
+    font-weight: {{ section.settings.button_font_weight }} !important;
+    font-size: {{ section.settings.button_font_size_mobile }}px !important;
+    line-height: 1.2;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  #ListicleStickyCta-{{ section.id }} .listicle-sticky-cta__button:hover {
+    opacity: 0.92;
+  }
+
+  #ListicleStickyCta-{{ section.id }} .listicle-sticky-cta__label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  #ListicleStickyCta-{{ section.id }} .listicle-sticky-cta__label-main {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #ListicleStickyCta-{{ section.id }} .listicle-sticky-cta__note {
+    display: block;
+    width: 100%;
+    line-height: 1.2;
+    font-weight: {{ section.settings.note_font_weight }} !important;
+    font-size: {{ section.settings.note_font_size_mobile }}px !important;
+    margin-top: {{ section.settings.note_margin_top }}px;
+    color: {{ section.settings.note_color }} !important;
+  }
+
+  body.has-listicle-sticky-cta-{{ section.id }} {
+    padding-bottom: var(--listicle-sticky-cta-height-{{ section.id }}, 0px);
+  }
+
+  @media screen and (min-width: 750px) {
+    #ListicleStickyCta-{{ section.id }} {
+      padding: {{ section.settings.bar_padding_desktop }}px 20px;
+    }
+
+    #ListicleStickyCta-{{ section.id }} .listicle-sticky-cta__button {
+      padding: {{ section.settings.button_padding_vertical_desktop }}px {{ section.settings.button_padding_horizontal_desktop }}px !important;
+      font-size: {{ section.settings.button_font_size_desktop }}px !important;
+      {% unless section.settings.full_width_desktop %}
+        max-width: {{ section.settings.button_max_width_desktop }}px;
+        margin-left: auto;
+        margin-right: auto;
+      {% endunless %}
+    }
+
+    #ListicleStickyCta-{{ section.id }} .listicle-sticky-cta__note {
+      font-size: {{ section.settings.note_font_size_desktop }}px !important;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    const sticky = document.getElementById('ListicleStickyCta-{{ section.id }}');
+    if (!sticky) return;
+
+    const selector = sticky.dataset.ctaSelector || '.iwb-button, [data-listicle-cta]';
+    const heightVar = '--listicle-sticky-cta-height-{{ section.id }}';
+    let observer;
+    let resizeObserver;
+    let targets = [];
+
+    function anyCtaInViewport() {
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const vw = window.innerWidth || document.documentElement.clientWidth;
+      return targets.some(function (el) {
+        const rect = el.getBoundingClientRect();
+        return (
+          rect.width > 0 &&
+          rect.height > 0 &&
+          rect.bottom > 0 &&
+          rect.top < vh &&
+          rect.right > 0 &&
+          rect.left < vw
+        );
+      });
+    }
+
+    function setVisible(show) {
+      sticky.classList.toggle('is-visible', show);
+      sticky.setAttribute('aria-hidden', show ? 'false' : 'true');
+      document.body.classList.toggle('has-listicle-sticky-cta-{{ section.id }}', show);
+      document.documentElement.style.setProperty(
+        heightVar,
+        show ? sticky.offsetHeight + 'px' : '0px'
+      );
+    }
+
+    function updateVisibility() {
+      setVisible(!anyCtaInViewport());
+    }
+
+    function observeCtas() {
+      if (observer) observer.disconnect();
+
+      targets = Array.from(document.querySelectorAll(selector)).filter(function (el) {
+        return !sticky.contains(el);
+      });
+
+      if (!targets.length) {
+        setVisible(true);
+        return;
+      }
+
+      observer = new IntersectionObserver(updateVisibility, {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0
+      });
+
+      targets.forEach(function (el) {
+        observer.observe(el);
+      });
+
+      updateVisibility();
+    }
+
+    function init() {
+      observeCtas();
+
+      if (resizeObserver) resizeObserver.disconnect();
+      resizeObserver = new ResizeObserver(function () {
+        if (sticky.classList.contains('is-visible')) {
+          document.documentElement.style.setProperty(heightVar, sticky.offsetHeight + 'px');
+        }
+      });
+      resizeObserver.observe(sticky);
+
+      window.addEventListener('resize', updateVisibility, { passive: true });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+    document.addEventListener('shopify:section:load', function (event) {
+      if (event.detail && event.detail.sectionId === '{{ section.id }}') init();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Listicle sticky CTA",
+  "tag": "section",
+  "class": "section-listicle-sticky-cta",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button text",
+      "default": "Se mer"
+    },
+    {
+      "type": "text",
+      "id": "button_note",
+      "label": "Button note",
+      "default": "60 Dagars nöjdhetsgaranti",
+      "info": "Small text under the main label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "cta_selector",
+      "label": "In-page CTA selector",
+      "default": ".iwb-button, [data-listicle-cta]",
+      "info": "Sticky shows when none of these elements are in the viewport"
+    },
+    {
+      "type": "header",
+      "content": "Bar"
+    },
+    {
+      "type": "color",
+      "id": "bar_background",
+      "label": "Bar background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "bar_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Bar opacity",
+      "default": 95
+    },
+    {
+      "type": "range",
+      "id": "backdrop_blur",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Backdrop blur",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "bar_padding_mobile",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Bar padding (mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "bar_padding_desktop",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Bar padding (desktop)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 320,
+      "max": 1200,
+      "step": 20,
+      "unit": "px",
+      "label": "Max content width",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "z_index",
+      "min": 1000,
+      "max": 9900,
+      "step": 100,
+      "label": "Z-index",
+      "default": 9900
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "#0f0f0f"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_button_gradient",
+      "label": "Use button gradient",
+      "default": false
+    },
+    {
+      "type": "color_background",
+      "id": "button_gradient",
+      "label": "Button gradient",
+      "default": "linear-gradient(180deg, rgba(255, 228, 49, 1), rgba(249, 32, 32, 1) 100%)"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button border color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "button_border_width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Button border width",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Button border radius",
+      "default": 50
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Button font weight",
+      "options": [
+        { "value": "400", "label": "400" },
+        { "value": "500", "label": "500" },
+        { "value": "600", "label": "600" },
+        { "value": "700", "label": "700" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_mobile",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Button font size (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_desktop",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Button font size (desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical_mobile",
+      "min": 8,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Button vertical padding (mobile)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal_mobile",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Button horizontal padding (mobile)",
+      "default": 27
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical_desktop",
+      "min": 8,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Button vertical padding (desktop)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal_desktop",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Button horizontal padding (desktop)",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width_desktop",
+      "label": "Full width button on desktop",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "button_max_width_desktop",
+      "min": 280,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "label": "Desktop button max width",
+      "default": 480
+    },
+    {
+      "type": "header",
+      "content": "Note"
+    },
+    {
+      "type": "color",
+      "id": "note_color",
+      "label": "Note color",
+      "default": "#f0f0f0"
+    },
+    {
+      "type": "range",
+      "id": "note_font_size_mobile",
+      "min": 9,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Note font size (mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "note_font_size_desktop",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Note font size (desktop)",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "note_font_weight",
+      "label": "Note font weight",
+      "options": [
+        { "value": "400", "label": "400" },
+        { "value": "500", "label": "500" },
+        { "value": "600", "label": "600" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "note_margin_top",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "label": "Note top margin",
+      "default": 2
+    }
+  ],
+  "presets": [
+    {
+      "name": "Listicle sticky CTA"
+    }
+  ]
+}
+{% endschema %}
