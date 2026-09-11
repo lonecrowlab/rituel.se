@@ -31,6 +31,14 @@
     "custom_hero_CVjkwi": {
       "type": "custom-hero",
       "blocks": {
+        "custom_html_gULqFF": {
+          "type": "custom_html",
+          "settings": {
+            "custom_html": "<div class=\"alert-note\" style=\"background: #b11836;\n    border-radius: 75px;\n    display: inline-flex; color:#fff;padding:5px 15px\">\n[Limited Time] Get an Exclusive Gift\n</div>",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
         "rating_BBMFhn": {
           "type": "rating",
           "settings": {
@@ -184,6 +192,7 @@
         }
       },
       "block_order": [
+        "custom_html_gULqFF",
         "rating_BBMFhn",
         "badge_VCMMcQ",
         "heading_ThbrWU",
