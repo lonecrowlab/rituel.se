@@ -44,7 +44,7 @@
             "container_border_color": "#e9ecef",
             "container_border_width": 1,
             "rating_text_color": "#000000",
-            "star_color": "#CC667C",
+            "star_color": "#cc667c",
             "margin_top": 0,
             "margin_bottom": 16
           }
@@ -138,11 +138,11 @@
             "button_link": "",
             "scroll_to_section": "",
             "use_custom_styles": true,
-            "button_text_color": "#FFFFFF",
-            "button_bg_color": "#CC667C",
+            "button_text_color": "#ffffff",
+            "button_bg_color": "#cc667c",
             "use_gradient": false,
             "button_gradient": "",
-            "button_text_color_hover": "#FFFFFF",
+            "button_text_color_hover": "#ffffff",
             "button_bg_color_hover": "#333333",
             "border_width": 0,
             "border_color": "#000000",
@@ -164,6 +164,11 @@
           "type": "benefits",
           "settings": {
             "benefits_flex_layout": false,
+            "font_size_desktop": 16,
+            "font_size_mobile": 14,
+            "font_weight": "500",
+            "font_style": "normal",
+            "font_family": "inherit",
             "benefit_1_icon": "check",
             "benefit_1_custom_svg": "",
             "benefit_1_text": "RESULTS WITHIN 24-48 HOURS OF USE",
@@ -210,12 +215,12 @@
         "content_padding_vertical": 20,
         "content_padding_horizontal": 20,
         "content_padding_mobile": 15,
-        "section_bg": "#F5F5F5",
+        "section_bg": "#f5f5f5",
         "enable_gradient": false,
         "section_gradient_background": "linear-gradient(135deg, rgba(247, 245, 252, 1), rgba(230, 225, 249, 1) 100%)",
         "contain_section": false,
         "container_max_width": 1200,
-        "container_bg_color": "#FFFFFF",
+        "container_bg_color": "#ffffff",
         "enable_container_gradient": false,
         "container_gradient_background": "linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(248, 248, 248, 1) 100%)",
         "container_padding_top": 40,
@@ -229,7 +234,7 @@
         "enable_border": false,
         "border_width": 1,
         "border_style": "solid",
-        "border_color": "#E5E7EB",
+        "border_color": "#e5e7eb",
         "border_radius": 8,
         "enable_shadow": false
       }
@@ -240,8 +245,10 @@
         "icon_item_1": {
           "type": "icon_item",
           "settings": {
-            "icon_level": "first",
+            "icon_level": "second",
             "icon": "shopify://shop_images/wrinkles_visible.svg",
+            "line_1": "Wrinkles visibly",
+            "line_2": "smoothed",
             "title": "",
             "text": "<p>Wrinkles visibly smoothed<br/><br/></p>"
           }
@@ -249,8 +256,10 @@
         "icon_item_2": {
           "type": "icon_item",
           "settings": {
-            "icon_level": "first",
+            "icon_level": "second",
             "icon": "shopify://shop_images/Redness_irritation_soothed.svg",
+            "line_1": "",
+            "line_2": "",
             "title": "",
             "text": "<h5>Redness & irritation soothed</h5>"
           }
@@ -258,17 +267,21 @@
         "icon_item_jbLcAn": {
           "type": "icon_item",
           "settings": {
-            "icon_level": "first",
+            "icon_level": "second",
             "icon": "shopify://shop_images/skin_looks_firmer.svg",
+            "line_1": "Skin looks firmer &",
+            "line_2": "glowy",
             "title": "",
-            "text": "<p>Skin looks firmer & glowy</p>"
+            "text": ""
           }
         },
         "icon_item_jLPz9e": {
           "type": "icon_item",
           "settings": {
-            "icon_level": "first",
+            "icon_level": "second",
             "icon": "shopify://shop_images/confidence.svg",
+            "line_1": "",
+            "line_2": "",
             "title": "",
             "text": "<p>Confidence back in 2 weeks</p>"
           }
@@ -286,9 +299,12 @@
         "heading_font_size_desktop": 40,
         "heading_font_weight": "600",
         "heading_color": "#1f2937",
-        "level1_bg_color": "#F4F0F2",
-        "level1_padding": 32,
+        "level1_bg_color": "#f4f0f2",
+        "level1_circle_bg_color": "#c4939a",
+        "level1_padding": 16,
         "level1_border_radius": 12,
+        "level1_circle_size_mobile": 72,
+        "level1_circle_size_desktop": 80,
         "level1_icon_size_mobile": 64,
         "level1_icon_size_desktop": 80,
         "level1_title_size_mobile": 24,
@@ -298,15 +314,24 @@
         "level1_text_size_mobile": 15,
         "level1_text_size_desktop": 16,
         "level1_text_color": "#4b5563",
+        "level2_columns_desktop": 4,
+        "level2_columns_mobile": 2,
+        "level2_grid_gap_mobile": 16,
+        "level2_grid_gap_desktop": 24,
+        "level2_icon_text_gap": 12,
+        "level2_circle_bg_color": "#c4939a",
+        "level2_circle_size_mobile": 38,
+        "level2_circle_size_desktop": 38,
         "level2_icon_size_mobile": 40,
         "level2_icon_size_desktop": 48,
-        "level2_title_size_mobile": 16,
-        "level2_title_size_desktop": 18,
-        "level2_title_weight": "600",
-        "level2_title_color": "#1f2937",
-        "level2_text_size_mobile": 14,
-        "level2_text_size_desktop": 15,
-        "level2_text_color": "#6b7280",
+        "level2_line1_size_mobile": 14,
+        "level2_line1_size_desktop": 15,
+        "level2_line1_weight": "500",
+        "level2_line1_color": "#1f2937",
+        "level2_line2_size_mobile": 14,
+        "level2_line2_size_desktop": 15,
+        "level2_line2_weight": "500",
+        "level2_line2_color": "#1f2937",
         "item_spacing_mobile": 16,
         "item_spacing_desktop": 20,
         "button_bg_color": "#000000",
@@ -321,10 +346,10 @@
         "body_font_size_mobile": 16,
         "body_font_size_desktop": 16,
         "container_max_width": 1000,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32,
-        "padding_top_desktop": 48,
-        "padding_bottom_desktop": 48
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16,
+        "padding_top_desktop": 16,
+        "padding_bottom_desktop": 16
       }
     },
     "listicle_froya_brands": {
@@ -438,7 +463,7 @@
         "pagination_inactive_color": "#d1d5db",
         "bg_color": "#f3ecec",
         "gradient_enabled": false,
-        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "gradient_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(250, 248, 246, 1) 100%)",
         "text_color": "#000000",
         "body_color": "#374151",
         "body_font_size_mobile": 16,
@@ -845,6 +870,8 @@
           "type": "icon_item",
           "settings": {
             "icon_level": "second",
+            "line_1": "Wrinkles visibly",
+            "line_2": "smoothed",
             "title": "Small icon",
             "text": "<p>Secondary feature detail.</p>"
           }
@@ -853,6 +880,8 @@
           "type": "icon_item",
           "settings": {
             "icon_level": "second",
+            "line_1": "Wrinkles visibly",
+            "line_2": "smoothed",
             "title": "Small icon",
             "text": "<p>Secondary feature detail.</p>"
           }
@@ -861,6 +890,8 @@
           "type": "icon_item",
           "settings": {
             "icon_level": "second",
+            "line_1": "Wrinkles visibly",
+            "line_2": "smoothed",
             "title": "Small icon",
             "text": "<p>Secondary feature detail.</p>"
           }
@@ -869,6 +900,8 @@
           "type": "icon_item",
           "settings": {
             "icon_level": "second",
+            "line_1": "Wrinkles visibly",
+            "line_2": "smoothed",
             "title": "Small icon",
             "text": "<p>Secondary feature detail.</p>"
           }
@@ -887,8 +920,11 @@
         "heading_font_weight": "600",
         "heading_color": "#1f2937",
         "level1_bg_color": "#faf8f6",
+        "level1_circle_bg_color": "#c4939a",
         "level1_padding": 32,
         "level1_border_radius": 12,
+        "level1_circle_size_mobile": 72,
+        "level1_circle_size_desktop": 80,
         "level1_icon_size_mobile": 64,
         "level1_icon_size_desktop": 80,
         "level1_title_size_mobile": 24,
@@ -898,15 +934,24 @@
         "level1_text_size_mobile": 15,
         "level1_text_size_desktop": 16,
         "level1_text_color": "#4b5563",
+        "level2_columns_desktop": 4,
+        "level2_columns_mobile": 2,
+        "level2_grid_gap_mobile": 16,
+        "level2_grid_gap_desktop": 24,
+        "level2_icon_text_gap": 12,
+        "level2_circle_bg_color": "#c4939a",
+        "level2_circle_size_mobile": 52,
+        "level2_circle_size_desktop": 56,
         "level2_icon_size_mobile": 40,
         "level2_icon_size_desktop": 48,
-        "level2_title_size_mobile": 16,
-        "level2_title_size_desktop": 18,
-        "level2_title_weight": "600",
-        "level2_title_color": "#1f2937",
-        "level2_text_size_mobile": 14,
-        "level2_text_size_desktop": 15,
-        "level2_text_color": "#6b7280",
+        "level2_line1_size_mobile": 14,
+        "level2_line1_size_desktop": 15,
+        "level2_line1_weight": "500",
+        "level2_line1_color": "#1f2937",
+        "level2_line2_size_mobile": 14,
+        "level2_line2_size_desktop": 15,
+        "level2_line2_weight": "500",
+        "level2_line2_color": "#1f2937",
         "item_spacing_mobile": 16,
         "item_spacing_desktop": 20,
         "button_bg_color": "#000000",
