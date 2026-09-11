@@ -266,7 +266,7 @@
             "card_padding_vertical": 6,
             "card_padding_horizontal": 4,
             "image_width": 70,
-            "image_height": 70,
+            "image_height": 60,
             "title_font_size": 13,
             "title_font_weight": "700",
             "upsell_price_font_size": 14,
