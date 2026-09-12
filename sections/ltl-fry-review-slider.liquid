@@ -29,18 +29,79 @@
             <ul class="splide__list">
               {% for block in section.blocks %}
                 {% if block.type == 'review' %}
+                  {% liquid
+                    assign media_type = block.settings.media_type | default: 'image'
+                    assign is_video = false
+                    if media_type == 'video'
+                      assign is_video = true
+                    endif
+                    assign video = block.settings.video
+                    assign placeholder = block.settings.placeholder
+                    if placeholder == blank and video != blank
+                      assign placeholder = video.preview_image
+                    endif
+                    assign has_video = false
+                    if video != blank
+                      assign has_video = true
+                    endif
+                    assign video_aspect = block.settings.video_aspect_ratio | default: '3 / 4'
+                  %}
                   <li class="splide__slide lfrs-slide-{{ block.id }}" {{ block.shopify_attributes }}>
-                    <div class="lfrs-card">
-                      {% if block.settings.image != blank %}
+                    <div class="lfrs-card" data-media-type="{{ media_type }}">
+                      {% if is_video %}
+                        {% if has_video or placeholder != blank %}
+                          <div class="lfrs-card__video-wrap" style="--lfrs-video-aspect: {{ video_aspect }};">
+                            {% if placeholder != blank %}
+                              <button
+                                type="button"
+                                class="lfrs-card__preview"
+                                {% unless has_video %}disabled{% endunless %}
+                                aria-label="Play {{ block.settings.name | escape }} review video"
+                              >
+                                {{ placeholder | image_url: width: 760 | image_tag: loading: 'lazy', class: 'lfrs-card__preview-image', alt: block.settings.name }}
+                                {% if has_video %}
+                                  <span class="lfrs-card__play" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 249 249" fill="none">
+                                      <circle cx="124.5" cy="124.5" r="124.5" fill="#D9D9D9" fill-opacity="0.5"></circle>
+                                      <path d="M188 124L93.5 178.56L93.5 69.4404L188 124Z" fill="white"></path>
+                                    </svg>
+                                  </span>
+                                {% endif %}
+                              </button>
+                            {% endif %}
+                            {% if has_video %}
+                              <video
+                                class="lfrs-card__video"
+                                controls
+                                playsinline
+                                preload="none"
+                                aria-label="{{ block.settings.name | escape }} - Customer review video"
+                              >
+                                {% for source in video.sources %}
+                                  <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                                {% endfor %}
+                              </video>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+                      {% elsif block.settings.image != blank %}
                         <div class="lfrs-card__image-wrap">
                           {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'lfrs-card__image', alt: block.settings.name }}
                         </div>
                       {% endif %}
+
                       <div class="lfrs-card__content">
-                        {% if block.settings.name != blank or block.settings.show_stars %}
+                        {% if block.settings.name != blank or block.settings.show_stars or block.settings.date != blank %}
                           <div class="lfrs-card__meta">
-                            {% if block.settings.name != blank %}
-                              <div class="lfrs-card__name">{{ block.settings.name }}</div>
+                            {% if block.settings.name != blank or block.settings.date != blank %}
+                              <div class="lfrs-card__identity">
+                                {% if block.settings.name != blank %}
+                                  <div class="lfrs-card__name">{{ block.settings.name }}</div>
+                                {% endif %}
+                                {% if is_video and block.settings.date != blank %}
+                                  <div class="lfrs-card__date">{{ block.settings.date }}</div>
+                                {% endif %}
+                              </div>
                             {% endif %}
                             {% if block.settings.show_stars %}
                               <div class="lfrs-card__stars" aria-label="{{ block.settings.star_rating }} stars">
@@ -50,50 +111,52 @@
                           </div>
                         {% endif %}
 
-                        {% liquid
-                          assign has_features = false
-                          if block.settings.feature_1_name != blank or block.settings.feature_1_logo != blank or block.settings.feature_2_name != blank or block.settings.feature_2_logo != blank or block.settings.feature_3_name != blank or block.settings.feature_3_logo != blank
-                            assign has_features = true
-                          endif
-                        %}
-                        {% if has_features %}
-                          <ul class="lfrs-card__features">
-                            {% for i in (1..3) %}
-                              {% liquid
-                                assign feature_name = ''
-                                assign feature_logo = nil
-                                case i
-                                  when 1
-                                    assign feature_name = block.settings.feature_1_name
-                                    assign feature_logo = block.settings.feature_1_logo
-                                  when 2
-                                    assign feature_name = block.settings.feature_2_name
-                                    assign feature_logo = block.settings.feature_2_logo
-                                  when 3
-                                    assign feature_name = block.settings.feature_3_name
-                                    assign feature_logo = block.settings.feature_3_logo
-                                endcase
-                              %}
-                              {% if feature_name != blank or feature_logo != blank %}
-                                <li class="lfrs-card__feature">
-                                  {% if feature_logo != blank %}
-                                    {{ feature_logo | image_url: width: 64 | image_tag: loading: 'lazy', class: 'lfrs-card__feature-logo', alt: feature_name }}
-                                  {% endif %}
-                                  {% if feature_name != blank %}
-                                    <span class="lfrs-card__feature-name">{{ feature_name }}</span>
-                                  {% endif %}
-                                </li>
-                              {% endif %}
-                            {% endfor %}
-                          </ul>
-                        {% endif %}
+                        {% unless is_video %}
+                          {% liquid
+                            assign has_features = false
+                            if block.settings.feature_1_name != blank or block.settings.feature_1_logo != blank or block.settings.feature_2_name != blank or block.settings.feature_2_logo != blank or block.settings.feature_3_name != blank or block.settings.feature_3_logo != blank
+                              assign has_features = true
+                            endif
+                          %}
+                          {% if has_features %}
+                            <ul class="lfrs-card__features">
+                              {% for i in (1..3) %}
+                                {% liquid
+                                  assign feature_name = ''
+                                  assign feature_logo = nil
+                                  case i
+                                    when 1
+                                      assign feature_name = block.settings.feature_1_name
+                                      assign feature_logo = block.settings.feature_1_logo
+                                    when 2
+                                      assign feature_name = block.settings.feature_2_name
+                                      assign feature_logo = block.settings.feature_2_logo
+                                    when 3
+                                      assign feature_name = block.settings.feature_3_name
+                                      assign feature_logo = block.settings.feature_3_logo
+                                  endcase
+                                %}
+                                {% if feature_name != blank or feature_logo != blank %}
+                                  <li class="lfrs-card__feature">
+                                    {% if feature_logo != blank %}
+                                      {{ feature_logo | image_url: width: 64 | image_tag: loading: 'lazy', class: 'lfrs-card__feature-logo', alt: feature_name }}
+                                    {% endif %}
+                                    {% if feature_name != blank %}
+                                      <span class="lfrs-card__feature-name">{{ feature_name }}</span>
+                                    {% endif %}
+                                  </li>
+                                {% endif %}
+                              {% endfor %}
+                            </ul>
+                          {% endif %}
 
-                        {% if block.settings.quote != blank %}
-                          <div class="lfrs-card__quote rte">{{ block.settings.quote }}</div>
-                        {% endif %}
-                        {% if block.settings.product_label != blank %}
-                          <div class="lfrs-card__product">{{ block.settings.product_label }}</div>
-                        {% endif %}
+                          {% if block.settings.quote != blank %}
+                            <div class="lfrs-card__quote rte">{{ block.settings.quote }}</div>
+                          {% endif %}
+                          {% if block.settings.product_label != blank %}
+                            <div class="lfrs-card__product">{{ block.settings.product_label }}</div>
+                          {% endif %}
+                        {% endunless %}
                       </div>
                     </div>
                   </li>
@@ -127,11 +190,62 @@
     height: 100%;
   }
 
-  .section-{{ section.id }} .lfrs-card__image {
+  .section-{{ section.id }} .lfrs-card__image,
+  .section-{{ section.id }} .lfrs-card__preview-image {
     width: 100%;
     height: auto;
     display: block;
     object-fit: cover;
+  }
+
+  .section-{{ section.id }} .lfrs-card__video-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: var(--lfrs-video-aspect, 3 / 4);
+    background: #111;
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }} .lfrs-card__preview {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .section-{{ section.id }} .lfrs-card__preview:disabled {
+    cursor: default;
+  }
+
+  .section-{{ section.id }} .lfrs-card__preview.is-hidden {
+    display: none;
+  }
+
+  .section-{{ section.id }} .lfrs-card__preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .section-{{ section.id }} .lfrs-card__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .section-{{ section.id }} .lfrs-card__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .section-{{ section.id }} .lfrs-card__content {
@@ -194,10 +308,23 @@
     margin-bottom: 10px;
   }
 
+  .section-{{ section.id }} .lfrs-card__identity {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
   .section-{{ section.id }} .lfrs-card__name {
     font-size: {{ section.settings.name_font_size_mobile }}px;
     font-weight: 600;
     color: {{ section.settings.name_color }};
+  }
+
+  .section-{{ section.id }} .lfrs-card__date {
+    font-size: {{ section.settings.label_font_size_mobile }}px;
+    color: {{ section.settings.label_color }};
+    line-height: 1.3;
   }
 
   .section-{{ section.id }} .lfrs-card__product {
@@ -227,11 +354,33 @@
       font-size: {{ section.settings.feature_font_size_desktop }}px;
     }
 
-    .section-{{ section.id }} .lfrs-card__product {
+    .section-{{ section.id }} .lfrs-card__product,
+    .section-{{ section.id }} .lfrs-card__date {
       font-size: {{ section.settings.label_font_size_desktop }}px;
     }
   }
 </style>
+
+<script>
+  (function() {
+    var root = document.querySelector('.section-{{ section.id }}');
+    if (!root || root.dataset.lfrsVideoBound === 'true') return;
+    root.dataset.lfrsVideoBound = 'true';
+
+    root.addEventListener('click', function(event) {
+      var preview = event.target.closest('.lfrs-card__preview');
+      if (!preview || preview.disabled || !root.contains(preview)) return;
+
+      var wrap = preview.closest('.lfrs-card__video-wrap');
+      if (!wrap) return;
+      var video = wrap.querySelector('.lfrs-card__video');
+      if (!video) return;
+
+      preview.classList.add('is-hidden');
+      video.play().catch(function() {});
+    });
+  })();
+</script>
 
 {% schema %}
 {
@@ -308,21 +457,35 @@
       "type": "review",
       "name": "Review",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "select", "id": "media_type", "label": "Review type", "options": [
+          { "value": "image", "label": "Image review" },
+          { "value": "video", "label": "Video review" }
+        ], "default": "image" },
+        { "type": "image_picker", "id": "image", "label": "Image", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "header", "content": "Video", "visible_if": "{{ block.settings.media_type == 'video' }}" },
+        { "type": "video", "id": "video", "label": "Video", "visible_if": "{{ block.settings.media_type == 'video' }}" },
+        { "type": "image_picker", "id": "placeholder", "label": "Placeholder", "info": "Image or GIF shown before the video plays. Falls back to the video thumbnail if empty.", "visible_if": "{{ block.settings.media_type == 'video' }}" },
+        { "type": "select", "id": "video_aspect_ratio", "label": "Video aspect ratio", "options": [
+          { "value": "3 / 4", "label": "3:4" },
+          { "value": "9 / 16", "label": "9:16" },
+          { "value": "1 / 1", "label": "1:1" },
+          { "value": "16 / 9", "label": "16:9" }
+        ], "default": "3 / 4", "visible_if": "{{ block.settings.media_type == 'video' }}" },
         { "type": "checkbox", "id": "show_stars", "label": "Show stars", "default": true },
         { "type": "range", "id": "star_rating", "min": 1, "max": 5, "step": 1, "label": "Star rating", "default": 5 },
-        { "type": "richtext", "id": "quote", "label": "Quote", "default": "<p>\"Amazing results in just a few weeks.\"</p>" },
         { "type": "text", "id": "name", "label": "Customer name", "default": "Verified buyer" },
-        { "type": "text", "id": "product_label", "label": "Product label" },
-        { "type": "header", "content": "Feature 1" },
-        { "type": "text", "id": "feature_1_name", "label": "Feature name" },
-        { "type": "image_picker", "id": "feature_1_logo", "label": "Logo" },
-        { "type": "header", "content": "Feature 2" },
-        { "type": "text", "id": "feature_2_name", "label": "Feature name" },
-        { "type": "image_picker", "id": "feature_2_logo", "label": "Logo" },
-        { "type": "header", "content": "Feature 3" },
-        { "type": "text", "id": "feature_3_name", "label": "Feature name" },
-        { "type": "image_picker", "id": "feature_3_logo", "label": "Logo" }
+        { "type": "text", "id": "date", "label": "Date / source", "info": "Example: Reviewed 09/27/2024 or Posted on TikTok 01/03/2025", "visible_if": "{{ block.settings.media_type == 'video' }}" },
+        { "type": "richtext", "id": "quote", "label": "Quote", "default": "<p>\"Amazing results in just a few weeks.\"</p>", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "text", "id": "product_label", "label": "Product label", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "header", "content": "Feature 1", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "text", "id": "feature_1_name", "label": "Feature name", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "image_picker", "id": "feature_1_logo", "label": "Logo", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "header", "content": "Feature 2", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "text", "id": "feature_2_name", "label": "Feature name", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "image_picker", "id": "feature_2_logo", "label": "Logo", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "header", "content": "Feature 3", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "text", "id": "feature_3_name", "label": "Feature name", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "image_picker", "id": "feature_3_logo", "label": "Logo", "visible_if": "{{ block.settings.media_type == 'image' }}" }
       ]
     }
   ],
