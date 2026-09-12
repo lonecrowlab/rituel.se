@@ -37,16 +37,59 @@
                         </div>
                       {% endif %}
                       <div class="lfrs-card__content">
-                        {% if block.settings.show_stars %}
-                          <div class="lfrs-card__stars" aria-label="{{ block.settings.star_rating }} stars">
-                            {% for i in (1..block.settings.star_rating) %}★{% endfor %}
+                        {% if block.settings.name != blank or block.settings.show_stars %}
+                          <div class="lfrs-card__meta">
+                            {% if block.settings.name != blank %}
+                              <div class="lfrs-card__name">{{ block.settings.name }}</div>
+                            {% endif %}
+                            {% if block.settings.show_stars %}
+                              <div class="lfrs-card__stars" aria-label="{{ block.settings.star_rating }} stars">
+                                {% for i in (1..block.settings.star_rating) %}★{% endfor %}
+                              </div>
+                            {% endif %}
                           </div>
                         {% endif %}
+
+                        {% liquid
+                          assign has_features = false
+                          if block.settings.feature_1_name != blank or block.settings.feature_1_logo != blank or block.settings.feature_2_name != blank or block.settings.feature_2_logo != blank or block.settings.feature_3_name != blank or block.settings.feature_3_logo != blank
+                            assign has_features = true
+                          endif
+                        %}
+                        {% if has_features %}
+                          <ul class="lfrs-card__features">
+                            {% for i in (1..3) %}
+                              {% liquid
+                                assign feature_name = ''
+                                assign feature_logo = nil
+                                case i
+                                  when 1
+                                    assign feature_name = block.settings.feature_1_name
+                                    assign feature_logo = block.settings.feature_1_logo
+                                  when 2
+                                    assign feature_name = block.settings.feature_2_name
+                                    assign feature_logo = block.settings.feature_2_logo
+                                  when 3
+                                    assign feature_name = block.settings.feature_3_name
+                                    assign feature_logo = block.settings.feature_3_logo
+                                endcase
+                              %}
+                              {% if feature_name != blank or feature_logo != blank %}
+                                <li class="lfrs-card__feature">
+                                  {% if feature_logo != blank %}
+                                    {{ feature_logo | image_url: width: 64 | image_tag: loading: 'lazy', class: 'lfrs-card__feature-logo', alt: feature_name }}
+                                  {% endif %}
+                                  {% if feature_name != blank %}
+                                    <span class="lfrs-card__feature-name">{{ feature_name }}</span>
+                                  {% endif %}
+                                </li>
+                              {% endif %}
+                            {% endfor %}
+                          </ul>
+                        {% endif %}
+
                         {% if block.settings.quote != blank %}
                           <div class="lfrs-card__quote rte">{{ block.settings.quote }}</div>
-                        {% endif %}
-                        {% if block.settings.name != blank %}
-                          <div class="lfrs-card__name">{{ block.settings.name }}</div>
                         {% endif %}
                         {% if block.settings.product_label != blank %}
                           <div class="lfrs-card__product">{{ block.settings.product_label }}</div>
@@ -95,11 +138,53 @@
     padding: 16px;
   }
 
+  .section-{{ section.id }} .lfrs-card__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
   .section-{{ section.id }} .lfrs-card__stars {
     color: {{ section.settings.star_color }};
     font-size: {{ section.settings.star_size_mobile }}px;
-    margin-bottom: 8px;
     letter-spacing: 1px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .section-{{ section.id }} .lfrs-card__features {
+    list-style: none;
+    margin: 0 0 12px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__feature-logo {
+    width: {{ section.settings.feature_logo_size }}px;
+    height: {{ section.settings.feature_logo_size }}px;
+    object-fit: contain;
+    flex-shrink: 0;
+    display: block;
+    margin-top: 1px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__feature-name {
+    font-size: {{ section.settings.feature_font_size_mobile }}px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: {{ section.settings.feature_color }};
+    line-height: 1.35;
   }
 
   .section-{{ section.id }} .lfrs-card__quote {
@@ -136,6 +221,10 @@
 
     .section-{{ section.id }} .lfrs-card__name {
       font-size: {{ section.settings.name_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfrs-card__feature-name {
+      font-size: {{ section.settings.feature_font_size_desktop }}px;
     }
 
     .section-{{ section.id }} .lfrs-card__product {
@@ -193,6 +282,10 @@
     { "type": "range", "id": "name_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Name size (mobile)", "default": 14 },
     { "type": "range", "id": "name_font_size_desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Name size (desktop)", "default": 15 },
     { "type": "color", "id": "name_color", "label": "Name color", "default": "#111827" },
+    { "type": "range", "id": "feature_logo_size", "min": 12, "max": 32, "step": 1, "unit": "px", "label": "Feature logo size", "default": 16 },
+    { "type": "range", "id": "feature_font_size_mobile", "min": 10, "max": 16, "step": 1, "unit": "px", "label": "Feature size (mobile)", "default": 11 },
+    { "type": "range", "id": "feature_font_size_desktop", "min": 10, "max": 16, "step": 1, "unit": "px", "label": "Feature size (desktop)", "default": 12 },
+    { "type": "color", "id": "feature_color", "label": "Feature color", "default": "#6b7280" },
     { "type": "range", "id": "label_font_size_mobile", "min": 10, "max": 16, "step": 1, "unit": "px", "label": "Product label size (mobile)", "default": 12 },
     { "type": "range", "id": "label_font_size_desktop", "min": 10, "max": 16, "step": 1, "unit": "px", "label": "Product label size (desktop)", "default": 13 },
     { "type": "color", "id": "label_color", "label": "Product label color", "default": "#9ca3af" },
@@ -220,7 +313,16 @@
         { "type": "range", "id": "star_rating", "min": 1, "max": 5, "step": 1, "label": "Star rating", "default": 5 },
         { "type": "richtext", "id": "quote", "label": "Quote", "default": "<p>\"Amazing results in just a few weeks.\"</p>" },
         { "type": "text", "id": "name", "label": "Customer name", "default": "Verified buyer" },
-        { "type": "text", "id": "product_label", "label": "Product label" }
+        { "type": "text", "id": "product_label", "label": "Product label" },
+        { "type": "header", "content": "Feature 1" },
+        { "type": "text", "id": "feature_1_name", "label": "Feature name" },
+        { "type": "image_picker", "id": "feature_1_logo", "label": "Logo" },
+        { "type": "header", "content": "Feature 2" },
+        { "type": "text", "id": "feature_2_name", "label": "Feature name" },
+        { "type": "image_picker", "id": "feature_2_logo", "label": "Logo" },
+        { "type": "header", "content": "Feature 3" },
+        { "type": "text", "id": "feature_3_name", "label": "Feature name" },
+        { "type": "image_picker", "id": "feature_3_logo", "label": "Logo" }
       ]
     }
   ],
