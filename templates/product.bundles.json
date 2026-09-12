@@ -357,7 +357,7 @@
           }
         },
         "rapi_rapi_bundle_KmgXWT": {
-          "type": "shopify://apps/rapi-bundle/blocks/rapi-bundle/99617c17-a32b-4e70-a883-7a155610d032",
+          "type": "shopify://apps/rapid-bundle/blocks/rapi-bundle/99617c17-a32b-4e70-a883-7a155610d032",
           "settings": {
             "product": "pdrn-collagen-volume-balm"
           }
@@ -525,6 +525,7 @@
         },
         "social_proof_accordion_RT_H05": {
           "type": "social_proof_accordion",
+          "disabled": true,
           "settings": {
             "question": "Se Emmas resultat",
             "open_default": false,
