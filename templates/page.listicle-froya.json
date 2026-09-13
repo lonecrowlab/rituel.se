@@ -547,11 +547,203 @@
           "type": "review",
           "settings": {
             "media_type": "image",
+            "image": "shopify://shop_images/Joan_Woody.webp",
             "video_aspect_ratio": "3 / 4",
             "show_stars": true,
             "star_rating": 5,
-            "name": "Verified buyer",
+            "name": "Joan, 64",
             "date": "",
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "product_label": "",
+            "feature_1_name": "REDUCE LINES & WRINKLES",
+            "feature_1_logo": "shopify://shop_images/reduce_line.svg",
+            "feature_2_name": "EVEN SKINTONE",
+            "feature_2_logo": "shopify://shop_images/even_skintone.svg",
+            "feature_3_name": ""
+          }
+        },
+        "review_GCGMmr": {
+          "type": "review",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/Karen_Kelly.webp",
+            "video_aspect_ratio": "3 / 4",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Karen K.",
+            "date": "",
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "product_label": "",
+            "feature_1_name": "EVEN SKINTONE",
+            "feature_1_logo": "shopify://shop_images/even_skintone.svg",
+            "feature_2_name": "Instant Glow",
+            "feature_2_logo": "shopify://shop_images/instant_glow.svg",
+            "feature_3_name": ""
+          }
+        },
+        "review_fM7XER": {
+          "type": "review",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/Nicole_39.webp",
+            "video_aspect_ratio": "3 / 4",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Nicole, 39",
+            "date": "",
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "product_label": "",
+            "feature_1_name": "IMPROVE SKIN TEXTURE",
+            "feature_1_logo": "shopify://shop_images/reduce_line.svg",
+            "feature_2_name": "SMOOTHER SKIN",
+            "feature_2_logo": "shopify://shop_images/smoother_skin.svg",
+            "feature_3_name": ""
+          }
+        },
+        "review_Nr8mdx": {
+          "type": "review",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/Lisa_55.webp",
+            "video_aspect_ratio": "3 / 4",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Lisa, 55",
+            "date": "",
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "product_label": "",
+            "feature_1_name": "REDUCE LINES & WRINKLES",
+            "feature_1_logo": "shopify://shop_images/reduce_line.svg",
+            "feature_2_name": "Natural Glow",
+            "feature_2_logo": "shopify://shop_images/smoother_skin.svg",
+            "feature_3_name": ""
+          }
+        },
+        "review_V6tQpC": {
+          "type": "review",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/Sarah_Jane_Frantz.webp",
+            "video_aspect_ratio": "3 / 4",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Sarah Jane, 47",
+            "date": "",
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "product_label": "",
+            "feature_1_name": "Calm Redness",
+            "feature_1_logo": "shopify://shop_images/even_skintone.svg",
+            "feature_2_name": "Clearer Skin",
+            "feature_2_logo": "shopify://shop_images/clearer_skin.svg",
+            "feature_3_name": ""
+          }
+        },
+        "review_9ERzVT": {
+          "type": "review",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/Iriel_G.png",
+            "video_aspect_ratio": "3 / 4",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Iriel, 54",
+            "date": "",
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "product_label": "",
+            "feature_1_name": "Natural Glow",
+            "feature_1_logo": "shopify://shop_images/smoother_skin.svg",
+            "feature_2_name": "Support Collagen",
+            "feature_2_logo": "shopify://shop_images/support_collagen.svg",
+            "feature_3_name": ""
+          }
+        },
+        "review_wEp7Ua": {
+          "type": "review",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/Sarah_M.webp",
+            "video_aspect_ratio": "3 / 4",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Sarah, 41",
+            "date": "",
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "product_label": "",
+            "feature_1_name": "Smoother Skin",
+            "feature_1_logo": "shopify://shop_images/smoother_skin.svg",
+            "feature_2_name": "Even Skintone",
+            "feature_2_logo": "shopify://shop_images/even_skintone.svg",
+            "feature_3_name": ""
+          }
+        },
+        "review_VMYRwG": {
+          "type": "review",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/Sheila_74.png",
+            "video_aspect_ratio": "3 / 4",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Sheila, 74",
+            "date": "",
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "product_label": "",
+            "feature_1_name": "Reduce Eyebags",
+            "feature_1_logo": "shopify://shop_images/reduce_eyebags.svg",
+            "feature_2_name": "Natural Foundation",
+            "feature_2_logo": "shopify://shop_images/even_skintone.svg",
+            "feature_3_name": ""
+          }
+        },
+        "review_4d4Ce7": {
+          "type": "review",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/Traci_R.webp",
+            "video_aspect_ratio": "3 / 4",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Traci R,  36",
+            "date": "",
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "product_label": "",
+            "feature_1_name": "Instant Glow",
+            "feature_1_logo": "shopify://shop_images/instant_glow.svg",
+            "feature_2_name": "Tighten Skin",
+            "feature_2_logo": "shopify://shop_images/reduce_line.svg",
+            "feature_3_name": ""
+          }
+        },
+        "review_rKKQ9b": {
+          "type": "review",
+          "settings": {
+            "media_type": "image",
+            "image": "shopify://shop_images/Jennifer_M.webp",
+            "video_aspect_ratio": "3 / 4",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Jennifer, 54",
+            "date": "",
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "product_label": "",
+            "feature_1_name": "Reduce Dark Circles",
+            "feature_1_logo": "shopify://shop_images/reduce_eyebags.svg",
+            "feature_2_name": "Reduce Wrinkles",
+            "feature_2_logo": "shopify://shop_images/reduce_line.svg",
+            "feature_3_name": ""
+          }
+        },
+        "review_qnRXUA": {
+          "type": "review",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/Barbara V.mp4",
+            "placeholder": "shopify://shop_images/Barbara.webp",
+            "video_aspect_ratio": "3 / 4",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Barbara V.",
+            "date": "Reviewed 09/27/2024",
             "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
             "product_label": "",
             "feature_1_name": "",
@@ -559,15 +751,17 @@
             "feature_3_name": ""
           }
         },
-        "review_2": {
+        "review_H9JGik": {
           "type": "review",
           "settings": {
-            "media_type": "image",
+            "media_type": "video",
+            "video": "shopify://files/videos/April B..mp4",
+            "placeholder": "shopify://shop_images/April-1.webp",
             "video_aspect_ratio": "3 / 4",
             "show_stars": true,
             "star_rating": 5,
-            "name": "Verified buyer",
-            "date": "",
+            "name": "April B.",
+            "date": "Posted on TikTok 10/10/2024",
             "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
             "product_label": "",
             "feature_1_name": "",
@@ -575,15 +769,17 @@
             "feature_3_name": ""
           }
         },
-        "review_3": {
+        "review_AwTYaH": {
           "type": "review",
           "settings": {
-            "media_type": "image",
+            "media_type": "video",
+            "video": "shopify://files/videos/Christy C..mp4",
+            "placeholder": "shopify://shop_images/christy.webp",
             "video_aspect_ratio": "3 / 4",
             "show_stars": true,
             "star_rating": 5,
-            "name": "Verified buyer",
-            "date": "",
+            "name": "Christy C.",
+            "date": "Posted on TikTok 01/03/2025",
             "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
             "product_label": "",
             "feature_1_name": "",
@@ -594,8 +790,18 @@
       },
       "block_order": [
         "review_1",
-        "review_2",
-        "review_3"
+        "review_GCGMmr",
+        "review_fM7XER",
+        "review_Nr8mdx",
+        "review_V6tQpC",
+        "review_9ERzVT",
+        "review_wEp7Ua",
+        "review_VMYRwG",
+        "review_4d4Ce7",
+        "review_rKKQ9b",
+        "review_qnRXUA",
+        "review_H9JGik",
+        "review_AwTYaH"
       ],
       "settings": {
         "heading": "What customers say",
@@ -631,7 +837,7 @@
         "label_color": "#9ca3af",
         "bg_color": "#faf8f6",
         "gradient_enabled": false,
-        "gradient_background": "linear-gradient(180deg, rgba(250,248,246,1), rgba(255,255,255,1) 100%)",
+        "gradient_background": "linear-gradient(180deg, rgba(250, 248, 246, 1), rgba(255, 255, 255, 1) 100%)",
         "text_color": "#000000",
         "container_max_width": 1100,
         "padding_top_mobile": 32,
@@ -763,6 +969,23 @@
         "progress_3"
       ],
       "settings": {
+        "image_position": "left",
+        "image_position_mobile": "top",
+        "image_column_width": 50,
+        "image_fit": "cover",
+        "image_aspect": "auto",
+        "image_radius": 0,
+        "image_visibility": "all",
+        "layout": "split",
+        "content_vertical_align": "center",
+        "column_gap_mobile": 0,
+        "column_gap_desktop": 0,
+        "block_gap_mobile": 16,
+        "block_gap_desktop": 20,
+        "content_max_width": 560,
+        "split_min_height": 640,
+        "content_padding_mobile": 24,
+        "content_padding_desktop": 40,
         "bar_height": 8,
         "bar_bg_color": "#e5e7eb",
         "bar_fill_color": "#cc667c",
