@@ -490,31 +490,49 @@
         "review_1": {
           "type": "review",
           "settings": {
+            "media_type": "image",
+            "video_aspect_ratio": "3 / 4",
             "show_stars": true,
             "star_rating": 5,
-            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
             "name": "Verified buyer",
-            "product_label": ""
+            "date": "",
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "product_label": "",
+            "feature_1_name": "",
+            "feature_2_name": "",
+            "feature_3_name": ""
           }
         },
         "review_2": {
           "type": "review",
           "settings": {
+            "media_type": "image",
+            "video_aspect_ratio": "3 / 4",
             "show_stars": true,
             "star_rating": 5,
-            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
             "name": "Verified buyer",
-            "product_label": ""
+            "date": "",
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "product_label": "",
+            "feature_1_name": "",
+            "feature_2_name": "",
+            "feature_3_name": ""
           }
         },
         "review_3": {
           "type": "review",
           "settings": {
+            "media_type": "image",
+            "video_aspect_ratio": "3 / 4",
             "show_stars": true,
             "star_rating": 5,
-            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
             "name": "Verified buyer",
-            "product_label": ""
+            "date": "",
+            "quote": "<p>\"Amazing results in just a few weeks.\"</p>",
+            "product_label": "",
+            "feature_1_name": "",
+            "feature_2_name": "",
+            "feature_3_name": ""
           }
         }
       },
@@ -553,6 +571,10 @@
         "name_font_size_mobile": 14,
         "name_font_size_desktop": 15,
         "name_color": "#111827",
+        "feature_logo_size": 16,
+        "feature_font_size_mobile": 11,
+        "feature_font_size_desktop": 12,
+        "feature_color": "#6b7280",
         "label_font_size_mobile": 12,
         "label_font_size_desktop": 13,
         "label_color": "#9ca3af",
@@ -576,6 +598,7 @@
         "step_1": {
           "type": "step",
           "settings": {
+            "step_number": "",
             "title": "Step 1",
             "text": "<p>Describe this step.</p>"
           }
@@ -583,6 +606,7 @@
         "step_2": {
           "type": "step",
           "settings": {
+            "step_number": "",
             "title": "Step 2",
             "text": "<p>Describe this step.</p>"
           }
@@ -590,6 +614,7 @@
         "step_3": {
           "type": "step",
           "settings": {
+            "step_number": "",
             "title": "Step 3",
             "text": "<p>Describe this step.</p>"
           }
@@ -604,17 +629,27 @@
         "heading": "How the system works",
         "subheading": "",
         "text_align": "center",
-        "columns_desktop": 3,
-        "gap_desktop": 24,
-        "mobile_slider": true,
+        "image_border_radius": 8,
+        "column_gap": 48,
+        "sticky_top": 96,
+        "scroll_trigger": 50,
+        "line_width": 2,
+        "line_color": "#e8e0e4",
+        "line_active_color": "#b89aa6",
+        "step_spacing_mobile": 16,
+        "step_spacing_desktop": 16,
         "step_bg_color": "#faf8f6",
         "step_border_radius": 12,
-        "image_border_radius": 8,
         "number_size": 36,
-        "number_bg_color": "#cc667c",
+        "number_bg_color": "#F7CAD4",
         "number_text_color": "#ffffff",
+        "number_border_color": "#e8e0e4",
+        "number_active_bg_color": "#CC667C",
+        "number_active_text_color": "#ffffff",
         "number_font_size_mobile": 14,
         "number_font_size_desktop": 15,
+        "icon_size": 36,
+        "icon_bg_color": "#d7c6cc",
         "heading_font_size_mobile": 28,
         "heading_font_size_desktop": 40,
         "heading_font_weight": "600",
@@ -631,7 +666,7 @@
         "step_text_color": "#4b5563",
         "bg_color": "#ffffff",
         "gradient_enabled": false,
-        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "gradient_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(250, 248, 246, 1) 100%)",
         "text_color": "#000000",
         "body_color": "#374151",
         "body_font_size_mobile": 16,
