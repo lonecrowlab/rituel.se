@@ -357,19 +357,11 @@
       fillHeight = Math.max(0, Math.min(trackHeight, fillHeight));
       fill.style.height = (fillHeight / trackHeight) * 100 + '%';
 
-      let activeIndex = 0;
-      let closest = Infinity;
-      numbers.forEach(function (number, index) {
-        const center = number.getBoundingClientRect().top + number.offsetHeight / 2;
-        const distance = Math.abs(center - triggerY);
-        if (distance < closest) {
-          closest = distance;
-          activeIndex = index;
-        }
-      });
-
       steps.forEach(function (step, index) {
-        step.classList.toggle('is-active', index === activeIndex);
+        const number = numbers[index];
+        if (!number) return;
+        const markerCenter = number.getBoundingClientRect().top + number.offsetHeight / 2;
+        step.classList.toggle('is-active', markerCenter <= triggerY);
       });
     }
 
