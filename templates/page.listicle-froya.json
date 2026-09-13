@@ -804,14 +804,14 @@
         "review_AwTYaH"
       ],
       "settings": {
-        "heading": "What customers say",
+        "heading": "No One Has Before & Afters Like Rituel",
         "text_align": "center",
         "slider_type": "slide",
         "autoplay": false,
         "autoplay_speed": 5,
         "lock_drag": false,
         "columns_mobile": 1,
-        "columns_desktop": 3,
+        "columns_desktop": 4,
         "gap_mobile": 16,
         "gap_desktop": 24,
         "show_arrows": true,
