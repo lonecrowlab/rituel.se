@@ -1,0 +1,2279 @@
+{%- liquid
+  assign featured_product = section.settings.product
+  if featured_product == blank and product != blank
+    assign featured_product = product
+  endif
+
+  assign selected_variant = featured_product.selected_or_first_available_variant
+  assign media_image = section.settings.image
+  if media_image == blank and featured_product != blank and featured_product.featured_image
+    assign media_image = featured_product.featured_image
+  endif
+  assign media_alt = ''
+  if media_image != blank
+    assign media_alt = media_image.alt
+  endif
+  if media_alt == blank and featured_product != blank
+    assign media_alt = featured_product.title
+  endif
+
+  assign offer_percent = 0
+  assign offer_code = ''
+  for block in section.blocks
+    if block.type == 'special_offer'
+      assign offer_percent = block.settings.offer_percent | plus: 0
+      assign offer_code = block.settings.discount_code | strip
+    endif
+  endfor
+
+  assign original_price = 0
+  assign offer_price = 0
+  if selected_variant
+    assign original_price = selected_variant.compare_at_price | default: selected_variant.price
+    if original_price == blank or original_price < selected_variant.price
+      assign original_price = selected_variant.price
+    endif
+    if offer_percent > 0
+      assign offer_multiplier = 100 | minus: offer_percent
+      assign offer_price = original_price | times: offer_multiplier | divided_by: 100
+    else
+      assign offer_price = selected_variant.price
+    endif
+  endif
+
+  assign ingredients_title = section.settings.ingredients_html_title
+  assign ingredients_cards = section.settings.ingredients_html_cards
+  assign ingredients_sidebar = section.settings.ingredients_html_sidebar
+  assign ingredients_footer = section.settings.ingredients_html_footer
+-%}
+
+{%- if ingredients_title == blank -%}
+  {%- capture ingredients_title -%}
+    <h2 class="pf-ing-title">10 Key Ingredients, Mixed to Work Together</h2>
+  {%- endcapture -%}
+{%- endif -%}
+
+{%- if ingredients_cards == blank -%}
+  {%- capture ingredients_cards -%}
+    <div class="pf-ing-grid">
+      <article class="pf-ing-card">
+        <span class="pf-ing-card__icon pf-ing-card__icon--rose" aria-hidden="true">●</span>
+        <p class="pf-ing-card__kicker">Softer, smoother skin</p>
+        <h3 class="pf-ing-card__name">Pomegranate, Arctic rosehip &amp; arnica</h3>
+        <p class="pf-ing-card__text">Arnica is clinically shown to visibly soften fine lines and smooth skin texture (92% effective). Pomegranate &amp; rosehip ranked nr 2 &amp; 3.</p>
+      </article>
+      <article class="pf-ing-card">
+        <span class="pf-ing-card__icon pf-ing-card__icon--sun" aria-hidden="true">☼</span>
+        <p class="pf-ing-card__kicker">Firmer skin</p>
+        <h3 class="pf-ing-card__name">Natural Vitamin E</h3>
+        <p class="pf-ing-card__text">Vitamin E from sunflowers removes free radicals that slow skin renewal, helping your skin feel firmer and look more toned.</p>
+      </article>
+      <article class="pf-ing-card">
+        <span class="pf-ing-card__icon pf-ing-card__icon--honey" aria-hidden="true">⬡</span>
+        <p class="pf-ing-card__kicker">Heal skin barrier &amp; moisture</p>
+        <h3 class="pf-ing-card__name">Beeswax &amp; thistle</h3>
+        <p class="pf-ing-card__text">Lock in moisture while protecting &amp; fixing the skin barrier, letting the skin heal itself. 92% of people had more moisturized skin after 2 weeks.</p>
+      </article>
+      <article class="pf-ing-card">
+        <span class="pf-ing-card__icon pf-ing-card__icon--gold" aria-hidden="true">✿</span>
+        <p class="pf-ing-card__kicker">Heal skin &amp; stop redness</p>
+        <h3 class="pf-ing-card__name">Calendula &amp; marigold</h3>
+        <p class="pf-ing-card__text">Powerful and fast-working weapon against redness: 75% reduction in inflammatory cytokines / 30% increase in collagen marker.</p>
+      </article>
+      <article class="pf-ing-card">
+        <span class="pf-ing-card__icon pf-ing-card__icon--amber" aria-hidden="true">❀</span>
+        <p class="pf-ing-card__kicker">Reduces dark circles &amp; puffiness</p>
+        <h3 class="pf-ing-card__name">Arctic arnica &amp; squalane</h3>
+        <p class="pf-ing-card__text">Increases subcutaneous fat by 19% in 4 weeks, adding fullness to help reduce dark circles &amp; puffiness.</p>
+      </article>
+      <article class="pf-ing-card">
+        <span class="pf-ing-card__icon pf-ing-card__icon--orange" aria-hidden="true">✶</span>
+        <p class="pf-ing-card__kicker">Natural glow</p>
+        <h3 class="pf-ing-card__name">Sea buckthorn</h3>
+        <p class="pf-ing-card__text">The most potent source of Vitamin C in the world (17× oranges). Shown to activate stem cells and rejuvenate skin.</p>
+      </article>
+    </div>
+  {%- endcapture -%}
+{%- endif -%}
+
+{%- if ingredients_sidebar == blank -%}
+  {%- capture ingredients_sidebar -%}
+    <div class="pf-ing-levels">
+      <p class="pf-ing-levels__label">Ingredient levels</p>
+      <ul class="pf-ing-levels__list">
+        <li>Arctic</li>
+        <li>Natural</li>
+        <li>Organic</li>
+        <li>
+          The complete system for mature women’s skin
+          <ul>
+            <li>Ultra cleanse &amp; revive face scrub</li>
+            <li>Rice powder</li>
+            <li>Apricot seed powder</li>
+            <li>Rose petal powder</li>
+            <li>Anti-age &amp; insane glow day balm</li>
+            <li>Safflower seed oil</li>
+            <li>Beeswax</li>
+            <li>Sea buckthorn oil</li>
+            <li>Pomegranate seed oil</li>
+            <li>Squalane</li>
+            <li>Rosehip fruit oil</li>
+            <li>Argan kernel oil</li>
+            <li>Apricot kernel oil</li>
+            <li>Rosemary leaf extract</li>
+            <li>Tocopherol</li>
+            <li>Sea buckthorn fruit extract</li>
+            <li>Marigold flower extract</li>
+            <li>Red cedar oil</li>
+            <li>Grapefruit peel oil</li>
+            <li>Magic reviver balm</li>
+            <li>Safflower seed oil</li>
+            <li>Beeswax</li>
+            <li>Almond oil</li>
+            <li>Arnica montana flower extract</li>
+            <li>Sweet almond oil</li>
+            <li>Rosehip fruit oil</li>
+            <li>Squalane</li>
+            <li>Pomegranate seed oil</li>
+            <li>Rosemary leaf extract</li>
+            <li>Marigold flower extract</li>
+            <li>Pomegranate seed extract</li>
+            <li>Chamomile flower oil</li>
+            <li>Wrinkle smoothing night balm</li>
+            <li>Safflower seed oil</li>
+            <li>Beeswax</li>
+            <li>Rosehip fruit oil</li>
+            <li>Marigold flower extract</li>
+            <li>Sweet almond oil</li>
+            <li>Arnica montana flower extract</li>
+            <li>Pomegranate seed oil</li>
+            <li>Squalane</li>
+            <li>Rosemary leaf extract</li>
+            <li>Tocopherol</li>
+            <li>Sunflower seed oil</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  {%- endcapture -%}
+{%- endif -%}
+
+{%- if ingredients_footer == blank -%}
+  {%- capture ingredients_footer -%}
+    <ul class="pf-ing-trust">
+      <li><span aria-hidden="true">◎</span> 0 pesticides</li>
+      <li><span aria-hidden="true">◎</span> 0 hormone disruptors</li>
+      <li><span aria-hidden="true">◎</span> 100% natural</li>
+      <li><span aria-hidden="true">◎</span> 3rd party tested</li>
+    </ul>
+  {%- endcapture -%}
+{%- endif -%}
+
+<section
+  id="ProductFeatured-{{ section.id }}"
+  class="product-featured section-{{ section.id }} pf-image-{{ section.settings.image_position }}"
+  data-section-id="{{ section.id }}"
+  data-discount-code="{{ offer_code | escape }}"
+>
+  <div class="pf-wrap">
+    <div class="pf-grid">
+      <div class="pf-media">
+        <div class="pf-media__image-wrap">
+          {%- if media_image != blank -%}
+            {{ media_image | image_url: width: 1400 | image_tag: loading: 'lazy', class: 'pf-media__image', alt: media_alt }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'pf-media__placeholder' }}
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.show_ingredients -%}
+          <button
+            type="button"
+            class="pf-ingredients-btn"
+            data-pf-ingredients-open
+            aria-haspopup="dialog"
+            aria-controls="ProductFeaturedIngredients-{{ section.id }}"
+          >
+            {{ section.settings.ingredients_button_label | default: 'View ingredients' }}
+          </button>
+        {%- endif -%}
+      </div>
+
+      <div class="pf-content">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'rating' -%}
+              <div
+                class="pf-block pf-rating pf-block-{{ block.id }}"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.profile_image_1 != blank or block.settings.profile_image_2 != blank or block.settings.profile_image_3 != blank -%}
+                  <div class="pf-rating__faces">
+                    {%- if block.settings.profile_image_1 != blank -%}
+                      {{ block.settings.profile_image_1 | image_url: width: 48, height: 48 | image_tag: class: 'pf-rating__face', loading: 'lazy', alt: '' }}
+                    {%- endif -%}
+                    {%- if block.settings.profile_image_2 != blank -%}
+                      {{ block.settings.profile_image_2 | image_url: width: 48, height: 48 | image_tag: class: 'pf-rating__face', loading: 'lazy', alt: '' }}
+                    {%- endif -%}
+                    {%- if block.settings.profile_image_3 != blank -%}
+                      {{ block.settings.profile_image_3 | image_url: width: 48, height: 48 | image_tag: class: 'pf-rating__face', loading: 'lazy', alt: '' }}
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.show_stars -%}
+                  <span class="pf-rating__stars" aria-hidden="true">
+                    {%- for i in (1..block.settings.star_rating) -%}
+                      {% render 'icons', icon: 'custom_hero_rating' %}
+                    {%- endfor -%}
+                  </span>
+                {%- endif -%}
+                {%- if block.settings.rating_text != blank -%}
+                  <div class="pf-rating__text">{{ block.settings.rating_text }}</div>
+                {%- endif -%}
+              </div>
+
+            {%- when 'heading' -%}
+              {%- if block.settings.heading != blank -%}
+                <{{ block.settings.heading_tag | default: 'h2' }}
+                  class="pf-block pf-heading pf-block-{{ block.id }}"
+                  {{ block.shopify_attributes }}
+                >
+                  {{ block.settings.heading }}
+                </{{ block.settings.heading_tag | default: 'h2' }}>
+              {%- endif -%}
+
+            {%- when 'text' -%}
+              {%- if block.settings.text != blank -%}
+                <div class="pf-block pf-text rte pf-block-{{ block.id }}" {{ block.shopify_attributes }}>
+                  {{ block.settings.text }}
+                </div>
+              {%- endif -%}
+
+            {%- when 'special_offer' -%}
+              <div class="pf-block pf-offer pf-block-{{ block.id }}" {{ block.shopify_attributes }}>
+                <div class="pf-offer__top">
+                  {%- if block.settings.title != blank -%}
+                    <p class="pf-offer__title">{{ block.settings.title }}</p>
+                  {%- endif -%}
+                  {%- if block.settings.offer_percent > 0 -%}
+                    <span class="pf-offer__badge">−{{ block.settings.offer_percent }}%</span>
+                  {%- endif -%}
+                </div>
+                {%- if block.settings.description != blank -%}
+                  <div class="pf-offer__desc">{{ block.settings.description }}</div>
+                {%- endif -%}
+                {%- if featured_product != blank -%}
+                  <div class="pf-offer__prices">
+                    {%- if offer_percent > 0 and offer_price < original_price -%}
+                      <s class="pf-offer__compare">{{ original_price | money }}</s>
+                      <span class="pf-offer__price">{{ offer_price | money }}</span>
+                    {%- else -%}
+                      <span class="pf-offer__price">{{ selected_variant.price | money }}</span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.show_code and block.settings.discount_code != blank -%}
+                  <button type="button" class="pf-offer__code" data-pf-copy-code="{{ block.settings.discount_code | escape }}">
+                    <span>Code:</span>
+                    <strong>{{ block.settings.discount_code }}</strong>
+                  </button>
+                {%- endif -%}
+              </div>
+
+            {%- when 'features' -%}
+              {%- if block.settings.features != blank -%}
+                <div class="pf-block pf-features pf-block-{{ block.id }}" {{ block.shopify_attributes }}>
+                  {{ block.settings.features }}
+                </div>
+              {%- endif -%}
+
+            {%- when 'low_stock' -%}
+              {%- liquid
+                assign stock_count = block.settings.fallback_count | plus: 0
+                assign show_stock = true
+                if block.settings.use_product_inventory and selected_variant
+                  if selected_variant.inventory_management == blank
+                    assign show_stock = false
+                  else
+                    assign stock_count = selected_variant.inventory_quantity
+                    if selected_variant.inventory_quantity > block.settings.threshold
+                      assign show_stock = false
+                    endif
+                    unless selected_variant.available
+                      assign show_stock = true
+                    endunless
+                  endif
+                endif
+                assign stock_label = block.settings.text | default: 'Only {count} left'
+                assign stock_label = stock_label | replace: '{count}', stock_count
+              -%}
+              {%- if show_stock -%}
+                <p class="pf-block pf-stock pf-block-{{ block.id }}" {{ block.shopify_attributes }}>
+                  <span class="pf-stock__dot" aria-hidden="true"></span>
+                  <span class="pf-stock__text">{{ stock_label }}</span>
+                </p>
+              {%- endif -%}
+
+            {%- when 'button' -%}
+              {%- liquid
+                assign button_label = block.settings.button_label | default: 'Add to cart'
+                if featured_product != blank and selected_variant.available == false
+                  assign button_label = block.settings.sold_out_label | default: 'Sold out'
+                endif
+              -%}
+              <div class="pf-block pf-cta pf-block-{{ block.id }}" {{ block.shopify_attributes }}>
+                {%- if featured_product != blank -%}
+                  {%- assign pf_form_id = 'pf-form-' | append: section.id | append: '-' | append: block.id -%}
+                  {% form 'product', featured_product, id: pf_form_id, class: 'pf-form' %}
+                    <input type="hidden" name="id" value="{{ selected_variant.id }}">
+                    {%- if featured_product.has_only_default_variant == false -%}
+                      <select name="id" class="pf-variant" aria-label="{{ featured_product.options | join: ' / ' }}">
+                        {%- for variant in featured_product.variants -%}
+                          <option
+                            value="{{ variant.id }}"
+                            {% if variant.id == selected_variant.id %}selected{% endif %}
+                            {% unless variant.available %}disabled{% endunless %}
+                          >
+                            {{ variant.title }} — {{ variant.price | money }}
+                          </option>
+                        {%- endfor -%}
+                      </select>
+                    {%- endif -%}
+                    <button
+                      type="submit"
+                      class="pf-btn"
+                      {% unless selected_variant.available %}disabled{% endunless %}
+                    >
+                      {{ button_label }}
+                    </button>
+                  {% endform %}
+                {%- elsif block.settings.button_link != blank -%}
+                  <a class="pf-btn" href="{{ block.settings.button_link }}">{{ button_label }}</a>
+                {%- else -%}
+                  <p class="pf-empty">Select a product in section settings.</p>
+                {%- endif -%}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.show_ingredients -%}
+    <dialog
+      id="ProductFeaturedIngredients-{{ section.id }}"
+      class="pf-ing-dialog"
+      aria-labelledby="ProductFeaturedIngredientsTitle-{{ section.id }}"
+    >
+      <div class="pf-ing-panel">
+        <button type="button" class="pf-ing-close" data-pf-ingredients-close aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <div id="ProductFeaturedIngredientsTitle-{{ section.id }}" class="pf-ing-area pf-ing-area--title">
+          {{ ingredients_title }}
+        </div>
+        <div class="pf-ing-split">
+          <div class="pf-ing-area pf-ing-area--cards">
+            {{ ingredients_cards }}
+          </div>
+          <aside class="pf-ing-area pf-ing-area--sidebar">
+            {{ ingredients_sidebar }}
+          </aside>
+        </div>
+        <div class="pf-ing-area pf-ing-area--footer">
+          {{ ingredients_footer }}
+        </div>
+      </div>
+    </dialog>
+  {%- endif -%}
+</section>
+
+{% style %}
+  .section-{{ section.id }} {
+    --pf-bg: {{ section.settings.background_color }};
+    --pf-text: {{ section.settings.text_color }};
+    --pf-muted: {{ section.settings.muted_color }};
+    --pf-accent: {{ section.settings.accent_color }};
+    --pf-radius: {{ section.settings.image_radius }}px;
+    background: var(--pf-bg);
+    color: var(--pf-text);
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    padding-left: {{ section.settings.padding_x_mobile }}px;
+    padding-right: {{ section.settings.padding_x_mobile }}px;
+  }
+
+  .section-{{ section.id }} .pf-wrap {
+    max-width: {{ section.settings.container_max_width }}px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .section-{{ section.id }} .pf-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: {{ section.settings.column_gap_mobile }}px;
+    align-items: {{ section.settings.vertical_alignment }};
+  }
+
+  .section-{{ section.id }} .pf-media,
+  .section-{{ section.id }} .pf-content {
+    min-width: 0;
+  }
+
+  .section-{{ section.id }} .pf-media__image,
+  .section-{{ section.id }} .pf-media__placeholder {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--pf-radius);
+  }
+
+  .section-{{ section.id }} .pf-ingredients-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: {{ section.settings.ingredients_btn_margin_top }}px;
+    padding: {{ section.settings.ingredients_btn_pad_y_mobile }}px {{ section.settings.ingredients_btn_pad_x_mobile }}px;
+    border: 1px solid {{ section.settings.ingredients_btn_border }};
+    border-radius: {{ section.settings.ingredients_btn_radius }}px;
+    background: {{ section.settings.ingredients_btn_bg }};
+    color: {{ section.settings.ingredients_btn_color }};
+    font-size: {{ section.settings.ingredients_btn_size_mobile }}px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .section-{{ section.id }} .pf-content {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.block_gap_mobile }}px;
+  }
+
+  .section-{{ section.id }} .pf-rating {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .section-{{ section.id }} .pf-rating__faces {
+    display: flex;
+    align-items: center;
+  }
+
+  .section-{{ section.id }} .pf-rating__face {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    margin-left: -8px;
+  }
+
+  .section-{{ section.id }} .pf-rating__face:first-child {
+    margin-left: 0;
+  }
+
+  .section-{{ section.id }} .pf-rating__stars {
+    display: inline-flex;
+    gap: 2px;
+    color: {{ section.settings.star_color }};
+  }
+
+  .section-{{ section.id }} .pf-rating__stars svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .section-{{ section.id }} .pf-rating__text,
+  .section-{{ section.id }} .pf-rating__text p {
+    margin: 0;
+    font-size: inherit;
+  }
+
+  .section-{{ section.id }} .pf-heading {
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .section-{{ section.id }} .pf-text p {
+    margin: 0 0 0.7em;
+  }
+
+  .section-{{ section.id }} .pf-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-{{ section.id }} .pf-offer {
+    border: 1px solid {{ section.settings.offer_border }};
+    background: {{ section.settings.offer_bg }};
+    border-radius: 12px;
+  }
+
+  .section-{{ section.id }} .pf-offer__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .section-{{ section.id }} .pf-offer__title {
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .section-{{ section.id }} .pf-offer__badge {
+    flex-shrink: 0;
+    background: var(--pf-accent);
+    color: #fff;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .section-{{ section.id }} .pf-offer__desc,
+  .section-{{ section.id }} .pf-offer__desc p {
+    margin: 8px 0 0;
+    color: var(--pf-muted);
+  }
+
+  .section-{{ section.id }} .pf-offer__prices {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .section-{{ section.id }} .pf-offer__compare {
+    color: var(--pf-muted);
+    text-decoration: line-through;
+  }
+
+  .section-{{ section.id }} .pf-offer__price {
+    font-weight: 700;
+    color: var(--pf-accent);
+  }
+
+  .section-{{ section.id }} .pf-offer__code {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--pf-text);
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .section-{{ section.id }} .pf-offer__code.is-copied::after {
+    content: 'Copied';
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--pf-accent);
+  }
+
+  .section-{{ section.id }} .pf-features ul,
+  .section-{{ section.id }} .pf-features ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .section-{{ section.id }} .pf-features li {
+    position: relative;
+    padding-left: 28px;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .section-{{ section.id }} .pf-features li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.15em;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--pf-accent);
+    box-shadow: inset 0 0 0 18px var(--pf-accent);
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='12' fill='black'/><path d='M7.2 12.2L10.3 15.3L16.8 8.7' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>") center / contain no-repeat;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='12' fill='black'/><path d='M7.2 12.2L10.3 15.3L16.8 8.7' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>") center / contain no-repeat;
+  }
+
+  .section-{{ section.id }} .pf-features p {
+    margin: 0 0 8px;
+  }
+
+  .section-{{ section.id }} .pf-stock {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: {{ section.settings.stock_color }};
+    font-weight: 600;
+  }
+
+  .section-{{ section.id }} .pf-stock__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: {{ section.settings.stock_color }};
+    box-shadow: 0 0 0 4px {{ section.settings.stock_color | color_modify: 'alpha', 0.16 }};
+  }
+
+  .section-{{ section.id }} .pf-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .section-{{ section.id }} .pf-variant {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d8d2cc;
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  .section-{{ section.id }} .pf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 0;
+    border-radius: {{ section.settings.button_radius }}px;
+    background: {{ section.settings.button_bg }};
+    color: {{ section.settings.button_text }};
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .section-{{ section.id }} .pf-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .section-{{ section.id }} .pf-empty {
+    margin: 0;
+    color: var(--pf-muted);
+  }
+
+  .section-{{ section.id }} .pf-ing-dialog {
+    width: min(1120px, calc(100vw - 24px));
+    max-height: calc(100svh - 24px);
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: #fff;
+    color: #1a1a1a;
+  }
+
+  .section-{{ section.id }} .pf-ing-dialog::backdrop {
+    background: rgba(20, 16, 14, 0.55);
+  }
+
+  .section-{{ section.id }} .pf-ing-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100svh - 24px);
+  }
+
+  .section-{{ section.id }} .pf-ing-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    z-index: 2;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    background: transparent;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    color: #1a1a1a;
+  }
+
+  .section-{{ section.id }} .pf-ing-area--title {
+    padding: 28px 44px 8px 28px;
+  }
+
+  .section-{{ section.id }} .pf-ing-title {
+    margin: 0;
+    font-size: {{ section.settings.ing_title_size_mobile }}px;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .section-{{ section.id }} .pf-ing-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 8px 20px 20px;
+    overflow: auto;
+  }
+
+  .section-{{ section.id }} .pf-ing-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px 20px;
+  }
+
+  .section-{{ section.id }} .pf-ing-card__icon {
+    display: inline-flex;
+    width: 28px;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .section-{{ section.id }} .pf-ing-card__icon--rose { color: #e38a86; }
+  .section-{{ section.id }} .pf-ing-card__icon--sun { color: #f0b429; }
+  .section-{{ section.id }} .pf-ing-card__icon--honey { color: #e0b35a; }
+  .section-{{ section.id }} .pf-ing-card__icon--gold { color: #f0a14a; }
+  .section-{{ section.id }} .pf-ing-card__icon--amber { color: #f2c14b; }
+  .section-{{ section.id }} .pf-ing-card__icon--orange { color: #ef8b3a; }
+
+  .section-{{ section.id }} .pf-ing-card__kicker {
+    margin: 0 0 4px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6d6862;
+  }
+
+  .section-{{ section.id }} .pf-ing-card__name {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .section-{{ section.id }} .pf-ing-card__text {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #4a4743;
+  }
+
+  .section-{{ section.id }} .pf-ing-levels__label {
+    margin: 0 0 10px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6d6862;
+  }
+
+  .section-{{ section.id }} .pf-ing-levels__list,
+  .section-{{ section.id }} .pf-ing-levels__list ul {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #3d3a36;
+  }
+
+  .section-{{ section.id }} .pf-ing-area--footer {
+    margin-top: auto;
+    padding: 14px 20px;
+    background: #f6f1ea;
+  }
+
+  .section-{{ section.id }} .pf-ing-trust {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #5c5853;
+  }
+
+  .section-{{ section.id }} .pf-ing-trust li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'rating' -%}
+        .section-{{ section.id }} .pf-block-{{ block.id }} {
+          margin-top: {{ block.settings.margin_top }}px;
+          margin-bottom: {{ block.settings.margin_bottom }}px;
+          padding: {{ block.settings.padding_mobile }}px;
+          font-size: {{ block.settings.font_size_mobile }}px;
+          color: {{ block.settings.text_color }};
+        }
+        .section-{{ section.id }} .pf-block-{{ block.id }} .pf-rating__stars {
+          color: {{ block.settings.star_color }};
+        }
+      {%- when 'heading' -%}
+        .section-{{ section.id }} .pf-block-{{ block.id }} {
+          margin-top: {{ block.settings.margin_top }}px;
+          margin-bottom: {{ block.settings.margin_bottom }}px;
+          padding: {{ block.settings.padding_mobile }}px 0;
+          font-size: {{ block.settings.font_size_mobile }}px;
+          font-weight: {{ block.settings.font_weight }};
+          color: {{ block.settings.text_color }};
+        }
+      {%- when 'text' -%}
+        .section-{{ section.id }} .pf-block-{{ block.id }} {
+          margin-top: {{ block.settings.margin_top }}px;
+          margin-bottom: {{ block.settings.margin_bottom }}px;
+          padding: {{ block.settings.padding_mobile }}px 0;
+          font-size: {{ block.settings.font_size_mobile }}px;
+          color: {{ block.settings.text_color }};
+          line-height: 1.55;
+        }
+      {%- when 'special_offer' -%}
+        .section-{{ section.id }} .pf-block-{{ block.id }} {
+          margin-top: {{ block.settings.margin_top }}px;
+          margin-bottom: {{ block.settings.margin_bottom }}px;
+          padding: {{ block.settings.padding_mobile }}px;
+        }
+        .section-{{ section.id }} .pf-block-{{ block.id }} .pf-offer__title {
+          font-size: {{ block.settings.title_size_mobile }}px;
+        }
+        .section-{{ section.id }} .pf-block-{{ block.id }} .pf-offer__desc {
+          font-size: {{ block.settings.desc_size_mobile }}px;
+        }
+        .section-{{ section.id }} .pf-block-{{ block.id }} .pf-offer__price {
+          font-size: {{ block.settings.price_size_mobile }}px;
+        }
+        .section-{{ section.id }} .pf-block-{{ block.id }} .pf-offer__badge {
+          font-size: {{ block.settings.badge_size_mobile }}px;
+        }
+      {%- when 'features' -%}
+        .section-{{ section.id }} .pf-block-{{ block.id }} {
+          margin-top: {{ block.settings.margin_top }}px;
+          margin-bottom: {{ block.settings.margin_bottom }}px;
+          padding: {{ block.settings.padding_mobile }}px 0;
+          font-size: {{ block.settings.font_size_mobile }}px;
+          color: {{ block.settings.text_color }};
+        }
+      {%- when 'low_stock' -%}
+        .section-{{ section.id }} .pf-block-{{ block.id }} {
+          margin-top: {{ block.settings.margin_top }}px;
+          margin-bottom: {{ block.settings.margin_bottom }}px;
+          padding: {{ block.settings.padding_mobile }}px 0;
+          font-size: {{ block.settings.font_size_mobile }}px;
+        }
+      {%- when 'button' -%}
+        .section-{{ section.id }} .pf-block-{{ block.id }} {
+          margin-top: {{ block.settings.margin_top }}px;
+          margin-bottom: {{ block.settings.margin_bottom }}px;
+        }
+        .section-{{ section.id }} .pf-block-{{ block.id }} .pf-btn {
+          padding: {{ block.settings.padding_y_mobile }}px {{ block.settings.padding_x_mobile }}px;
+          font-size: {{ block.settings.font_size_mobile }}px;
+        }
+    {%- endcase -%}
+  {%- endfor -%}
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+      padding-left: {{ section.settings.padding_x_desktop }}px;
+      padding-right: {{ section.settings.padding_x_desktop }}px;
+    }
+
+    .section-{{ section.id }} .pf-grid {
+      grid-template-columns: {% if section.settings.image_position == 'right' %}minmax(0, 1fr) minmax(0, {{ section.settings.image_width_desktop }}%){% else %}minmax(0, {{ section.settings.image_width_desktop }}%) minmax(0, 1fr){% endif %};
+      gap: {{ section.settings.column_gap_desktop }}px;
+    }
+
+    .section-{{ section.id }}.pf-image-right .pf-media {
+      order: 2;
+    }
+
+    .section-{{ section.id }} .pf-content {
+      gap: {{ section.settings.block_gap_desktop }}px;
+    }
+
+    .section-{{ section.id }} .pf-ingredients-btn {
+      width: auto;
+      padding: {{ section.settings.ingredients_btn_pad_y_desktop }}px {{ section.settings.ingredients_btn_pad_x_desktop }}px;
+      font-size: {{ section.settings.ingredients_btn_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .pf-ing-area--title {
+      padding: 36px 56px 4px 40px;
+    }
+
+    .section-{{ section.id }} .pf-ing-title {
+      font-size: {{ section.settings.ing_title_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .pf-ing-split {
+      grid-template-columns: minmax(0, 1.7fr) minmax(220px, 0.9fr);
+      gap: 28px;
+      padding: 8px 40px 24px;
+    }
+
+    .section-{{ section.id }} .pf-ing-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 28px 32px;
+    }
+
+    .section-{{ section.id }} .pf-ing-area--footer {
+      padding: 16px 40px;
+    }
+
+    .section-{{ section.id }} .pf-ing-trust {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      font-size: 12px;
+    }
+
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'rating' -%}
+          .section-{{ section.id }} .pf-block-{{ block.id }} {
+            padding: {{ block.settings.padding_desktop }}px;
+            font-size: {{ block.settings.font_size_desktop }}px;
+          }
+        {%- when 'heading' -%}
+          .section-{{ section.id }} .pf-block-{{ block.id }} {
+            padding: {{ block.settings.padding_desktop }}px 0;
+            font-size: {{ block.settings.font_size_desktop }}px;
+          }
+        {%- when 'text' -%}
+          .section-{{ section.id }} .pf-block-{{ block.id }} {
+            padding: {{ block.settings.padding_desktop }}px 0;
+            font-size: {{ block.settings.font_size_desktop }}px;
+          }
+        {%- when 'special_offer' -%}
+          .section-{{ section.id }} .pf-block-{{ block.id }} {
+            padding: {{ block.settings.padding_desktop }}px;
+          }
+          .section-{{ section.id }} .pf-block-{{ block.id }} .pf-offer__title {
+            font-size: {{ block.settings.title_size_desktop }}px;
+          }
+          .section-{{ section.id }} .pf-block-{{ block.id }} .pf-offer__desc {
+            font-size: {{ block.settings.desc_size_desktop }}px;
+          }
+          .section-{{ section.id }} .pf-block-{{ block.id }} .pf-offer__price {
+            font-size: {{ block.settings.price_size_desktop }}px;
+          }
+          .section-{{ section.id }} .pf-block-{{ block.id }} .pf-offer__badge {
+            font-size: {{ block.settings.badge_size_desktop }}px;
+          }
+        {%- when 'features' -%}
+          .section-{{ section.id }} .pf-block-{{ block.id }} {
+            padding: {{ block.settings.padding_desktop }}px 0;
+            font-size: {{ block.settings.font_size_desktop }}px;
+          }
+        {%- when 'low_stock' -%}
+          .section-{{ section.id }} .pf-block-{{ block.id }} {
+            padding: {{ block.settings.padding_desktop }}px 0;
+            font-size: {{ block.settings.font_size_desktop }}px;
+          }
+        {%- when 'button' -%}
+          .section-{{ section.id }} .pf-block-{{ block.id }} .pf-btn {
+            padding: {{ block.settings.padding_y_desktop }}px {{ block.settings.padding_x_desktop }}px;
+            font-size: {{ block.settings.font_size_desktop }}px;
+          }
+      {%- endcase -%}
+    {%- endfor -%}
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var root = document.getElementById('ProductFeatured-{{ section.id }}');
+    if (!root) return;
+
+    var dialog = document.getElementById('ProductFeaturedIngredients-{{ section.id }}');
+    var openBtn = root.querySelector('[data-pf-ingredients-open]');
+    var closeBtn = root.querySelector('[data-pf-ingredients-close]');
+    var discountCode = (root.getAttribute('data-discount-code') || '').trim();
+
+    function openIngredients() {
+      if (!dialog) return;
+      if (typeof dialog.showModal === 'function') {
+        dialog.showModal();
+      } else {
+        dialog.setAttribute('open', '');
+      }
+    }
+
+    function closeIngredients() {
+      if (!dialog) return;
+      if (typeof dialog.close === 'function') {
+        dialog.close();
+      } else {
+        dialog.removeAttribute('open');
+      }
+    }
+
+    if (openBtn) openBtn.addEventListener('click', openIngredients);
+    if (closeBtn) closeBtn.addEventListener('click', closeIngredients);
+    if (dialog) {
+      dialog.addEventListener('click', function (event) {
+        if (event.target === dialog) closeIngredients();
+      });
+    }
+
+    root.querySelectorAll('[data-pf-copy-code]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var code = btn.getAttribute('data-pf-copy-code') || '';
+        if (!code || !navigator.clipboard) return;
+        navigator.clipboard.writeText(code).then(function () {
+          btn.classList.add('is-copied');
+          setTimeout(function () { btn.classList.remove('is-copied'); }, 1600);
+        });
+      });
+    });
+
+    async function applyDiscount(code) {
+      if (!code) return;
+      try {
+        await fetch('/cart/update.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ discount: code })
+        });
+      } catch (e) {}
+    }
+
+    async function refreshCart() {
+      if (window.CartManager && typeof window.CartManager.clearCache === 'function') {
+        window.CartManager.clearCache();
+      }
+      document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true }));
+      var drawer = document.querySelector('cart-drawer');
+      if (drawer && typeof drawer.open === 'function') {
+        drawer.open();
+      } else if (drawer) {
+        drawer.classList.add('active', 'animate');
+        drawer.setAttribute('open', '');
+      }
+    }
+
+    root.querySelectorAll('form.pf-form').forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var idInput = form.querySelector('[name="id"]');
+        var variantId = idInput ? idInput.value : null;
+        var button = form.querySelector('.pf-btn');
+        if (!variantId) return;
+        if (button) button.disabled = true;
+
+        applyDiscount(discountCode)
+          .then(function () {
+            if (window.CartManager && typeof window.CartManager.addToCart === 'function') {
+              return window.CartManager.addToCart([{ id: Number(variantId), quantity: 1 }]);
+            }
+            return fetch('/cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ items: [{ id: Number(variantId), quantity: 1 }] })
+            }).then(function (res) {
+              if (!res.ok) throw new Error('Add to cart failed');
+              return res.json();
+            });
+          })
+          .then(refreshCart)
+          .catch(function () {
+            form.submit();
+          })
+          .finally(function () {
+            if (button) button.disabled = false;
+          });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product featured",
+  "tag": "section",
+  "class": "section-product-featured",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image override",
+      "info": "Leave empty to use the product featured image"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position (desktop)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "image_width_desktop",
+      "min": 32,
+      "max": 62,
+      "step": 2,
+      "unit": "%",
+      "label": "Image width (desktop)",
+      "default": 48
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "Vertical alignment",
+      "options": [
+        { "value": "start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "end", "label": "Bottom" }
+      ],
+      "default": "start"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Image radius",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "min": 800,
+      "max": 1400,
+      "step": 20,
+      "unit": "px",
+      "label": "Container max width",
+      "default": 1180
+    },
+    {
+      "type": "header",
+      "content": "View ingredients"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ingredients",
+      "label": "Show view ingredients under image",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "ingredients_button_label",
+      "label": "Button label",
+      "default": "View ingredients"
+    },
+    {
+      "type": "html",
+      "id": "ingredients_html_title",
+      "label": "Ingredients — title",
+      "info": "Custom HTML for the modal title area. Leave empty to use the generated default.",
+      "default": "<h2 class=\"pf-ing-title\">10 Key Ingredients, Mixed to Work Together</h2>"
+    },
+    {
+      "type": "html",
+      "id": "ingredients_html_cards",
+      "label": "Ingredients — image with icons",
+      "info": "Custom HTML for the cards / icons area. Leave empty to use the generated default."
+    },
+    {
+      "type": "html",
+      "id": "ingredients_html_sidebar",
+      "label": "Ingredients — right sidebar",
+      "info": "Custom HTML for the ingredient levels sidebar. Leave empty to use the generated default."
+    },
+    {
+      "type": "html",
+      "id": "ingredients_html_footer",
+      "label": "Ingredients — footer",
+      "info": "Custom HTML for the footer trust row. Leave empty to use the generated default.",
+      "default": "<ul class=\"pf-ing-trust\"><li><span aria-hidden=\"true\">◎</span> 0 pesticides</li><li><span aria-hidden=\"true\">◎</span> 0 hormone disruptors</li><li><span aria-hidden=\"true\">◎</span> 100% natural</li><li><span aria-hidden=\"true\">◎</span> 3rd party tested</li></ul>"
+    },
+    {
+      "type": "range",
+      "id": "ing_title_size_mobile",
+      "min": 18,
+      "max": 42,
+      "step": 1,
+      "unit": "px",
+      "label": "Ingredients title size (mobile)",
+      "default": 26
+    },
+    {
+      "type": "range",
+      "id": "ing_title_size_desktop",
+      "min": 22,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "label": "Ingredients title size (desktop)",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Muted text",
+      "default": "#6b6560"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#8B1E2D"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#d4a017"
+    },
+    {
+      "type": "color",
+      "id": "offer_bg",
+      "label": "Offer background",
+      "default": "#fbf6f1"
+    },
+    {
+      "type": "color",
+      "id": "offer_border",
+      "label": "Offer border",
+      "default": "#eadfd4"
+    },
+    {
+      "type": "color",
+      "id": "stock_color",
+      "label": "Low stock color",
+      "default": "#b45309"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Button radius",
+      "default": 6
+    },
+    {
+      "type": "color",
+      "id": "ingredients_btn_bg",
+      "label": "Ingredients button background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "ingredients_btn_color",
+      "label": "Ingredients button text",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "ingredients_btn_border",
+      "label": "Ingredients button border",
+      "default": "#d8d2cc"
+    },
+    {
+      "type": "range",
+      "id": "ingredients_btn_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Ingredients button radius",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding side (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (desktop)",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (desktop)",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_x_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding side (desktop)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "min": 12,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Column gap (mobile)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "column_gap_desktop",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Column gap (desktop)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "block_gap_mobile",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Block gap (mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "block_gap_desktop",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Block gap (desktop)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "ingredients_btn_margin_top",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Ingredients button top margin",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "ingredients_btn_size_mobile",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Ingredients button size (mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "ingredients_btn_size_desktop",
+      "min": 11,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Ingredients button size (desktop)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "ingredients_btn_pad_y_mobile",
+      "min": 6,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Ingredients button pad Y (mobile)",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "ingredients_btn_pad_x_mobile",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Ingredients button pad X (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "ingredients_btn_pad_y_desktop",
+      "min": 6,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Ingredients button pad Y (desktop)",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "ingredients_btn_pad_x_desktop",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Ingredients button pad X (desktop)",
+      "default": 18
+    }
+  ],
+  "blocks": [
+    {
+      "type": "rating",
+      "name": "Rating",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_stars",
+          "label": "Show stars",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "star_rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star rating",
+          "default": 5
+        },
+        {
+          "type": "richtext",
+          "id": "rating_text",
+          "label": "Rating text",
+          "default": "<p><strong>4.8/5</strong> based on 2,184 reviews</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "profile_image_1",
+          "label": "Profile image 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "profile_image_2",
+          "label": "Profile image 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "profile_image_3",
+          "label": "Profile image 3"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#1a1a1a"
+        },
+        {
+          "type": "color",
+          "id": "star_color",
+          "label": "Star color",
+          "default": "#d4a017"
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "min": 11,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (mobile)",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "font_size_desktop",
+          "min": 11,
+          "max": 22,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (desktop)",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "padding_mobile",
+          "min": 0,
+          "max": 32,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding (mobile)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_desktop",
+          "min": 0,
+          "max": 32,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding (desktop)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "The complete system for mature skin"
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "Heading tag",
+          "options": [
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" },
+            { "value": "h3", "label": "H3" },
+            { "value": "p", "label": "Paragraph" }
+          ],
+          "default": "h2"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color",
+          "default": "#1a1a1a"
+        },
+        {
+          "type": "select",
+          "id": "font_weight",
+          "label": "Font weight",
+          "options": [
+            { "value": "400", "label": "Regular" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semi-bold" },
+            { "value": "700", "label": "Bold" }
+          ],
+          "default": "600"
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "min": 18,
+          "max": 42,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (mobile)",
+          "default": 26
+        },
+        {
+          "type": "range",
+          "id": "font_size_desktop",
+          "min": 20,
+          "max": 56,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (desktop)",
+          "default": 34
+        },
+        {
+          "type": "range",
+          "id": "padding_mobile",
+          "min": 0,
+          "max": 32,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding (mobile)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_desktop",
+          "min": 0,
+          "max": 32,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding (desktop)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>A complete ritual clinically evaluated for mature women’s skin. Visible glow, firmer feel, and fewer dark circles.</p>"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Color",
+          "default": "#3f3b37"
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "min": 12,
+          "max": 22,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (mobile)",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "font_size_desktop",
+          "min": 12,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (desktop)",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "padding_mobile",
+          "min": 0,
+          "max": 32,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding (mobile)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_desktop",
+          "min": 0,
+          "max": 32,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding (desktop)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "special_offer",
+      "name": "Special offer",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Limited-time special offer"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Save on the complete system. The discount is applied at checkout with the code below.</p>"
+        },
+        {
+          "type": "range",
+          "id": "offer_percent",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "%",
+          "label": "Offer percent",
+          "default": 30,
+          "info": "Used to show the sale price. Create a matching Shopify discount."
+        },
+        {
+          "type": "text",
+          "id": "discount_code",
+          "label": "Discount code",
+          "info": "Must match a real Shopify discount code. Applied when the customer adds this product to cart."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_code",
+          "label": "Show discount code",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "title_size_mobile",
+          "min": 13,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Title size (mobile)",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "title_size_desktop",
+          "min": 13,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "label": "Title size (desktop)",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "desc_size_mobile",
+          "min": 11,
+          "max": 18,
+          "step": 1,
+          "unit": "px",
+          "label": "Description size (mobile)",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "desc_size_desktop",
+          "min": 11,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "label": "Description size (desktop)",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "price_size_mobile",
+          "min": 16,
+          "max": 36,
+          "step": 1,
+          "unit": "px",
+          "label": "Price size (mobile)",
+          "default": 22
+        },
+        {
+          "type": "range",
+          "id": "price_size_desktop",
+          "min": 16,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Price size (desktop)",
+          "default": 26
+        },
+        {
+          "type": "range",
+          "id": "badge_size_mobile",
+          "min": 11,
+          "max": 18,
+          "step": 1,
+          "unit": "px",
+          "label": "Badge size (mobile)",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "badge_size_desktop",
+          "min": 11,
+          "max": 18,
+          "step": 1,
+          "unit": "px",
+          "label": "Badge size (desktop)",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "padding_mobile",
+          "min": 8,
+          "max": 36,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding (mobile)",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "padding_desktop",
+          "min": 8,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding (desktop)",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "features",
+      "name": "Features",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "features",
+          "label": "Features",
+          "default": "<ul><li>Clinically evaluated 60-day results</li><li>Softer, smoother, younger-looking skin</li><li>60-day happiness guarantee</li></ul>",
+          "info": "Use bullet points. Each bullet becomes a checkmark."
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#1a1a1a"
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "min": 12,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (mobile)",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "font_size_desktop",
+          "min": 12,
+          "max": 22,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (desktop)",
+          "default": 15
+        },
+        {
+          "type": "range",
+          "id": "padding_mobile",
+          "min": 0,
+          "max": 32,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding (mobile)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_desktop",
+          "min": 0,
+          "max": 32,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding (desktop)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "low_stock",
+      "name": "Low stock",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Only {count} left",
+          "info": "Use {count} for the remaining number"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_product_inventory",
+          "label": "Use real product inventory",
+          "default": true,
+          "info": "Hides the badge when inventory is above the threshold"
+        },
+        {
+          "type": "range",
+          "id": "threshold",
+          "min": 1,
+          "max": 50,
+          "step": 1,
+          "label": "Show when stock is at or below",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "fallback_count",
+          "min": 1,
+          "max": 30,
+          "step": 1,
+          "label": "Fallback count",
+          "default": 7,
+          "info": "Used when inventory is not tracked"
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "min": 11,
+          "max": 18,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (mobile)",
+          "default": 13
+        },
+        {
+          "type": "range",
+          "id": "font_size_desktop",
+          "min": 11,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (desktop)",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "padding_mobile",
+          "min": 0,
+          "max": 24,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding (mobile)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_desktop",
+          "min": 0,
+          "max": 24,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding (desktop)",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Add to cart"
+        },
+        {
+          "type": "text",
+          "id": "sold_out_label",
+          "label": "Sold out label",
+          "default": "Sold out"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Fallback link",
+          "info": "Used only when no product is selected"
+        },
+        {
+          "type": "range",
+          "id": "font_size_mobile",
+          "min": 12,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (mobile)",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "font_size_desktop",
+          "min": 12,
+          "max": 22,
+          "step": 1,
+          "unit": "px",
+          "label": "Font size (desktop)",
+          "default": 15
+        },
+        {
+          "type": "range",
+          "id": "padding_y_mobile",
+          "min": 8,
+          "max": 24,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Y (mobile)",
+          "default": 14
+        },
+        {
+          "type": "range",
+          "id": "padding_x_mobile",
+          "min": 12,
+          "max": 40,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding X (mobile)",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "padding_y_desktop",
+          "min": 8,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Y (desktop)",
+          "default": 16
+        },
+        {
+          "type": "range",
+          "id": "padding_x_desktop",
+          "min": 12,
+          "max": 48,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding X (desktop)",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "margin_top",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin top",
+          "default": 4
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin bottom",
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product featured",
+      "blocks": [
+        { "type": "rating" },
+        { "type": "heading" },
+        { "type": "text" },
+        { "type": "special_offer" },
+        { "type": "features" },
+        { "type": "low_stock" },
+        { "type": "button" }
+      ]
+    }
+  ]
+}
+{% endschema %}
