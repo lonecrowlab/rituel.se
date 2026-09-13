@@ -5,7 +5,10 @@
   endif
 %}
 
-<section class="ltl-fry-review-slider section-{{ section.id }}" data-section-id="{{ section.id }}">
+<section
+  class="ltl-fry-review-slider section-{{ section.id }} lfrs-width-{{ section.settings.section_width | default: 'page' }}"
+  data-section-id="{{ section.id }}"
+>
   <div class="lf-wrap">
     {% if section.settings.heading != blank %}
       <h2 class="lfrs-heading">{{ section.settings.heading }}</h2>
@@ -153,6 +156,15 @@
                           {% if block.settings.quote != blank %}
                             <div class="lfrs-card__quote rte">{{ block.settings.quote }}</div>
                           {% endif %}
+                          {% if block.settings.description != blank %}
+                            <div class="lfrs-card__description" data-lfrs-description>
+                              <div class="lfrs-card__description-text">{{ block.settings.description | newline_to_br }}</div>
+                              <button type="button" class="lfrs-card__read-toggle" hidden data-lfrs-read-more>
+                                <span data-lfrs-label-more>Read more</span>
+                                <span data-lfrs-label-less hidden>Read less</span>
+                              </button>
+                            </div>
+                          {% endif %}
                           {% if block.settings.product_label != blank %}
                             <div class="lfrs-card__product">{{ block.settings.product_label }}</div>
                           {% endif %}
@@ -173,6 +185,10 @@
 {% render 'ltl-fry-section-base', section: section %}
 
 <style>
+  .section-{{ section.id }}.lfrs-width-full .lf-wrap {
+    max-width: none;
+  }
+
   .section-{{ section.id }} .lfrs-heading {
     font-size: {{ section.settings.heading_font_size_mobile }}px;
     font-weight: {{ section.settings.heading_font_weight }};
@@ -308,6 +324,42 @@
     margin-bottom: 10px;
   }
 
+  .section-{{ section.id }} .lfrs-card__description {
+    margin-bottom: 10px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__description-text {
+    font-size: {{ section.settings.description_font_size_mobile }}px;
+    color: {{ section.settings.description_color }};
+    line-height: 1.5;
+  }
+
+  .section-{{ section.id }} .lfrs-card__description:not(.is-expanded) .lfrs-card__description-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }} .lfrs-card__read-toggle {
+    display: inline;
+    margin-top: 4px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: {{ section.settings.description_color }};
+    font-size: {{ section.settings.description_font_size_mobile }}px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .section-{{ section.id }} .lfrs-card__read-toggle[hidden] {
+    display: none;
+  }
+
   .section-{{ section.id }} .lfrs-card__identity {
     display: flex;
     flex-direction: column;
@@ -346,6 +398,11 @@
       font-size: {{ section.settings.quote_font_size_mobile }}px;
     }
 
+    .section-{{ section.id }} .lfrs-card__description-text,
+    .section-{{ section.id }} .lfrs-card__read-toggle {
+      font-size: {{ section.settings.description_font_size_mobile }}px;
+    }
+
     .section-{{ section.id }} .lfrs-card__name {
       font-size: {{ section.settings.name_font_size_mobile }}px;
     }
@@ -364,20 +421,51 @@
 <script>
   (function() {
     var root = document.querySelector('.section-{{ section.id }}');
-    if (!root || root.dataset.lfrsVideoBound === 'true') return;
-    root.dataset.lfrsVideoBound = 'true';
+    if (!root || root.dataset.lfrsBound === 'true') return;
+    root.dataset.lfrsBound = 'true';
 
     root.addEventListener('click', function(event) {
       var preview = event.target.closest('.lfrs-card__preview');
-      if (!preview || preview.disabled || !root.contains(preview)) return;
+      if (preview && !preview.disabled && root.contains(preview)) {
+        var wrap = preview.closest('.lfrs-card__video-wrap');
+        if (!wrap) return;
+        var video = wrap.querySelector('.lfrs-card__video');
+        if (!video) return;
+        preview.classList.add('is-hidden');
+        video.play().catch(function() {});
+        return;
+      }
 
-      var wrap = preview.closest('.lfrs-card__video-wrap');
-      if (!wrap) return;
-      var video = wrap.querySelector('.lfrs-card__video');
-      if (!video) return;
+      var toggle = event.target.closest('[data-lfrs-read-more]');
+      if (!toggle || !root.contains(toggle)) return;
+      var description = toggle.closest('[data-lfrs-description]');
+      if (!description) return;
+      var expanded = description.classList.toggle('is-expanded');
+      var moreLabel = toggle.querySelector('[data-lfrs-label-more]');
+      var lessLabel = toggle.querySelector('[data-lfrs-label-less]');
+      if (moreLabel) moreLabel.hidden = expanded;
+      if (lessLabel) lessLabel.hidden = !expanded;
+      toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
 
-      preview.classList.add('is-hidden');
-      video.play().catch(function() {});
+    function syncDescriptionToggles() {
+      root.querySelectorAll('[data-lfrs-description]').forEach(function(description) {
+        var text = description.querySelector('.lfrs-card__description-text');
+        var toggle = description.querySelector('[data-lfrs-read-more]');
+        if (!text || !toggle) return;
+        if (description.classList.contains('is-expanded')) return;
+        var overflows = text.scrollHeight > text.clientHeight + 1;
+        toggle.hidden = !overflows;
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    syncDescriptionToggles();
+    window.addEventListener('resize', syncDescriptionToggles);
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.detail && String(event.detail.sectionId) === '{{ section.id }}') {
+        syncDescriptionToggles();
+      }
     });
   })();
 </script>
@@ -394,6 +482,10 @@
       { "value": "center", "label": "Center" },
       { "value": "right", "label": "Right" }
     ], "default": "center" },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [
+      { "value": "page", "label": "Page width" },
+      { "value": "full", "label": "Full width" }
+    ], "default": "page" },
     { "type": "select", "id": "slider_type", "label": "Type", "options": [
       { "value": "slide", "label": "Slide" },
       { "value": "loop", "label": "Loop" }
@@ -423,6 +515,8 @@
     { "type": "range", "id": "star_size_mobile", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Star size", "default": 14 },
     { "type": "range", "id": "quote_font_size_mobile", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Quote size", "default": 15 },
     { "type": "color", "id": "quote_color", "label": "Quote color", "default": "#374151" },
+    { "type": "range", "id": "description_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Description size", "default": 14 },
+    { "type": "color", "id": "description_color", "label": "Description color", "default": "#4b5563" },
     { "type": "range", "id": "name_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Name size", "default": 14 },
     { "type": "color", "id": "name_color", "label": "Name color", "default": "#111827" },
     { "type": "range", "id": "feature_logo_size", "min": 12, "max": 32, "step": 1, "unit": "px", "label": "Feature logo size", "default": 16 },
@@ -434,7 +528,7 @@
     { "type": "checkbox", "id": "gradient_enabled", "label": "Use gradient background", "default": false },
     { "type": "color_background", "id": "gradient_background", "label": "Gradient", "default": "linear-gradient(180deg, rgba(250,248,246,1), rgba(255,255,255,1) 100%)" },
     { "type": "color", "id": "text_color", "label": "Text color", "default": "#000000" },
-    { "type": "range", "id": "container_max_width", "min": 600, "max": 1400, "step": 10, "unit": "px", "label": "Container max width", "default": 1100 },
+    { "type": "range", "id": "container_max_width", "min": 600, "max": 1400, "step": 10, "unit": "px", "label": "Container max width", "default": 1100, "info": "Applies when Section width is Page width." },
     { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (mobile)", "default": 32 },
     { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (mobile)", "default": 32 },
     { "type": "range", "id": "padding_top_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (desktop)", "default": 48 },
@@ -464,6 +558,7 @@
         { "type": "text", "id": "name", "label": "Customer name", "default": "Verified buyer" },
         { "type": "text", "id": "date", "label": "Date / source", "info": "Example: Reviewed 09/27/2024 or Posted on TikTok 01/03/2025", "visible_if": "{{ block.settings.media_type == 'video' }}" },
         { "type": "richtext", "id": "quote", "label": "Quote", "default": "<p>\"Amazing results in just a few weeks.\"</p>", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "textarea", "id": "description", "label": "Description", "info": "Truncates after 3 lines with a Read more toggle when needed.", "visible_if": "{{ block.settings.media_type == 'image' }}" },
         { "type": "text", "id": "product_label", "label": "Product label", "visible_if": "{{ block.settings.media_type == 'image' }}" },
         { "type": "header", "content": "Feature 1", "visible_if": "{{ block.settings.media_type == 'image' }}" },
         { "type": "text", "id": "feature_1_name", "label": "Feature name", "visible_if": "{{ block.settings.media_type == 'image' }}" },
