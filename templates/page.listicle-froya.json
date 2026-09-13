@@ -681,81 +681,133 @@
     "listicle_froya_result_progress": {
       "type": "ltl-fry-result-progress",
       "blocks": {
-        "progress_1": {
-          "type": "progress_item",
+        "eyebrow_1": {
+          "type": "text",
           "settings": {
-            "progress_label": "Week 2",
-            "progress_percent": 40,
-            "title": "Visible improvement",
-            "text": "<p>Describe the result at this stage.</p>"
+            "style": "eyebrow",
+            "text": "<p>35 WOMEN. 60 DAYS.</p>",
+            "font_size_mobile": 12,
+            "font_size_desktop": 13,
+            "font_weight": "500",
+            "letter_spacing": 6,
+            "text_transform": "uppercase",
+            "color": "#6b7280"
+          }
+        },
+        "heading_1": {
+          "type": "text",
+          "settings": {
+            "style": "heading",
+            "text": "<p>Scientists Shocked by Results In Independent 60 Day Clinical Trial</p>",
+            "font_size_mobile": 26,
+            "font_size_desktop": 34,
+            "font_weight": "600",
+            "line_height": 12,
+            "color": "#111111"
+          }
+        },
+        "image_text_1": {
+          "type": "image_with_text",
+          "settings": {
+            "text": "<p>The Complete System for Mature Women's Skin was evaluated by multiple independent dermatologists. Here are the results from the clinical study:</p>"
+          }
+        },
+        "progress_1": {
+          "type": "progress",
+          "settings": {
+            "percent": 91,
+            "percent_prefix": "+",
+            "show_percent": true,
+            "title": "Glow",
+            "text": "<p>Participants experienced a more youthful and glowing appearance.</p>"
           }
         },
         "progress_2": {
-          "type": "progress_item",
+          "type": "progress",
           "settings": {
-            "progress_label": "Week 4",
-            "progress_percent": 75,
-            "title": "Visible improvement",
-            "text": "<p>Describe the result at this stage.</p>"
+            "percent": 75,
+            "percent_prefix": "+",
+            "show_percent": true,
+            "title": "Younger skin",
+            "text": "<p>Participants reported younger-looking skin at Day 60.</p>"
           }
         },
         "progress_3": {
-          "type": "progress_item",
+          "type": "progress",
           "settings": {
-            "progress_label": "Week 8",
-            "progress_percent": 100,
-            "title": "Visible improvement",
-            "text": "<p>Describe the result at this stage.</p>"
+            "percent": 48,
+            "percent_prefix": "+",
+            "show_percent": true,
+            "title": "Dark circles",
+            "text": "<p>Reduced by dermatologist assessment at Day 60.</p>"
+          }
+        },
+        "disclaimer_1": {
+          "type": "text",
+          "settings": {
+            "style": "body",
+            "text": "<p>*Individual results may vary. Customer perception reporting the appearance of clearer and glowing skin in as little as 3 days after the product is used as directed. If dissatisfied with the results, please reach out after 60 days of use for a full, no-questions refund.</p>",
+            "font_size_mobile": 11,
+            "font_size_desktop": 12,
+            "color": "#9ca3af",
+            "line_height": 15
           }
         }
       },
       "block_order": [
+        "eyebrow_1",
+        "heading_1",
+        "image_text_1",
         "progress_1",
         "progress_2",
-        "progress_3"
+        "progress_3",
+        "disclaimer_1"
       ],
       "settings": {
-        "heading": "Real results over time",
-        "subheading": "",
-        "text_align": "center",
-        "item_gap_mobile": 16,
-        "item_gap_desktop": 24,
-        "item_bg_color": "#faf8f6",
-        "item_border_radius": 12,
-        "image_border_radius": 8,
-        "label_bg_color": "#cc667c",
-        "label_text_color": "#ffffff",
-        "label_font_size_mobile": 12,
-        "label_font_size_desktop": 13,
+        "image_position": "left",
+        "image_position_mobile": "top",
+        "image_column_width": 50,
+        "image_fit": "cover",
+        "image_aspect": "auto",
+        "image_radius": 0,
+        "hide_image_mobile": false,
+        "hide_image_desktop": false,
+        "layout": "split",
+        "content_vertical_align": "center",
+        "column_gap_mobile": 0,
+        "column_gap_desktop": 0,
+        "block_gap_mobile": 16,
+        "block_gap_desktop": 20,
+        "content_max_width": 560,
+        "split_min_height": 640,
+        "content_padding_top_mobile": 24,
+        "content_padding_bottom_mobile": 24,
+        "content_padding_horizontal_mobile": 20,
+        "content_padding_top_desktop": 48,
+        "content_padding_bottom_desktop": 48,
+        "content_padding_horizontal_desktop": 40,
+        "iwt_vertical_align": "center",
         "bar_height": 8,
-        "bar_bg_color": "#e5e7eb",
-        "bar_fill_color": "#cc667c",
+        "bar_radius": 8,
+        "bar_bg_color": "#f1efed",
+        "bar_fill_color": "#d9d4d0",
+        "text_align": "left",
         "heading_font_size_mobile": 28,
-        "heading_font_size_desktop": 40,
+        "heading_font_size_desktop": 36,
         "heading_font_weight": "600",
-        "heading_color": "#1f2937",
-        "subheading_font_size_mobile": 15,
-        "subheading_font_size_desktop": 16,
-        "subheading_color": "#6b7280",
-        "item_title_size_mobile": 18,
-        "item_title_size_desktop": 22,
-        "item_title_weight": "600",
-        "item_title_color": "#111827",
-        "item_text_size_mobile": 14,
-        "item_text_size_desktop": 15,
-        "item_text_color": "#4b5563",
+        "heading_color": "#111111",
+        "body_font_size_mobile": 15,
+        "body_font_size_desktop": 16,
+        "body_color": "#4b5563",
         "bg_color": "#ffffff",
         "gradient_enabled": false,
         "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
-        "text_color": "#000000",
-        "body_color": "#374151",
-        "body_font_size_mobile": 16,
-        "body_font_size_desktop": 16,
-        "container_max_width": 1000,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32,
-        "padding_top_desktop": 48,
-        "padding_bottom_desktop": 48
+        "text_color": "#111111",
+        "container_max_width": 1400,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0
       }
     },
     "listicle_froya_quick_buy": {

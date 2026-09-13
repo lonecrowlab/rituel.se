@@ -78,17 +78,25 @@
                 {% endif %}
               </div>
 
-            {% when 'progress' %}
+            {% when 'progress', 'progress_item' %}
+              {%- liquid
+                assign progress_percent = block.settings.percent | default: block.settings.progress_percent | default: 0
+                assign progress_prefix = block.settings.percent_prefix | default: '+'
+                assign show_percent = true
+                if block.type == 'progress' and block.settings.show_percent == false
+                  assign show_percent = false
+                endif
+              -%}
               <div
                 class="lfrp-progress lfrp-block-{{ block.id }} {{ device_class }}"
                 {{ block.shopify_attributes }}
               >
                 <div class="lfrp-progress__row">
-                  {% if block.settings.show_percent %}
-                    <span class="lfrp-progress__percent">{{ block.settings.percent_prefix }}{{ block.settings.percent }}%</span>
+                  {% if show_percent %}
+                    <span class="lfrp-progress__percent">{{ progress_prefix }}{{ progress_percent }}%</span>
                   {% endif %}
-                  <div class="lfrp-progress__bar" role="img" aria-label="{{ block.settings.percent }} percent">
-                    <span class="lfrp-progress__fill" style="width: {{ block.settings.percent }}%;"></span>
+                  <div class="lfrp-progress__bar" role="img" aria-label="{{ progress_percent }} percent">
+                    <span class="lfrp-progress__fill" style="width: {{ progress_percent }}%;"></span>
                   </div>
                 </div>
                 {% if block.settings.title != blank %}
@@ -284,7 +292,7 @@
         font-weight: {{ block.settings.font_weight }};
       {% endif %}
       {% if block.settings.letter_spacing %}
-        letter-spacing: {{ block.settings.letter_spacing }}em;
+        letter-spacing: {{ block.settings.letter_spacing | times: 0.01 }}em;
       {% endif %}
       {% if block.settings.text_transform %}
         text-transform: {{ block.settings.text_transform }};
@@ -297,7 +305,7 @@
     {% if block.type == 'text' %}
       .section-{{ section.id }} .lfrp-block-{{ block.id }} {
         font-size: {{ block.settings.font_size_mobile }}px;
-        line-height: {{ block.settings.line_height }};
+        line-height: {{ block.settings.line_height | times: 0.1 }};
         {% if block.settings.max_width > 0 %}
           max-width: {{ block.settings.max_width }}px;
         {% endif %}
@@ -322,7 +330,7 @@
       }
     {% endif %}
 
-    {% if block.type == 'progress' %}
+    {% if block.type == 'progress' or block.type == 'progress_item' %}
       .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-progress__percent {
         font-size: {{ block.settings.percent_size_mobile }}px;
         font-weight: {{ block.settings.percent_weight }};
@@ -333,7 +341,7 @@
         font-size: {{ block.settings.title_size_mobile }}px;
         font-weight: {{ block.settings.title_weight }};
         color: {{ block.settings.title_color }};
-        letter-spacing: {{ block.settings.title_letter_spacing }}em;
+        letter-spacing: {{ block.settings.title_letter_spacing | times: 0.01 }}em;
         text-transform: {{ block.settings.title_transform }};
       }
 
@@ -461,7 +469,7 @@
         }
       {% endif %}
 
-      {% if block.type == 'progress' %}
+      {% if block.type == 'progress' or block.type == 'progress_item' %}
         .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-progress__percent {
           font-size: {{ block.settings.percent_size_desktop }}px;
         }
@@ -645,8 +653,8 @@
           ],
           "default": "400"
         },
-        { "type": "range", "id": "line_height", "min": 1, "max": 2, "step": 0.1, "label": "Line height", "default": 1.4 },
-        { "type": "range", "id": "letter_spacing", "min": 0, "max": 0.2, "step": 0.01, "unit": "em", "label": "Letter spacing", "default": 0 },
+        { "type": "range", "id": "line_height", "min": 10, "max": 20, "step": 1, "label": "Line height", "default": 14, "info": "10 = 1.0, 14 = 1.4" },
+        { "type": "range", "id": "letter_spacing", "min": 0, "max": 20, "step": 1, "label": "Letter spacing", "default": 0, "info": "0–20. 6 = 0.06em" },
         {
           "type": "select",
           "id": "text_transform",
@@ -776,7 +784,7 @@
           "default": "600"
         },
         { "type": "color", "id": "title_color", "label": "Title color", "default": "#111111" },
-        { "type": "range", "id": "title_letter_spacing", "min": 0, "max": 0.2, "step": 0.01, "unit": "em", "label": "Title letter spacing", "default": 0.04 },
+        { "type": "range", "id": "title_letter_spacing", "min": 0, "max": 20, "step": 1, "label": "Title letter spacing", "default": 4, "info": "4 = 0.04em" },
         {
           "type": "select",
           "id": "title_transform",
@@ -809,6 +817,18 @@
           "default": "all"
         }
       ]
+    },
+    {
+      "type": "progress_item",
+      "name": "Progress item",
+      "settings": [
+        { "type": "paragraph", "content": "Legacy block. Prefer the Progress block." },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "progress_label", "label": "Progress label", "default": "Week 4" },
+        { "type": "range", "id": "progress_percent", "min": 0, "max": 100, "step": 5, "unit": "%", "label": "Progress percent", "default": 75 },
+        { "type": "text", "id": "title", "label": "Title", "default": "Visible improvement" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Describe the result at this stage.</p>" }
+      ]
     }
   ],
   "presets": [
@@ -823,7 +843,7 @@
             "font_size_mobile": 12,
             "font_size_desktop": 13,
             "font_weight": "500",
-            "letter_spacing": 0.06,
+            "letter_spacing": 6,
             "text_transform": "uppercase",
             "color": "#6b7280"
           }
@@ -836,7 +856,7 @@
             "font_size_mobile": 26,
             "font_size_desktop": 34,
             "font_weight": "600",
-            "line_height": 1.2,
+            "line_height": 12,
             "color": "#111111"
           }
         },
@@ -878,7 +898,7 @@
             "font_size_mobile": 11,
             "font_size_desktop": 12,
             "color": "#9ca3af",
-            "line_height": 1.5
+            "line_height": 15
           }
         }
       ]
