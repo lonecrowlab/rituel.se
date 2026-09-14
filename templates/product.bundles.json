@@ -896,7 +896,7 @@
         "thumbnail_border_width": 0,
         "thumbnail_border_color": "rgba(0,0,0,0)",
         "thumbnail_active_border_width": 1,
-        "thumbnail_active_border_color": "#eb8fa2",
+        "thumbnail_active_border_color": "rgba(0,0,0,0)",
         "mobile_media_corner_radius": 8,
         "mobile_spacing_pixels": 6,
         "mobile_arrows_position": "sides",
