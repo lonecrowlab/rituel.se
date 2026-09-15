@@ -355,11 +355,6 @@
         "disabled": false,
         "settings": {}
       },
-      "consentmo-gdpr-4fbe573f-a377-4fea-9801-3ee0858cae41": {
-        "type": "shopify://apps/consentmo-gdpr/blocks/gdpr_cookie_consent/4fbe573f-a377-4fea-9801-3ee0858cae41",
-        "disabled": false,
-        "settings": {}
-      },
       "10840395464443086010": {
         "type": "shopify://apps/alia/blocks/customer-app-frame/51f1d398-3e41-44da-b81e-defd5804b292",
         "disabled": false,
@@ -403,6 +398,11 @@
       "consentmo-ada-4fbe573f-a377-4fea-9801-3ee0858cae41": {
         "type": "shopify://apps/consentmo-gdpr/blocks/ada_compliance/4fbe573f-a377-4fea-9801-3ee0858cae41",
         "disabled": true,
+        "settings": {}
+      },
+      "consentmo-gdpr-4fbe573f-a377-4fea-9801-3ee0858cae41": {
+        "type": "shopify://apps/consentmo-gdpr/blocks/gdpr_cookie_consent/4fbe573f-a377-4fea-9801-3ee0858cae41",
+        "disabled": false,
         "settings": {}
       }
     }
