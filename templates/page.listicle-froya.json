@@ -11,16 +11,24 @@
   "sections": {
     "font_override_froya": {
       "type": "font-override",
+      "blocks": {
+        "font_xNJaGX": {
+          "type": "font",
+          "settings": {
+            "font_name": "subtitle",
+            "font": "geist_mono_n4"
+          }
+        }
+      },
+      "block_order": [
+        "font_xNJaGX"
+      ],
       "name": "Page Font Override",
       "settings": {
-        "custom_font": "libre_baskerville_n4"
-      }
-    },
-    "font_override_84D7yN": {
-      "type": "font-override",
-      "name": "Page Font Override",
-      "settings": {
-        "custom_font": "sans_serif_n4"
+        "custom_font": "libre_baskerville_n4",
+        "heading_font_name": "page-heading",
+        "body_font": "sans_serif_n4",
+        "body_font_name": "page-body"
       }
     },
     "custom_liquid_hide_header": {
@@ -881,7 +889,7 @@
         "name_color": "#111827",
         "feature_logo_size": 16,
         "feature_font_size_mobile": 14,
-        "feature_color": "#1D2736",
+        "feature_color": "#1d2736",
         "label_font_size_mobile": 12,
         "label_color": "#9ca3af",
         "product_bar_bg_color": "#f9fafb",
@@ -1761,7 +1769,6 @@
   },
   "order": [
     "font_override_froya",
-    "font_override_84D7yN",
     "custom_liquid_hide_header",
     "custom_hero_CVjkwi",
     "listicle_froya_icons_1",
