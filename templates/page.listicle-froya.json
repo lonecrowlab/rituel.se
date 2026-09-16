@@ -559,7 +559,9 @@
             "product_label": "",
             "feature_1_name": "",
             "feature_2_name": "",
-            "feature_3_name": ""
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
           }
         },
         "review_AwTYaH": {
@@ -578,7 +580,9 @@
             "product_label": "",
             "feature_1_name": "",
             "feature_2_name": "",
-            "feature_3_name": ""
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
           }
         },
         "review_H9JGik": {
@@ -597,7 +601,9 @@
             "product_label": "",
             "feature_1_name": "",
             "feature_2_name": "",
-            "feature_3_name": ""
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
           }
         },
         "review_1": {
@@ -617,7 +623,9 @@
             "feature_1_logo": "shopify://shop_images/reduce_line.svg",
             "feature_2_name": "EVEN SKINTONE",
             "feature_2_logo": "shopify://shop_images/even_skintone.svg",
-            "feature_3_name": ""
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
           }
         },
         "review_GCGMmr": {
@@ -637,7 +645,9 @@
             "feature_1_logo": "shopify://shop_images/even_skintone.svg",
             "feature_2_name": "Instant Glow",
             "feature_2_logo": "shopify://shop_images/instant_glow.svg",
-            "feature_3_name": ""
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
           }
         },
         "review_fM7XER": {
@@ -657,7 +667,9 @@
             "feature_1_logo": "shopify://shop_images/reduce_line.svg",
             "feature_2_name": "SMOOTHER SKIN",
             "feature_2_logo": "shopify://shop_images/smoother_skin.svg",
-            "feature_3_name": ""
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
           }
         },
         "review_Nr8mdx": {
@@ -677,7 +689,9 @@
             "feature_1_logo": "shopify://shop_images/reduce_line.svg",
             "feature_2_name": "Natural Glow",
             "feature_2_logo": "shopify://shop_images/smoother_skin.svg",
-            "feature_3_name": ""
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
           }
         },
         "review_V6tQpC": {
@@ -697,7 +711,9 @@
             "feature_1_logo": "shopify://shop_images/even_skintone.svg",
             "feature_2_name": "Clearer Skin",
             "feature_2_logo": "shopify://shop_images/clearer_skin.svg",
-            "feature_3_name": ""
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
           }
         },
         "review_9ERzVT": {
@@ -717,7 +733,9 @@
             "feature_1_logo": "shopify://shop_images/smoother_skin.svg",
             "feature_2_name": "Support Collagen",
             "feature_2_logo": "shopify://shop_images/support_collagen.svg",
-            "feature_3_name": ""
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
           }
         },
         "review_wEp7Ua": {
@@ -737,7 +755,9 @@
             "feature_1_logo": "shopify://shop_images/smoother_skin.svg",
             "feature_2_name": "Even Skintone",
             "feature_2_logo": "shopify://shop_images/even_skintone.svg",
-            "feature_3_name": ""
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
           }
         },
         "review_VMYRwG": {
@@ -757,7 +777,9 @@
             "feature_1_logo": "shopify://shop_images/reduce_eyebags.svg",
             "feature_2_name": "Natural Foundation",
             "feature_2_logo": "shopify://shop_images/even_skintone.svg",
-            "feature_3_name": ""
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
           }
         },
         "review_4d4Ce7": {
@@ -777,7 +799,9 @@
             "feature_1_logo": "shopify://shop_images/instant_glow.svg",
             "feature_2_name": "Tighten Skin",
             "feature_2_logo": "shopify://shop_images/reduce_line.svg",
-            "feature_3_name": ""
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
           }
         },
         "review_rKKQ9b": {
@@ -797,7 +821,9 @@
             "feature_1_logo": "shopify://shop_images/reduce_eyebags.svg",
             "feature_2_name": "Reduce Wrinkles",
             "feature_2_logo": "shopify://shop_images/reduce_line.svg",
-            "feature_3_name": ""
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
           }
         }
       },
@@ -851,6 +877,22 @@
         "feature_color": "#6b7280",
         "label_font_size_mobile": 12,
         "label_color": "#9ca3af",
+        "product_bar_bg_color": "#f9fafb",
+        "product_bar_border_width": 1,
+        "product_bar_border_color": "#e5e7eb",
+        "product_bar_border_radius": 6,
+        "product_thumb_size": 48,
+        "product_title_font_size": 12,
+        "product_title_color": "#111827",
+        "product_price_font_size": 12,
+        "product_price_color": "#6b7280",
+        "button_bg_color": "#c45c26",
+        "button_text_color": "#ffffff",
+        "button_font_size": 11,
+        "button_font_weight": "700",
+        "button_padding_vertical": 8,
+        "button_padding_horizontal": 12,
+        "button_border_radius": 4,
         "bg_color": "#faf8f6",
         "gradient_enabled": false,
         "gradient_background": "linear-gradient(180deg, rgba(250, 248, 246, 1), rgba(255, 255, 255, 1) 100%)",
@@ -869,36 +911,60 @@
           "type": "step",
           "settings": {
             "step_number": "",
-            "title": "Step 1",
-            "text": "<p>Describe this step.</p>"
+            "image": "shopify://shop_images/Erases_Lines_Wrinkles.webp",
+            "title": "Erases Lines & Wrinkles",
+            "text": "<p>Arnica, Pomegranate & Rosehip, clinically proven 92% effective at reducing wrinkle depth.</p>"
           }
         },
         "step_2": {
           "type": "step",
           "settings": {
             "step_number": "",
-            "title": "Step 2",
-            "text": "<p>Describe this step.</p>"
+            "image": "shopify://shop_images/Rebuilds_Collagen_Elastin.webp",
+            "title": "Rebuilds Collagen & Elastin",
+            "text": "<p>Natural Vitamin E from Sunflowers removes free radicals that slow collagen production, making skin visibly firmer.<br/><br/></p>"
           }
         },
         "step_3": {
           "type": "step",
           "settings": {
             "step_number": "",
-            "title": "Step 3",
-            "text": "<p>Describe this step.</p>"
+            "image": "shopify://shop_images/Restores_The_Skin_Barrier_Locks_In_Moisture.webp",
+            "title": "Restores The Skin Barrier & Locks In Moisture",
+            "text": "<p>Beeswax & Thistle heal and seal the skin barrier. 92% of people had more moisturized skin after just 2 weeks.</p>"
+          }
+        },
+        "step_xpJd8j": {
+          "type": "step",
+          "settings": {
+            "step_number": "",
+            "image": "shopify://shop_images/Fades_Dark_Circles_Puffiness.webp",
+            "title": "Fades Dark Circles & Puffiness",
+            "text": "<p>Arctic Arnica & Squalane increase subcutaneous fat by 19% in 4 weeks, adding fullness to reduce hollowing under the eyes.</p>"
+          }
+        },
+        "step_8TybBi": {
+          "type": "step",
+          "settings": {
+            "step_number": "5",
+            "image": "shopify://shop_images/Activates_Natural_Glow.webp",
+            "title": "Activates Natural Glow",
+            "text": "<p>Sea Buckthorn delivers 17x more Vitamin C than oranges, shown to activate stem cells and rejuvenate dull skin.</p>"
           }
         }
       },
       "block_order": [
         "step_1",
         "step_2",
-        "step_3"
+        "step_3",
+        "step_xpJd8j",
+        "step_8TybBi"
       ],
       "settings": {
-        "heading": "How the system works",
-        "subheading": "",
+        "heading": "How The Complete System For Mature Skin Works",
+        "subheading": "5 clinically-backed mechanisms that reverse visible aging, no chemicals, just Arctic science.",
         "text_align": "center",
+        "image": "shopify://shop_images/Frame_104.webp",
         "image_border_radius": 8,
         "column_gap": 48,
         "sticky_top": 96,
@@ -918,7 +984,7 @@
         "number_active_text_color": "#ffffff",
         "number_font_size_mobile": 14,
         "number_font_size_desktop": 15,
-        "icon_size": 36,
+        "icon_size": 38,
         "icon_bg_color": "#d7c6cc",
         "heading_font_size_mobile": 28,
         "heading_font_size_desktop": 40,
