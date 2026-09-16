@@ -16,7 +16,7 @@
           "type": "font",
           "settings": {
             "font_name": "quote-font",
-            "font": "prompt_n4"
+            "font": "epilogue_n4"
           }
         },
         "font_xNJaGX": {
@@ -229,7 +229,7 @@
         "use_theme_colors": true,
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
-        "hero_image": "shopify://shop_images/froya_hero.webp",
+        "hero_image": "shopify://shop_images/hero-rtk.jpg",
         "image_position": "left",
         "fit_image_to_height": true,
         "overlay_content_desktop": false,
@@ -1008,6 +1008,10 @@
         "heading_font_size_desktop": 40,
         "heading_font_weight": "600",
         "heading_color": "#1f2937",
+        "description": "5 clinically-backed mechanisms that reverse visible aging, no chemicals, just Arctic science.",
+        "description_font_size_mobile": 15,
+        "description_font_size_desktop": 16,
+        "description_color": "#374151",
         "text_align": "center",
         "image": "shopify://shop_images/rituel.jpg",
         "image_border_radius": 8,
@@ -1055,12 +1059,70 @@
     "listicle_froya_result_progress": {
       "type": "ltl-fry-result-progress",
       "blocks": {
+        "text_LKD8Fx": {
+          "type": "text",
+          "settings": {
+            "style": "body",
+            "text": "<p>35 women. 60 days.</p>",
+            "font_size_mobile": 15,
+            "font_size_desktop": 16,
+            "font_weight": "400",
+            "line_height": 14,
+            "letter_spacing": 0,
+            "text_transform": "none",
+            "color": "#111111",
+            "text_align": "left",
+            "max_width": 0,
+            "margin_bottom_mobile": 0,
+            "margin_bottom_desktop": 0,
+            "visibility": "all"
+          }
+        },
+        "text_qNXB9Y": {
+          "type": "text",
+          "settings": {
+            "style": "heading",
+            "text": "<p>Scientists Shocked by Results In</p><p><br/><em>Independent 60 Day</em> Clinical Trial<br/><br/></p>",
+            "font_size_mobile": 15,
+            "font_size_desktop": 16,
+            "font_weight": "400",
+            "line_height": 14,
+            "letter_spacing": 0,
+            "text_transform": "none",
+            "color": "#111111",
+            "text_align": "left",
+            "max_width": 0,
+            "margin_bottom_mobile": 0,
+            "margin_bottom_desktop": 0,
+            "visibility": "all"
+          }
+        },
+        "image_with_text_7LTW9k": {
+          "type": "image_with_text",
+          "settings": {
+            "image_alt": "",
+            "text": "<p>Add supporting copy next to the image.</p>",
+            "image_position": "left",
+            "vertical_align": "center",
+            "image_width_mobile": 48,
+            "image_width_desktop": 56,
+            "image_radius": 100,
+            "gap_mobile": 12,
+            "gap_desktop": 16,
+            "font_size_mobile": 14,
+            "font_size_desktop": 15,
+            "color": "#4b5563",
+            "margin_bottom_mobile": 0,
+            "margin_bottom_desktop": 0,
+            "visibility": "all"
+          }
+        },
         "progress_1": {
           "type": "progress_item",
           "settings": {
-            "progress_label": "Week 2",
-            "progress_percent": 40,
-            "title": "Visible improvement",
+            "progress_label": "Week 291",
+            "progress_percent": 90,
+            "title": "GLOW",
             "text": "<p>Describe the result at this stage.</p>"
           }
         },
@@ -1069,7 +1131,7 @@
           "settings": {
             "progress_label": "Week 4",
             "progress_percent": 75,
-            "title": "Visible improvement",
+            "title": "YOUNGER SKIN",
             "text": "<p>Describe the result at this stage.</p>"
           }
         },
@@ -1077,18 +1139,42 @@
           "type": "progress_item",
           "settings": {
             "progress_label": "Week 8",
-            "progress_percent": 100,
-            "title": "Visible improvement",
+            "progress_percent": 50,
+            "title": "DARK CIRCLES",
             "text": "<p>Describe the result at this stage.</p>"
+          }
+        },
+        "text_G6Gkrr": {
+          "type": "text",
+          "settings": {
+            "style": "body",
+            "text": "<p>Add text</p>",
+            "font_size_mobile": 15,
+            "font_size_desktop": 16,
+            "font_weight": "400",
+            "line_height": 14,
+            "letter_spacing": 0,
+            "text_transform": "none",
+            "color": "#111111",
+            "text_align": "left",
+            "max_width": 0,
+            "margin_bottom_mobile": 0,
+            "margin_bottom_desktop": 0,
+            "visibility": "all"
           }
         }
       },
       "block_order": [
+        "text_LKD8Fx",
+        "text_qNXB9Y",
+        "image_with_text_7LTW9k",
         "progress_1",
         "progress_2",
-        "progress_3"
+        "progress_3",
+        "text_G6Gkrr"
       ],
       "settings": {
+        "image": "shopify://shop_images/progressimag.webp",
         "image_position": "left",
         "image_position_mobile": "top",
         "image_column_width": 50,
@@ -1148,7 +1234,7 @@
         "qb_badge"
       ],
       "settings": {
-        "product": "",
+        "product": "pdrn-collagen-volume-balm",
         "button_label": "Add to cart",
         "text_align": "left",
         "buy_box_bg_color": "#ffffff",
@@ -1260,7 +1346,7 @@
         "button_full_width": false,
         "bg_color": "#ffffff",
         "gradient_enabled": false,
-        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "gradient_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(250, 248, 246, 1) 100%)",
         "text_color": "#000000",
         "container_max_width": 1200,
         "padding_top_mobile": 32,
