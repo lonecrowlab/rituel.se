@@ -12,15 +12,23 @@
     "font_override_froya": {
       "type": "font-override",
       "blocks": {
+        "font_GEjiNr": {
+          "type": "font",
+          "settings": {
+            "font_name": "quote-font",
+            "font": "nanum_pen_script_n4"
+          }
+        },
         "font_xNJaGX": {
           "type": "font",
           "settings": {
-            "font_name": "subtitle",
+            "font_name": "sub-title",
             "font": "geist_mono_n4"
           }
         }
       },
       "block_order": [
+        "font_GEjiNr",
         "font_xNJaGX"
       ],
       "name": "Page Font Override",
@@ -74,6 +82,7 @@
         },
         "badge_VCMMcQ": {
           "type": "badge",
+          "disabled": true,
           "settings": {
             "badge_text_1": "NEW ARRIVAL",
             "badge_bg_1": "",
@@ -510,6 +519,9 @@
         "brand_QnyXAn",
         "brand_DBLpUe"
       ],
+      "custom_css": [
+        ".lfb-heading {font-family: \"sub-title\";}"
+      ],
       "settings": {
         "heading": "\"FRØYA IS HANDS DOWN THE #1 SKINCARE FOR MATURE WOMEN'S SKIN\"",
         "text_align": "center",
@@ -536,8 +548,8 @@
         "name_font_size_mobile": 14,
         "name_font_size_desktop": 15,
         "name_color": "#6b7280",
-        "caption_font_size_mobile": 12,
-        "caption_font_size_desktop": 12,
+        "caption_font_size_mobile": 14,
+        "caption_font_size_desktop": 14,
         "caption_color": "#374151",
         "pagination_active_color": "#111827",
         "pagination_inactive_color": "#d1d5db",
@@ -888,6 +900,13 @@
         "quote_color": "#374151",
         "description_font_size_mobile": 14,
         "description_color": "#4b5563",
+        "show_read_more": true,
+        "read_more_label": "Read more",
+        "read_less_label": "Read less",
+        "description_line_clamp": 3,
+        "read_more_color": "#c45c26",
+        "read_more_font_size": 14,
+        "read_more_font_weight": "400",
         "name_font_size_mobile": 14,
         "name_color": "#111827",
         "feature_logo_size": 16,
@@ -979,10 +998,17 @@
         "step_8TybBi"
       ],
       "settings": {
-        "heading": "How The Complete System For Mature Skin Works",
         "subheading": "5 clinically-backed mechanisms that reverse visible aging, no chemicals, just Arctic science.",
+        "subheading_font_size_mobile": 15,
+        "subheading_font_size_desktop": 16,
+        "subheading_color": "#6b7280",
+        "heading": "How The Complete System For Mature Skin Works",
+        "heading_font_size_mobile": 28,
+        "heading_font_size_desktop": 40,
+        "heading_font_weight": "600",
+        "heading_color": "#1f2937",
         "text_align": "center",
-        "image": "shopify://shop_images/Frame_104.webp",
+        "image": "shopify://shop_images/rituel.jpg",
         "image_border_radius": 8,
         "column_gap": 48,
         "sticky_top": 96,
@@ -1004,13 +1030,6 @@
         "number_font_size_desktop": 15,
         "icon_size": 38,
         "icon_bg_color": "#d7c6cc",
-        "heading_font_size_mobile": 28,
-        "heading_font_size_desktop": 40,
-        "heading_font_weight": "600",
-        "heading_color": "#1f2937",
-        "subheading_font_size_mobile": 15,
-        "subheading_font_size_desktop": 16,
-        "subheading_color": "#6b7280",
         "step_title_size_mobile": 18,
         "step_title_size_desktop": 20,
         "step_title_weight": "600",
