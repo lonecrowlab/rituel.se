@@ -13,7 +13,14 @@
       "type": "font-override",
       "name": "Page Font Override",
       "settings": {
-        "custom_font": "serif"
+        "custom_font": "libre_baskerville_n4"
+      }
+    },
+    "font_override_84D7yN": {
+      "type": "font-override",
+      "name": "Page Font Override",
+      "settings": {
+        "custom_font": "sans_serif_n4"
       }
     },
     "custom_liquid_hide_header": {
@@ -22,7 +29,7 @@
       "settings": {
         "display_id": false,
         "visibility": "always-display",
-        "custom_liquid": "<style>\n:root {\n  --font-heading-family: \"New York\", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol !important;\n}\n.h0, .h1, .h2, .h3, .h4, .h5, h1, h2, h3, h4, h5 {\n  font-family: \"New York\", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol !important;\n}\nsticky-header,\n.shopify-section-group-footer-group {\n  display: none !important;\n}\n</style>",
+        "custom_liquid": "<style>\n:root {\n  --font-heading-family:Libre Baskerville,serif, Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol !important;\n}\n.h0, .h1, .h2, .h3, .h4, .h5, h1, h2, h3, h4, h5 {\n  font-family: Libre Baskerville,serif,\"New York\", Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol !important;\nfont-weight:400!important;\n}\nsticky-header,\n.shopify-section-group-footer-group {\n  display: none !important;\n}\n</style>",
         "color_scheme": "background-1",
         "padding_top": 0,
         "padding_bottom": 0
@@ -42,7 +49,7 @@
         "rating_BBMFhn": {
           "type": "rating",
           "settings": {
-            "rating_text": "<p>583,000 Women Said Goodbye to Wrinkles (4.9/5)</p>",
+            "rating_text": "<p>583,000 814,539+ Women Said Goodbye to Wrinkles (4.9/5)</p>",
             "enable_container_background": false,
             "container_background_color": "#f8f9fa",
             "container_padding_vertical": 12,
@@ -177,13 +184,13 @@
             "font_weight": "500",
             "font_style": "normal",
             "font_family": "inherit",
-            "benefit_1_icon": "check",
+            "benefit_1_icon": "none",
             "benefit_1_custom_svg": "",
             "benefit_1_text": "RESULTS WITHIN 24-48 HOURS OF USE",
-            "benefit_2_icon": "check",
+            "benefit_2_icon": "none",
             "benefit_2_custom_svg": "",
             "benefit_2_text": "YOUNGER SKIN OR YOUR MONEY BACK",
-            "benefit_3_icon": "check",
+            "benefit_3_icon": "none",
             "benefit_3_custom_svg": "",
             "benefit_3_text": "1M+ JARS SOLD WORLDWIDE",
             "margin_top": 0,
@@ -516,7 +523,7 @@
         "logo_opacity": 100,
         "heading_font_size_mobile": 18,
         "heading_font_size_desktop": 17,
-        "heading_font_weight": "600",
+        "heading_font_weight": "500",
         "heading_color": "#111827",
         "name_font_size_mobile": 14,
         "name_font_size_desktop": 15,
@@ -1754,6 +1761,7 @@
   },
   "order": [
     "font_override_froya",
+    "font_override_84D7yN",
     "custom_liquid_hide_header",
     "custom_hero_CVjkwi",
     "listicle_froya_icons_1",
