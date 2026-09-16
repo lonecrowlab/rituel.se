@@ -520,7 +520,8 @@
         "brand_DBLpUe"
       ],
       "custom_css": [
-        ".lfb-heading {font-family: \"sub-title\";}"
+        ".lfb-heading {font-family: \"sub-title\";}",
+        "p.lfb-brand__caption {font-family: quote-font; line-height: 1 !important; font-weight: 600;}"
       ],
       "settings": {
         "heading": "\"FRØYA IS HANDS DOWN THE #1 SKINCARE FOR MATURE WOMEN'S SKIN\"",
