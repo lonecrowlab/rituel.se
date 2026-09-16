@@ -27,8 +27,8 @@
       "settings": {
         "custom_font": "libre_baskerville_n4",
         "heading_font_name": "page-heading",
-        "body_font": "sans_serif_n4",
-        "body_font_name": "page-body"
+        "body_font": "roboto_n4",
+        "body_font_name": ""
       }
     },
     "custom_liquid_hide_header": {
@@ -856,6 +856,9 @@
         "review_qnRXUA",
         "review_AwTYaH",
         "review_H9JGik"
+      ],
+      "custom_css": [
+        ".lfrs-card__quote {font-family: Libre Baskerville, serif; line-height: 1.2;}"
       ],
       "settings": {
         "heading": "No One Has Before & Afters Like Rituel",
