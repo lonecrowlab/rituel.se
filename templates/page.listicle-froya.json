@@ -543,69 +543,6 @@
     "listicle_froya_review_slider": {
       "type": "ltl-fry-review-slider",
       "blocks": {
-        "review_qnRXUA": {
-          "type": "review",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/Barbara V.mp4",
-            "placeholder": "shopify://shop_images/Barbara.webp",
-            "video_aspect_ratio": "3 / 4",
-            "show_stars": true,
-            "star_rating": 5,
-            "name": "Barbara V.",
-            "date": "Reviewed 09/27/2024",
-            "quote": "",
-            "description": "",
-            "product_label": "",
-            "feature_1_name": "",
-            "feature_2_name": "",
-            "feature_3_name": "",
-            "product": "",
-            "button_label": "SHOP NOW"
-          }
-        },
-        "review_AwTYaH": {
-          "type": "review",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/Christy C..mp4",
-            "placeholder": "shopify://shop_images/christy.webp",
-            "video_aspect_ratio": "9 / 16",
-            "show_stars": true,
-            "star_rating": 5,
-            "name": "Christy C.",
-            "date": "Posted on TikTok 01/03/2025",
-            "quote": "",
-            "description": "",
-            "product_label": "",
-            "feature_1_name": "",
-            "feature_2_name": "",
-            "feature_3_name": "",
-            "product": "",
-            "button_label": "SHOP NOW"
-          }
-        },
-        "review_H9JGik": {
-          "type": "review",
-          "settings": {
-            "media_type": "video",
-            "video": "shopify://files/videos/April B..mp4",
-            "placeholder": "shopify://shop_images/April-1.webp",
-            "video_aspect_ratio": "9 / 16",
-            "show_stars": true,
-            "star_rating": 5,
-            "name": "April B.",
-            "date": "Posted on TikTok 10/10/2024",
-            "quote": "",
-            "description": "",
-            "product_label": "",
-            "feature_1_name": "",
-            "feature_2_name": "",
-            "feature_3_name": "",
-            "product": "",
-            "button_label": "SHOP NOW"
-          }
-        },
         "review_1": {
           "type": "review",
           "settings": {
@@ -825,12 +762,72 @@
             "product": "",
             "button_label": "SHOP NOW"
           }
+        },
+        "review_qnRXUA": {
+          "type": "review",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/Barbara V.mp4",
+            "placeholder": "shopify://shop_images/Barbara.webp",
+            "video_aspect_ratio": "3 / 4",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Barbara V.",
+            "date": "Reviewed 09/27/2024",
+            "quote": "",
+            "description": "",
+            "product_label": "",
+            "feature_1_name": "",
+            "feature_2_name": "",
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
+          }
+        },
+        "review_AwTYaH": {
+          "type": "review",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/Christy C..mp4",
+            "placeholder": "shopify://shop_images/christy.webp",
+            "video_aspect_ratio": "9 / 16",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Christy C.",
+            "date": "Posted on TikTok 01/03/2025",
+            "quote": "",
+            "description": "",
+            "product_label": "",
+            "feature_1_name": "",
+            "feature_2_name": "",
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
+          }
+        },
+        "review_H9JGik": {
+          "type": "review",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/April B..mp4",
+            "placeholder": "shopify://shop_images/April-1.webp",
+            "video_aspect_ratio": "9 / 16",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "April B.",
+            "date": "Posted on TikTok 10/10/2024",
+            "quote": "",
+            "description": "",
+            "product_label": "",
+            "feature_1_name": "",
+            "feature_2_name": "",
+            "feature_3_name": "",
+            "product": "",
+            "button_label": "SHOP NOW"
+          }
         }
       },
       "block_order": [
-        "review_qnRXUA",
-        "review_AwTYaH",
-        "review_H9JGik",
         "review_1",
         "review_GCGMmr",
         "review_fM7XER",
@@ -840,12 +837,15 @@
         "review_wEp7Ua",
         "review_VMYRwG",
         "review_4d4Ce7",
-        "review_rKKQ9b"
+        "review_rKKQ9b",
+        "review_qnRXUA",
+        "review_AwTYaH",
+        "review_H9JGik"
       ],
       "settings": {
         "heading": "No One Has Before & Afters Like Rituel",
         "text_align": "center",
-        "section_width": "page",
+        "section_width": "full",
         "slider_type": "slide",
         "autoplay": false,
         "autoplay_speed": 5,
@@ -873,8 +873,8 @@
         "name_font_size_mobile": 14,
         "name_color": "#111827",
         "feature_logo_size": 16,
-        "feature_font_size_mobile": 11,
-        "feature_color": "#6b7280",
+        "feature_font_size_mobile": 14,
+        "feature_color": "#1D2736",
         "label_font_size_mobile": 12,
         "label_color": "#9ca3af",
         "product_bar_bg_color": "#f9fafb",
