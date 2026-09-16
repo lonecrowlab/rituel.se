@@ -36,7 +36,7 @@
         "custom_font": "libre_baskerville_n4",
         "heading_font_name": "page-heading",
         "body_font": "dm_sans_n5",
-        "body_font_name": ""
+        "body_font_name": "body-font"
       }
     },
     "custom_liquid_hide_header": {
@@ -1239,8 +1239,9 @@
     "custom_liquid_Hz9kLg": {
       "type": "custom-liquid",
       "custom_css": [
-        "h2 {display: flex; justify-content: center; align-items: center;}",
-        "p {background: #e5f3fa; display: inline-block; padding:10px 30px;}"
+        "h2 {display: flex; justify-content: center; align-items: center; margin: 0px;}",
+        "p {background: #e5f3fa; display: inline-block; padding: 15px 30px; font-family: body-font, sans-serif; border-radius: 5px; margin: 0px;}",
+        ".s-featured-product__badge-underline{text-decoration:underline;}"
       ],
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
@@ -1248,8 +1249,8 @@
         "visibility": "always-display",
         "custom_liquid": "<h2><p class=\"s-featured-product__badge-text\"><span aria-hidden=\"true\">✨ </span>Our Products are proven to deliver <span class=\"s-featured-product__badge-underline\">fast results</span></p></h2>",
         "color_scheme": "background-1",
-        "padding_top": 4,
-        "padding_bottom": 4
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "listicle_froya_quick_buy": {
