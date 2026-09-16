@@ -81,6 +81,11 @@
             {% when 'progress', 'progress_item' %}
               {%- liquid
                 assign progress_percent = block.settings.percent | default: block.settings.progress_percent | default: 0
+                if progress_percent < 0
+                  assign progress_percent = 0
+                elsif progress_percent > 100
+                  assign progress_percent = 100
+                endif
                 assign progress_prefix = block.settings.percent_prefix | default: '+'
                 assign show_percent = true
                 if block.type == 'progress' and block.settings.show_percent == false
@@ -91,13 +96,11 @@
                 class="lfrp-progress lfrp-block-{{ block.id }} {{ device_class }}"
                 {{ block.shopify_attributes }}
               >
-                <div class="lfrp-progress__row">
+                <div class="lfrp-progress__bar" role="img" aria-label="{{ progress_percent }} percent">
+                  <span class="lfrp-progress__fill" style="width: {{ progress_percent }}%;"></span>
                   {% if show_percent %}
                     <span class="lfrp-progress__percent">{{ progress_prefix }}{{ progress_percent }}%</span>
                   {% endif %}
-                  <div class="lfrp-progress__bar" role="img" aria-label="{{ progress_percent }} percent">
-                    <span class="lfrp-progress__fill" style="width: {{ progress_percent }}%;"></span>
-                  </div>
                 </div>
                 {% if block.settings.title != blank %}
                   <p class="lfrp-progress__title">{{ block.settings.title }}</p>
@@ -116,6 +119,27 @@
 {% render 'ltl-fry-section-base', section: section %}
 
 <style>
+  {% for block in section.blocks %}
+    {% if block.type == 'text' %}
+      {% if block.settings.font_regular != blank %}
+        {{ block.settings.font_regular | font_face: font_display: 'swap' }}
+      {% endif %}
+      {% if block.settings.font_bold != blank %}
+        {{ block.settings.font_bold | font_face: font_display: 'swap' }}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% if section.settings.progress_label_font != blank %}
+    {{ section.settings.progress_label_font | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.progress_title_font != blank %}
+    {{ section.settings.progress_title_font | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.progress_text_font != blank %}
+    {{ section.settings.progress_text_font | font_face: font_display: 'swap' }}
+  {% endif %}
+
   .section-{{ section.id }} .lfrp-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -226,20 +250,9 @@
     flex-direction: column;
   }
 
-  .section-{{ section.id }} .lfrp-progress__row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .section-{{ section.id }} .lfrp-progress__percent {
-    flex-shrink: 0;
-    line-height: 1;
-    min-width: 4.5ch;
-  }
-
   .section-{{ section.id }} .lfrp-progress__bar {
-    flex: 1;
+    position: relative;
+    width: 100%;
     min-width: 0;
     overflow: hidden;
     background: {{ section.settings.bar_bg_color }};
@@ -251,17 +264,48 @@
     display: block;
     height: 100%;
     border-radius: inherit;
-    background: {{ section.settings.bar_fill_color }};
+    background: {{ section.settings.bar_fill_gradient }};
+  }
+
+  .section-{{ section.id }} .lfrp-progress__percent {
+    position: absolute;
+    left: {{ section.settings.progress_label_inset }}px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    line-height: 1;
+    white-space: nowrap;
+    pointer-events: none;
+    font-size: {{ section.settings.progress_label_size_mobile }}px;
+    font-weight: {{ section.settings.progress_label_weight }};
+    color: {{ section.settings.progress_label_color }};
+    {% if section.settings.progress_label_font != blank %}
+      font-family: {{ section.settings.progress_label_font.family }}, {{ section.settings.progress_label_font.fallback_families }};
+    {% endif %}
   }
 
   .section-{{ section.id }} .lfrp-progress__title {
-    margin: 10px 0 0;
+    margin: {{ section.settings.progress_title_spacing }}px 0 0;
     line-height: 1.3;
+    font-size: {{ section.settings.progress_title_size_mobile }}px;
+    font-weight: {{ section.settings.progress_title_weight }};
+    color: {{ section.settings.progress_title_color }};
+    letter-spacing: {{ section.settings.progress_title_letter_spacing | times: 0.01 }}em;
+    text-transform: {{ section.settings.progress_title_transform }};
+    {% if section.settings.progress_title_font != blank %}
+      font-family: {{ section.settings.progress_title_font.family }}, {{ section.settings.progress_title_font.fallback_families }};
+    {% endif %}
   }
 
   .section-{{ section.id }} .lfrp-progress__text {
-    margin-top: 4px;
+    margin-top: {{ section.settings.progress_text_spacing }}px;
     line-height: 1.5;
+    font-size: {{ section.settings.progress_text_size_mobile }}px;
+    font-weight: {{ section.settings.progress_text_weight }};
+    color: {{ section.settings.progress_text_color }};
+    {% if section.settings.progress_text_font != blank %}
+      font-family: {{ section.settings.progress_text_font.family }}, {{ section.settings.progress_text_font.fallback_families }};
+    {% endif %}
   }
 
   .section-{{ section.id }} .lfrp-progress__text p {
@@ -309,6 +353,18 @@
         {% if block.settings.max_width > 0 %}
           max-width: {{ block.settings.max_width }}px;
         {% endif %}
+        {% if block.settings.font_regular != blank %}
+          font-family: {{ block.settings.font_regular.family }}, {{ block.settings.font_regular.fallback_families }};
+        {% endif %}
+        font-weight: {{ block.settings.font_weight_regular | default: block.settings.font_weight }};
+      }
+
+      .section-{{ section.id }} .lfrp-block-{{ block.id }} strong,
+      .section-{{ section.id }} .lfrp-block-{{ block.id }} b {
+        {% if block.settings.font_bold != blank %}
+          font-family: {{ block.settings.font_bold.family }}, {{ block.settings.font_bold.fallback_families }};
+        {% endif %}
+        font-weight: {{ block.settings.font_weight_bold | default: '700' }};
       }
     {% endif %}
 
@@ -327,37 +383,6 @@
       .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-iwt__text {
         font-size: {{ block.settings.font_size_mobile }}px;
         color: {{ block.settings.color }};
-      }
-    {% endif %}
-
-    {% if block.type == 'progress' or block.type == 'progress_item' %}
-      .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-progress__percent {
-        font-size: {{ block.settings.percent_size_mobile }}px;
-        font-weight: {{ block.settings.percent_weight }};
-        color: {{ block.settings.percent_color }};
-      }
-
-      .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-progress__title {
-        font-size: {{ block.settings.title_size_mobile }}px;
-        font-weight: {{ block.settings.title_weight }};
-        color: {{ block.settings.title_color }};
-        letter-spacing: {{ block.settings.title_letter_spacing | times: 0.01 }}em;
-        text-transform: {{ block.settings.title_transform }};
-      }
-
-      .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-progress__text {
-        font-size: {{ block.settings.text_size_mobile }}px;
-        color: {{ block.settings.text_color }};
-      }
-
-      .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-progress__bar {
-        height: {{ block.settings.bar_height }}px;
-        background: {{ block.settings.bar_bg_color }};
-        border-radius: {{ block.settings.bar_radius }}px;
-      }
-
-      .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-progress__fill {
-        background: {{ block.settings.bar_fill_color }};
       }
     {% endif %}
   {% endfor %}
@@ -406,6 +431,18 @@
     .section-{{ section.id }} .lfrp-content {
       gap: {{ section.settings.block_gap_desktop }}px;
       padding: {{ section.settings.content_padding_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfrp-progress__percent {
+      font-size: {{ section.settings.progress_label_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfrp-progress__title {
+      font-size: {{ section.settings.progress_title_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfrp-progress__text {
+      font-size: {{ section.settings.progress_text_size_desktop }}px;
     }
 
     .section-{{ section.id }}.lfrp-layout-split .lfrp-media,
@@ -466,20 +503,6 @@
 
         .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-iwt__text {
           font-size: {{ block.settings.font_size_desktop }}px;
-        }
-      {% endif %}
-
-      {% if block.type == 'progress' or block.type == 'progress_item' %}
-        .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-progress__percent {
-          font-size: {{ block.settings.percent_size_desktop }}px;
-        }
-
-        .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-progress__title {
-          font-size: {{ block.settings.title_size_desktop }}px;
-        }
-
-        .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-progress__text {
-          font-size: {{ block.settings.text_size_desktop }}px;
         }
       {% endif %}
     {% endfor %}
@@ -581,10 +604,75 @@
     { "type": "range", "id": "split_min_height", "min": 320, "max": 900, "step": 10, "unit": "px", "label": "Split min height (desktop)", "default": 640 },
     { "type": "range", "id": "content_padding_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Content padding (mobile)", "default": 24 },
     { "type": "range", "id": "content_padding_desktop", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Content padding (desktop)", "default": 40 },
-    { "type": "header", "content": "Progress defaults" },
-    { "type": "range", "id": "bar_height", "min": 4, "max": 20, "step": 1, "unit": "px", "label": "Bar height", "default": 8 },
-    { "type": "color", "id": "bar_bg_color", "label": "Bar background", "default": "#f1efed" },
-    { "type": "color", "id": "bar_fill_color", "label": "Bar fill", "default": "#d9d4d0" },
+    { "type": "header", "content": "Progress bar" },
+    { "type": "range", "id": "bar_height", "min": 20, "max": 64, "step": 1, "unit": "px", "label": "Bar height", "default": 44 },
+    { "type": "color", "id": "bar_bg_color", "label": "Bar background", "default": "#f3eee9" },
+    { "type": "color_background", "id": "bar_fill_gradient", "label": "Bar fill gradient", "default": "linear-gradient(90deg, rgba(196, 154, 154, 1), rgba(232, 213, 213, 0.35) 100%)" },
+    { "type": "header", "content": "Progress label" },
+    { "type": "font_picker", "id": "progress_label_font", "label": "Font", "default": "poppins_n7" },
+    {
+      "type": "select",
+      "id": "progress_label_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    { "type": "range", "id": "progress_label_size_mobile", "min": 12, "max": 36, "step": 1, "unit": "px", "label": "Size (mobile)", "default": 18 },
+    { "type": "range", "id": "progress_label_size_desktop", "min": 12, "max": 40, "step": 1, "unit": "px", "label": "Size (desktop)", "default": 20 },
+    { "type": "color", "id": "progress_label_color", "label": "Color", "default": "#ffffff" },
+    { "type": "range", "id": "progress_label_inset", "min": 8, "max": 32, "step": 1, "unit": "px", "label": "Label inset", "default": 16 },
+    { "type": "header", "content": "Progress title" },
+    { "type": "font_picker", "id": "progress_title_font", "label": "Font", "default": "poppins_n7" },
+    {
+      "type": "select",
+      "id": "progress_title_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    { "type": "range", "id": "progress_title_size_mobile", "min": 10, "max": 24, "step": 1, "unit": "px", "label": "Size (mobile)", "default": 13 },
+    { "type": "range", "id": "progress_title_size_desktop", "min": 10, "max": 28, "step": 1, "unit": "px", "label": "Size (desktop)", "default": 14 },
+    { "type": "color", "id": "progress_title_color", "label": "Color", "default": "#c49a9a" },
+    { "type": "range", "id": "progress_title_letter_spacing", "min": 0, "max": 20, "step": 1, "label": "Letter spacing", "default": 4, "info": "4 = 0.04em" },
+    {
+      "type": "select",
+      "id": "progress_title_transform",
+      "label": "Text transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" }
+      ],
+      "default": "uppercase"
+    },
+    { "type": "range", "id": "progress_title_spacing", "min": 0, "max": 24, "step": 1, "unit": "px", "label": "Spacing above title", "default": 10 },
+    { "type": "header", "content": "Progress text" },
+    { "type": "font_picker", "id": "progress_text_font", "label": "Font", "default": "poppins_n4" },
+    {
+      "type": "select",
+      "id": "progress_text_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    { "type": "range", "id": "progress_text_size_mobile", "min": 11, "max": 20, "step": 1, "unit": "px", "label": "Size (mobile)", "default": 13 },
+    { "type": "range", "id": "progress_text_size_desktop", "min": 11, "max": 22, "step": 1, "unit": "px", "label": "Size (desktop)", "default": 14 },
+    { "type": "color", "id": "progress_text_color", "label": "Color", "default": "#111111" },
+    { "type": "range", "id": "progress_text_spacing", "min": 0, "max": 16, "step": 1, "unit": "px", "label": "Spacing above text", "default": 4 },
     { "type": "header", "content": "Section style" },
     { "type": "color", "id": "bg_color", "label": "Background", "default": "#ffffff" },
     { "type": "checkbox", "id": "gradient_enabled", "label": "Use gradient background", "default": false },
@@ -614,11 +702,10 @@
         },
         { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Add text</p>" },
         { "type": "header", "content": "Typography" },
-        { "type": "range", "id": "font_size_mobile", "min": 10, "max": 48, "step": 1, "unit": "px", "label": "Font size (mobile)", "default": 15 },
-        { "type": "range", "id": "font_size_desktop", "min": 10, "max": 64, "step": 1, "unit": "px", "label": "Font size (desktop)", "default": 16 },
+        { "type": "font_picker", "id": "font_regular", "label": "Regular", "default": "poppins_n4" },
         {
           "type": "select",
-          "id": "font_weight",
+          "id": "font_weight_regular",
           "label": "Font weight",
           "options": [
             { "value": "400", "label": "Regular" },
@@ -628,6 +715,21 @@
           ],
           "default": "400"
         },
+        { "type": "font_picker", "id": "font_bold", "label": "Bold", "default": "poppins_n7" },
+        {
+          "type": "select",
+          "id": "font_weight_bold",
+          "label": "Font weight",
+          "options": [
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semibold" },
+            { "value": "700", "label": "Bold" },
+            { "value": "800", "label": "Extra bold" }
+          ],
+          "default": "700"
+        },
+        { "type": "range", "id": "font_size_mobile", "min": 10, "max": 48, "step": 1, "unit": "px", "label": "Font size (mobile)", "default": 15 },
+        { "type": "range", "id": "font_size_desktop", "min": 10, "max": 64, "step": 1, "unit": "px", "label": "Font size (desktop)", "default": 16 },
         { "type": "range", "id": "line_height", "min": 10, "max": 20, "step": 1, "label": "Line height", "default": 14, "info": "10 = 1.0, 14 = 1.4" },
         { "type": "range", "id": "letter_spacing", "min": 0, "max": 20, "step": 1, "label": "Letter spacing", "default": 0, "info": "0–20. 6 = 0.06em" },
         {
@@ -725,59 +827,12 @@
       "type": "progress",
       "name": "Progress",
       "settings": [
-        { "type": "range", "id": "percent", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "Percent", "default": 91 },
+        { "type": "number", "id": "percent", "label": "Percent", "default": 91, "info": "Enter any whole number from 0 to 100." },
         { "type": "text", "id": "percent_prefix", "label": "Percent prefix", "default": "+" },
         { "type": "checkbox", "id": "show_percent", "label": "Show percent", "default": true },
         { "type": "text", "id": "title", "label": "Title", "default": "Glow" },
         { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Participants experienced a more youthful and glowing appearance.</p>" },
-        { "type": "header", "content": "Typography" },
-        { "type": "range", "id": "percent_size_mobile", "min": 14, "max": 36, "step": 1, "unit": "px", "label": "Percent size (mobile)", "default": 22 },
-        { "type": "range", "id": "percent_size_desktop", "min": 14, "max": 40, "step": 1, "unit": "px", "label": "Percent size (desktop)", "default": 24 },
-        {
-          "type": "select",
-          "id": "percent_weight",
-          "label": "Percent weight",
-          "options": [
-            { "value": "500", "label": "Medium" },
-            { "value": "600", "label": "Semibold" },
-            { "value": "700", "label": "Bold" }
-          ],
-          "default": "600"
-        },
-        { "type": "color", "id": "percent_color", "label": "Percent color", "default": "#111111" },
-        { "type": "range", "id": "title_size_mobile", "min": 10, "max": 22, "step": 1, "unit": "px", "label": "Title size (mobile)", "default": 13 },
-        { "type": "range", "id": "title_size_desktop", "min": 10, "max": 24, "step": 1, "unit": "px", "label": "Title size (desktop)", "default": 14 },
-        {
-          "type": "select",
-          "id": "title_weight",
-          "label": "Title weight",
-          "options": [
-            { "value": "500", "label": "Medium" },
-            { "value": "600", "label": "Semibold" },
-            { "value": "700", "label": "Bold" }
-          ],
-          "default": "600"
-        },
-        { "type": "color", "id": "title_color", "label": "Title color", "default": "#111111" },
-        { "type": "range", "id": "title_letter_spacing", "min": 0, "max": 20, "step": 1, "label": "Title letter spacing", "default": 4, "info": "4 = 0.04em" },
-        {
-          "type": "select",
-          "id": "title_transform",
-          "label": "Title transform",
-          "options": [
-            { "value": "none", "label": "None" },
-            { "value": "uppercase", "label": "Uppercase" }
-          ],
-          "default": "uppercase"
-        },
-        { "type": "range", "id": "text_size_mobile", "min": 11, "max": 18, "step": 1, "unit": "px", "label": "Text size (mobile)", "default": 13 },
-        { "type": "range", "id": "text_size_desktop", "min": 11, "max": 20, "step": 1, "unit": "px", "label": "Text size (desktop)", "default": 14 },
-        { "type": "color", "id": "text_color", "label": "Text color", "default": "#6b7280" },
-        { "type": "header", "content": "Bar" },
-        { "type": "range", "id": "bar_height", "min": 4, "max": 20, "step": 1, "unit": "px", "label": "Bar height", "default": 8 },
-        { "type": "range", "id": "bar_radius", "min": 0, "max": 20, "step": 1, "unit": "px", "label": "Bar radius", "default": 8 },
-        { "type": "color", "id": "bar_bg_color", "label": "Bar background", "default": "#f1efed" },
-        { "type": "color", "id": "bar_fill_color", "label": "Bar fill", "default": "#d9d4d0" },
+        { "type": "header", "content": "Spacing and device" },
         { "type": "range", "id": "margin_bottom_mobile", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Margin bottom (mobile)", "default": 0 },
         { "type": "range", "id": "margin_bottom_desktop", "min": 0, "max": 48, "step": 2, "unit": "px", "label": "Margin bottom (desktop)", "default": 0 },
         {
@@ -800,7 +855,7 @@
         { "type": "paragraph", "content": "Legacy block. Prefer the Progress block." },
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "progress_label", "label": "Progress label", "default": "Week 4" },
-        { "type": "range", "id": "progress_percent", "min": 0, "max": 100, "step": 5, "unit": "%", "label": "Progress percent", "default": 75 },
+        { "type": "number", "id": "progress_percent", "label": "Progress percent", "default": 75, "info": "Enter any whole number from 0 to 100." },
         { "type": "text", "id": "title", "label": "Title", "default": "Visible improvement" },
         { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Describe the result at this stage.</p>" }
       ]
@@ -817,7 +872,7 @@
             "text": "<p>35 WOMEN. 60 DAYS.</p>",
             "font_size_mobile": 12,
             "font_size_desktop": 13,
-            "font_weight": "500",
+            "font_weight_regular": "500",
             "letter_spacing": 6,
             "text_transform": "uppercase",
             "color": "#6b7280"
@@ -830,7 +885,7 @@
             "text": "<p>Scientists Shocked by Results In Independent 60 Day Clinical Trial</p>",
             "font_size_mobile": 26,
             "font_size_desktop": 34,
-            "font_weight": "600",
+            "font_weight_regular": "600",
             "line_height": 12,
             "color": "#111111"
           }
