@@ -1,28 +1,111 @@
 {% liquid
-  assign custom_font = section.settings.custom_font
+  assign heading_font_source = section.settings.heading_font_source | default: 'shopify'
+  assign body_font_source = section.settings.body_font_source | default: 'shopify'
+
+  assign heading_font = section.settings.custom_font
+  assign body_font = section.settings.body_font
+
+  if heading_font_source == 'custom' and section.settings.heading_custom_font_name != blank
+    assign heading_font_family = "'" | append: section.settings.heading_custom_font_name | append: "', sans-serif"
+  elsif heading_font != blank
+    assign heading_font_family = heading_font.family | append: ', ' | append: heading_font.fallback_families
+  endif
+
+  if body_font_source == 'custom' and section.settings.body_custom_font_name != blank
+    assign body_font_family = "'" | append: section.settings.body_custom_font_name | append: "', sans-serif"
+  elsif body_font != blank
+    assign body_font_family = body_font.family | append: ', ' | append: body_font.fallback_families
+  endif
 %}
 
 {% style %}
+  {% if section.settings.heading_font_import != blank %}
+    {{ section.settings.heading_font_import }}
+  {% endif %}
 
-/* Load selected Shopify font */
-{{ custom_font | font_face }}
+  {% if section.settings.body_font_import != blank %}
+    {{ section.settings.body_font_import }}
+  {% endif %}
 
-/* Apply only on this template/page */
-body .shopify-section-group-main h1,
-body .shopify-section-group-main h2,
-body .shopify-section-group-main h3,
-body .shopify-section-group-main h4,
-body .shopify-section-group-main h5,
-body .shopify-section-group-main h6,
-body .shopify-section-group-main .h0,
-body .shopify-section-group-main .h1,
-body .shopify-section-group-main .h2,
-body .shopify-section-group-main .h3,
-body .shopify-section-group-main .h4,
-body .shopify-section-group-main .h5 {
-  font-family: {{ custom_font.family }}, {{ custom_font.fallback_families }} !important;
-}
+  {% if heading_font_source == 'custom' and section.settings.heading_custom_font_url != blank and section.settings.heading_custom_font_name != blank %}
+    @font-face {
+      font-family: '{{ section.settings.heading_custom_font_name }}';
+      src: url('{{ section.settings.heading_custom_font_url }}');
+      font-weight: {{ section.settings.heading_custom_font_weight | default: 700 }};
+      font-style: normal;
+      font-display: swap;
+    }
 
+    {% if section.settings.heading_custom_font_bold_url != blank %}
+      @font-face {
+        font-family: '{{ section.settings.heading_custom_font_name }}';
+        src: url('{{ section.settings.heading_custom_font_bold_url }}');
+        font-weight: {{ section.settings.heading_custom_font_weight | default: 700 | plus: 200 | at_most: 900 }};
+        font-style: normal;
+        font-display: swap;
+      }
+    {% endif %}
+  {% elsif heading_font_source == 'shopify' and heading_font != blank %}
+    {{ heading_font | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  {% if body_font_source == 'custom' and section.settings.body_custom_font_url != blank and section.settings.body_custom_font_name != blank %}
+    @font-face {
+      font-family: '{{ section.settings.body_custom_font_name }}';
+      src: url('{{ section.settings.body_custom_font_url }}');
+      font-weight: {{ section.settings.body_custom_font_weight | default: 400 }};
+      font-style: normal;
+      font-display: swap;
+    }
+
+    {% if section.settings.body_custom_font_bold_url != blank %}
+      @font-face {
+        font-family: '{{ section.settings.body_custom_font_name }}';
+        src: url('{{ section.settings.body_custom_font_bold_url }}');
+        font-weight: {{ section.settings.body_custom_font_weight | default: 400 | plus: 300 | at_most: 900 }};
+        font-style: normal;
+        font-display: swap;
+      }
+    {% endif %}
+  {% elsif body_font_source == 'shopify' and body_font != blank %}
+    {{ body_font | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  {% if heading_font_family != blank or body_font_family != blank %}
+    :root {
+      {% if heading_font_family != blank %}
+        --page-font-heading: {{ heading_font_family }};
+        --font-heading-family: var(--page-font-heading);
+      {% endif %}
+      {% if body_font_family != blank %}
+        --page-font-body: {{ body_font_family }};
+        --font-body-family: var(--page-font-body);
+      {% endif %}
+    }
+  {% endif %}
+
+  {% if body_font_family != blank %}
+    body .shopify-section-group-main {
+      font-family: var(--page-font-body) !important;
+    }
+  {% endif %}
+
+  {% if heading_font_family != blank %}
+    body .shopify-section-group-main h1,
+    body .shopify-section-group-main h2,
+    body .shopify-section-group-main h3,
+    body .shopify-section-group-main h4,
+    body .shopify-section-group-main h5,
+    body .shopify-section-group-main h6,
+    body .shopify-section-group-main .h0,
+    body .shopify-section-group-main .h1,
+    body .shopify-section-group-main .h2,
+    body .shopify-section-group-main .h3,
+    body .shopify-section-group-main .h4,
+    body .shopify-section-group-main .h5 {
+      font-family: var(--page-font-heading) !important;
+    }
+  {% endif %}
 {% endstyle %}
 
 {% schema %}
@@ -30,10 +113,134 @@ body .shopify-section-group-main .h5 {
   "name": "Page Font Override",
   "settings": [
     {
+      "type": "header",
+      "content": "Heading font"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_source",
+      "label": "Heading font source",
+      "options": [
+        {
+          "value": "shopify",
+          "label": "Shopify font library"
+        },
+        {
+          "value": "custom",
+          "label": "Custom font file"
+        }
+      ],
+      "default": "shopify"
+    },
+    {
       "type": "font_picker",
       "id": "custom_font",
-      "label": "Heading Font",
-      "default": "helvetica_n4"
+      "label": "Heading font",
+      "default": "helvetica_n4",
+      "visible_if": "{{ section.settings.heading_font_source == 'shopify' }}"
+    },
+    {
+      "type": "text",
+      "id": "heading_custom_font_name",
+      "label": "Heading font family name",
+      "info": "Use in custom CSS as var(--page-font-heading) or font-family: 'Your Font Name'",
+      "visible_if": "{{ section.settings.heading_font_source == 'custom' }}"
+    },
+    {
+      "type": "url",
+      "id": "heading_custom_font_url",
+      "label": "Heading font file URL",
+      "info": "Direct link to a .woff2 or .woff file",
+      "visible_if": "{{ section.settings.heading_font_source == 'custom' }}"
+    },
+    {
+      "type": "url",
+      "id": "heading_custom_font_bold_url",
+      "label": "Heading bold font file URL (optional)",
+      "visible_if": "{{ section.settings.heading_font_source == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "heading_custom_font_weight",
+      "label": "Heading font weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 700,
+      "visible_if": "{{ section.settings.heading_font_source == 'custom' }}"
+    },
+    {
+      "type": "html",
+      "id": "heading_font_import",
+      "label": "Heading font import CSS (optional)",
+      "info": "Paste @import rules, for example from Google Fonts"
+    },
+    {
+      "type": "header",
+      "content": "Body font"
+    },
+    {
+      "type": "select",
+      "id": "body_font_source",
+      "label": "Body font source",
+      "options": [
+        {
+          "value": "shopify",
+          "label": "Shopify font library"
+        },
+        {
+          "value": "custom",
+          "label": "Custom font file"
+        }
+      ],
+      "default": "shopify"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "helvetica_n4",
+      "visible_if": "{{ section.settings.body_font_source == 'shopify' }}"
+    },
+    {
+      "type": "text",
+      "id": "body_custom_font_name",
+      "label": "Body font family name",
+      "info": "Use in custom CSS as var(--page-font-body) or font-family: 'Your Font Name'",
+      "visible_if": "{{ section.settings.body_font_source == 'custom' }}"
+    },
+    {
+      "type": "url",
+      "id": "body_custom_font_url",
+      "label": "Body font file URL",
+      "info": "Direct link to a .woff2 or .woff file",
+      "visible_if": "{{ section.settings.body_font_source == 'custom' }}"
+    },
+    {
+      "type": "url",
+      "id": "body_custom_font_bold_url",
+      "label": "Body bold font file URL (optional)",
+      "visible_if": "{{ section.settings.body_font_source == 'custom' }}"
+    },
+    {
+      "type": "range",
+      "id": "body_custom_font_weight",
+      "label": "Body font weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400,
+      "visible_if": "{{ section.settings.body_font_source == 'custom' }}"
+    },
+    {
+      "type": "html",
+      "id": "body_font_import",
+      "label": "Body font import CSS (optional)",
+      "info": "Paste @import rules, for example from Google Fonts"
+    },
+    {
+      "type": "paragraph",
+      "content": "Reuse these fonts anywhere on the page with CSS variables: var(--page-font-heading) and var(--page-font-body). Theme variables --font-heading-family and --font-body-family are also updated on this page."
     }
   ],
   "presets": [
