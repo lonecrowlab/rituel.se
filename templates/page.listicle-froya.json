@@ -1236,6 +1236,22 @@
         "padding_bottom_desktop": 48
       }
     },
+    "custom_liquid_Hz9kLg": {
+      "type": "custom-liquid",
+      "custom_css": [
+        "h2 {display: flex; justify-content: center; align-items: center;}",
+        "p {background: #e5f3fa; display: inline-block; padding:10px 30px;}"
+      ],
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "custom_liquid": "<h2><p class=\"s-featured-product__badge-text\"><span aria-hidden=\"true\">✨ </span>Our Products are proven to deliver <span class=\"s-featured-product__badge-underline\">fast results</span></p></h2>",
+        "color_scheme": "background-1",
+        "padding_top": 4,
+        "padding_bottom": 4
+      }
+    },
     "listicle_froya_quick_buy": {
       "type": "ltl-fry-quick-buy",
       "blocks": {
@@ -1915,6 +1931,7 @@
     "listicle_froya_review_slider",
     "listicle_froya_system_steps",
     "listicle_froya_result_progress",
+    "custom_liquid_Hz9kLg",
     "listicle_froya_quick_buy",
     "listicle_froya_hero_mid",
     "listicle_froya_icons_2",
