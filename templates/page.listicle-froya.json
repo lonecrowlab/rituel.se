@@ -496,7 +496,7 @@
         "brand_DBLpUe"
       ],
       "settings": {
-        "heading": "FRØYA IS HANDS DOWN THE #1 SKINCARE FOR MATURE WOMEN'S SKIN",
+        "heading": "\"FRØYA IS HANDS DOWN THE #1 SKINCARE FOR MATURE WOMEN'S SKIN\"",
         "text_align": "center",
         "display_type": "slider",
         "enable_marquee": true,
@@ -514,8 +514,8 @@
         "logo_height_mobile": 28,
         "logo_height_desktop": 36,
         "logo_opacity": 100,
-        "heading_font_size_mobile": 12,
-        "heading_font_size_desktop": 13,
+        "heading_font_size_mobile": 18,
+        "heading_font_size_desktop": 17,
         "heading_font_weight": "600",
         "heading_color": "#111827",
         "name_font_size_mobile": 14,
