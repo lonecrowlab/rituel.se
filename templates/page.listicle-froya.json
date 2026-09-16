@@ -1234,7 +1234,7 @@
         "qb_badge"
       ],
       "settings": {
-        "product": "",
+        "product": "pdrn-collagen-volume-balm",
         "button_label": "Add to cart",
         "text_align": "left",
         "buy_box_bg_color": "#ffffff",
@@ -1346,7 +1346,7 @@
         "button_full_width": false,
         "bg_color": "#ffffff",
         "gradient_enabled": false,
-        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "gradient_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(250, 248, 246, 1) 100%)",
         "text_color": "#000000",
         "container_max_width": 1200,
         "padding_top_mobile": 32,
