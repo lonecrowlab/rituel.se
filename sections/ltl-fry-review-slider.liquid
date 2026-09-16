@@ -157,12 +157,18 @@
                             <div class="lfrs-card__quote rte">{{ block.settings.quote }}</div>
                           {% endif %}
                           {% if block.settings.description != blank %}
-                            <div class="lfrs-card__description" data-lfrs-description>
+                            <div
+                              class="lfrs-card__description"
+                              data-lfrs-description
+                              style="--lfrs-description-lines: {{ section.settings.description_line_clamp | default: 3 }};"
+                            >
                               <div class="lfrs-card__description-text">{{ block.settings.description | newline_to_br }}</div>
-                              <button type="button" class="lfrs-card__read-toggle" hidden data-lfrs-read-more>
-                                <span data-lfrs-label-more>Read more</span>
-                                <span data-lfrs-label-less hidden>Read less</span>
-                              </button>
+                              {% if section.settings.show_read_more %}
+                                <button type="button" class="lfrs-card__read-toggle" hidden data-lfrs-read-more>
+                                  <span data-lfrs-label-more>{{ section.settings.read_more_label | default: 'Read more' }}</span>
+                                  <span data-lfrs-label-less hidden>{{ section.settings.read_less_label | default: 'Read less' }}</span>
+                                </button>
+                              {% endif %}
                             </div>
                           {% endif %}
                           {% if block.settings.product_label != blank %}
@@ -322,6 +328,7 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+    font-family:subtitle,'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
   }
 
   .section-{{ section.id }} .lfrs-card__feature {
@@ -368,22 +375,23 @@
   .section-{{ section.id }} .lfrs-card__description:not(.is-expanded) .lfrs-card__description-text {
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+    -webkit-line-clamp: var(--lfrs-description-lines, 3);
+    line-clamp: var(--lfrs-description-lines, 3);
     overflow: hidden;
   }
 
   .section-{{ section.id }} .lfrs-card__read-toggle {
-    display: inline;
+    display: inline-block;
     margin-top: 4px;
     padding: 0;
     border: 0;
     background: transparent;
-    color: {{ section.settings.description_color }};
-    font-size: {{ section.settings.description_font_size_mobile }}px;
-    font-weight: 600;
+    color: {{ section.settings.read_more_color }};
+    font-size: {{ section.settings.read_more_font_size }}px;
+    font-weight: {{ section.settings.read_more_font_weight }};
     line-height: 1.5;
     text-decoration: underline;
+    text-underline-offset: 2px;
     cursor: pointer;
   }
 
@@ -498,8 +506,7 @@
       font-size: {{ section.settings.quote_font_size_mobile }}px;
     }
 
-    .section-{{ section.id }} .lfrs-card__description-text,
-    .section-{{ section.id }} .lfrs-card__read-toggle {
+    .section-{{ section.id }} .lfrs-card__description-text {
       font-size: {{ section.settings.description_font_size_mobile }}px;
     }
 
@@ -617,6 +624,19 @@
     { "type": "color", "id": "quote_color", "label": "Quote color", "default": "#374151" },
     { "type": "range", "id": "description_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Description size", "default": 14 },
     { "type": "color", "id": "description_color", "label": "Description color", "default": "#4b5563" },
+    { "type": "header", "content": "Read more" },
+    { "type": "checkbox", "id": "show_read_more", "label": "Show read more toggle", "default": true },
+    { "type": "text", "id": "read_more_label", "label": "Read more label", "default": "Read more" },
+    { "type": "text", "id": "read_less_label", "label": "Read less label", "default": "Read less" },
+    { "type": "range", "id": "description_line_clamp", "min": 1, "max": 6, "step": 1, "label": "Description lines before truncate", "default": 3 },
+    { "type": "color", "id": "read_more_color", "label": "Read more color", "default": "#c45c26" },
+    { "type": "range", "id": "read_more_font_size", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Read more size", "default": 14 },
+    { "type": "select", "id": "read_more_font_weight", "label": "Read more weight", "options": [
+      { "value": "400", "label": "Regular" },
+      { "value": "500", "label": "Medium" },
+      { "value": "600", "label": "Semibold" },
+      { "value": "700", "label": "Bold" }
+    ], "default": "400" },
     { "type": "range", "id": "name_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Name size", "default": 14 },
     { "type": "color", "id": "name_color", "label": "Name color", "default": "#111827" },
     { "type": "range", "id": "feature_logo_size", "min": 12, "max": 32, "step": 1, "unit": "px", "label": "Feature logo size", "default": 16 },
