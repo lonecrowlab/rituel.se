@@ -1241,7 +1241,7 @@
       "custom_css": [
         "h2 {display: flex; justify-content: center; align-items: center; margin: 0px;}",
         "p {background: #e5f3fa; display: inline-block; padding: 15px 30px; font-family: body-font, sans-serif; border-radius: 5px; margin: 0px;}",
-        ".s-featured-product__badge-underline{text-decoration:underline;}"
+        ".s-featured-product__badge-underline {text-decoration: underline;}"
       ],
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
@@ -1363,7 +1363,7 @@
         "button_2"
       ],
       "settings": {
-        "image_position": "left",
+        "image_position": "right",
         "vertical_alignment": "center",
         "text_align": "left",
         "column_gap_mobile": 24,
