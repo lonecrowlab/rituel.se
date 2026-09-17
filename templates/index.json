@@ -1823,7 +1823,7 @@
         "button_text_color": "#ffffff",
         "button_hover_text_color": "#ffffff",
         "button_font_size_desktop": 16,
-        "button_font_size_mobile": 14,
+        "button_font_size_mobile": 15,
         "button_font_weight": "600",
         "button_horizontal_padding": 60,
         "button_horizontal_padding_mobile": 60,
