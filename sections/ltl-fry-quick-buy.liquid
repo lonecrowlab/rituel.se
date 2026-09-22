@@ -183,9 +183,9 @@
                       {{ block.shopify_attributes }}
                     >
                       <div class="lfqb-price__row">
-                        <span class="lfqb-price__current" data-lfqb-price-current>{{ current_price | money }}</span>
+                        <span class="lfqb-price__current" data-lfqb-price-current>{{ current_price | money_with_currency }}</span>
                         {% if on_sale %}
-                          <s class="lfqb-price__compare" data-lfqb-price-compare>{{ compare_at | money }}</s>
+                          <s class="lfqb-price__compare" data-lfqb-price-compare>{{ compare_at | money_with_currency }}</s>
                         {% else %}
                           <s class="lfqb-price__compare" data-lfqb-price-compare hidden></s>
                         {% endif %}
@@ -225,7 +225,7 @@
                       {% if block.settings.show_savings_message %}
                         {%- liquid
                           assign savings_token = '{' | append: '{' | append: ' savings ' | append: '}' | append: '}'
-                          assign savings_preview = block.settings.savings_message | replace: savings_token, ''
+                          assign savings_preview = block.settings.savings_message | replace: '[savings]', '' | replace: '[ savings ]', '' | replace: savings_token, ''
                         -%}
                         <p
                           class="lfqb-feature__savings"
@@ -288,8 +288,19 @@
                       if block.settings.image != blank and block.settings.image.alt != blank
                         assign iwt_alt = block.settings.image.alt
                       endif
+                      assign iwt_text_position = block.settings.text_position
+                      if iwt_text_position == blank
+                        if block.settings.image_position == 'right'
+                          assign iwt_text_position = 'left'
+                        elsif block.settings.image_position == 'left'
+                          assign iwt_text_position = 'right'
+                        else
+                          assign iwt_text_position = 'right'
+                        endif
+                      endif
+                      assign iwt_width = block.settings.block_width | default: 'auto'
                     -%}
-                    <div class="lfqb-iwt lfqb-iwt--{{ block.settings.image_position }} lfqb-block lfqb-block-{{ block.id }} {{ device_class }}" {{ block.shopify_attributes }}>
+                    <div class="lfqb-iwt lfqb-iwt--text-{{ iwt_text_position }} lfqb-iwt--{{ iwt_width }} lfqb-block lfqb-block-{{ block.id }} {{ device_class }}" {{ block.shopify_attributes }}>
                       {% if block.settings.image != blank %}
                         <div class="lfqb-iwt__media">
                           {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'lfqb-iwt__image', alt: iwt_alt }}
@@ -311,12 +322,14 @@
                         stock_min: block.settings.stock_min,
                         stock_max: block.settings.stock_max,
                         reduction_minutes: block.settings.reduction_minutes,
+                        reduction_amount: block.settings.reduction_amount,
                         text_prefix: block.settings.text_prefix,
                         text_suffix: block.settings.text_suffix,
                         dot_color: block.settings.dot_color,
                         min_dot_color: block.settings.min_dot_color,
                         match_text_to_dot_color: block.settings.match_text_to_dot_color,
                         text_color: block.settings.text_color,
+                        stock_color: block.settings.stock_color,
                         text_font_size: block.settings.text_font_size,
                         text_font_weight: block.settings.text_font_weight,
                         count_font_weight: block.settings.count_font_weight
@@ -331,7 +344,7 @@
 
       <script type="application/json" data-lfqb-product-data>
         {
-          "moneyFormat": {{ shop.money_format | json }},
+          "moneyFormat": {{ shop.money_with_currency_format | json }},
           "currency": {{ cart.currency.iso_code | json }},
           "selectedVariantId": {{ selected_variant.id | json }},
           "sellingPlansAvailable": {{ selling_plans_available | json }},
@@ -565,8 +578,16 @@
 
   .section-{{ section.id }} .lfqb-blocks {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
     gap: {{ section.settings.block_gap_mobile }}px;
+  }
+
+  .section-{{ section.id }} .lfqb-blocks > .lfqb-block {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .section-{{ section.id }} .lfqb-variant-select {
@@ -578,9 +599,9 @@
     font-size: 14px;
   }
 
-  .section-{{ section.id }} .lfqb-device-all,
-  .section-{{ section.id }} .lfqb-device-mobile { display: block; }
-  .section-{{ section.id }} .lfqb-device-desktop { display: none; }
+  @media screen and (max-width: 749px) {
+    .section-{{ section.id }} .lfqb-device-desktop { display: none !important; }
+  }
 
   .section-{{ section.id }} .lfqb-block-reviews .rating-stars {
     justify-content: flex-start;
@@ -588,11 +609,13 @@
 
   {% for block in section.blocks %}
     {% if block.type == 'text' %}
-      {% if block.settings.font_regular != blank %}
-        {{ block.settings.font_regular | font_face: font_display: 'swap' }}
-      {% endif %}
-      {% if block.settings.font_bold != blank %}
-        {{ block.settings.font_bold | font_face: font_display: 'swap' }}
+      {% if block.settings.font_source == 'custom' %}
+        {% if block.settings.font_regular != blank %}
+          {{ block.settings.font_regular | font_face: font_display: 'swap' }}
+        {% endif %}
+        {% if block.settings.font_bold != blank %}
+          {{ block.settings.font_bold | font_face: font_display: 'swap' }}
+        {% endif %}
       {% endif %}
     {% endif %}
   {% endfor %}
@@ -604,17 +627,26 @@
         line-height: {{ block.settings.line_height | times: 0.1 }};
         color: {{ block.settings.color }};
         text-align: {{ block.settings.text_align }};
-        {% if block.settings.font_regular != blank %}
+        padding: {{ block.settings.padding_top | default: 0 }}px {{ block.settings.padding_right | default: 0 }}px {{ block.settings.padding_bottom | default: 0 }}px {{ block.settings.padding_left | default: 0 }}px;
+        {% if block.settings.font_source == 'custom' and block.settings.font_regular != blank %}
           font-family: {{ block.settings.font_regular.family }}, {{ block.settings.font_regular.fallback_families }};
+        {% else %}
+          font-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
         {% endif %}
         font-weight: {{ block.settings.font_weight_regular }};
         letter-spacing: {{ block.settings.letter_spacing | times: 0.01 }}em;
         text-transform: {{ block.settings.text_transform }};
         margin-bottom: {{ block.settings.margin_bottom_mobile }}px;
       }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} p {
+        margin: 0;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} p + p {
+        margin-top: 0.4em;
+      }
       .section-{{ section.id }} .lfqb-block-{{ block.id }} strong,
       .section-{{ section.id }} .lfqb-block-{{ block.id }} b {
-        {% if block.settings.font_bold != blank %}
+        {% if block.settings.font_source == 'custom' and block.settings.font_bold != blank %}
           font-family: {{ block.settings.font_bold.family }}, {{ block.settings.font_bold.fallback_families }};
         {% endif %}
         font-weight: {{ block.settings.font_weight_bold }};
@@ -737,15 +769,24 @@
     {% if block.type == 'buy_buttons' %}
       .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-atc {
         width: 100%;
-        border: none;
-        border-radius: {{ block.settings.button_border_radius }}px;
-        padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px;
-        background: {{ block.settings.button_bg_color }};
-        color: {{ block.settings.button_text_color }};
-        font-size: {{ block.settings.button_font_size_mobile }}px;
-        font-weight: {{ block.settings.button_font_weight }};
-        text-transform: {% if block.settings.uppercase_text %}uppercase{% else %}none{% endif %};
+        border: none !important;
+        border-radius: {{ block.settings.button_border_radius }}px !important;
+        padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px !important;
+        background: {{ block.settings.button_bg_color }} !important;
+        background-color: {{ block.settings.button_bg_color }} !important;
+        color: {{ block.settings.button_text_color }} !important;
+        font-size: {{ block.settings.button_font_size_mobile }}px !important;
+        font-weight: {{ block.settings.button_font_weight }} !important;
+        text-transform: {% if block.settings.uppercase_text %}uppercase{% else %}none{% endif %} !important;
         cursor: pointer;
+        z-index: 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-atc::before,
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-atc::after {
+        display: none !important;
+        content: none !important;
       }
       .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-atc:disabled {
         opacity: 0.65;
@@ -754,22 +795,67 @@
     {% endif %}
 
     {% if block.type == 'image_with_text' %}
+      {%- liquid
+        assign iwt_text_position = block.settings.text_position
+        if iwt_text_position == blank
+          if block.settings.image_position == 'right'
+            assign iwt_text_position = 'left'
+          elsif block.settings.image_position == 'left'
+            assign iwt_text_position = 'right'
+          else
+            assign iwt_text_position = 'right'
+          endif
+        endif
+        assign iwt_width = block.settings.block_width | default: 'auto'
+        assign iwt_fit = block.settings.image_fit | default: 'contain'
+        case iwt_text_position
+          when 'left'
+            assign iwt_direction = 'row-reverse'
+          when 'top'
+            assign iwt_direction = 'column-reverse'
+          when 'bottom'
+            assign iwt_direction = 'column'
+          else
+            assign iwt_direction = 'row'
+        endcase
+      -%}
       .section-{{ section.id }} .lfqb-block-{{ block.id }} {
         display: flex;
         align-items: {{ block.settings.vertical_align }};
         gap: {{ block.settings.gap_mobile }}px;
-        flex-direction: {% if block.settings.image_position == 'right' %}row-reverse{% else %}row{% endif %};
+        flex-direction: {{ iwt_direction }};
+        {% if iwt_width == 'auto' %}
+          flex: 0 1 auto;
+          width: auto;
+          max-width: 100%;
+        {% else %}
+          flex: 0 0 100%;
+          width: 100%;
+        {% endif %}
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__media {
+        flex-shrink: 0;
       }
       .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__image {
         width: {{ block.settings.image_width_mobile }}px;
-        height: {{ block.settings.image_width_mobile }}px;
+        {% if iwt_fit == 'cover' %}
+          height: {{ block.settings.image_width_mobile }}px;
+        {% else %}
+          height: auto;
+          max-height: {{ block.settings.image_width_mobile }}px;
+        {% endif %}
         border-radius: {{ block.settings.image_radius }}px;
-        object-fit: cover;
+        object-fit: {{ iwt_fit }};
+        display: block;
       }
       .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__text {
         font-size: {{ block.settings.font_size_mobile }}px;
         color: {{ block.settings.color }};
         line-height: 1.45;
+        min-width: 0;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__text p {
+        margin: 0;
       }
     {% endif %}
 
@@ -873,9 +959,7 @@
       gap: {{ section.settings.block_gap_desktop }}px;
     }
 
-    .section-{{ section.id }} .lfqb-device-desktop { display: block; }
-    .section-{{ section.id }} .lfqb-device-mobile { display: none; }
-    .section-{{ section.id }} .lfqb-device-all { display: block; }
+    .section-{{ section.id }} .lfqb-device-mobile { display: none !important; }
 
     .section-{{ section.id }} .lfqb-ingredients-btn {
       font-size: {{ section.settings.ingredients_button_font_size_desktop }}px;
@@ -920,16 +1004,33 @@
       {% endif %}
       {% if block.type == 'buy_buttons' %}
         .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-atc {
-          font-size: {{ block.settings.button_font_size_desktop }}px;
+          font-size: {{ block.settings.button_font_size_desktop }}px !important;
         }
       {% endif %}
       {% if block.type == 'image_with_text' %}
+        {%- liquid
+          assign iwt_fit_d = block.settings.image_fit | default: 'contain'
+          assign iwt_width_d = block.settings.block_width | default: 'auto'
+        -%}
         .section-{{ section.id }} .lfqb-block-{{ block.id }} {
           gap: {{ block.settings.gap_desktop }}px;
+          {% if iwt_width_d == 'auto' %}
+            flex: 0 1 auto;
+            width: auto;
+            max-width: 100%;
+          {% else %}
+            flex: 0 0 100%;
+            width: 100%;
+          {% endif %}
         }
         .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__image {
           width: {{ block.settings.image_width_desktop }}px;
-          height: {{ block.settings.image_width_desktop }}px;
+          {% if iwt_fit_d == 'cover' %}
+            height: {{ block.settings.image_width_desktop }}px;
+          {% else %}
+            height: auto;
+            max-height: {{ block.settings.image_width_desktop }}px;
+          {% endif %}
         }
         .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__text {
           font-size: {{ block.settings.font_size_desktop }}px;
@@ -1064,7 +1165,9 @@
         if (!savingsEl) return;
         const template = savingsEl.dataset.template || savingsEl.textContent.trim();
         if (!template) return;
-        const message = template.replace(/\{\{\s*savings\s*\}\}/g, formatMoney(prices.savings));
+        const message = template
+          .replace(/\[\s*savings\s*\]/gi, formatMoney(prices.savings))
+          .replace(/\{\{\s*savings\s*\}\}/gi, formatMoney(prices.savings));
         savingsEl.textContent = message;
         savingsEl.hidden = !(getActivePlanId(featureEl) && prices.savings > 0);
       });
@@ -1261,13 +1364,17 @@
           { "value": "eyebrow", "label": "Eyebrow" }
         ], "default": "body" },
         { "type": "richtext", "id": "text", "label": "Text", "default": "<p>ARCTIC HERBS · 40-DAY SUPPLY</p><p><strong>The Complete System for Mature Women's Skin</strong></p><p>System Includes (40-day supply): Anti-Age &amp; Insane Glow Day Balm, Hyper Potent Dark Circles &amp; Eye Balm, Magic Wrinkle Eraser Night Balm, Ultra Cleanse &amp; Revive Face Scrub</p>" },
-        { "type": "font_picker", "id": "font_regular", "label": "Regular font", "default": "helvetica_n4" },
+        { "type": "select", "id": "font_source", "label": "Font", "options": [
+          { "value": "body", "label": "Body font" },
+          { "value": "custom", "label": "Custom font" }
+        ], "default": "body" },
+        { "type": "font_picker", "id": "font_regular", "label": "Regular font", "default": "helvetica_n4", "visible_if": "{{ block.settings.font_source == 'custom' }}" },
         { "type": "select", "id": "font_weight_regular", "label": "Regular weight", "options": [
           { "value": "400", "label": "Regular" },
           { "value": "500", "label": "Medium" },
           { "value": "600", "label": "Semibold" }
         ], "default": "400" },
-        { "type": "font_picker", "id": "font_bold", "label": "Bold font", "default": "helvetica_n7" },
+        { "type": "font_picker", "id": "font_bold", "label": "Bold font", "default": "helvetica_n7", "visible_if": "{{ block.settings.font_source == 'custom' }}" },
         { "type": "select", "id": "font_weight_bold", "label": "Bold weight", "options": [
           { "value": "600", "label": "Semibold" },
           { "value": "700", "label": "Bold" },
@@ -1286,6 +1393,10 @@
           { "value": "left", "label": "Left" },
           { "value": "center", "label": "Center" }
         ], "default": "left" },
+        { "type": "range", "id": "padding_top", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Padding top", "default": 0 },
+        { "type": "range", "id": "padding_bottom", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Padding bottom", "default": 0 },
+        { "type": "range", "id": "padding_left", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Padding left", "default": 0 },
+        { "type": "range", "id": "padding_right", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Padding right", "default": 0 },
         { "type": "range", "id": "margin_bottom_mobile", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Margin bottom (mobile)", "default": 0 },
         { "type": "range", "id": "margin_bottom_desktop", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Margin bottom (desktop)", "default": 0 },
         { "type": "select", "id": "visibility", "label": "Show on", "options": [
@@ -1330,7 +1441,7 @@
         { "type": "richtext", "id": "features", "label": "Features", "default": "<ul><li>Free Shipping Forever</li><li>30% Off All Future Orders</li><li>60-Day Money-Back Guarantee</li><li>Skip, Pause Or Cancel Anytime</li><li>Consistent Results, Backed By Testing</li><li>Never Run Out Of Your Routine</li></ul>" },
         { "type": "checkbox", "id": "default_enabled", "label": "Enable subscription by default", "default": true },
         { "type": "checkbox", "id": "show_savings_message", "label": "Show savings message", "default": true },
-        { "type": "text", "id": "savings_message", "label": "Savings message", "default": "🎉 Congrats! You're saving {{ savings }}", "info": "Use {{ savings }} for the calculated amount." },
+        { "type": "text", "id": "savings_message", "label": "Savings message", "default": "🎉 Congrats! You're saving [savings]", "info": "Use [savings] for the calculated amount." },
         { "type": "range", "id": "feature_columns", "min": 1, "max": 3, "step": 1, "label": "Feature columns", "default": 2 },
         { "type": "color", "id": "card_bg_color", "label": "Card background", "default": "#faf8f6" },
         { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#e5e7eb" },
@@ -1400,10 +1511,20 @@
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "image_alt", "label": "Image alt text" },
         { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Gentle with you &amp; with nature</p>" },
-        { "type": "select", "id": "image_position", "label": "Image position", "options": [
-          { "value": "left", "label": "Left" },
-          { "value": "right", "label": "Right" }
-        ], "default": "left" },
+        { "type": "select", "id": "text_position", "label": "Text position", "options": [
+          { "value": "right", "label": "Right of image" },
+          { "value": "left", "label": "Left of image" },
+          { "value": "top", "label": "Above image" },
+          { "value": "bottom", "label": "Below image" }
+        ], "default": "right" },
+        { "type": "select", "id": "block_width", "label": "Width", "options": [
+          { "value": "auto", "label": "Auto (same line)" },
+          { "value": "full", "label": "Full width" }
+        ], "default": "auto" },
+        { "type": "select", "id": "image_fit", "label": "Image fit", "options": [
+          { "value": "contain", "label": "Contain" },
+          { "value": "cover", "label": "Cover" }
+        ], "default": "contain" },
         { "type": "select", "id": "vertical_align", "label": "Vertical alignment", "options": [
           { "value": "flex-start", "label": "Top" },
           { "value": "center", "label": "Center" }
@@ -1434,12 +1555,14 @@
         { "type": "number", "id": "stock_min", "label": "Minimum stock count", "default": 4 },
         { "type": "number", "id": "stock_max", "label": "Maximum stock count", "default": 97 },
         { "type": "number", "id": "reduction_minutes", "label": "Reduce stock every (minutes)", "default": 60 },
+        { "type": "number", "id": "reduction_amount", "label": "Reduce by (amount)", "default": 1, "info": "How much stock to subtract each interval." },
         { "type": "text", "id": "text_prefix", "label": "Prefix text", "default": "Low Stock: only" },
         { "type": "text", "id": "text_suffix", "label": "Suffix text", "default": "left" },
         { "type": "color", "id": "bar_bg_color", "label": "Bar background", "default": "#fce7f3" },
-        { "type": "range", "id": "bar_radius", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Bar radius", "default":50 },
+        { "type": "range", "id": "bar_radius", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Bar radius", "default": 50 },
         { "type": "checkbox", "id": "match_text_to_dot_color", "label": "Match text color to dot", "default": false },
         { "type": "color", "id": "text_color", "label": "Text color", "default": "#111111" },
+        { "type": "color", "id": "stock_color", "label": "Stock count color", "default": "#dc2626" },
         { "type": "color", "id": "dot_color", "label": "Dot color", "default": "#dc2626" },
         { "type": "color", "id": "min_dot_color", "label": "Dot color at minimum", "default": "#dc2626" },
         { "type": "range", "id": "text_font_size", "min": 10, "max": 18, "step": 1, "unit": "px", "label": "Text size", "default": 13 },
