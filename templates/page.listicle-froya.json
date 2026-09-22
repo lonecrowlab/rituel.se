@@ -1423,7 +1423,7 @@
           "settings": {
             "image": "shopify://shop_images/heart.svg",
             "image_alt": "",
-            "text": "<p>Gentle with you & with nature</p>",
+            "text": "<p>Gentle with you </p><p>& with nature</p>",
             "text_position": "bottom",
             "block_width": "auto",
             "image_fit": "contain",
@@ -1444,7 +1444,7 @@
           "settings": {
             "image": "shopify://shop_images/reuse.svg",
             "image_alt": "",
-            "text": "<p>better skin in 60 days money-back guarantee</p>",
+            "text": "<p>Better skin in 60 days </p><p>money-back guarantee</p>",
             "text_position": "bottom",
             "block_width": "auto",
             "image_fit": "contain",
