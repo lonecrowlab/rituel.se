@@ -205,7 +205,7 @@
                             type="checkbox"
                             class="lfqb-feature__toggle"
                             data-lfqb-plan-toggle
-                            {% if block.settings.default_enabled %}checked{% endif %}
+                            {% if block.settings.default_enabled and selling_plans_available %}checked{% endif %}
                             {% unless selling_plans_available %}disabled{% endunless %}
                           >
                           <span class="lfqb-feature__toggle-ui" aria-hidden="true"></span>
@@ -231,11 +231,14 @@
                           class="lfqb-feature__savings"
                           data-lfqb-savings
                           data-template="{{ block.settings.savings_message | escape }}"
-                          {% unless block.settings.default_enabled %}hidden{% endunless %}
+                          {% unless block.settings.default_enabled and selling_plans_available %}hidden{% endunless %}
                         >
                           {{ savings_preview }}
                         </p>
                       {% endif %}
+                      {% unless selling_plans_available %}
+                        <p class="lfqb-feature__no-plans">No subscription plans found on this product.</p>
+                      {% endunless %}
                       {% if selling_plan_count > 1 %}
                         <label class="lfqb-feature__plan-label visually-hidden" for="lfqb-plan-{{ block.id }}">Subscription plan</label>
                         <select id="lfqb-plan-{{ block.id }}" class="lfqb-feature__plan-select" data-lfqb-plan-select>
@@ -583,11 +586,19 @@
     gap: {{ section.settings.block_gap_mobile }}px;
   }
 
-  .section-{{ section.id }} .lfqb-blocks > .lfqb-block {
+  .section-{{ section.id }} .lfqb-blocks > .lfqb-block:not(.lfqb-iwt--auto) {
     flex: 0 0 100%;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+  }
+
+  .section-{{ section.id }} .lfqb-blocks > .lfqb-iwt--auto {
+    flex: 0 0 auto;
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    align-self: flex-start;
   }
 
   .section-{{ section.id }} .lfqb-variant-select {
@@ -764,6 +775,11 @@
         border-radius: 8px;
         border: 1px solid #d1d5db;
       }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__no-plans {
+        margin: 10px 0 0;
+        font-size: 12px;
+        color: #9ca3af;
+      }
     {% endif %}
 
     {% if block.type == 'buy_buttons' %}
@@ -819,15 +835,17 @@
             assign iwt_direction = 'row'
         endcase
       -%}
+      .section-{{ section.id }} .lfqb-blocks > .lfqb-block-{{ block.id }}.lfqb-iwt--auto,
       .section-{{ section.id }} .lfqb-block-{{ block.id }} {
         display: flex;
         align-items: {{ block.settings.vertical_align }};
         gap: {{ block.settings.gap_mobile }}px;
         flex-direction: {{ iwt_direction }};
         {% if iwt_width == 'auto' %}
-          flex: 0 1 auto;
-          width: auto;
+          flex: 0 0 auto;
+          width: fit-content;
           max-width: 100%;
+          align-self: flex-start;
         {% else %}
           flex: 0 0 100%;
           width: 100%;
@@ -1012,12 +1030,14 @@
           assign iwt_fit_d = block.settings.image_fit | default: 'contain'
           assign iwt_width_d = block.settings.block_width | default: 'auto'
         -%}
+        .section-{{ section.id }} .lfqb-blocks > .lfqb-block-{{ block.id }}.lfqb-iwt--auto,
         .section-{{ section.id }} .lfqb-block-{{ block.id }} {
           gap: {{ block.settings.gap_desktop }}px;
           {% if iwt_width_d == 'auto' %}
-            flex: 0 1 auto;
-            width: auto;
+            flex: 0 0 auto;
+            width: fit-content;
             max-width: 100%;
+            align-self: flex-start;
           {% else %}
             flex: 0 0 100%;
             width: 100%;
@@ -1065,10 +1085,20 @@
 
     function formatMoney(cents) {
       const value = Math.round(Number(cents) || 0);
+      const format = productData.moneyFormat || '{{amount}}';
       if (typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
-        return Shopify.formatMoney(value, productData.moneyFormat);
+        try {
+          return Shopify.formatMoney(value, format);
+        } catch (e) {}
       }
-      return (value / 100).toFixed(2);
+      const amount = (value / 100).toFixed(2);
+      const amountNoDecimals = String(Math.round(value / 100));
+      const amountWithCommaSeparator = amount.replace('.', ',');
+      return String(format)
+        .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g, amountWithCommaSeparator)
+        .replace(/\{\{\s*amount_no_decimals_with_comma_separator\s*\}\}/g, amountNoDecimals)
+        .replace(/\{\{\s*amount_no_decimals\s*\}\}/g, amountNoDecimals)
+        .replace(/\{\{\s*amount\s*\}\}/g, amount);
     }
 
     function getVariant() {
