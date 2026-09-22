@@ -302,8 +302,9 @@
                         endif
                       endif
                       assign iwt_width = block.settings.block_width | default: 'auto'
+                      assign iwt_align = block.settings.content_align | default: 'center'
                     -%}
-                    <div class="lfqb-iwt lfqb-iwt--text-{{ iwt_text_position }} lfqb-iwt--{{ iwt_width }} lfqb-block lfqb-block-{{ block.id }} {{ device_class }}" {{ block.shopify_attributes }}>
+                    <div class="lfqb-iwt lfqb-iwt--text-{{ iwt_text_position }} lfqb-iwt--{{ iwt_width }} lfqb-iwt--align-{{ iwt_align }} lfqb-block lfqb-block-{{ block.id }} {{ device_class }}" {{ block.shopify_attributes }}>
                       {% if block.settings.image != blank %}
                         <div class="lfqb-iwt__media">
                           {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'lfqb-iwt__image', alt: iwt_alt }}
@@ -312,6 +313,43 @@
                       {% if block.settings.text != blank %}
                         <div class="lfqb-iwt__text rte">{{ block.settings.text }}</div>
                       {% endif %}
+                    </div>
+
+                  {% when 'images_with_text' %}
+                    {%- liquid
+                      assign iwtm_columns = block.settings.columns | default: 2
+                      assign iwtm_align = block.settings.content_align | default: 'center'
+                    -%}
+                    <div
+                      class="lfqb-iwtm lfqb-block lfqb-block-{{ block.id }} {{ device_class }}"
+                      style="--lfqb-iwtm-cols: {{ iwtm_columns }};"
+                      {{ block.shopify_attributes }}
+                    >
+                      {% for i in (1..4) %}
+                        {%- liquid
+                          assign image_key = 'image_' | append: i
+                          assign text_key = 'text_' | append: i
+                          assign alt_key = 'image_alt_' | append: i
+                          assign item_image = block.settings[image_key]
+                          assign item_text = block.settings[text_key]
+                          assign item_alt = block.settings[alt_key]
+                          if item_image != blank and item_image.alt != blank
+                            assign item_alt = item_image.alt
+                          endif
+                        -%}
+                        {% if item_image != blank or item_text != blank %}
+                          <div class="lfqb-iwtm__item lfqb-iwtm__item--align-{{ iwtm_align }}">
+                            {% if item_image != blank %}
+                              <div class="lfqb-iwtm__media">
+                                {{ item_image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'lfqb-iwtm__image', alt: item_alt }}
+                              </div>
+                            {% endif %}
+                            {% if item_text != blank %}
+                              <div class="lfqb-iwtm__text rte">{{ item_text }}</div>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+                      {% endfor %}
                     </div>
 
                   {% when 'low_stock' %}
@@ -824,6 +862,15 @@
         endif
         assign iwt_width = block.settings.block_width | default: 'auto'
         assign iwt_fit = block.settings.image_fit | default: 'contain'
+        assign iwt_align = block.settings.content_align | default: 'center'
+        case iwt_align
+          when 'left'
+            assign iwt_align_flex = 'flex-start'
+          when 'right'
+            assign iwt_align_flex = 'flex-end'
+          else
+            assign iwt_align_flex = 'center'
+        endcase
         case iwt_text_position
           when 'left'
             assign iwt_direction = 'row-reverse'
@@ -838,9 +885,10 @@
       .section-{{ section.id }} .lfqb-blocks > .lfqb-block-{{ block.id }}.lfqb-iwt--auto,
       .section-{{ section.id }} .lfqb-block-{{ block.id }} {
         display: flex;
-        align-items: {{ block.settings.vertical_align }};
+        align-items: {% if iwt_text_position == 'top' or iwt_text_position == 'bottom' %}{{ iwt_align_flex }}{% else %}{{ block.settings.vertical_align }}{% endif %};
         gap: {{ block.settings.gap_mobile }}px;
         flex-direction: {{ iwt_direction }};
+        text-align: {{ iwt_align }};
         {% if iwt_width == 'auto' %}
           flex: 0 0 auto;
           width: fit-content;
@@ -853,6 +901,9 @@
       }
       .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__media {
         flex-shrink: 0;
+        display: flex;
+        justify-content: {{ iwt_align_flex }};
+        width: {% if iwt_text_position == 'top' or iwt_text_position == 'bottom' %}100%{% else %}auto{% endif %};
       }
       .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__image {
         width: {{ block.settings.image_width_mobile }}px;
@@ -871,8 +922,65 @@
         color: {{ block.settings.color }};
         line-height: 1.45;
         min-width: 0;
+        text-align: {{ iwt_align }};
       }
       .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__text p {
+        margin: 0;
+      }
+    {% endif %}
+
+    {% if block.type == 'images_with_text' %}
+      {%- liquid
+        assign iwtm_fit = block.settings.image_fit | default: 'contain'
+        assign iwtm_align = block.settings.content_align | default: 'center'
+        case iwtm_align
+          when 'flex-start'
+            assign iwtm_text_align = 'left'
+          when 'flex-end'
+            assign iwtm_text_align = 'right'
+          else
+            assign iwtm_text_align = 'center'
+        endcase
+      -%}
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} {
+        display: grid;
+        grid-template-columns: repeat({{ block.settings.columns_mobile | default: 2 }}, minmax(0, 1fr));
+        gap: {{ block.settings.gap_mobile }}px;
+        width: 100%;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwtm__item {
+        display: flex;
+        flex-direction: column;
+        align-items: {{ iwtm_align }};
+        gap: {{ block.settings.item_gap }}px;
+        text-align: {{ iwtm_text_align }};
+        min-width: 0;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwtm__media {
+        display: flex;
+        justify-content: {{ iwtm_align }};
+        width: 100%;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwtm__image {
+        width: {{ block.settings.image_width_mobile }}px;
+        {% if iwtm_fit == 'cover' %}
+          height: {{ block.settings.image_width_mobile }}px;
+        {% else %}
+          height: auto;
+          max-height: {{ block.settings.image_width_mobile }}px;
+        {% endif %}
+        border-radius: {{ block.settings.image_radius }}px;
+        object-fit: {{ iwtm_fit }};
+        display: block;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwtm__text {
+        font-size: {{ block.settings.font_size_mobile }}px;
+        color: {{ block.settings.color }};
+        line-height: 1.45;
+        width: 100%;
+        text-align: {{ iwtm_text_align }};
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwtm__text p {
         margin: 0;
       }
     {% endif %}
@@ -1056,6 +1164,27 @@
           font-size: {{ block.settings.font_size_desktop }}px;
         }
       {% endif %}
+      {% if block.type == 'images_with_text' %}
+        {%- liquid
+          assign iwtm_fit_d = block.settings.image_fit | default: 'contain'
+        -%}
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} {
+          grid-template-columns: repeat({{ block.settings.columns | default: 2 }}, minmax(0, 1fr));
+          gap: {{ block.settings.gap_desktop }}px;
+        }
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwtm__image {
+          width: {{ block.settings.image_width_desktop }}px;
+          {% if iwtm_fit_d == 'cover' %}
+            height: {{ block.settings.image_width_desktop }}px;
+          {% else %}
+            height: auto;
+            max-height: {{ block.settings.image_width_desktop }}px;
+          {% endif %}
+        }
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwtm__text {
+          font-size: {{ block.settings.font_size_desktop }}px;
+        }
+      {% endif %}
     {% endfor %}
   }
 </style>
@@ -1086,19 +1215,38 @@
     function formatMoney(cents) {
       const value = Math.round(Number(cents) || 0);
       const format = productData.moneyFormat || '{{amount}}';
-      if (typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
+      const amount = (value / 100).toFixed(2);
+      const amountParts = amount.split('.');
+      const intPart = amountParts[0];
+      const decPart = amountParts[1] || '00';
+      const amountNoDecimals = String(Math.round(value / 100));
+
+      const withThousands = function (numStr, sep) {
+        return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, sep);
+      };
+
+      const placeholders = {
+        amount_with_comma_separator: withThousands(intPart, '.') + ',' + decPart,
+        amount_no_decimals_with_comma_separator: withThousands(amountNoDecimals, '.'),
+        amount_with_apostrophe_separator: withThousands(intPart, "'") + '.' + decPart,
+        amount_no_decimals_with_apostrophe_separator: withThousands(amountNoDecimals, "'"),
+        amount_with_space_separator: withThousands(intPart, ' ') + ',' + decPart,
+        amount_no_decimals_with_space_separator: withThousands(amountNoDecimals, ' '),
+        amount_no_decimals: withThousands(amountNoDecimals, ','),
+        amount: withThousands(intPart, ',') + '.' + decPart
+      };
+
+      let output = String(format);
+      Object.keys(placeholders).forEach(function (key) {
+        output = output.replace(new RegExp('\\{\\{\\s*' + key + '\\s*\\}\\}', 'g'), placeholders[key]);
+      });
+
+      if (/\{\{\s*amount/.test(output) && typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
         try {
           return Shopify.formatMoney(value, format);
         } catch (e) {}
       }
-      const amount = (value / 100).toFixed(2);
-      const amountNoDecimals = String(Math.round(value / 100));
-      const amountWithCommaSeparator = amount.replace('.', ',');
-      return String(format)
-        .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g, amountWithCommaSeparator)
-        .replace(/\{\{\s*amount_no_decimals_with_comma_separator\s*\}\}/g, amountNoDecimals)
-        .replace(/\{\{\s*amount_no_decimals\s*\}\}/g, amountNoDecimals)
-        .replace(/\{\{\s*amount\s*\}\}/g, amount);
+      return output;
     }
 
     function getVariant() {
@@ -1546,7 +1694,12 @@
           { "value": "left", "label": "Left of image" },
           { "value": "top", "label": "Above image" },
           { "value": "bottom", "label": "Below image" }
-        ], "default": "right" },
+        ], "default": "bottom" },
+        { "type": "select", "id": "content_align", "label": "Content alignment", "options": [
+          { "value": "left", "label": "Left" },
+          { "value": "center", "label": "Center" },
+          { "value": "right", "label": "Right" }
+        ], "default": "center" },
         { "type": "select", "id": "block_width", "label": "Width", "options": [
           { "value": "auto", "label": "Auto (same line)" },
           { "value": "full", "label": "Full width" }
@@ -1558,12 +1711,60 @@
         { "type": "select", "id": "vertical_align", "label": "Vertical alignment", "options": [
           { "value": "flex-start", "label": "Top" },
           { "value": "center", "label": "Center" }
-        ], "default": "center" },
+        ], "default": "center", "info": "Used when text is left or right of the image." },
         { "type": "range", "id": "image_width_mobile", "min": 24, "max": 80, "step": 2, "unit": "px", "label": "Image size (mobile)", "default": 40 },
         { "type": "range", "id": "image_width_desktop", "min": 24, "max": 80, "step": 2, "unit": "px", "label": "Image size (desktop)", "default": 44 },
         { "type": "range", "id": "image_radius", "min": 0, "max": 100, "step": 2, "unit": "px", "label": "Image radius", "default": 0 },
         { "type": "range", "id": "gap_mobile", "min": 8, "max": 24, "step": 2, "unit": "px", "label": "Gap (mobile)", "default": 10 },
         { "type": "range", "id": "gap_desktop", "min": 8, "max": 24, "step": 2, "unit": "px", "label": "Gap (desktop)", "default": 12 },
+        { "type": "range", "id": "font_size_mobile", "min": 11, "max": 16, "step": 1, "unit": "px", "label": "Text size (mobile)", "default": 12 },
+        { "type": "range", "id": "font_size_desktop", "min": 11, "max": 16, "step": 1, "unit": "px", "label": "Text size (desktop)", "default": 13 },
+        { "type": "color", "id": "color", "label": "Text color", "default": "#374151" },
+        { "type": "select", "id": "visibility", "label": "Show on", "options": [
+          { "value": "all", "label": "All devices" },
+          { "value": "desktop", "label": "Desktop only" },
+          { "value": "mobile", "label": "Mobile only" }
+        ], "default": "all" }
+      ]
+    },
+    {
+      "type": "images_with_text",
+      "name": "Images with text",
+      "settings": [
+        { "type": "header", "content": "Item 1" },
+        { "type": "image_picker", "id": "image_1", "label": "Image" },
+        { "type": "text", "id": "image_alt_1", "label": "Image alt text" },
+        { "type": "richtext", "id": "text_1", "label": "Text", "default": "<p>Gentle with you &amp; with nature</p>" },
+        { "type": "header", "content": "Item 2" },
+        { "type": "image_picker", "id": "image_2", "label": "Image" },
+        { "type": "text", "id": "image_alt_2", "label": "Image alt text" },
+        { "type": "richtext", "id": "text_2", "label": "Text", "default": "<p>Better skin in 60 days money-back guarantee</p>" },
+        { "type": "header", "content": "Item 3" },
+        { "type": "image_picker", "id": "image_3", "label": "Image" },
+        { "type": "text", "id": "image_alt_3", "label": "Image alt text" },
+        { "type": "richtext", "id": "text_3", "label": "Text" },
+        { "type": "header", "content": "Item 4" },
+        { "type": "image_picker", "id": "image_4", "label": "Image" },
+        { "type": "text", "id": "image_alt_4", "label": "Image alt text" },
+        { "type": "richtext", "id": "text_4", "label": "Text" },
+        { "type": "header", "content": "Layout" },
+        { "type": "range", "id": "columns_mobile", "min": 1, "max": 2, "step": 1, "label": "Columns (mobile)", "default": 2 },
+        { "type": "range", "id": "columns", "min": 2, "max": 4, "step": 1, "label": "Columns (desktop)", "default": 2 },
+        { "type": "select", "id": "content_align", "label": "Content alignment", "options": [
+          { "value": "flex-start", "label": "Left" },
+          { "value": "center", "label": "Center" },
+          { "value": "flex-end", "label": "Right" }
+        ], "default": "center" },
+        { "type": "select", "id": "image_fit", "label": "Image fit", "options": [
+          { "value": "contain", "label": "Contain" },
+          { "value": "cover", "label": "Cover" }
+        ], "default": "contain" },
+        { "type": "range", "id": "image_width_mobile", "min": 24, "max": 80, "step": 2, "unit": "px", "label": "Image size (mobile)", "default": 40 },
+        { "type": "range", "id": "image_width_desktop", "min": 24, "max": 80, "step": 2, "unit": "px", "label": "Image size (desktop)", "default": 44 },
+        { "type": "range", "id": "image_radius", "min": 0, "max": 100, "step": 2, "unit": "px", "label": "Image radius", "default": 0 },
+        { "type": "range", "id": "item_gap", "min": 4, "max": 20, "step": 2, "unit": "px", "label": "Gap image to text", "default": 8 },
+        { "type": "range", "id": "gap_mobile", "min": 8, "max": 32, "step": 2, "unit": "px", "label": "Gap between items (mobile)", "default": 16 },
+        { "type": "range", "id": "gap_desktop", "min": 8, "max": 40, "step": 2, "unit": "px", "label": "Gap between items (desktop)", "default": 24 },
         { "type": "range", "id": "font_size_mobile", "min": 11, "max": 16, "step": 1, "unit": "px", "label": "Text size (mobile)", "default": 12 },
         { "type": "range", "id": "font_size_desktop", "min": 11, "max": 16, "step": 1, "unit": "px", "label": "Text size (desktop)", "default": 13 },
         { "type": "color", "id": "color", "label": "Text color", "default": "#374151" },
@@ -1616,8 +1817,7 @@
         { "type": "feature" },
         { "type": "custom_html" },
         { "type": "buy_buttons" },
-        { "type": "image_with_text" },
-        { "type": "image_with_text" },
+        { "type": "images_with_text" },
         { "type": "low_stock" }
       ]
     }
