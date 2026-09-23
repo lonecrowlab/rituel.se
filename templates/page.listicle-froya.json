@@ -2609,7 +2609,7 @@
         "subheading": "",
         "text_align": "center",
         "image_border_radius": 8,
-        "line_offset": 36,
+        "line_offset": 32,
         "line_width": 3,
         "line_color": "#e5e7eb",
         "marker_bg_color": "#cc667c",
