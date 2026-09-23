@@ -252,9 +252,37 @@
     display: flex;
   }
 
+  /* Keep image items as flex so alignment works (device visibility rules set display:block) */
+  .section-{{ section.id }} .cs-device-all.cs__item--image,
+  .section-{{ section.id }} .cs-device-mobile.cs__item--image,
+  .section-{{ section.id }} .cs-device-desktop.cs__item--image {
+    display: flex;
+  }
+
   .section-{{ section.id }} .cs-align-left.cs__item--image { justify-content: flex-start; }
   .section-{{ section.id }} .cs-align-center.cs__item--image { justify-content: center; }
   .section-{{ section.id }} .cs-align-right.cs__item--image { justify-content: flex-end; }
+
+  .section-{{ section.id }} .cs-align-left.cs__item--image .cs__image,
+  .section-{{ section.id }} .cs-align-left.cs__item--image .cs__image-link,
+  .section-{{ section.id }} .cs-align-left.cs__item--image .cs__image-placeholder {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .section-{{ section.id }} .cs-align-center.cs__item--image .cs__image,
+  .section-{{ section.id }} .cs-align-center.cs__item--image .cs__image-link,
+  .section-{{ section.id }} .cs-align-center.cs__item--image .cs__image-placeholder {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-{{ section.id }} .cs-align-right.cs__item--image .cs__image,
+  .section-{{ section.id }} .cs-align-right.cs__item--image .cs__image-link,
+  .section-{{ section.id }} .cs-align-right.cs__item--image .cs__image-placeholder {
+    margin-left: auto;
+    margin-right: 0;
+  }
 
   .section-{{ section.id }} .cs-align-left .cs-iwt__inner { align-items: flex-start; }
   .section-{{ section.id }} .cs-align-center .cs-iwt__inner { align-items: center; }
@@ -498,15 +526,29 @@
 
     {% if block.type == 'image' %}
       .section-{{ section.id }} .cs-block-{{ block.id }} .cs__image,
-      .section-{{ section.id }} .cs-block-{{ block.id }} .cs__image-placeholder {
-        width: {{ block.settings.image_width_mobile }}px;
+      .section-{{ section.id }} .cs-block-{{ block.id }} .cs__image-placeholder,
+      .section-{{ section.id }} .cs-block-{{ block.id }} .cs__image-link {
+        {% if block.settings.image_width_mode == 'full' %}
+          width: 100%;
+        {% else %}
+          width: {{ block.settings.image_width_mobile }}px;
+        {% endif %}
         max-width: 100%;
         border-radius: {{ block.settings.image_radius }}px;
         object-fit: {{ block.settings.image_fit }};
       }
 
+      .section-{{ section.id }} .cs-block-{{ block.id }} .cs__image-link .cs__image {
+        width: 100%;
+      }
+
       .section-{{ section.id }} .cs-block-{{ block.id }} .cs__image-placeholder {
-        height: {{ block.settings.image_width_mobile }}px;
+        {% if block.settings.image_width_mode == 'full' %}
+          height: auto;
+          aspect-ratio: 1;
+        {% else %}
+          height: {{ block.settings.image_width_mobile }}px;
+        {% endif %}
       }
     {% endif %}
   {% endfor %}
@@ -553,6 +595,8 @@
     .section-{{ section.id }} .cs-device-all { display: block; }
     .section-{{ section.id }} .cs-device-all.cs__item--iwt,
     .section-{{ section.id }} .cs-device-desktop.cs__item--iwt { display: flex; }
+    .section-{{ section.id }} .cs-device-all.cs__item--image,
+    .section-{{ section.id }} .cs-device-desktop.cs__item--image { display: flex; }
 
     .section-{{ section.id }} .cs__heading {
       font-size: {{ section.settings.heading_size_desktop }}px;
@@ -617,12 +661,22 @@
 
       {% if block.type == 'image' %}
         .section-{{ section.id }} .cs-block-{{ block.id }} .cs__image,
-        .section-{{ section.id }} .cs-block-{{ block.id }} .cs__image-placeholder {
-          width: {{ block.settings.image_width_desktop }}px;
+        .section-{{ section.id }} .cs-block-{{ block.id }} .cs__image-placeholder,
+        .section-{{ section.id }} .cs-block-{{ block.id }} .cs__image-link {
+          {% if block.settings.image_width_mode == 'full' %}
+            width: 100%;
+          {% else %}
+            width: {{ block.settings.image_width_desktop }}px;
+          {% endif %}
         }
 
         .section-{{ section.id }} .cs-block-{{ block.id }} .cs__image-placeholder {
-          height: {{ block.settings.image_width_desktop }}px;
+          {% if block.settings.image_width_mode == 'full' %}
+            height: auto;
+            aspect-ratio: 1;
+          {% else %}
+            height: {{ block.settings.image_width_desktop }}px;
+          {% endif %}
         }
       {% endif %}
     {% endfor %}
@@ -1082,8 +1136,38 @@
         { "type": "image_picker", "id": "image", "label": "Image" },
         { "type": "text", "id": "image_alt", "label": "Image alt text" },
         { "type": "url", "id": "link", "label": "Link" },
-        { "type": "range", "id": "image_width_desktop", "min": 40, "max": 600, "step": 8, "unit": "px", "label": "Image width (desktop)", "default": 200 },
-        { "type": "range", "id": "image_width_mobile", "min": 40, "max": 400, "step": 8, "unit": "px", "label": "Image width (mobile)", "default": 160 },
+        {
+          "type": "select",
+          "id": "image_width_mode",
+          "label": "Image width",
+          "options": [
+            { "value": "full", "label": "Full width" },
+            { "value": "custom", "label": "Custom width" }
+          ],
+          "default": "custom"
+        },
+        {
+          "type": "range",
+          "id": "image_width_desktop",
+          "min": 40,
+          "max": 1200,
+          "step": 8,
+          "unit": "px",
+          "label": "Custom width (desktop)",
+          "default": 200,
+          "visible_if": "{{ block.settings.image_width_mode == 'custom' }}"
+        },
+        {
+          "type": "range",
+          "id": "image_width_mobile",
+          "min": 40,
+          "max": 600,
+          "step": 8,
+          "unit": "px",
+          "label": "Custom width (mobile)",
+          "default": 160,
+          "visible_if": "{{ block.settings.image_width_mode == 'custom' }}"
+        },
         { "type": "range", "id": "image_radius", "min": 0, "max": 50, "step": 2, "unit": "px", "label": "Border radius", "default": 0 },
         {
           "type": "select",
@@ -1100,7 +1184,7 @@
         {
           "type": "select",
           "id": "width_desktop",
-          "label": "Width (desktop)",
+          "label": "Column width (desktop)",
           "options": [
             { "value": "full", "label": "Full" },
             { "value": "half", "label": "1/2" },
@@ -1111,12 +1195,12 @@
             { "value": "seventh", "label": "1/7" },
             { "value": "auto", "label": "Auto" }
           ],
-          "default": "auto"
+          "default": "full"
         },
         {
           "type": "select",
           "id": "width_mobile",
-          "label": "Width (mobile)",
+          "label": "Column width (mobile)",
           "options": [
             { "value": "full", "label": "Full" },
             { "value": "half", "label": "1/2" },
