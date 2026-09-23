@@ -131,7 +131,11 @@
     { "type": "checkbox", "id": "gradient_enabled", "label": "Use gradient background", "default": false },
     { "type": "color_background", "id": "gradient_background", "label": "Gradient", "default": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)" },
     { "type": "color", "id": "text_color", "label": "Text color", "default": "#000000" },
-    { "type": "range", "id": "container_max_width", "min": 600, "max": 1200, "step": 10, "unit": "px", "label": "Container max width", "default": 900 },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [
+      { "value": "page", "label": "Section width" },
+      { "value": "full", "label": "Full width" }
+    ], "default": "page" },
+    { "type": "range", "id": "container_max_width", "min": 600, "max": 1200, "step": 10, "unit": "px", "label": "Container max width", "default": 900, "info": "Applies when Section width is selected." },
     { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (mobile)", "default": 32 },
     { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (mobile)", "default": 32 },
     { "type": "range", "id": "padding_top_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (desktop)", "default": 48 },

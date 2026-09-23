@@ -15,7 +15,11 @@
   }
 
   .section-{{ section.id }} .lf-wrap {
-    max-width: {{ section.settings.container_max_width }}px;
+    {% if section.settings.section_width == 'full' %}
+      max-width: none;
+    {% else %}
+      max-width: {{ section.settings.container_max_width }}px;
+    {% endif %}
     margin-left: auto;
     margin-right: auto;
     width: 100%;
