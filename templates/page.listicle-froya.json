@@ -2354,6 +2354,7 @@
             "image": "shopify://shop_images/raw_reviews-m.webp",
             "image_alt": "",
             "link": "",
+            "image_width_mode": "custom",
             "image_width_desktop": 600,
             "image_width_mobile": 160,
             "image_radius": 0,
@@ -2361,7 +2362,7 @@
             "alignment": "center",
             "width_desktop": "full",
             "width_mobile": "full",
-            "margin_top_mobile": 0,
+            "margin_top_mobile": 32,
             "margin_bottom_mobile": 0,
             "margin_top_desktop": 0,
             "margin_bottom_desktop": 0,
@@ -2408,39 +2409,144 @@
         "text_color": "#333333"
       }
     },
-    "listicle_froya_media": {
-      "type": "ltl-fry-media",
+    "ltl_fry_review_slider_HYmiW6": {
+      "type": "ltl-fry-review-slider",
       "blocks": {
-        "media_heading": {
-          "type": "heading",
+        "review_Cb3Yph": {
+          "type": "review",
           "settings": {
-            "text": "See it in action"
+            "media_type": "video",
+            "video": "shopify://files/videos/Barbara V.mp4",
+            "placeholder": "shopify://shop_images/Barbara.webp",
+            "video_aspect_ratio": "3 / 4",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Barbara V.",
+            "date": "Reviewed 09/27/2024",
+            "quote": "",
+            "description": "",
+            "product_label": "",
+            "feature_1_name": "",
+            "feature_2_name": "",
+            "feature_3_name": "",
+            "product": "pdrn-collagen-volume-balm",
+            "button_label": "SHOP NOW"
+          }
+        },
+        "review_bfQn46": {
+          "type": "review",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/Christy C..mp4",
+            "placeholder": "shopify://shop_images/christy.webp",
+            "video_aspect_ratio": "9 / 16",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Christy C.",
+            "date": "Posted on TikTok 01/03/2025",
+            "quote": "",
+            "description": "",
+            "product_label": "",
+            "feature_1_name": "",
+            "feature_2_name": "",
+            "feature_3_name": "",
+            "product": "5-step-bundle",
+            "button_label": "SHOP NOW"
+          }
+        },
+        "review_xgHMQf": {
+          "type": "review",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/April B..mp4",
+            "placeholder": "shopify://shop_images/April-1.webp",
+            "video_aspect_ratio": "9 / 16",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "April B.",
+            "date": "Posted on TikTok 10/10/2024",
+            "quote": "",
+            "description": "",
+            "product_label": "",
+            "feature_1_name": "",
+            "feature_2_name": "",
+            "feature_3_name": "",
+            "product": "zero-pore-pads",
+            "button_label": "SHOP NOW"
           }
         }
       },
       "block_order": [
-        "media_heading"
+        "review_Cb3Yph",
+        "review_bfQn46",
+        "review_xgHMQf"
+      ],
+      "custom_css": [
+        ".lfrs-card__quote {font-family: Libre Baskerville, serif; line-height: 1.2;}"
       ],
       "settings": {
-        "media_type": "gif",
-        "video_url": "",
-        "media_alt": "",
-        "aspect_ratio": "16 / 9",
+        "heading": "No One Has Before & Afters Like Rituel",
         "text_align": "center",
-        "media_bg_color": "#f3f4f6",
-        "media_border_radius": 12,
+        "section_width": "full",
+        "slider_type": "slide",
+        "autoplay": false,
+        "autoplay_speed": 5,
+        "lock_drag": false,
+        "columns_mobile": 1,
+        "columns_desktop": 4,
+        "gap_mobile": 16,
+        "gap_desktop": 24,
+        "show_arrows": true,
+        "show_pagination": false,
+        "card_bg_color": "#ffffff",
+        "card_border_width": 1,
+        "card_border_color": "#e5e7eb",
+        "card_border_radius": 8,
         "heading_font_size_mobile": 28,
         "heading_font_size_desktop": 40,
         "heading_font_weight": "600",
         "heading_color": "#1f2937",
-        "body_font_size_mobile": 15,
-        "body_font_size_desktop": 16,
-        "body_color": "#6b7280",
-        "bg_color": "#ffffff",
+        "star_color": "#fba124",
+        "star_size_mobile": 14,
+        "quote_font_size_mobile": 22,
+        "quote_color": "#374151",
+        "description_font_size_mobile": 14,
+        "description_color": "#4b5563",
+        "show_read_more": true,
+        "read_more_label": "Read more",
+        "read_less_label": "Read less",
+        "description_line_clamp": 3,
+        "read_more_color": "#c45c26",
+        "read_more_font_size": 14,
+        "read_more_font_weight": "400",
+        "name_font_size_mobile": 14,
+        "name_color": "#111827",
+        "feature_logo_size": 16,
+        "feature_font_size_mobile": 14,
+        "feature_color": "#1d2736",
+        "label_font_size_mobile": 12,
+        "label_color": "#9ca3af",
+        "product_bar_bg_color": "#f9fafb",
+        "product_bar_border_width": 1,
+        "product_bar_border_color": "#e5e7eb",
+        "product_bar_border_radius": 6,
+        "product_thumb_size": 48,
+        "product_title_font_size": 12,
+        "product_title_color": "#111827",
+        "product_price_font_size": 12,
+        "product_price_color": "#6b7280",
+        "button_bg_color": "#c45c26",
+        "button_text_color": "#ffffff",
+        "button_font_size": 11,
+        "button_font_weight": "700",
+        "button_padding_vertical": 8,
+        "button_padding_horizontal": 12,
+        "button_border_radius": 4,
+        "bg_color": "#faf8f6",
         "gradient_enabled": false,
-        "gradient_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(250, 248, 246, 1) 100%)",
+        "gradient_background": "linear-gradient(180deg, rgba(250, 248, 246, 1), rgba(255, 255, 255, 1) 100%)",
         "text_color": "#000000",
-        "container_max_width": 900,
+        "container_max_width": 1100,
         "padding_top_mobile": 32,
         "padding_bottom_mobile": 32,
         "padding_top_desktop": 48,
@@ -2453,32 +2559,50 @@
         "timeline_1": {
           "type": "timeline_step",
           "settings": {
-            "label": "Week 1",
-            "title": "First signs of change",
-            "text": "<p>Describe what happens at this stage.</p>"
+            "label": "",
+            "title": "Daily routine – Morning & night",
+            "text": "<h5>BALMS</h5><p>Apply a small amount to clean, dry skin. Our formulas are rich in botanicals, no fillers, no water, just pure skin-loving ingredients. A little goes a long way!</p>"
           }
         },
         "timeline_2": {
           "type": "timeline_step",
           "settings": {
-            "label": "Week 4",
-            "title": "Visible improvement",
-            "text": "<p>Describe what happens at this stage.</p>"
+            "label": "",
+            "title": "Exfoliate",
+            "text": "<h5>SCRUB</h5><p>Use 2-3 times a week in the shower. Before getting in, add a small amount to your dry palm, mix with water, and gently massage your face. Avoid introducing water into the jar, keep it dry for lasting freshness.</p>"
           }
         },
         "timeline_3": {
           "type": "timeline_step",
           "settings": {
-            "label": "Week 8",
-            "title": "Full results",
-            "text": "<p>Describe what happens at this stage.</p>"
+            "label": "",
+            "title": "Targeted care when you need it",
+            "text": "<h5>Balm for Dry, Itchy Skin</h5><p>Apply 2-3 times daily to clean, dry skin. Use a thin layer and reapply frequently throughout the day for best results.</p>"
+          }
+        },
+        "timeline_step_chCCqz": {
+          "type": "timeline_step",
+          "settings": {
+            "label": "",
+            "title": "JOINT & MUSCLE BALM",
+            "text": "<h5>Balm for Dry, Itchy Skin</h5><p>Apply 2-3 times daily to clean, dry skin. Use a thin layer and reapply frequently throughout the day for best results.</p>"
+          }
+        },
+        "timeline_step_zCTYhC": {
+          "type": "timeline_step",
+          "settings": {
+            "label": "",
+            "title": "Keep it simple.No extra products needed.",
+            "text": "<p>Skip the extra cleansers and face washes, your skin doesn’t need them. Overwashing strips natural oils, leading to dryness and breakouts.</p><p>Let your skin breathe, and let Frøya do the work.</p>"
           }
         }
       },
       "block_order": [
         "timeline_1",
         "timeline_2",
-        "timeline_3"
+        "timeline_3",
+        "timeline_step_chCCqz",
+        "timeline_step_zCTYhC"
       ],
       "settings": {
         "heading": "Your transformation timeline",
@@ -2510,7 +2634,7 @@
         "step_text_color": "#4b5563",
         "bg_color": "#ffffff",
         "gradient_enabled": false,
-        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
+        "gradient_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(250, 248, 246, 1) 100%)",
         "text_color": "#000000",
         "body_color": "#374151",
         "body_font_size_mobile": 16,
@@ -2598,7 +2722,7 @@
         "desc_color": "#4b5563",
         "bg_color": "#faf8f6",
         "gradient_enabled": false,
-        "gradient_background": "linear-gradient(180deg, rgba(250,248,246,1), rgba(255,255,255,1) 100%)",
+        "gradient_background": "linear-gradient(180deg, rgba(250, 248, 246, 1), rgba(255, 255, 255, 1) 100%)",
         "text_color": "#000000",
         "body_color": "#374151",
         "body_font_size_mobile": 16,
@@ -2765,7 +2889,7 @@
     "listicle_froya_icons_2",
     "custom_section_K7bGfr",
     "custom_section_b7KYPk",
-    "listicle_froya_media",
+    "ltl_fry_review_slider_HYmiW6",
     "listicle_froya_timeline",
     "listicle_froya_ingredients",
     "listicle_froya_hero_bottom",
