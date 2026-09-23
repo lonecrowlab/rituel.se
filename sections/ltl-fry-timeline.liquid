@@ -87,6 +87,17 @@
     gap: 28px;
   }
 
+  {% if section.settings.section_width == 'full' %}
+    .section-{{ section.id }} .lft-content {
+      padding-left: {{ section.settings.side_padding }}px;
+      padding-right: {{ section.settings.side_padding }}px;
+    }
+
+    .section-{{ section.id }} .lft-media__image {
+      border-radius: 0;
+    }
+  {% endif %}
+
   .section-{{ section.id }} .lft-media__image {
     display: block;
     width: 100%;
@@ -114,6 +125,7 @@
   .section-{{ section.id }} .lft-timeline {
     --lft-dot-size: {{ section.settings.dot_size }}px;
     --lft-dot-gap: {{ section.settings.line_offset }}px;
+    --lft-dot-line-gap: {{ section.settings.dot_line_gap }}px;
     position: relative;
   }
 
@@ -157,7 +169,11 @@
     height: var(--lft-dot-size);
     border-radius: 50%;
     background: {{ section.settings.marker_inactive_color }};
-    box-shadow: 0 0 0 4px {{ section.settings.bg_color }};
+    {% if section.settings.dot_line_gap > 0 %}
+      box-shadow: 0 0 0 var(--lft-dot-line-gap) {{ section.settings.bg_color }};
+    {% else %}
+      box-shadow: none;
+    {% endif %}
   }
 
   .section-{{ section.id }} .lft-step.is-active .lft-step__dot,
@@ -227,6 +243,18 @@
       margin-right: auto;
     }
 
+    {% if section.settings.section_width == 'full' %}
+      .section-{{ section.id }} .lft-media {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .section-{{ section.id }} .lft-content {
+        padding-left: {{ section.settings.side_padding }}px;
+        padding-right: {{ section.settings.side_padding }}px;
+      }
+    {% endif %}
+
     .section-{{ section.id }} .lft-media {
       position: sticky;
       top: {{ section.settings.sticky_top }}px;
@@ -273,12 +301,13 @@
     { "type": "header", "content": "Image" },
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "range", "id": "image_border_radius", "min": 0, "max": 24, "step": 2, "unit": "px", "label": "Image radius", "default": 0 },
-    { "type": "range", "id": "column_gap", "min": 24, "max": 80, "step": 4, "unit": "px", "label": "Column gap", "default": 48 },
+    { "type": "range", "id": "column_gap", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Column gap", "default": 48 },
     { "type": "range", "id": "sticky_top", "min": 20, "max": 160, "step": 4, "unit": "px", "label": "Sticky image offset", "default": 96 },
     { "type": "header", "content": "Timeline" },
     { "type": "checkbox", "id": "highlight_all", "label": "Highlight all", "default": true, "info": "Highlights every timeline marker and the connecting line by default" },
     { "type": "range", "id": "dot_size", "min": 10, "max": 24, "step": 2, "unit": "px", "label": "Dot size", "default": 14 },
-    { "type": "range", "id": "line_offset", "min": 12, "max": 40, "step": 2, "unit": "px", "label": "Gap between dot and text", "default": 20 },
+    { "type": "range", "id": "line_offset", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Gap between dot and text", "default": 20 },
+    { "type": "range", "id": "dot_line_gap", "min": 0, "max": 12, "step": 1, "unit": "px", "label": "Gap between line and dot", "default": 0, "info": "0 makes the line connect through the dots with no ring gap." },
     { "type": "range", "id": "line_width", "min": 1, "max": 8, "step": 1, "unit": "px", "label": "Line width", "default": 2 },
     { "type": "color", "id": "line_color", "label": "Line color", "default": "#e5e7eb" },
     { "type": "color", "id": "marker_bg_color", "label": "Active marker color", "default": "#b89aa6" },
@@ -328,6 +357,7 @@
       { "value": "full", "label": "Full width" }
     ], "default": "page" },
     { "type": "range", "id": "container_max_width", "min": 600, "max": 1400, "step": 10, "unit": "px", "label": "Container max width", "default": 1100, "info": "Applies when Section width is selected." },
+    { "type": "range", "id": "side_padding", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Content side padding", "default": 24, "info": "Used when Full width is selected. Image stays edge-to-edge on desktop." },
     { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (mobile)", "default": 32 },
     { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (mobile)", "default": 32 },
     { "type": "range", "id": "padding_top_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (desktop)", "default": 48 },
