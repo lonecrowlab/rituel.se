@@ -2354,7 +2354,7 @@
             "image": "shopify://shop_images/raw_reviews-m.webp",
             "image_alt": "",
             "link": "",
-            "image_width_desktop": 200,
+            "image_width_desktop": 600,
             "image_width_mobile": 160,
             "image_radius": 0,
             "image_fit": "contain",
