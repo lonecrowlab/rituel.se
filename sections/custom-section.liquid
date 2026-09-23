@@ -532,7 +532,7 @@
         {% if block.settings.image_width_mode == 'full' %}
           width: 100%;
         {% else %}
-          width: {{ block.settings.image_width_mobile }}px;
+          width: {{ block.settings.image_width_mobile | default: 160 }}px;
         {% endif %}
         max-width: 100%;
         border-radius: {{ block.settings.image_radius }}px;
@@ -548,7 +548,7 @@
           height: auto;
           aspect-ratio: 1;
         {% else %}
-          height: {{ block.settings.image_width_mobile }}px;
+          height: {{ block.settings.image_width_mobile | default: 160 }}px;
         {% endif %}
       }
     {% endif %}
@@ -667,7 +667,7 @@
           {% if block.settings.image_width_mode == 'full' %}
             width: 100%;
           {% else %}
-            width: {{ block.settings.image_width_desktop }}px;
+            width: {{ block.settings.image_width_desktop | default: 200 }}px;
           {% endif %}
         }
 
@@ -676,7 +676,7 @@
             height: auto;
             aspect-ratio: 1;
           {% else %}
-            height: {{ block.settings.image_width_desktop }}px;
+            height: {{ block.settings.image_width_desktop | default: 200 }}px;
           {% endif %}
         }
       {% endif %}
@@ -1148,25 +1148,19 @@
           "default": "custom"
         },
         {
-          "type": "range",
+          "type": "number",
           "id": "image_width_desktop",
-          "min": 40,
-          "max": 1200,
-          "step": 8,
-          "unit": "px",
           "label": "Custom width (desktop)",
           "default": 200,
+          "info": "Width in pixels",
           "visible_if": "{{ block.settings.image_width_mode == 'custom' }}"
         },
         {
-          "type": "range",
+          "type": "number",
           "id": "image_width_mobile",
-          "min": 40,
-          "max": 600,
-          "step": 8,
-          "unit": "px",
           "label": "Custom width (mobile)",
           "default": 160,
+          "info": "Width in pixels",
           "visible_if": "{{ block.settings.image_width_mode == 'custom' }}"
         },
         { "type": "range", "id": "image_radius", "min": 0, "max": 50, "step": 2, "unit": "px", "label": "Border radius", "default": 0 },
