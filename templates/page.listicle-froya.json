@@ -2559,40 +2559,40 @@
         "timeline_1": {
           "type": "timeline_step",
           "settings": {
-            "label": "",
             "title": "Daily routine – Morning & night",
+            "label": "",
             "text": "<h5>BALMS</h5><p>Apply a small amount to clean, dry skin. Our formulas are rich in botanicals, no fillers, no water, just pure skin-loving ingredients. A little goes a long way!</p>"
           }
         },
         "timeline_2": {
           "type": "timeline_step",
           "settings": {
-            "label": "",
             "title": "Exfoliate",
+            "label": "",
             "text": "<h5>SCRUB</h5><p>Use 2-3 times a week in the shower. Before getting in, add a small amount to your dry palm, mix with water, and gently massage your face. Avoid introducing water into the jar, keep it dry for lasting freshness.</p>"
           }
         },
         "timeline_3": {
           "type": "timeline_step",
           "settings": {
-            "label": "",
             "title": "Targeted care when you need it",
+            "label": "",
             "text": "<h5>Balm for Dry, Itchy Skin</h5><p>Apply 2-3 times daily to clean, dry skin. Use a thin layer and reapply frequently throughout the day for best results.</p>"
           }
         },
         "timeline_step_chCCqz": {
           "type": "timeline_step",
           "settings": {
-            "label": "",
             "title": "JOINT & MUSCLE BALM",
+            "label": "",
             "text": "<h5>Balm for Dry, Itchy Skin</h5><p>Apply 2-3 times daily to clean, dry skin. Use a thin layer and reapply frequently throughout the day for best results.</p>"
           }
         },
         "timeline_step_zCTYhC": {
           "type": "timeline_step",
           "settings": {
-            "label": "",
             "title": "Keep it simple.No extra products needed.",
+            "label": "",
             "text": "<p>Skip the extra cleansers and face washes, your skin doesn’t need them. Overwashing strips natural oils, leading to dryness and breakouts.</p><p>Let your skin breathe, and let Frøya do the work.</p>"
           }
         }
@@ -2608,14 +2608,20 @@
         "heading": "Your transformation timeline",
         "subheading": "",
         "text_align": "center",
-        "line_offset": 48,
+        "image": "shopify://shop_images/Hero_9653fcf2-b13b-4472-9891-476cc9621d68-change-the-produc-of-this-image-to-it-will-be-appl_1.jpg",
+        "image_border_radius": 8,
+        "column_gap": 48,
+        "sticky_top": 96,
+        "highlight_all": true,
+        "dot_size": 14,
+        "line_offset": 32,
         "line_width": 3,
         "line_color": "#e5e7eb",
         "marker_bg_color": "#cc667c",
+        "marker_inactive_color": "#e5e7eb",
         "marker_text_color": "#ffffff",
         "marker_font_size_mobile": 12,
         "marker_font_size_desktop": 13,
-        "image_border_radius": 8,
         "step_spacing_mobile": 24,
         "step_spacing_desktop": 32,
         "heading_font_size_mobile": 28,
@@ -2628,6 +2634,7 @@
         "step_title_size_mobile": 18,
         "step_title_size_desktop": 22,
         "step_title_weight": "600",
+        "step_title_style": "italic",
         "step_title_color": "#111827",
         "step_text_size_mobile": 14,
         "step_text_size_desktop": 15,
@@ -2734,73 +2741,97 @@
         "padding_bottom_desktop": 48
       }
     },
-    "listicle_froya_hero_bottom": {
-      "type": "ltl-fry-hero",
+    "custom_hero_Fiw4pw": {
+      "type": "custom-hero",
       "blocks": {
-        "heading_3": {
+        "heading_99HM3E": {
           "type": "heading",
           "settings": {
-            "text": "Final call to action",
-            "tag": "h2"
+            "heading": "Premium Product That Solves Your Problem",
+            "heading_accent": "Fastest Solution.",
+            "highlight_position": "inline_last",
+            "use_theme_colors": false,
+            "font_size_desktop": 48,
+            "font_size_mobile": 32,
+            "line_height": 1.2,
+            "font_weight": "700",
+            "letter_spacing": 0,
+            "text_transform": "none",
+            "heading_color": "#000000",
+            "highlight_color": "#ef4a65",
+            "use_highlight_gradient": false,
+            "highlight_gradient": "",
+            "highlight_font_size_desktop": 48,
+            "highlight_font_size_mobile": 32,
+            "highlight_font_weight": "700",
+            "margin_top": 0,
+            "margin_bottom": 16
           }
         },
-        "text_3": {
-          "type": "text",
+        "subtitle_krxNDY": {
+          "type": "subtitle",
           "settings": {
-            "text": "<p>Close the page with a strong offer.</p>"
-          }
-        },
-        "button_3": {
-          "type": "button",
-          "settings": {
-            "label": "Shop now",
-            "link": ""
+            "subtitle": "<p>Clinically proven Arctic botanicals, smoothing wrinkles for over 583,000 women. No synthetics, no prescriptions. Just plants that work from the very first use…</p>",
+            "text_color": "#000000",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "margin_top": 0,
+            "margin_bottom": 24
           }
         }
       },
       "block_order": [
-        "heading_3",
-        "text_3",
-        "button_3"
+        "heading_99HM3E",
+        "subtitle_krxNDY"
       ],
+      "name": "Custom Hero",
       "settings": {
-        "image_position": "right",
-        "vertical_alignment": "center",
-        "text_align": "left",
-        "column_gap_mobile": 24,
-        "column_gap_desktop": 48,
-        "block_spacing_mobile": 12,
-        "block_spacing_desktop": 16,
-        "image_border_radius": 8,
-        "eyebrow_font_size_mobile": 12,
-        "eyebrow_font_size_desktop": 13,
-        "eyebrow_color": "#666666",
-        "heading_font_size_mobile": 32,
-        "heading_font_size_desktop": 48,
-        "heading_font_weight": "600",
-        "heading_color": "#1f2937",
-        "body_font_size_mobile": 16,
-        "body_font_size_desktop": 18,
-        "body_color": "#374151",
-        "star_color": "#fba124",
-        "button_font_size_mobile": 14,
-        "button_font_size_desktop": 16,
-        "button_font_weight": "600",
-        "button_bg_color": "#000000",
-        "button_text_color": "#ffffff",
-        "button_border_radius": 8,
-        "button_padding_vertical": 14,
-        "button_padding_horizontal": 32,
-        "button_full_width": false,
-        "bg_color": "#ffffff",
-        "gradient_enabled": false,
-        "gradient_background": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)",
-        "text_color": "#000000",
+        "use_theme_colors": true,
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "hero_image": "shopify://shop_images/image_5f045aa2-2f90-4335-8fbc-927d8d2eb077.webp",
+        "image_position": "left",
+        "fit_image_to_height": true,
+        "overlay_content_desktop": false,
+        "overlay_content_mobile": false,
+        "overlay_position_desktop": "center",
+        "overlay_position_mobile": "center",
+        "overlay_padding": 24,
+        "desktop_aspect_ratio": "auto",
+        "mobile_aspect_ratio": "auto",
+        "enable_image_fade_mask": false,
+        "image_fade_mask_height": 50,
+        "section_padding_vertical": 60,
+        "section_padding_horizontal": 40,
+        "section_padding_vertical_mobile": 40,
+        "section_padding_horizontal_mobile": 20,
+        "content_padding_vertical": 20,
+        "content_padding_horizontal": 20,
+        "content_padding_mobile": 15,
+        "section_bg": "#f5f5f5",
+        "enable_gradient": false,
+        "section_gradient_background": "linear-gradient(135deg, rgba(247, 245, 252, 1), rgba(230, 225, 249, 1) 100%)",
+        "contain_section": false,
         "container_max_width": 1200,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32,
-        "padding_top_desktop": 60,
-        "padding_bottom_desktop": 60
+        "container_bg_color": "#ffffff",
+        "enable_container_gradient": false,
+        "container_gradient_background": "linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(248, 248, 248, 1) 100%)",
+        "container_padding_top": 40,
+        "container_padding_right": 40,
+        "container_padding_bottom": 40,
+        "container_padding_left": 40,
+        "container_padding_top_mobile": 30,
+        "container_padding_right_mobile": 20,
+        "container_padding_bottom_mobile": 30,
+        "container_padding_left_mobile": 20,
+        "enable_border": false,
+        "border_width": 1,
+        "border_style": "solid",
+        "border_color": "#e5e7eb",
+        "border_radius": 8,
+        "enable_shadow": false
       }
     },
     "listicle_froya_guarantee_2": {
@@ -2892,7 +2923,7 @@
     "ltl_fry_review_slider_HYmiW6",
     "listicle_froya_timeline",
     "listicle_froya_ingredients",
-    "listicle_froya_hero_bottom",
+    "custom_hero_Fiw4pw",
     "listicle_froya_guarantee_2"
   ]
 }
