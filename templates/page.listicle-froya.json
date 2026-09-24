@@ -3190,7 +3190,7 @@
           "type": "text",
           "settings": {
             "style": "heading",
-            "text": "<h3>Better skin in 60 days or money-back guarantee</h3>",
+            "text": "<h2>Better skin in 60 days or money-back guarantee</h2>",
             "font_source": "heading",
             "font_regular": "assistant_n4",
             "font_weight_regular": "400",
