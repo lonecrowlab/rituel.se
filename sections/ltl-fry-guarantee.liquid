@@ -67,9 +67,15 @@
                 {% endif %}
               {% when 'link' %}
                 {% if block.settings.label != blank %}
-                  {%- assign visibility = block.settings.visibility | default: 'all' -%}
+                  {%- liquid
+                    assign visibility = block.settings.visibility | default: 'all'
+                    assign show_underline = true
+                    if block.settings.show_underline == false
+                      assign show_underline = false
+                    endif
+                  -%}
                   <a
-                    class="lfg-link lfg-block-{{ block.id }} lfg-device-{{ visibility }}"
+                    class="lfg-link lfg-block-{{ block.id }} lfg-device-{{ visibility }}{% if show_underline %} lfg-link--underline{% endif %}"
                     href="{{ block.settings.link | default: '#' }}"
                     {{ block.shopify_attributes }}
                   >{{ block.settings.label }}</a>
@@ -211,7 +217,13 @@
     width: 100%;
   }
 
-  .section-{{ section.id }} .lfg-text p {
+  .section-{{ section.id }} .lfg-text p,
+  .section-{{ section.id }} .lfg-text h1,
+  .section-{{ section.id }} .lfg-text h2,
+  .section-{{ section.id }} .lfg-text h3,
+  .section-{{ section.id }} .lfg-text h4,
+  .section-{{ section.id }} .lfg-text h5,
+  .section-{{ section.id }} .lfg-text h6 {
     margin: 0;
   }
 
@@ -220,14 +232,19 @@
   }
 
   .section-{{ section.id }} .lfg-link {
-    display: inline-flex;
+    display: inline-block;
     color: {{ section.settings.link_color }};
     font-size: {{ section.settings.link_font_size_mobile }}px;
     font-weight: {{ section.settings.link_font_weight }};
     letter-spacing: {{ section.settings.link_letter_spacing }}px;
     text-transform: {{ section.settings.link_text_transform }};
-    text-decoration: underline;
+    text-decoration: none !important;
+  }
+
+  .section-{{ section.id }} .lfg-link.lfg-link--underline {
+    text-decoration: underline !important;
     text-underline-offset: 3px;
+    text-decoration-thickness: from-font;
   }
 
   .section-{{ section.id }} .lfg-btn-wrap {
@@ -260,9 +277,9 @@
     display: block;
   }
 
-  .section-{{ section.id }} a.lfg-device-mobile,
-  .section-{{ section.id }} a.lfg-device-all {
-    display: inline-flex;
+  .section-{{ section.id }} a.lfg-link.lfg-device-mobile,
+  .section-{{ section.id }} a.lfg-link.lfg-device-all {
+    display: inline-block;
   }
 
   .section-{{ section.id }} .lfg-btn-wrap.lfg-device-mobile,
@@ -272,23 +289,34 @@
 
   {% for block in section.blocks %}
     {% if block.type == 'text' %}
+      .section-{{ section.id }} .lfg-block-{{ block.id }},
+      .section-{{ section.id }} .lfg-block-{{ block.id }} p,
+      .section-{{ section.id }} .lfg-block-{{ block.id }} h1,
+      .section-{{ section.id }} .lfg-block-{{ block.id }} h2,
+      .section-{{ section.id }} .lfg-block-{{ block.id }} h3,
+      .section-{{ section.id }} .lfg-block-{{ block.id }} h4,
+      .section-{{ section.id }} .lfg-block-{{ block.id }} h5,
+      .section-{{ section.id }} .lfg-block-{{ block.id }} h6 {
+        font-size: {{ block.settings.font_size_mobile | default: 15 }}px !important;
+        line-height: {{ block.settings.line_height | default: 14 | times: 0.1 }} !important;
+        color: {{ block.settings.color | default: '#111111' }} !important;
+        letter-spacing: {{ block.settings.letter_spacing | default: 0 | times: 0.01 }}em !important;
+        text-transform: {{ block.settings.text_transform | default: 'none' }} !important;
+        font-weight: {{ block.settings.font_weight_regular | default: 400 }} !important;
+        {% if block.settings.font_source == 'custom' and block.settings.font_regular != blank %}
+          font-family: {{ block.settings.font_regular.family }}, {{ block.settings.font_regular.fallback_families }} !important;
+        {% elsif block.settings.font_source == 'heading' %}
+          font-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }} !important;
+        {% else %}
+          font-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }} !important;
+        {% endif %}
+      }
+
       .section-{{ section.id }} .lfg-block-{{ block.id }} {
-        font-size: {{ block.settings.font_size_mobile | default: 15 }}px;
-        line-height: {{ block.settings.line_height | default: 14 | times: 0.1 }};
-        color: {{ block.settings.color | default: '#111111' }};
         text-align: {{ block.settings.text_align | default: section.settings.text_align }};
-        letter-spacing: {{ block.settings.letter_spacing | default: 0 | times: 0.01 }}em;
-        text-transform: {{ block.settings.text_transform | default: 'none' }};
         margin-top: {{ block.settings.margin_top | default: 0 }}px;
         margin-bottom: {{ block.settings.margin_bottom_mobile | default: 0 }}px;
-        font-weight: {{ block.settings.font_weight_regular | default: 400 }};
-        {% if block.settings.font_source == 'custom' and block.settings.font_regular != blank %}
-          font-family: {{ block.settings.font_regular.family }}, {{ block.settings.font_regular.fallback_families }};
-        {% elsif block.settings.font_source == 'heading' %}
-          font-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
-        {% else %}
-          font-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
-        {% endif %}
+        padding: {{ block.settings.padding_top | default: 0 }}px {{ block.settings.padding_right | default: 0 }}px {{ block.settings.padding_bottom | default: 0 }}px {{ block.settings.padding_left | default: 0 }}px;
         {% if block.settings.max_width > 0 %}
           max-width: {{ block.settings.max_width }}px;
         {% endif %}
@@ -297,21 +325,28 @@
       .section-{{ section.id }} .lfg-block-{{ block.id }} strong,
       .section-{{ section.id }} .lfg-block-{{ block.id }} b {
         {% if block.settings.font_source == 'custom' and block.settings.font_bold != blank %}
-          font-family: {{ block.settings.font_bold.family }}, {{ block.settings.font_bold.fallback_families }};
+          font-family: {{ block.settings.font_bold.family }}, {{ block.settings.font_bold.fallback_families }} !important;
         {% endif %}
-        font-weight: {{ block.settings.font_weight_bold | default: 700 }};
+        font-weight: {{ block.settings.font_weight_bold | default: 700 }} !important;
       }
     {% endif %}
 
     {% if block.type == 'link' %}
       .section-{{ section.id }} .lfg-block-{{ block.id }} {
-        color: {{ block.settings.color | default: section.settings.link_color }};
-        font-size: {{ block.settings.font_size_mobile | default: section.settings.link_font_size_mobile }}px;
-        font-weight: {{ block.settings.font_weight | default: section.settings.link_font_weight }};
-        letter-spacing: {{ block.settings.letter_spacing | default: section.settings.link_letter_spacing }}px;
-        text-transform: {{ block.settings.text_transform | default: section.settings.link_text_transform }};
+        color: {{ block.settings.color | default: section.settings.link_color }} !important;
+        font-size: {{ block.settings.font_size_mobile | default: section.settings.link_font_size_mobile }}px !important;
+        font-weight: {{ block.settings.font_weight | default: section.settings.link_font_weight }} !important;
+        letter-spacing: {{ block.settings.letter_spacing | default: section.settings.link_letter_spacing }}px !important;
+        text-transform: {{ block.settings.text_transform | default: section.settings.link_text_transform }} !important;
         margin-top: {{ block.settings.margin_top | default: 0 }}px;
         margin-bottom: {{ block.settings.margin_bottom_mobile | default: 0 }}px;
+        padding: {{ block.settings.padding_top | default: 0 }}px {{ block.settings.padding_right | default: 0 }}px {{ block.settings.padding_bottom | default: 0 }}px {{ block.settings.padding_left | default: 0 }}px;
+        {% if block.settings.show_underline == false %}
+          text-decoration: none !important;
+        {% else %}
+          text-decoration: underline !important;
+          text-underline-offset: 3px;
+        {% endif %}
       }
     {% endif %}
 
@@ -384,9 +419,9 @@
       display: block;
     }
 
-    .section-{{ section.id }} a.lfg-device-desktop,
-    .section-{{ section.id }} a.lfg-device-all {
-      display: inline-flex;
+    .section-{{ section.id }} a.lfg-link.lfg-device-desktop,
+    .section-{{ section.id }} a.lfg-link.lfg-device-all {
+      display: inline-block;
     }
 
     .section-{{ section.id }} .lfg-btn-wrap.lfg-device-desktop,
@@ -396,15 +431,25 @@
 
     {% for block in section.blocks %}
       {% if block.type == 'text' %}
+        .section-{{ section.id }} .lfg-block-{{ block.id }},
+        .section-{{ section.id }} .lfg-block-{{ block.id }} p,
+        .section-{{ section.id }} .lfg-block-{{ block.id }} h1,
+        .section-{{ section.id }} .lfg-block-{{ block.id }} h2,
+        .section-{{ section.id }} .lfg-block-{{ block.id }} h3,
+        .section-{{ section.id }} .lfg-block-{{ block.id }} h4,
+        .section-{{ section.id }} .lfg-block-{{ block.id }} h5,
+        .section-{{ section.id }} .lfg-block-{{ block.id }} h6 {
+          font-size: {{ block.settings.font_size_desktop | default: 16 }}px !important;
+        }
+
         .section-{{ section.id }} .lfg-block-{{ block.id }} {
-          font-size: {{ block.settings.font_size_desktop | default: 16 }}px;
           margin-bottom: {{ block.settings.margin_bottom_desktop | default: 0 }}px;
         }
       {% endif %}
 
       {% if block.type == 'link' %}
         .section-{{ section.id }} .lfg-block-{{ block.id }} {
-          font-size: {{ block.settings.font_size_desktop | default: section.settings.link_font_size_desktop }}px;
+          font-size: {{ block.settings.font_size_desktop | default: section.settings.link_font_size_desktop }}px !important;
           margin-bottom: {{ block.settings.margin_bottom_desktop | default: 0 }}px;
         }
       {% endif %}
@@ -707,7 +752,8 @@
             { "value": "heading", "label": "Heading" },
             { "value": "eyebrow", "label": "Eyebrow" }
           ],
-          "default": "body"
+          "default": "body",
+          "info": "Label only. Size, font, and spacing below always apply."
         },
         {
           "type": "richtext",
@@ -767,8 +813,8 @@
           ],
           "default": "700"
         },
-        { "type": "range", "id": "font_size_mobile", "min": 10, "max": 48, "step": 1, "unit": "px", "label": "Size (mobile)", "default": 22 },
-        { "type": "range", "id": "font_size_desktop", "min": 10, "max": 64, "step": 1, "unit": "px", "label": "Size (desktop)", "default": 28 },
+        { "type": "range", "id": "font_size_mobile", "min": 10, "max": 64, "step": 1, "unit": "px", "label": "Size (mobile)", "default": 22 },
+        { "type": "range", "id": "font_size_desktop", "min": 10, "max": 80, "step": 1, "unit": "px", "label": "Size (desktop)", "default": 28 },
         { "type": "range", "id": "line_height", "min": 10, "max": 20, "step": 1, "label": "Line height", "default": 13, "info": "10 = 1.0, 14 = 1.4" },
         { "type": "range", "id": "letter_spacing", "min": 0, "max": 20, "step": 1, "label": "Letter spacing", "default": 0, "info": "0–20. 6 = 0.06em" },
         {
@@ -799,6 +845,10 @@
           "type": "header",
           "content": "Spacing and device"
         },
+        { "type": "range", "id": "padding_top", "min": 0, "max": 60, "step": 2, "unit": "px", "label": "Padding top", "default": 0 },
+        { "type": "range", "id": "padding_bottom", "min": 0, "max": 60, "step": 2, "unit": "px", "label": "Padding bottom", "default": 0 },
+        { "type": "range", "id": "padding_left", "min": 0, "max": 60, "step": 2, "unit": "px", "label": "Padding left", "default": 0 },
+        { "type": "range", "id": "padding_right", "min": 0, "max": 60, "step": 2, "unit": "px", "label": "Padding right", "default": 0 },
         { "type": "range", "id": "margin_top", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Margin top", "default": 0 },
         { "type": "range", "id": "margin_bottom_mobile", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Margin bottom (mobile)", "default": 0 },
         { "type": "range", "id": "margin_bottom_desktop", "min": 0, "max": 48, "step": 2, "unit": "px", "label": "Margin bottom (desktop)", "default": 0 },
@@ -822,6 +872,7 @@
       "settings": [
         { "type": "text", "id": "label", "label": "Label", "default": "LEARN MORE" },
         { "type": "url", "id": "link", "label": "Link" },
+        { "type": "checkbox", "id": "show_underline", "label": "Show underline", "default": true },
         { "type": "color", "id": "color", "label": "Color", "default": "#111111" },
         { "type": "range", "id": "font_size_mobile", "min": 10, "max": 22, "step": 1, "unit": "px", "label": "Size (mobile)", "default": 13 },
         { "type": "range", "id": "font_size_desktop", "min": 10, "max": 22, "step": 1, "unit": "px", "label": "Size (desktop)", "default": 14 },
@@ -848,6 +899,10 @@
           ],
           "default": "uppercase"
         },
+        { "type": "range", "id": "padding_top", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Padding top", "default": 0 },
+        { "type": "range", "id": "padding_bottom", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Padding bottom", "default": 0 },
+        { "type": "range", "id": "padding_left", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Padding left", "default": 0 },
+        { "type": "range", "id": "padding_right", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Padding right", "default": 0 },
         { "type": "range", "id": "margin_top", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Margin top", "default": 4 },
         { "type": "range", "id": "margin_bottom_mobile", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Margin bottom (mobile)", "default": 0 },
         { "type": "range", "id": "margin_bottom_desktop", "min": 0, "max": 48, "step": 2, "unit": "px", "label": "Margin bottom (desktop)", "default": 0 },
@@ -948,7 +1003,7 @@
             "color": "#111111"
           }
         },
-        { "type": "link" },
+        { "type": "link", "settings": { "show_underline": true } },
         { "type": "button" }
       ]
     }
