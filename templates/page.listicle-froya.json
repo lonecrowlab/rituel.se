@@ -2612,7 +2612,7 @@
           "settings": {
             "title": "Daily routine – Morning & night",
             "label": "",
-            "text": "<h5>BALMS</h5><p>Apply a small amount to clean, dry skin. Our formulas are rich in botanicals, no fillers, no water, just pure skin-loving ingredients. A little goes a long way!</p>"
+            "text": "<p><strong>BALMS</strong></p><p>Apply a small amount to clean, dry skin. Our formulas are rich in botanicals, no fillers, no water, just pure skin-loving ingredients. A little goes a long way!</p>"
           }
         },
         "timeline_2": {
@@ -2620,7 +2620,7 @@
           "settings": {
             "title": "Exfoliate",
             "label": "",
-            "text": "<h5>SCRUB</h5><p>Use 2-3 times a week in the shower. Before getting in, add a small amount to your dry palm, mix with water, and gently massage your face. Avoid introducing water into the jar, keep it dry for lasting freshness.</p>"
+            "text": "<p><strong>SCRUB</strong></p><p>Use 2-3 times a week in the shower. Before getting in, add a small amount to your dry palm, mix with water, and gently massage your face. Avoid introducing water into the jar, keep it dry for lasting freshness.</p>"
           }
         },
         "timeline_3": {
@@ -2628,15 +2628,7 @@
           "settings": {
             "title": "Targeted care when you need it",
             "label": "",
-            "text": "<h5>Balm for Dry, Itchy Skin</h5><p>Apply 2-3 times daily to clean, dry skin. Use a thin layer and reapply frequently throughout the day for best results.</p>"
-          }
-        },
-        "timeline_step_chCCqz": {
-          "type": "timeline_step",
-          "settings": {
-            "title": "JOINT & MUSCLE BALM",
-            "label": "",
-            "text": "<h5>Balm for Dry, Itchy Skin</h5><p>Apply 2-3 times daily to clean, dry skin. Use a thin layer and reapply frequently throughout the day for best results.</p>"
+            "text": "<p><strong>BALM FOR DRY, ITCHY SKIN</strong></p><p>Apply 2-3 times daily to clean, dry skin. Use a thin layer and reapply frequently throughout the day for best results.</p><p><strong>JOINT & MUSCLE BALM</strong></p><p>Massage into sore joints or muscles. You’ll feel a light tingling, that’s the balm warming the area and starting to work immediately.</p>"
           }
         },
         "timeline_step_zCTYhC": {
@@ -2652,7 +2644,6 @@
         "timeline_1",
         "timeline_2",
         "timeline_3",
-        "timeline_step_chCCqz",
         "timeline_step_zCTYhC"
       ],
       "settings": {
