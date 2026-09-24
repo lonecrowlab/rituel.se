@@ -3189,7 +3189,7 @@
         "g_text_2": {
           "type": "text",
           "settings": {
-            "style": "body",
+            "style": "heading",
             "text": "<h3>Better skin in 60 days or money-back guarantee</h3>",
             "font_source": "heading",
             "font_regular": "assistant_n4",
@@ -3197,7 +3197,7 @@
             "font_bold": "assistant_n7",
             "font_weight_bold": "700",
             "font_size_mobile": 22,
-            "font_size_desktop": 29,
+            "font_size_desktop": 42,
             "line_height": 10,
             "letter_spacing": 0,
             "text_transform": "none",
