@@ -2779,13 +2779,21 @@
             "margin_bottom": 24
           }
         },
+        "custom_html_m7kLLk": {
+          "type": "custom_html",
+          "settings": {
+            "custom_html": "<style>\n#text_n8Vc8w ul {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}\n\n#text_n8Vc8w ul li {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n  font-size: 14px;\n  line-height: 1.35;\n  margin: 4px 0;\n}\n\n#text_n8Vc8w ul li::before {\n  content: \"\";\n  width: 12px;\n  height: 12px;\n  border-radius: 50%;\n  flex-shrink: 0;\n  display: inline-block;\n}\n\n/* Color per level */\n#text_n8Vc8w ul li:nth-child(1)::before { background-color: #e63946; } /* red */\n#text_n8Vc8w ul li:nth-child(2)::before { background-color: #f77f00; } /* orange */\n#text_n8Vc8w ul li:nth-child(3)::before { background-color: #fcbf49; } /* yellow */\n#text_n8Vc8w ul li:nth-child(4)::before { background-color: #90be6d; } /* light green */\n#text_n8Vc8w ul li:nth-child(5)::before { background-color: #2a9d8f; } /* green */\n#text_n8Vc8w ul li:nth-child(6)::before { background-color: #457b9d; } /* blue */\n</style>",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
         "text_n8Vc8w": {
           "type": "text",
           "settings": {
             "style": "body",
             "text": "<ul><li>LEVEL 1 - CHEMICALS&nbsp;</li><li>LEVEL 2 - INDUSTRIALLY MADE&nbsp;</li><li>LEVEL 3 - GMO NATURAL</li><li>LEVEL 4 - NATURAL&nbsp;</li><li>LEVEL 5 - ORGANIC&nbsp;</li><li>LEVEL 6 - ARCTIC</li></ul>",
             "font_source": "body",
-            "font_regular": "sans_serif_n4",
+            "font_regular": "inter_n4",
             "font_weight_regular": "400",
             "font_bold": "sans_serif_n7",
             "font_weight_bold": "600",
@@ -2811,8 +2819,10 @@
         "heading_99HM3E",
         "heading_CLaRx3",
         "subtitle_krxNDY",
+        "custom_html_m7kLLk",
         "text_n8Vc8w"
       ],
+      "custom_css": [],
       "name": "Custom Hero",
       "settings": {
         "use_theme_colors": true,
