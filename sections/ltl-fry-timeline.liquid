@@ -115,7 +115,7 @@
     font-size: {{ section.settings.heading_font_size_mobile }}px;
     font-weight: {{ section.settings.heading_font_weight }};
     color: {{ section.settings.heading_color }};
-    text-align: {{ section.settings.text_align }};
+    text-align: {{ section.settings.heading_align }};
     margin: {{ section.settings.heading_margin }};
     padding: {{ section.settings.heading_padding }};
     line-height: {{ section.settings.heading_line_height }};
@@ -124,7 +124,7 @@
   .section-{{ section.id }} .lft-subheading {
     font-size: {{ section.settings.subheading_font_size_mobile }}px;
     color: {{ section.settings.subheading_color }};
-    text-align: {{ section.settings.text_align }};
+    text-align: {{ section.settings.subheading_align }};
     margin: {{ section.settings.subheading_margin }};
     padding: {{ section.settings.subheading_padding }};
     line-height: {{ section.settings.subheading_line_height }};
@@ -195,6 +195,7 @@
     font-weight: {{ section.settings.step_title_weight }};
     font-style: {{ section.settings.step_title_style }};
     color: {{ section.settings.step_title_color }};
+    text-align: {{ section.settings.step_title_align }};
     margin: {{ section.settings.step_title_margin }};
     padding: {{ section.settings.step_title_padding }};
     line-height: {{ section.settings.step_title_line_height }};
@@ -211,6 +212,7 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: {{ section.settings.marker_text_color }};
+    text-align: {{ section.settings.step_label_align }};
     margin: {{ section.settings.step_label_margin }};
     padding: {{ section.settings.step_label_padding }};
     line-height: {{ section.settings.step_label_line_height }};
@@ -227,6 +229,7 @@
   .section-{{ section.id }} .lft-step__text {
     font-size: {{ section.settings.step_text_size_mobile }}px;
     color: {{ section.settings.step_text_color }};
+    text-align: {{ section.settings.step_text_align }};
     margin: {{ section.settings.step_text_margin }};
     padding: {{ section.settings.step_text_padding }};
     line-height: {{ section.settings.step_text_line_height }};
@@ -307,17 +310,23 @@
   "class": "section-ltl-fry-timeline",
   "settings": [
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Effortless, effective skincare. Because great skin shouldn't be complicated." },
+    { "type": "select", "id": "heading_align", "label": "Heading alignment", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" },
+      { "value": "right", "label": "Right" }
+    ], "default": "left" },
     { "type": "text", "id": "heading_line_height", "label": "Heading line height", "default": "1.25" },
     { "type": "text", "id": "heading_margin", "label": "Heading margin", "default": "0 0 8px", "info": "CSS value, e.g. 0 0 8px" },
     { "type": "text", "id": "heading_padding", "label": "Heading padding", "default": "0" },
     { "type": "textarea", "id": "subheading", "label": "Subheading" },
+    { "type": "select", "id": "subheading_align", "label": "Subheading alignment", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" },
+      { "value": "right", "label": "Right" }
+    ], "default": "left" },
     { "type": "text", "id": "subheading_line_height", "label": "Subheading line height", "default": "1.5" },
     { "type": "text", "id": "subheading_margin", "label": "Subheading margin", "default": "0 0 24px" },
     { "type": "text", "id": "subheading_padding", "label": "Subheading padding", "default": "0" },
-    { "type": "select", "id": "text_align", "label": "Text alignment", "options": [
-      { "value": "left", "label": "Left" },
-      { "value": "center", "label": "Center" }
-    ], "default": "left" },
     { "type": "header", "content": "Image" },
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "text", "id": "image_width", "label": "Image width", "default": "100%", "info": "Include unit, e.g. 100% or 500px" },
@@ -345,6 +354,11 @@
     { "type": "range", "id": "marker_font_size_mobile", "min": 10, "max": 16, "step": 1, "unit": "px", "label": "Label size (mobile)", "default": 12 },
     { "type": "range", "id": "marker_font_size_desktop", "min": 10, "max": 16, "step": 1, "unit": "px", "label": "Label size (desktop)", "default": 13 },
     { "type": "text", "id": "step_label_line_height", "label": "Label line height", "default": "1.4" },
+    { "type": "select", "id": "step_label_align", "label": "Label alignment", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" },
+      { "value": "right", "label": "Right" }
+    ], "default": "left" },
     { "type": "text", "id": "step_label_margin", "label": "Label margin", "default": "0 0 6px" },
     { "type": "text", "id": "step_label_padding", "label": "Label padding", "default": "0" },
     { "type": "range", "id": "step_spacing_mobile", "min": 16, "max": 64, "step": 4, "unit": "px", "label": "Step spacing (mobile)", "default": 28 },
@@ -373,12 +387,22 @@
       { "value": "italic", "label": "Italic" }
     ], "default": "italic" },
     { "type": "color", "id": "step_title_color", "label": "Step title color", "default": "#111827" },
+    { "type": "select", "id": "step_title_align", "label": "Step title alignment", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" },
+      { "value": "right", "label": "Right" }
+    ], "default": "left" },
     { "type": "text", "id": "step_title_line_height", "label": "Step title line height", "default": "1.3" },
     { "type": "text", "id": "step_title_margin", "label": "Step title margin", "default": "0" },
     { "type": "text", "id": "step_title_padding", "label": "Step title padding", "default": "0" },
     { "type": "range", "id": "step_text_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Step text size (mobile)", "default": 14 },
     { "type": "range", "id": "step_text_size_desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Step text size (desktop)", "default": 15 },
     { "type": "color", "id": "step_text_color", "label": "Step text color", "default": "#4b5563" },
+    { "type": "select", "id": "step_text_align", "label": "Step text alignment", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" },
+      { "value": "right", "label": "Right" }
+    ], "default": "left" },
     { "type": "text", "id": "step_text_line_height", "label": "Step text line height", "default": "1.5" },
     { "type": "text", "id": "step_text_margin", "label": "Step text margin", "default": "0" },
     { "type": "text", "id": "step_text_padding", "label": "Step text padding", "default": "0" },
