@@ -2655,7 +2655,6 @@
         "subheading_line_height": "1.5",
         "subheading_margin": "0 0 24px",
         "subheading_padding": "0",
-        "text_align": "center",
         "image": "shopify://shop_images/Hero_9653fcf2-b13b-4472-9891-476cc9621d68-change-the-produc-of-this-image-to-it-will-be-appl_1.jpg",
         "image_width": "100%",
         "image_height": "100%",
@@ -2716,109 +2715,44 @@
         "padding_bottom_desktop": 48
       }
     },
-    "listicle_froya_ingredients": {
-      "type": "ltl-fry-ingredients",
-      "blocks": {
-        "ingredient_1": {
-          "type": "ingredient",
-          "settings": {
-            "level": "high",
-            "level_label": "Hero ingredient",
-            "name": "PDRN",
-            "percent": "5%",
-            "description": "<p>Describe this ingredient and its benefits.</p>"
-          }
-        },
-        "ingredient_2": {
-          "type": "ingredient",
-          "settings": {
-            "level": "medium",
-            "level_label": "Active",
-            "name": "Volufiline",
-            "percent": "3%",
-            "description": "<p>Describe this ingredient and its benefits.</p>"
-          }
-        },
-        "ingredient_3": {
-          "type": "ingredient",
-          "settings": {
-            "level": "low",
-            "level_label": "Support",
-            "name": "Collagen",
-            "percent": "2%",
-            "description": "<p>Describe this ingredient and its benefits.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "ingredient_1",
-        "ingredient_2",
-        "ingredient_3"
-      ],
-      "settings": {
-        "heading": "Key ingredients",
-        "subheading": "",
-        "text_align": "center",
-        "columns_desktop": 2,
-        "item_gap_mobile": 16,
-        "item_gap_desktop": 24,
-        "item_bg_color": "#ffffff",
-        "item_border_color": "#e5e7eb",
-        "item_border_radius": 12,
-        "ingredient_image_size_mobile": 48,
-        "ingredient_image_size_desktop": 56,
-        "level_high_color": "#cc667c",
-        "level_medium_color": "#d4a574",
-        "level_low_color": "#9ca3af",
-        "bar_bg_color": "#e5e7eb",
-        "heading_font_size_mobile": 28,
-        "heading_font_size_desktop": 40,
-        "heading_font_weight": "600",
-        "heading_color": "#1f2937",
-        "subheading_font_size_mobile": 15,
-        "subheading_font_size_desktop": 16,
-        "subheading_color": "#6b7280",
-        "level_font_size_mobile": 11,
-        "level_font_size_desktop": 12,
-        "name_font_size_mobile": 16,
-        "name_font_size_desktop": 18,
-        "name_font_weight": "600",
-        "name_color": "#111827",
-        "percent_font_size_mobile": 14,
-        "percent_font_size_desktop": 15,
-        "percent_color": "#6b7280",
-        "desc_font_size_mobile": 14,
-        "desc_font_size_desktop": 15,
-        "desc_color": "#4b5563",
-        "bg_color": "#faf8f6",
-        "gradient_enabled": false,
-        "gradient_background": "linear-gradient(180deg, rgba(250, 248, 246, 1), rgba(255, 255, 255, 1) 100%)",
-        "text_color": "#000000",
-        "body_color": "#374151",
-        "body_font_size_mobile": 16,
-        "body_font_size_desktop": 16,
-        "section_width": "page",
-        "container_max_width": 1000,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32,
-        "padding_top_desktop": 48,
-        "padding_bottom_desktop": 48
-      }
-    },
     "custom_hero_Fiw4pw": {
       "type": "custom-hero",
       "blocks": {
         "heading_99HM3E": {
           "type": "heading",
           "settings": {
-            "heading": "<p>Premium Product That Solves Your Problem</p>",
-            "heading_accent": "Fastest Solution.",
+            "heading": "<p>Why women are<br/><em>moving in droves </em>to Frøya</p>",
+            "heading_accent": "",
             "highlight_position": "inline_last",
             "use_theme_colors": false,
-            "font_size_desktop": 48,
-            "font_size_mobile": 32,
+            "font_size_desktop": 34,
+            "font_size_mobile": 24,
             "line_height": 1.2,
             "font_weight": "700",
+            "letter_spacing": 0,
+            "text_transform": "none",
+            "heading_color": "#000000",
+            "highlight_color": "#ef4a65",
+            "use_highlight_gradient": false,
+            "highlight_gradient": "",
+            "highlight_font_size_desktop": 48,
+            "highlight_font_size_mobile": 32,
+            "highlight_font_weight": "700",
+            "margin_top": 0,
+            "margin_bottom": 16
+          }
+        },
+        "heading_CLaRx3": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p><em>Ingredients</em></p>",
+            "heading_accent": "",
+            "highlight_position": "inline_last",
+            "use_theme_colors": false,
+            "font_size_desktop": 34,
+            "font_size_mobile": 24,
+            "line_height": 1.2,
+            "font_weight": "400",
             "letter_spacing": 0,
             "text_transform": "none",
             "heading_color": "#000000",
@@ -2835,7 +2769,7 @@
         "subtitle_krxNDY": {
           "type": "subtitle",
           "settings": {
-            "subtitle": "<p>Clinically proven Arctic botanicals, smoothing wrinkles for over 583,000 women. No synthetics, no prescriptions. Just plants that work from the very first use…</p>",
+            "subtitle": "<p>The <em><strong>ingredients</strong></em> make the product. Most brands use diluted chemicals that are industrially made (level 1 and 2). We harvest arctic plants that grow strong in the Norwegian mountainside to capture the highest quality antioxidant potential. Our plants need to survive arctic winters and pack a punch!</p>",
             "text_color": "#000000",
             "padding_top": 0,
             "padding_bottom": 0,
@@ -2844,18 +2778,48 @@
             "margin_top": 0,
             "margin_bottom": 24
           }
+        },
+        "text_n8Vc8w": {
+          "type": "text",
+          "settings": {
+            "style": "body",
+            "text": "<ul><li>LEVEL 1 - CHEMICALS&nbsp;</li><li>LEVEL 2 - INDUSTRIALLY MADE&nbsp;</li><li>LEVEL 3 - GMO NATURAL</li><li>LEVEL 4 - NATURAL&nbsp;</li><li>LEVEL 5 - ORGANIC&nbsp;</li><li>LEVEL 6 - ARCTIC</li></ul>",
+            "font_source": "body",
+            "font_regular": "sans_serif_n4",
+            "font_weight_regular": "400",
+            "font_bold": "sans_serif_n7",
+            "font_weight_bold": "600",
+            "font_size_mobile": 15,
+            "font_size_desktop": 16,
+            "line_height": 14,
+            "letter_spacing": 0,
+            "text_transform": "none",
+            "color": "#111111",
+            "text_align": "left",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "margin_top": 0,
+            "margin_bottom_mobile": 0,
+            "margin_bottom_desktop": 0,
+            "visibility": "all"
+          }
         }
       },
       "block_order": [
         "heading_99HM3E",
-        "subtitle_krxNDY"
+        "heading_CLaRx3",
+        "subtitle_krxNDY",
+        "text_n8Vc8w"
       ],
       "name": "Custom Hero",
       "settings": {
         "use_theme_colors": true,
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "left",
-        "hero_image": "shopify://shop_images/image_5f045aa2-2f90-4335-8fbc-927d8d2eb077.webp",
+        "hero_image": "shopify://shop_images/ingredients.webp",
+        "hero_image_mobile": "shopify://shop_images/desktop-small-image.webp",
         "image_position": "left",
         "fit_image_to_height": true,
         "overlay_content_desktop": false,
@@ -2987,7 +2951,6 @@
     "custom_section_b7KYPk",
     "ltl_fry_review_slider_HYmiW6",
     "listicle_froya_timeline",
-    "listicle_froya_ingredients",
     "custom_hero_Fiw4pw",
     "listicle_froya_guarantee_2"
   ]
