@@ -2440,6 +2440,27 @@
             "button_label": "SHOP NOW"
           }
         },
+        "review_dmpMmp": {
+          "type": "review",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/April B..mp4",
+            "placeholder": "shopify://shop_images/April-1.webp",
+            "video_aspect_ratio": "9 / 16",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "April B.",
+            "date": "Posted on TikTok 10/10/2024",
+            "quote": "",
+            "description": "",
+            "product_label": "",
+            "feature_1_name": "",
+            "feature_2_name": "",
+            "feature_3_name": "",
+            "product": "zero-pore-pads",
+            "button_label": "SHOP NOW"
+          }
+        },
         "review_bfQn46": {
           "type": "review",
           "settings": {
@@ -2481,12 +2502,35 @@
             "product": "zero-pore-pads",
             "button_label": "SHOP NOW"
           }
+        },
+        "review_Kk9iEa": {
+          "type": "review",
+          "settings": {
+            "media_type": "video",
+            "video": "shopify://files/videos/Christy C..mp4",
+            "placeholder": "shopify://shop_images/christy.webp",
+            "video_aspect_ratio": "9 / 16",
+            "show_stars": true,
+            "star_rating": 5,
+            "name": "Christy C.",
+            "date": "Posted on TikTok 01/03/2025",
+            "quote": "",
+            "description": "",
+            "product_label": "",
+            "feature_1_name": "",
+            "feature_2_name": "",
+            "feature_3_name": "",
+            "product": "5-step-bundle",
+            "button_label": "SHOP NOW"
+          }
         }
       },
       "block_order": [
         "review_Cb3Yph",
+        "review_dmpMmp",
         "review_bfQn46",
-        "review_xgHMQf"
+        "review_xgHMQf",
+        "review_Kk9iEa"
       ],
       "custom_css": [
         ".lfrs-card__quote {font-family: Libre Baskerville, serif; line-height: 1.2;}"
@@ -2622,6 +2666,7 @@
         "highlight_all": true,
         "dot_size": 14,
         "line_offset": 20,
+        "dot_line_gap": 0,
         "line_width": 3,
         "line_color": "#e5e7eb",
         "marker_bg_color": "#cc667c",
@@ -2655,6 +2700,7 @@
         "body_font_size_desktop": 16,
         "section_width": "full",
         "container_max_width": 1400,
+        "side_padding": 24,
         "padding_top_mobile": 32,
         "padding_bottom_mobile": 32,
         "padding_top_desktop": 48,
