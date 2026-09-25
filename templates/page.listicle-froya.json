@@ -279,7 +279,7 @@
           "type": "icon_item",
           "settings": {
             "icon_level": "second",
-            "icon": "shopify://shop_images/wrinkles_visible.svg",
+            "icon": "shopify://shop_images/wrinkles-visible.png",
             "line_1": "Rynkor synligt",
             "line_2": "utjämnade",
             "title": "",
@@ -301,7 +301,7 @@
           "type": "icon_item",
           "settings": {
             "icon_level": "second",
-            "icon": "shopify://shop_images/skin_looks_firmer.svg",
+            "icon": "shopify://shop_images/skin--firm.png",
             "line_1": "Huden ser fastare &",
             "line_2": "mer strålande ut",
             "title": "",
@@ -553,7 +553,7 @@
         "caption_font_size_mobile": 14,
         "caption_font_size_desktop": 15,
         "caption_color": "#000000",
-        "pagination_active_color": "#cc667c",
+        "pagination_active_color": "#000000",
         "pagination_inactive_color": "#d1d5db",
         "bg_color": "#f3ecec",
         "gradient_enabled": false,
