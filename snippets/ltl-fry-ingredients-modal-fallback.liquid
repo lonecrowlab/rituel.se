@@ -1,29 +1,30 @@
 {% comment %}Content-only fallback for ingredients modal left column.{% endcomment %}
+{%- capture items -%}
+https://cdn.shopify.com/s/files/1/0743/5252/5487/files/s1.svg?v=1790317955|SOFTER, SMOOTHER SKIN|Pomegranate, Arctic rosehip &amp; arnica|Arnica, Pomegranate and Rosehip work together to help soften the look of fine lines and smooth skin texture.
+https://cdn.shopify.com/s/files/1/0743/5252/5487/files/sunflower.png?v=1790317955|FIRMER SKIN|Natural Vitamin E|Vitamin E from Sunflowers is a natural antioxidant that helps skin look firmer and more toned.
+https://cdn.shopify.com/s/files/1/0743/5252/5487/files/beeswax.svg?v=1790317955|SUPPORTS THE SKIN BARRIER|Beeswax &amp; Thistle|Locks in moisture while helping protect and support the skin barrier.
+https://cdn.shopify.com/s/files/1/0743/5252/5487/files/calendula.svg?v=1790317955|CALMS AND SOOTHES|Calendula &amp; Marigold|Powerful and fast-working skin soother.
+https://cdn.shopify.com/s/files/1/0743/5252/5487/files/arnica.svg?v=1790317955|BRIGHTENS THE LOOK OF DARK CIRCLES|Arctic Arnica &amp; Squalane|Helps add fullness and moisture to the delicate under-eye area.
+https://cdn.shopify.com/s/files/1/0743/5252/5487/files/sea_buckthorn_smaller.svg?v=1790317955|Natural Glow|Sea Buckthorn|An exceptionally rich natural source of Vitamin C (17x oranges).
+{%- endcapture -%}
+{%- assign rows = items | strip | newline_to_br | split: '<br />' -%}
 <div class="s-main-product__modal-ingredients product-ingredients">
   <div class="s-main-product__modal-content-title section-title">
     <p>10 Key Ingredients, Mixed to Work Together</p>
   </div>
   <ul class="product-ingredients__list" role="list">
-    <li class="product-ingredients__item" role="listitem">
-      <div class="product-ingredients__body">
-        <span class="product-ingredients__tag">SOFTER, SMOOTHER SKIN</span>
-        <h3 class="product-ingredients__title">Pomegranate, Arctic rosehip &amp; arnica</h3>
-        <div class="product-ingredients__text"><span>Arnica is clinically shown to visibly soften fine lines and smooth skin texture (92% effective).</span></div>
-      </div>
-    </li>
-    <li class="product-ingredients__item" role="listitem">
-      <div class="product-ingredients__body">
-        <span class="product-ingredients__tag">FIRMER SKIN</span>
-        <h3 class="product-ingredients__title">Natural Vitamin E</h3>
-        <div class="product-ingredients__text"><span>Vitamin E from Sunflowers removes free radicals that slow skin renewal.</span></div>
-      </div>
-    </li>
-    <li class="product-ingredients__item" role="listitem">
-      <div class="product-ingredients__body">
-        <span class="product-ingredients__tag">Heal skin barrier &amp; Moisture</span>
-        <h3 class="product-ingredients__title">Beeswax &amp; Thistle</h3>
-        <div class="product-ingredients__text"><span>Lock in moisture while protecting &amp; fixing the skin barrier.</span></div>
-      </div>
-    </li>
+    {%- for row in rows -%}
+      {%- assign parts = row | strip | split: '|' -%}
+      <li class="product-ingredients__item" role="listitem">
+        <div class="product-ingredients__media">
+          <img src="{{ parts[0] }}" alt="{{ parts[2] }}" width="240" height="240" loading="lazy" class="product-ingredients__icon">
+        </div>
+        <div class="product-ingredients__body">
+          <span class="product-ingredients__tag">{{ parts[1] }}</span>
+          <h3 class="product-ingredients__title">{{ parts[2] }}</h3>
+          <div class="product-ingredients__text"><span>{{ parts[3] }}</span></div>
+        </div>
+      </li>
+    {%- endfor -%}
   </ul>
 </div>
