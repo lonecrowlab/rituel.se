@@ -51,7 +51,7 @@
             "border_radius": 4,
             "mobile_alignment": "left",
             "desktop_alignment": "left",
-            "margin_top": 0,
+            "margin_top": 12,
             "margin_bottom": 0
           }
         },
@@ -66,7 +66,7 @@
             "text_align": "left",
             "heading_color": "#1f2937",
             "heading_font_size_desktop": 40,
-            "heading_font_size_mobile": 32,
+            "heading_font_size_mobile": 38,
             "heading_font_weight": "600",
             "heading_line_height": 1.2,
             "heading_margin_top": 0,
@@ -169,7 +169,7 @@
             "custom_width_desktop": 300,
             "custom_width_mobile": 230,
             "margin_top": 0,
-            "margin_bottom": -2
+            "margin_bottom": 0
           }
         },
         "image_RxM8iD": {
@@ -181,7 +181,7 @@
             "aspect_ratio_mobile": "auto",
             "border_radius": 0,
             "max_width": 100,
-            "margin_top": 0,
+            "margin_top": 8,
             "margin_bottom": 0
           }
         }
