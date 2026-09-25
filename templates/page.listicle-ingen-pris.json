@@ -709,7 +709,7 @@
           "settings": {
             "image_desktop": "shopify://shop_images/A.png",
             "aspect_ratio_desktop": "1 / 1",
-            "image_mobile": "shopify://shop_images/A.png",
+            "image_mobile": "shopify://shop_images/Karen_Kelly.webp",
             "aspect_ratio_mobile": "1 / 1",
             "border_radius": 0,
             "max_width": 100,
