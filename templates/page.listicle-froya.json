@@ -884,7 +884,7 @@
         "autoplay_speed": 5,
         "lock_drag": false,
         "columns_mobile": 1,
-        "columns_desktop": 4,
+        "columns_desktop": 5.5,
         "gap_mobile": 16,
         "gap_desktop": 24,
         "show_arrows": true,
