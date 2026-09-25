@@ -3580,6 +3580,59 @@
         "padding_top_desktop": 48,
         "padding_bottom_desktop": 48
       }
+    },
+    "subscribe_section_4663MG": {
+      "type": "subscribe-section",
+      "custom_css": [
+        ".lfg-row a {text-decoration: underline;}"
+      ],
+      "name": "Subscribe section",
+      "settings": {
+        "heading": "Tips & exklusiva erbjudanden",
+        "heading_tag": "h2",
+        "text": "<p>Registrera dig för att få exklusiv tillgång till våra bästa erbjudanden och guider för att förbättra din hud på naturlig väg.</p>",
+        "input_placeholder": "Ange din e-postadress",
+        "button_text": "Prenumerera",
+        "success_message": "Tack för att du prenumererar!",
+        "error_message": "Ange en giltig e-postadress.",
+        "text_align": "center",
+        "content_max_width": 700,
+        "text_max_width": 480,
+        "form_max_width": 400,
+        "form_gap": 6,
+        "stack_on_mobile": false,
+        "background_color": "#faf6f0",
+        "heading_color": "#1a1a1a",
+        "text_color": "#1a1a1a",
+        "heading_font_size_desktop": 30,
+        "heading_font_size_mobile": 24,
+        "heading_font_weight": "400",
+        "heading_margin_bottom": 12,
+        "text_font_size_desktop": 14,
+        "text_font_size_mobile": 13,
+        "text_margin_bottom": 12,
+        "field_height": 42,
+        "input_font_size": 14,
+        "input_background_color": "#ffffff",
+        "input_text_color": "#1a1a1a",
+        "input_border_color": "#8c8c8c",
+        "input_border_width": 1,
+        "input_border_radius": 2,
+        "button_background_color": "#ba6a7f",
+        "button_hover_color": "#a35669",
+        "button_text_color": "#ffffff",
+        "button_font_size": 14,
+        "button_font_weight": "700",
+        "button_uppercase": true,
+        "button_padding_horizontal": 16,
+        "button_border_radius": 2,
+        "padding_top_desktop": 36,
+        "padding_bottom_desktop": 36,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "border_bottom_width": 0,
+        "border_bottom_color": "#a08c96"
+      }
     }
   },
   "order": [
@@ -3602,6 +3655,7 @@
     "listicle_froya_timeline",
     "custom_hero_Fiw4pw",
     "custom_hero_3k7aMF",
-    "listicle_froya_guarantee_2"
+    "listicle_froya_guarantee_2",
+    "subscribe_section_4663MG"
   ]
 }
