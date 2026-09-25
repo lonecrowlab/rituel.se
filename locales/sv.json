@@ -485,7 +485,7 @@
         }
       },
       "payment": {
-        "card_security_notice": "Vill du betala med Swish? Välj Klarna längre ner. Swish finnes som alternativ där."
+        "card_security_notice": "Vill du betala med Swish? Välj Klarna längre ner, så kan du välja Swish i nästa steg."
       }
     }
   }
