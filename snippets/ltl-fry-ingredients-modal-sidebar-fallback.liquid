@@ -1,10 +1,86 @@
-{% comment %}Sidebar fallback for ingredients modal right column.{% endcomment %}
-<div class="product-content__info-content-text">
-  <div class="s-main-product__info-content-text-faq">
-    <h3 class="product-content__info-content-text-faq-title">INGREDIENT LEVELS</h3>
-    <p>ARCTIC · NATURAL · ORGANIC</p>
-    <h3 class="product-content__info-content-text-faq-title">THE COMPLETE SYSTEM FOR MATURE WOMEN'S SKIN</h3>
-    <h3 class="product-content__info-content-text-faq-title">ULTRA CLEANSE &amp; REVIVE FACE SCRUB</h3>
-    <p>RICE POWDER · APRICOT SEED POWDER · ROSE PETAL POWDER</p>
+{% comment %}
+  Sidebar fallback for ingredients modal right column.
+  Line prefixes: h = heading, a = arctic, n = natural, o = organic.
+{% endcomment %}
+{%- capture data -%}
+h:INGREDIENT LEVELS
+a:ARCTIC
+n:NATURAL
+o:ORGANIC
+h:THE COMPLETE SYSTEM FOR MATURE WOMEN’S SKIN
+h:ULTRA CLEANSE &amp; REVIVE FACE SCRUB
+n:RICE POWDER
+n:APRICOT SEED POWDER
+o:ROSE PETAL POWDER
+h:ANTI-AGE &amp; INSANE GLOW DAY BALM
+n:SAFFLOWER SEED OIL
+o:BEESWAX
+a:SEA BUCKTHORN OIL
+n:POMEGRANATE SEED OIL
+n:SQUALANE
+a:ROSEHIP FRUIT OIL
+n:ARGAN KERNEL OIL
+n:APRICOT KERNEL OIL
+n:ROSEMARY LEAF EXTRACT
+n:TOCOPHEROL
+a:SEA BUCKTHORN FRUIT EXTRACT
+a:MARIGOLD FLOWER EXTRACT
+n:RED CEDAR OIL
+n:GRAPEFRUIT PEEL OIL
+h:MAGIC REVIVE EYE BALM
+n:SAFFLOWER SEED OIL
+o:BEESWAX
+a:ARNICA MONTANA FLOWER EXTRACT
+n:SWEET ALMOND OIL
+a:ROSEHIP FRUIT OIL
+n:POMEGRANATE SEED OIL
+n:SQUALANE
+n:TOCOPHEROL
+a:ROSEHIP FRUIT EXTRACT
+n:ROSEMARY LEAF EXTRACT
+a:MARIGOLD FLOWER EXTRACT
+n:POMEGRANATE SEED EXTRACT
+n:CHAMOMILLE FLOWER OIL
+h:WRINKLE SMOOTHING NIGHT BALM
+n:SAFFLOWER SEED OIL
+o:BEESWAX
+a:ROSEHIP FRUIT OIL
+a:MARIGOLD FLOWER EXTRACT
+n:SWEET ALMOND OIL
+a:ARNICA MONTANA FLOWER EXTRACT
+n:POMEGRANATE SEED OIL
+n:SQUALANE
+n:ROSEMARY LEAF EXTRACT
+n:TOCOPHEROL
+a:ROSEHIP FRUIT EXTRACT
+n:SUNFLOWER SEED OIL
+a:CRANBERRY SEED OIL
+a:SEA BUCKTHORN FRUIT EXTRACT
+n:POMEGRANATE SEED EXTRACT
+n:CHAMOMILLE FLOWER OIL
+{%- endcapture -%}
+{%- assign lines = data | strip | newline_to_br | split: '<br />' -%}
+<div>
+  <div>
+    {%- for line in lines -%}
+      {%- assign entry = line | strip -%}
+      {%- assign kind = entry | slice: 0 -%}
+      {%- assign label = entry | remove_first: kind | remove_first: ':' -%}
+      {%- if kind == 'h' -%}
+        <h3 class="product-content__info-content-text-faq-title">{{ label }}</h3>
+      {%- else -%}
+        {%- case kind -%}
+          {%- when 'a' -%}{%- assign dot = '#4A90E2' -%}
+          {%- when 'o' -%}{%- assign dot = '#5A9512' -%}
+          {%- else -%}{%- assign dot = '#B8E77F' -%}
+        {%- endcase -%}
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="7" height="7" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <circle cx="7.47363" cy="7.33203" r="6.5" fill="{{ dot }}"></circle>
+          </svg>
+          <span>{{ label }}</span>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
   </div>
 </div>
