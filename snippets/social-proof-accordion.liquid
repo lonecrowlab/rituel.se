@@ -1246,15 +1246,20 @@
       .then(function(sections) {
         var html = sectionsApi.pickDrawerHtml(sections);
         var cartDrawer = document.querySelector('cart-drawer');
+        // Update drawer contents in-place — never replace cart-drawer root/className
+        // (that destroys the custom element's open/handlers and breaks main ATC UX).
         if (html && cartDrawer) {
           var parser = new DOMParser();
           var doc = parser.parseFromString(html, 'text/html');
-          var rendered = doc.querySelector('cart-drawer');
-          if (rendered) {
-            cartDrawer.innerHTML = rendered.innerHTML;
-            cartDrawer.className = rendered.className;
-            if (rendered.getAttribute('data-section-id')) {
-              cartDrawer.setAttribute('data-section-id', rendered.getAttribute('data-section-id'));
+          var cartItems = cartDrawer.querySelector('.cart-items, [id*="cart-items"], .drawer__inner');
+          var newCartItems = doc.querySelector('.cart-items, [id*="cart-items"], .drawer__inner');
+          if (cartItems && newCartItems) {
+            cartItems.innerHTML = newCartItems.innerHTML;
+          } else {
+            var drawerContent = cartDrawer.querySelector('.drawer__content, .cart-drawer__content');
+            var newDrawerContent = doc.querySelector('.drawer__content, .cart-drawer__content');
+            if (drawerContent && newDrawerContent) {
+              drawerContent.innerHTML = newDrawerContent.innerHTML;
             }
           }
         }
@@ -1277,24 +1282,27 @@
 
         if (cartDrawer) {
           cartDrawer.classList.remove('is-empty', 'is-loading');
-          cartDrawer.classList.add('is-loaded');
+          cartDrawer.classList.add('is-loaded', 'animate', 'active');
+          cartDrawer.setAttribute('open', '');
+          document.body.classList.add('overflow-hidden');
           if (typeof cartDrawer.open === 'function') {
             cartDrawer.open();
-          } else {
-            var trigger = document.querySelector('#cart-icon-bubble, .header__icon--cart');
-            if (trigger) trigger.click();
           }
         }
+
+        document.dispatchEvent(new CustomEvent('cart:updated'));
       });
   }
 
-  function initSpaProductsAtc() {
-    if (document.body.dataset.spaAtc === 'true') return;
-    document.body.dataset.spaAtc = 'true';
+  // Scope ATC to accordion/dialog roots only (pre-merge behavior).
+  // A document-level listener from Development could interfere with product form clicks.
+  function initSpaProductsAtc(root) {
+    if (!root || root.dataset.spaAtc === 'true') return;
+    root.dataset.spaAtc = 'true';
 
-    document.addEventListener('click', function(e) {
+    root.addEventListener('click', function(e) {
       var button = e.target.closest('[data-spa-atc]');
-      if (!button || button.disabled) return;
+      if (!button || !root.contains(button) || button.disabled) return;
 
       e.preventDefault();
       e.stopPropagation();
@@ -1302,7 +1310,7 @@
       var variantId = parseInt(button.getAttribute('data-variant-id'), 10);
       if (!variantId) return;
 
-      var textEl = button.querySelector('.spa-dialog__product-atc-text');
+      var textEl = button.querySelector('.spa-dialog__product-atc-text, .spa-products__atc-text');
       var originalText = button.getAttribute('data-add-label') || (textEl ? textEl.textContent : '');
       var addedText = button.getAttribute('data-added-label') || 'Tillagd';
 
@@ -1616,7 +1624,7 @@
     });
     isolateNestedScroll(accordion);
     bindProductsDesktopDrag(accordion);
-    initSpaProductsAtc();
+    initSpaProductsAtc(accordion);
 
     // Never init Splide while accordion is closed; on mobile always force native scroll
     if (!isDesktopSpa()) {
@@ -1630,6 +1638,7 @@
     });
     isolateNestedScroll(dialog);
     bindProductsDesktopDrag(dialog);
+    initSpaProductsAtc(dialog);
 
     const openBtn = accordion.querySelector('[data-spa-open]');
     const closeBtn = dialog.querySelector('[data-spa-close]');
@@ -1665,10 +1674,18 @@
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
-      initSocialProofAccordion('{{ spa_id }}');
+      try {
+        initSocialProofAccordion('{{ spa_id }}');
+      } catch (err) {
+        console.error('[social-proof-accordion] init failed', err);
+      }
     });
   } else {
-    initSocialProofAccordion('{{ spa_id }}');
+    try {
+      initSocialProofAccordion('{{ spa_id }}');
+    } catch (err) {
+      console.error('[social-proof-accordion] init failed', err);
+    }
   }
 })();
 </script>

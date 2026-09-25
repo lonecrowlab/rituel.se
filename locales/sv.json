@@ -160,7 +160,7 @@
         "load_model": "Ladda 3D-modellen {{ index }} i gallerivisning",
         "load_video": "Spela videon {{ index }} i gallerivisning",
         "image_available": "Bilden {{ index }} är nu tillgänglig i gallerivisning",
-        "see_it_in_action": "Se den i aktion",
+        "see_it_in_action": "Se den i action",
         "see_before_after": "Se våra kundresultat"
       },
       "view_full_details": "Visa alla uppgifter",

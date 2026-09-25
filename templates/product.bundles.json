@@ -357,7 +357,7 @@
           }
         },
         "rapi_rapi_bundle_KmgXWT": {
-          "type": "shopify://apps/rapi-bundle/blocks/rapi-bundle/99617c17-a32b-4e70-a883-7a155610d032",
+          "type": "shopify://apps/rapid-bundle/blocks/rapi-bundle/99617c17-a32b-4e70-a883-7a155610d032",
           "settings": {
             "product": "pdrn-collagen-volume-balm"
           }
@@ -525,6 +525,7 @@
         },
         "social_proof_accordion_RT_H05": {
           "type": "social_proof_accordion",
+          "disabled": true,
           "settings": {
             "question": "Se Emmas resultat",
             "open_default": false,
@@ -895,7 +896,7 @@
         "thumbnail_border_width": 0,
         "thumbnail_border_color": "rgba(0,0,0,0)",
         "thumbnail_active_border_width": 1,
-        "thumbnail_active_border_color": "#eb8fa2",
+        "thumbnail_active_border_color": "rgba(0,0,0,0)",
         "mobile_media_corner_radius": 8,
         "mobile_spacing_pixels": 6,
         "mobile_arrows_position": "sides",
@@ -2770,7 +2771,7 @@
           "type": "faq_item",
           "settings": {
             "question": "Fullständig ingredienslista",
-            "answer": "<p>Water (Aqua), Caprylic/Capric Triglyceride, Squalane, Glycerin, Cetyl Alcohol, Butyrospermum Parkii (Shea) Butter, Niacinamide, Hydrogenated Polyisobutene, Sodium Polydeoxyribonucleotide (PDRN), Sarcosine [Volufiline™], Hydrolyzed Collagen, Stearic Acid, Glyceryl Stearate, Cetearyl Alcohol, Ceramide NP, Ceramide AP, Ceramide EOP, Phytosphingosine, Cholesterol, Sodium Lauroyl Lactylate, Carbomer, Xanthan Gum, Sodium Hyaluronate, Hyaluronic Acid, Hydrolyzed Hyaluronic Acid, Centella Asiatica Extract, Camellia Sinensis Leaf Extract, Caffeine, Adenosine, Tocopheryl Acetate, Tocopherol, Allantoin, Panthenol, Disodium EDTA, Phenoxyethanol, Ethylhexylglycerin</p><p><strong>FRI FRÅN:</strong></p><p>✗ Parabener<br/>✗ Sulfater (SLS, SLES)<br/>✗ Parfym (Fragrance/Parfum)<br/>✗ Artificiella färgämnen<br/>✗ Mineralolja<br/>✗ Silikoner</p>",
+            "answer": "<p>Water (Aqua), Caprylic/Capric Triglyceride, Squalane, Retinol, Glycerin, Cetyl Alcohol, Butyrospermum Parkii (Shea) Butter, Niacinamide, Hydrogenated Polyisobutene, Sodium Polydeoxyribonucleotide (PDRN), [Volufiline™], Hydrolyzed Collagen, Stearic Acid, Glyceryl Stearate, Cetearyl Alcohol, Ceramide NP, Ceramide AP, Ceramide EOP, Phytosphingosine, Cholesterol, Sodium Lauroyl Lactylate, Carbomer, Xanthan Gum, Sodium Hyaluronate, Hyaluronic Acid, Hydrolyzed Hyaluronic Acid, Centella Asiatica Extract, Camellia Sinensis Leaf Extract, Caffeine, Adenosine, Tocopheryl Acetate, Tocopherol, Allantoin, Panthenol, Disodium EDTA, Phenoxyethanol, Ethylhexylglycerin</p><p><strong>FRI FRÅN:</strong></p><p>✗ Parabener<br/>✗ Sulfater (SLS, SLES)<br/>✗ Parfym (Fragrance/Parfum)<br/>✗ Artificiella färgämnen<br/>✗ Mineralolja<br/>✗ Silikoner</p>",
             "custom_html": "",
             "open_by_default": false,
             "badge_text": "",
