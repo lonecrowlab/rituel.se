@@ -1250,7 +1250,7 @@
       "type": "custom-liquid",
       "custom_css": [
         "h2 {display: flex; justify-content: center; align-items: center; margin: 0px;}",
-        "p {background: #e5f3fa; display: inline-block; padding: 15px 30px; font-family: body-font, sans-serif; border-radius: 5px; margin: 0px;}",
+        "p {background: #e5f3fa; display: inline-block; padding: 25px 30px; font-family: body-font, sans-serif; border-radius: 5px; margin: 0px;}",
         ".s-featured-product__badge-underline {text-decoration: underline;}"
       ],
       "name": "t:sections.custom-liquid.presets.name",
@@ -1497,7 +1497,7 @@
         "low_stock_ahbzJf"
       ],
       "custom_css": [
-        ".lfqb-ingredients-btn {font-size: 18px; background: var( --Gradient, linear-gradient( 92deg, rgba(223, 177, 66, 0.3) 10%, rgba(233, 128, 68, 0.3) 49.5%, rgba(175, 137, 152, 0.3) 100% ) ); color: #000; font-weight: 500; font-family:'body-font','Inter';}"
+        ".lfqb-ingredients-btn {font-size: 18px; background: var( --Gradient, linear-gradient( 92deg, rgba(223, 177, 66, 0.3) 10%, rgba(233, 128, 68, 0.3) 49.5%, rgba(175, 137, 152, 0.3) 100% ) ); color: #000; font-weight: 500; font-family: \"body-font\", \"Inter\";}"
       ],
       "settings": {
         "product": "pdrn-collagen-volume-balm",
