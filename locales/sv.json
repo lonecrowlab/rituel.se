@@ -483,15 +483,9 @@
         "selected_pickup_option_no_longer_available": {
           "ship_to_address_link": "leverera till adress"
         }
-      }
-    }
-  },
-  "customer_accounts": {
-    "payment_methods": {
-      "card_fields": {
-        "tooltip": {
-          "card_security_notice": "Vill du betala med Swish? Välj Klarna längre ner. Swish finnes som alternativ där."
-        }
+      },
+      "payment": {
+        "card_security_notice": "Vill du betala med Swish? Välj Klarna längre ner. Swish finnes som alternativ där."
       }
     }
   }
