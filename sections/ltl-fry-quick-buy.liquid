@@ -1,0 +1,1920 @@
+{%- liquid
+  assign quick_buy_product = section.settings.product
+  if quick_buy_product == blank
+    assign quick_buy_product = product
+  endif
+
+  assign selected_variant = quick_buy_product.selected_or_first_available_variant
+  assign lfqb_form_id = 'lfqb-form-' | append: section.id
+  assign selling_plans_available = false
+  assign first_selling_plan_id = blank
+  assign selling_plan_count = 0
+
+  if quick_buy_product != blank
+    assign product = quick_buy_product
+    for group in quick_buy_product.selling_plan_groups
+      for plan in group.selling_plans
+        assign selling_plan_count = selling_plan_count | plus: 1
+        if first_selling_plan_id == blank
+          assign first_selling_plan_id = plan.id
+          assign selling_plans_available = true
+        endif
+      endfor
+    endfor
+  endif
+
+  assign gallery_media = quick_buy_product.media | where: 'media_type', 'image'
+  if gallery_media.size == 0
+    assign gallery_media = quick_buy_product.media
+  endif
+-%}
+
+<section
+  class="ltl-fry-quick-buy section-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-lfqb-section
+>
+  <div class="lf-wrap">
+    {% if quick_buy_product == blank %}
+      <p class="lfqb-empty">Select a product in section settings.</p>
+    {% else %}
+      <div class="lfqb-grid">
+        <div class="lfqb-media">
+          <div class="lfqb-gallery" data-lfqb-gallery>
+            <div class="lfqb-gallery__stage">
+              {% if section.settings.show_save_badge and section.settings.save_badge_text != blank %}
+                <span class="lfqb-gallery__save-badge">{{ section.settings.save_badge_text }}</span>
+              {% endif %}
+
+              {% if gallery_media.size > 0 %}
+                {% for media in gallery_media %}
+                  {%- liquid
+                    assign slide_alt = media.alt
+                    if slide_alt == blank
+                      assign slide_alt = quick_buy_product.title
+                    endif
+                  -%}
+                  <div
+                    class="lfqb-gallery__slide{% if forloop.first %} is-active{% endif %}"
+                    data-lfqb-slide
+                    data-index="{{ forloop.index0 }}"
+                  >
+                    {{ media | image_url: width: 1400 | image_tag: loading: 'lazy', class: 'lfqb-gallery__image', alt: slide_alt }}
+                  </div>
+                {% endfor %}
+              {% else %}
+                <div class="lfqb-gallery__slide is-active" data-lfqb-slide data-index="0">
+                  {{ 'product-1' | placeholder_svg_tag: 'lfqb-gallery__placeholder' }}
+                </div>
+              {% endif %}
+
+              {% if gallery_media.size > 1 %}
+                <button type="button" class="lfqb-gallery__nav lfqb-gallery__nav--prev" data-lfqb-prev aria-label="Previous image">&lsaquo;</button>
+                <button type="button" class="lfqb-gallery__nav lfqb-gallery__nav--next" data-lfqb-next aria-label="Next image">&rsaquo;</button>
+              {% endif %}
+
+              {% if section.settings.show_quote_overlay %}
+                <div class="lfqb-gallery__quote">
+                  {% if section.settings.quote_image != blank %}
+                    {{ section.settings.quote_image | image_url: width: 80 | image_tag: loading: 'lazy', class: 'lfqb-gallery__quote-image', alt: section.settings.quote_name }}
+                  {% endif %}
+                  <div class="lfqb-gallery__quote-body">
+                    {% if section.settings.quote_name != blank %}
+                      <p class="lfqb-gallery__quote-name">{{ section.settings.quote_name }}</p>
+                    {% endif %}
+                    {% if section.settings.quote_text != blank %}
+                      <p class="lfqb-gallery__quote-text">{{ section.settings.quote_text }}</p>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+
+            {% if gallery_media.size > 1 %}
+              <div class="lfqb-gallery__thumbs" data-lfqb-thumbs>
+                {% for media in gallery_media %}
+                  {%- liquid
+                    assign thumb_alt = media.alt
+                    if thumb_alt == blank
+                      assign thumb_alt = quick_buy_product.title
+                    endif
+                  -%}
+                  <button
+                    type="button"
+                    class="lfqb-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+                    data-lfqb-thumb
+                    data-index="{{ forloop.index0 }}"
+                    aria-label="Show image {{ forloop.index }}"
+                  >
+                    {{ media | image_url: width: 160 | image_tag: loading: 'lazy', alt: thumb_alt }}
+                  </button>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+          {% assign ingredients_label = section.settings.ingredients_button_text | default: 'View ingredients' %}
+          <button
+            type="button"
+            class="lfqb-ingredients-btn"
+            data-lfqb-open-ingredients
+            aria-controls="lfqb-ingredients-{{ section.id }}"
+          >
+            {{ ingredients_label }}
+          </button>
+        </div>
+
+        <div class="lfqb-offer">
+          {% form 'product', quick_buy_product, class: 'lfqb-form', id: lfqb_form_id %}
+            <input type="hidden" name="id" value="{{ selected_variant.id }}" data-lfqb-variant-input>
+
+            {% if quick_buy_product.has_only_default_variant == false %}
+              <label class="lfqb-variant-label visually-hidden" for="lfqb-variant-{{ section.id }}">Variant</label>
+              <select id="lfqb-variant-{{ section.id }}" class="lfqb-variant-select" data-lfqb-variant-select aria-label="Variant">
+                {% for variant in quick_buy_product.variants %}
+                  <option
+                    value="{{ variant.id }}"
+                    {% if variant.id == selected_variant.id %}selected{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}
+                  >
+                    {{ variant.title }} — {{ variant.price | money }}
+                  </option>
+                {% endfor %}
+              </select>
+            {% endif %}
+
+            <div class="lfqb-blocks">
+              {% for block in section.blocks %}
+                {%- liquid
+                  assign visibility = block.settings.visibility | default: 'all'
+                  assign device_class = 'lfqb-device-' | append: visibility
+                -%}
+
+                {% case block.type %}
+                  {% when 'reviews' %}
+                    <div class="lfqb-block lfqb-block-reviews lfqb-block-{{ block.id }} {{ device_class }}" {{ block.shopify_attributes }}>
+                      {% render 'rating-stars-block', block: block, product: quick_buy_product, block_attributes: '', margins: true %}
+                    </div>
+
+                  {% when 'text' %}
+                    {% if block.settings.text != blank %}
+                      <div class="lfqb-text lfqb-text--{{ block.settings.style }} lfqb-block lfqb-block-{{ block.id }} {{ device_class }}" {{ block.shopify_attributes }}>
+                        {{ block.settings.text }}
+                      </div>
+                    {% endif %}
+
+                  {% when 'price' %}
+                    {%- liquid
+                      assign compare_at = selected_variant.compare_at_price
+                      assign current_price = selected_variant.price
+                      assign on_sale = false
+                      if compare_at > current_price
+                        assign on_sale = true
+                      endif
+                      assign price_second = false
+                      if block.settings.layout == 'price_second'
+                        assign price_second = true
+                      endif
+                    -%}
+                    <div
+                      class="lfqb-price lfqb-block lfqb-block-{{ block.id }} {{ device_class }}{% if on_sale %} lfqb-price--on-sale{% endif %}{% if price_second %} lfqb-price--compare-first{% endif %}"
+                      id="lfqb-price-{{ block.id }}"
+                      data-lfqb-price-block
+                      {{ block.shopify_attributes }}
+                    >
+                      <div class="lfqb-price__row">
+                        <span class="lfqb-price__current" data-lfqb-price-current>{{ current_price | money_with_currency }}</span>
+                        {% if on_sale %}
+                          <s class="lfqb-price__compare" data-lfqb-price-compare>{{ compare_at | money_with_currency }}</s>
+                        {% else %}
+                          <s class="lfqb-price__compare" data-lfqb-price-compare hidden></s>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                  {% when 'feature' %}
+                    <div
+                      class="lfqb-feature lfqb-block lfqb-block-{{ block.id }} {{ device_class }}"
+                      data-lfqb-feature
+                      data-default-enabled="{{ block.settings.default_enabled }}"
+                      {{ block.shopify_attributes }}
+                    >
+                      <div class="lfqb-feature__head">
+                        <label class="lfqb-feature__toggle-wrap">
+                          <input
+                            type="checkbox"
+                            class="lfqb-feature__toggle"
+                            data-lfqb-plan-toggle
+                            {% if block.settings.default_enabled and selling_plans_available %}checked{% endif %}
+                            {% unless selling_plans_available %}disabled{% endunless %}
+                          >
+                          <span class="lfqb-feature__toggle-ui" aria-hidden="true"></span>
+                        </label>
+                        <div class="lfqb-feature__copy">
+                          {% if block.settings.title != blank %}
+                            <p class="lfqb-feature__title">{{ block.settings.title }}</p>
+                          {% endif %}
+                          {% if block.settings.description != blank %}
+                            <p class="lfqb-feature__description">{{ block.settings.description }}</p>
+                          {% endif %}
+                        </div>
+                      </div>
+                      {% if block.settings.features != blank %}
+                        <div class="lfqb-feature__features rte">{{ block.settings.features }}</div>
+                      {% endif %}
+                      {% if block.settings.show_savings_message %}
+                        {%- liquid
+                          assign savings_token = '{' | append: '{' | append: ' savings ' | append: '}' | append: '}'
+                          assign savings_preview = block.settings.savings_message | replace: '[savings]', '' | replace: '[ savings ]', '' | replace: savings_token, ''
+                        -%}
+                        <p
+                          class="lfqb-feature__savings"
+                          data-lfqb-savings
+                          data-template="{{ block.settings.savings_message | escape }}"
+                          {% unless block.settings.default_enabled and selling_plans_available %}hidden{% endunless %}
+                        >
+                          {{ savings_preview }}
+                        </p>
+                      {% endif %}
+                      {% unless selling_plans_available %}
+                        <p class="lfqb-feature__no-plans">No subscription plans found on this product.</p>
+                      {% endunless %}
+                      {% if selling_plan_count > 1 %}
+                        <label class="lfqb-feature__plan-label visually-hidden" for="lfqb-plan-{{ block.id }}">Subscription plan</label>
+                        <select id="lfqb-plan-{{ block.id }}" class="lfqb-feature__plan-select" data-lfqb-plan-select>
+                          {% for group in quick_buy_product.selling_plan_groups %}
+                            {% for plan in group.selling_plans %}
+                              <option value="{{ plan.id }}" {% if plan.id == first_selling_plan_id %}selected{% endif %}>{{ plan.name }}</option>
+                            {% endfor %}
+                          {% endfor %}
+                        </select>
+                      {% endif %}
+                    </div>
+
+                  {% when 'custom_html' %}
+                    {% if block.settings.custom_html != blank %}
+                      <div class="lfqb-custom-html lfqb-block lfqb-block-{{ block.id }} {{ device_class }}" {{ block.shopify_attributes }}>
+                        {{ block.settings.custom_html }}
+                      </div>
+                    {% endif %}
+
+                  {% when 'buy_buttons' %}
+                    {%- liquid
+                      assign atc_label = block.settings.button_label
+                      if atc_label == blank
+                        if selected_variant.available
+                          assign atc_label = 'Add to cart'
+                        else
+                          assign atc_label = 'Sold out'
+                        endif
+                      endif
+                    -%}
+                    <div class="lfqb-atc-wrap lfqb-block lfqb-block-{{ block.id }} {{ device_class }}" {{ block.shopify_attributes }}>
+                      <button
+                        type="submit"
+                        name="add"
+                        class="lfqb-atc"
+                        data-lfqb-atc
+                        {% unless selected_variant.available %}disabled{% endunless %}
+                      >
+                        <span
+                          data-lfqb-atc-label
+                          data-available-label="{{ atc_label | escape }}"
+                          data-sold-out-label="{{ block.settings.sold_out_label | default: 'Sold out' | escape }}"
+                        >{{ atc_label }}</span>
+                      </button>
+                    </div>
+
+                  {% when 'image_with_text' %}
+                    {%- liquid
+                      assign iwt_alt = block.settings.image_alt
+                      if block.settings.image != blank and block.settings.image.alt != blank
+                        assign iwt_alt = block.settings.image.alt
+                      endif
+                      assign iwt_text_position = block.settings.text_position
+                      if iwt_text_position == blank
+                        if block.settings.image_position == 'right'
+                          assign iwt_text_position = 'left'
+                        elsif block.settings.image_position == 'left'
+                          assign iwt_text_position = 'right'
+                        else
+                          assign iwt_text_position = 'right'
+                        endif
+                      endif
+                      assign iwt_width = block.settings.block_width | default: 'auto'
+                      assign iwt_align = block.settings.content_align | default: 'center'
+                    -%}
+                    <div class="lfqb-iwt lfqb-iwt--text-{{ iwt_text_position }} lfqb-iwt--{{ iwt_width }} lfqb-iwt--align-{{ iwt_align }} lfqb-block lfqb-block-{{ block.id }} {{ device_class }}" {{ block.shopify_attributes }}>
+                      {% if block.settings.image != blank %}
+                        <div class="lfqb-iwt__media">
+                          {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'lfqb-iwt__image', alt: iwt_alt }}
+                        </div>
+                      {% endif %}
+                      {% if block.settings.text != blank %}
+                        <div class="lfqb-iwt__text rte">{{ block.settings.text }}</div>
+                      {% endif %}
+                    </div>
+
+                  {% when 'images_with_text' %}
+                    {%- liquid
+                      assign iwtm_columns = block.settings.columns | default: 2
+                      assign iwtm_align = block.settings.content_align | default: 'center'
+                    -%}
+                    <div
+                      class="lfqb-iwtm lfqb-block lfqb-block-{{ block.id }} {{ device_class }}"
+                      style="--lfqb-iwtm-cols: {{ iwtm_columns }};"
+                      {{ block.shopify_attributes }}
+                    >
+                      {% for i in (1..4) %}
+                        {%- liquid
+                          assign image_key = 'image_' | append: i
+                          assign text_key = 'text_' | append: i
+                          assign alt_key = 'image_alt_' | append: i
+                          assign item_image = block.settings[image_key]
+                          assign item_text = block.settings[text_key]
+                          assign item_alt = block.settings[alt_key]
+                          if item_image != blank and item_image.alt != blank
+                            assign item_alt = item_image.alt
+                          endif
+                        -%}
+                        {% if item_image != blank or item_text != blank %}
+                          <div class="lfqb-iwtm__item lfqb-iwtm__item--align-{{ iwtm_align }}">
+                            {% if item_image != blank %}
+                              <div class="lfqb-iwtm__media">
+                                {{ item_image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'lfqb-iwtm__image', alt: item_alt }}
+                              </div>
+                            {% endif %}
+                            {% if item_text != blank %}
+                              <div class="lfqb-iwtm__text rte">{{ item_text }}</div>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+
+                  {% when 'low_stock' %}
+                    <div class="lfqb-low-stock lfqb-block lfqb-block-{{ block.id }} {{ device_class }}" {{ block.shopify_attributes }}>
+                      {% if block.settings.show_icon %}
+                        <span class="lfqb-low-stock__icon" aria-hidden="true">{{ block.settings.icon_text | default: '🔥' }}</span>
+                      {% endif %}
+                      {% render 'product-scarcity',
+                        scarcity_id: block.id,
+                        block_attributes: '',
+                        stock_min: block.settings.stock_min,
+                        stock_max: block.settings.stock_max,
+                        reduction_minutes: block.settings.reduction_minutes,
+                        reduction_amount: block.settings.reduction_amount,
+                        text_prefix: block.settings.text_prefix,
+                        text_suffix: block.settings.text_suffix,
+                        dot_color: block.settings.dot_color,
+                        min_dot_color: block.settings.min_dot_color,
+                        match_text_to_dot_color: block.settings.match_text_to_dot_color,
+                        text_color: block.settings.text_color,
+                        stock_color: block.settings.stock_color,
+                        text_font_size: block.settings.text_font_size,
+                        text_font_weight: block.settings.text_font_weight,
+                        count_font_weight: block.settings.count_font_weight
+                      %}
+                    </div>
+                {% endcase %}
+              {% endfor %}
+            </div>
+          {% endform %}
+        </div>
+      </div>
+
+      <script type="application/json" data-lfqb-product-data>
+        {
+          "moneyFormat": {{ shop.money_with_currency_format | json }},
+          "currency": {{ cart.currency.iso_code | json }},
+          "selectedVariantId": {{ selected_variant.id | json }},
+          "sellingPlansAvailable": {{ selling_plans_available | json }},
+          "defaultPlanId": {{ first_selling_plan_id | json }},
+          "variants": [
+            {%- for variant in quick_buy_product.variants -%}
+              {
+                "id": {{ variant.id | json }},
+                "price": {{ variant.price }},
+                "compareAtPrice": {{ variant.compare_at_price | default: 0 }},
+                "available": {{ variant.available | json }},
+                "allocations": [
+                  {%- for allocation in variant.selling_plan_allocations -%}
+                    {
+                      "planId": {{ allocation.selling_plan.id | json }},
+                      "price": {{ allocation.price }}
+                    }{%- unless forloop.last -%},{%- endunless -%}
+                  {%- endfor -%}
+                ]
+              }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          ]
+        }
+      </script>
+    {% endif %}
+  </div>
+
+  <dialog class="lfqb-ingredients-modal" id="lfqb-ingredients-{{ section.id }}" data-lfqb-ingredients-modal>
+    <div class="lfqb-ingredients-modal__inner">
+      <button type="button" class="lfqb-ingredients-modal__close" data-lfqb-close-ingredients aria-label="Close">&times;</button>
+      <div class="lfqb-ingredients-modal__layout">
+        <div class="lfqb-ingredients-modal__content">
+          {% if section.settings.ingredients_modal_content != blank %}
+            {{ section.settings.ingredients_modal_content }}
+          {% else %}
+            {% render 'ltl-fry-ingredients-modal-fallback' %}
+          {% endif %}
+        </div>
+        <div class="lfqb-ingredients-modal__sidebar">
+          {% if section.settings.ingredients_modal_sidebar != blank %}
+            {{ section.settings.ingredients_modal_sidebar }}
+          {% else %}
+            {% render 'ltl-fry-ingredients-modal-sidebar-fallback' %}
+          {% endif %}
+        </div>
+      </div>
+      <div class="lfqb-ingredients-modal__footer">
+        {% if section.settings.ingredients_modal_footer != blank %}
+          {{ section.settings.ingredients_modal_footer }}
+        {% else %}
+          {% render 'ltl-fry-ingredients-modal-footer-fallback' %}
+        {% endif %}
+      </div>
+    </div>
+  </dialog>
+</section>
+
+{% render 'ltl-fry-section-base', section: section %}
+
+<style>
+  .section-{{ section.id }} .lfqb-empty {
+    margin: 0;
+    font-size: 15px;
+    color: #6b7280;
+  }
+
+  .section-{{ section.id }} {
+    overflow-x: clip;
+  }
+
+  .section-{{ section.id }},
+  .section-{{ section.id }} *,
+  .section-{{ section.id }} *::before,
+  .section-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  .section-{{ section.id }} .lfqb-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: {{ section.settings.column_gap_mobile }}px;
+    align-items: start;
+    width: 100%;
+  }
+
+  .section-{{ section.id }} .lfqb-grid > *,
+  .section-{{ section.id }} .lfqb-gallery,
+  .section-{{ section.id }} .lfqb-form,
+  .section-{{ section.id }} .lfqb-blocks {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .section-{{ section.id }} .lfqb-blocks img,
+  .section-{{ section.id }} .lfqb-blocks video,
+  .section-{{ section.id }} .lfqb-blocks iframe,
+  .section-{{ section.id }} .lfqb-blocks svg,
+  .section-{{ section.id }} .lfqb-blocks table {
+    max-width: 100%;
+  }
+
+  .section-{{ section.id }} .lfqb-blocks img {
+    height: auto;
+  }
+
+  .section-{{ section.id }} .lfqb-blocks,
+  .section-{{ section.id }} .lfqb-blocks * {
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  .section-{{ section.id }} .lfqb-custom-html {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__stage {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: {{ section.settings.gallery_radius }}px;
+    background: {{ section.settings.gallery_bg_color }};
+    {% if section.settings.gallery_aspect_ratio == 'auto' %}
+      min-height: 420px;
+    {% else %}
+      aspect-ratio: {{ section.settings.gallery_aspect_ratio }};
+    {% endif %}
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__image,
+  .section-{{ section.id }} .lfqb-gallery__placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: {{ section.settings.gallery_image_fit }};
+    display: block;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__save-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 2;
+    background: {{ section.settings.save_badge_bg_color }};
+    color: {{ section.settings.save_badge_text_color }};
+    font-size: {{ section.settings.save_badge_font_size }}px;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: #111;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__nav--prev { left: 12px; }
+  .section-{{ section.id }} .lfqb-gallery__nav--next { right: 12px; }
+
+  .section-{{ section.id }} .lfqb-gallery__quote {
+    position: absolute;
+    left: clamp(8px, 3vw, 16px);
+    right: clamp(8px, 3vw, 16px);
+    bottom: clamp(8px, 3vw, 16px);
+    z-index: 2;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: 12px;
+    padding: 10px 12px;
+    min-width: 0;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__quote-body {
+    min-width: 0;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__quote-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__quote-name {
+    margin: 0 0 2px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__quote-text {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__thumbs {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__thumb {
+    flex: 0 0 calc((100% - 32px) / 5);
+    min-width: 48px;
+    max-width: 80px;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    scroll-snap-align: start;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__thumb.is-active {
+    border-color: #111;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .section-{{ section.id }} .lfqb-ingredients-btn {
+    width: 100%;
+    margin-top: 12px;
+    border: none;
+    border-radius: {{ section.settings.ingredients_button_radius }}px;
+    padding: 14px 18px;
+    background: {{ section.settings.ingredients_button_bg }};
+    color: {{ section.settings.ingredients_button_color }};
+    font-size: {{ section.settings.ingredients_button_font_size_mobile }}px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+    white-space: normal;
+    overflow-wrap: break-word;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .section-{{ section.id }} .lfqb-offer {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .section-{{ section.id }} .lfqb-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .section-{{ section.id }} .lfqb-blocks {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: {{ section.settings.block_gap_mobile }}px;
+  }
+
+  .section-{{ section.id }} .lfqb-blocks > .lfqb-block:not(.lfqb-iwt--auto) {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .section-{{ section.id }} .lfqb-blocks > .lfqb-iwt--auto {
+    flex: 0 0 auto;
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    align-self: flex-start;
+  }
+
+  .section-{{ section.id }} .lfqb-variant-select {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .section-{{ section.id }} .lfqb-device-desktop { display: none !important; }
+  }
+
+  .section-{{ section.id }} .lfqb-block-reviews .rating-stars {
+    justify-content: flex-start;
+  }
+
+  {% for block in section.blocks %}
+    {% if block.type == 'text' %}
+      {% if block.settings.font_source == 'custom' %}
+        {% if block.settings.font_regular != blank %}
+          {{ block.settings.font_regular | font_face: font_display: 'swap' }}
+        {% endif %}
+        {% if block.settings.font_bold != blank %}
+          {{ block.settings.font_bold | font_face: font_display: 'swap' }}
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% for block in section.blocks %}
+    {% if block.type == 'text' %}
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} {
+        font-size: {{ block.settings.font_size_mobile }}px;
+        line-height: {{ block.settings.line_height | times: 0.1 }};
+        color: {{ block.settings.color }};
+        text-align: {{ block.settings.text_align }};
+        padding: {{ block.settings.padding_top | default: 0 }}px {{ block.settings.padding_right | default: 0 }}px {{ block.settings.padding_bottom | default: 0 }}px {{ block.settings.padding_left | default: 0 }}px;
+        {% if block.settings.font_source == 'custom' and block.settings.font_regular != blank %}
+          font-family: {{ block.settings.font_regular.family }}, {{ block.settings.font_regular.fallback_families }};
+        {% else %}
+          font-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+        {% endif %}
+        font-weight: {{ block.settings.font_weight_regular }};
+        letter-spacing: {{ block.settings.letter_spacing | times: 0.01 }}em;
+        text-transform: {{ block.settings.text_transform }};
+        margin-bottom: {{ block.settings.margin_bottom_mobile }}px;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} p {
+        margin: 0;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} p + p {
+        margin-top: 0.4em;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} strong,
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} b {
+        {% if block.settings.font_source == 'custom' and block.settings.font_bold != blank %}
+          font-family: {{ block.settings.font_bold.family }}, {{ block.settings.font_bold.fallback_families }};
+        {% endif %}
+        font-weight: {{ block.settings.font_weight_bold }};
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }}.lfqb-text--heading {
+        font-size: {{ block.settings.font_size_mobile | plus: 8 }}px;
+      }
+    {% endif %}
+
+    {% if block.type == 'price' %}
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-price__current {
+        color: {{ block.settings.price_color }};
+        font-size: {{ block.settings.price_font_size_mobile }}px;
+        font-weight: {{ block.settings.price_font_weight }};
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-price__compare {
+        color: {{ block.settings.compare_price_color }};
+        font-size: {{ block.settings.compare_price_font_size_mobile }}px;
+        font-weight: {{ block.settings.compare_price_font_weight }};
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-price__row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: {{ block.settings.price_gap }}px;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }}.lfqb-price--compare-first .lfqb-price__row {
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+      }
+    {% endif %}
+
+    {% if block.type == 'feature' %}
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} {
+        background: {{ block.settings.card_bg_color }};
+        border: 1px solid {{ block.settings.card_border_color }};
+        border-radius: {{ block.settings.card_border_radius }}px;
+        padding: 16px;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__title {
+        margin: 0 0 4px;
+        font-size: {{ block.settings.title_font_size_mobile }}px;
+        font-weight: {{ block.settings.title_font_weight }};
+        color: {{ block.settings.title_color }};
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__description {
+        margin: 0;
+        font-size: {{ block.settings.description_font_size_mobile }}px;
+        color: {{ block.settings.description_color }};
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__features ul {
+        list-style: none;
+        margin: 14px 0 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat({{ block.settings.feature_columns }}, minmax(0, 1fr));
+        gap: 8px 16px;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__features li {
+        position: relative;
+        padding-left: 22px;
+        font-size: {{ block.settings.feature_font_size_mobile }}px;
+        line-height: 1.35;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__features li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.35em;
+        width: 14px;
+        height: 14px;
+        background: {{ block.settings.check_color }};
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M6.2 12.3 2.8 8.9l1.4-1.4 2 2 6.6-6.6 1.4 1.4z'/%3E%3C/svg%3E") center / contain no-repeat;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M6.2 12.3 2.8 8.9l1.4-1.4 2 2 6.6-6.6 1.4 1.4z'/%3E%3C/svg%3E") center / contain no-repeat;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__savings {
+        margin: 12px 0 0;
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: {{ block.settings.savings_bg_color }};
+        color: {{ block.settings.savings_text_color }};
+        font-size: {{ block.settings.savings_font_size_mobile }}px;
+        text-align: center;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__toggle-ui {
+        display: block;
+        width: 44px;
+        height: 24px;
+        border-radius: 999px;
+        background: {{ block.settings.toggle_off_color }};
+        position: relative;
+        transition: background 0.2s ease;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__toggle:checked + .lfqb-feature__toggle-ui {
+        background: {{ block.settings.toggle_on_color }};
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__toggle-ui::after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #fff;
+        transition: transform 0.2s ease;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__toggle:checked + .lfqb-feature__toggle-ui::after {
+        transform: translateX(20px);
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__plan-select {
+        width: 100%;
+        margin-top: 12px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__no-plans {
+        margin: 10px 0 0;
+        font-size: 12px;
+        color: #9ca3af;
+      }
+    {% endif %}
+
+    {% if block.type == 'buy_buttons' %}
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-atc {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        white-space: normal;
+        line-height: 1.3;
+        overflow-wrap: break-word;
+        border: none !important;
+        border-radius: {{ block.settings.button_border_radius }}px !important;
+        padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px !important;
+        background: {{ block.settings.button_bg_color }} !important;
+        background-color: {{ block.settings.button_bg_color }} !important;
+        color: {{ block.settings.button_text_color }} !important;
+        font-size: {{ block.settings.button_font_size_mobile }}px !important;
+        font-weight: {{ block.settings.button_font_weight }} !important;
+        text-transform: {% if block.settings.uppercase_text %}uppercase{% else %}none{% endif %} !important;
+        cursor: pointer;
+        z-index: 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-atc::before,
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-atc::after {
+        display: none !important;
+        content: none !important;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-atc:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+      }
+    {% endif %}
+
+    {% if block.type == 'image_with_text' %}
+      {%- liquid
+        assign iwt_text_position = block.settings.text_position
+        if iwt_text_position == blank
+          if block.settings.image_position == 'right'
+            assign iwt_text_position = 'left'
+          elsif block.settings.image_position == 'left'
+            assign iwt_text_position = 'right'
+          else
+            assign iwt_text_position = 'right'
+          endif
+        endif
+        assign iwt_width = block.settings.block_width | default: 'auto'
+        assign iwt_fit = block.settings.image_fit | default: 'contain'
+        assign iwt_align = block.settings.content_align | default: 'center'
+        case iwt_align
+          when 'left'
+            assign iwt_align_flex = 'flex-start'
+          when 'right'
+            assign iwt_align_flex = 'flex-end'
+          else
+            assign iwt_align_flex = 'center'
+        endcase
+        case iwt_text_position
+          when 'left'
+            assign iwt_direction = 'row-reverse'
+          when 'top'
+            assign iwt_direction = 'column-reverse'
+          when 'bottom'
+            assign iwt_direction = 'column'
+          else
+            assign iwt_direction = 'row'
+        endcase
+      -%}
+      .section-{{ section.id }} .lfqb-blocks > .lfqb-block-{{ block.id }}.lfqb-iwt--auto,
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} {
+        display: flex;
+        align-items: {% if iwt_text_position == 'top' or iwt_text_position == 'bottom' %}{{ iwt_align_flex }}{% else %}{{ block.settings.vertical_align }}{% endif %};
+        gap: {{ block.settings.gap_mobile }}px;
+        flex-direction: {{ iwt_direction }};
+        text-align: {{ iwt_align }};
+        {% if iwt_width == 'auto' %}
+          flex: 0 0 auto;
+          width: fit-content;
+          max-width: 100%;
+          align-self: flex-start;
+        {% else %}
+          flex: 0 0 100%;
+          width: 100%;
+        {% endif %}
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__media {
+        flex-shrink: 0;
+        display: flex;
+        justify-content: {{ iwt_align_flex }};
+        width: {% if iwt_text_position == 'top' or iwt_text_position == 'bottom' %}100%{% else %}auto{% endif %};
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__image {
+        width: {{ block.settings.image_width_mobile }}px;
+        {% if iwt_fit == 'cover' %}
+          height: {{ block.settings.image_width_mobile }}px;
+        {% else %}
+          height: auto;
+          max-height: {{ block.settings.image_width_mobile }}px;
+        {% endif %}
+        border-radius: {{ block.settings.image_radius }}px;
+        object-fit: {{ iwt_fit }};
+        display: block;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__text {
+        font-size: {{ block.settings.font_size_mobile }}px;
+        color: {{ block.settings.color }};
+        line-height: 1.45;
+        min-width: 0;
+        text-align: {{ iwt_align }};
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__text p {
+        margin: 0;
+      }
+    {% endif %}
+
+    {% if block.type == 'images_with_text' %}
+      {%- liquid
+        assign iwtm_fit = block.settings.image_fit | default: 'contain'
+        assign iwtm_align = block.settings.content_align | default: 'center'
+        case iwtm_align
+          when 'flex-start'
+            assign iwtm_text_align = 'left'
+          when 'flex-end'
+            assign iwtm_text_align = 'right'
+          else
+            assign iwtm_text_align = 'center'
+        endcase
+      -%}
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} {
+        display: grid;
+        grid-template-columns: repeat({{ block.settings.columns_mobile | default: 2 }}, minmax(0, 1fr));
+        gap: {{ block.settings.gap_mobile }}px;
+        width: 100%;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwtm__item {
+        display: flex;
+        flex-direction: column;
+        align-items: {{ iwtm_align }};
+        gap: {{ block.settings.item_gap }}px;
+        text-align: {{ iwtm_text_align }};
+        min-width: 0;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwtm__media {
+        display: flex;
+        justify-content: {{ iwtm_align }};
+        width: 100%;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwtm__image {
+        width: {{ block.settings.image_width_mobile }}px;
+        {% if iwtm_fit == 'cover' %}
+          height: {{ block.settings.image_width_mobile }}px;
+        {% else %}
+          height: auto;
+          max-height: {{ block.settings.image_width_mobile }}px;
+        {% endif %}
+        border-radius: {{ block.settings.image_radius }}px;
+        object-fit: {{ iwtm_fit }};
+        display: block;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwtm__text {
+        font-size: {{ block.settings.font_size_mobile }}px;
+        color: {{ block.settings.color }};
+        line-height: 1.45;
+        width: 100%;
+        text-align: {{ iwtm_text_align }};
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwtm__text p {
+        margin: 0;
+      }
+    {% endif %}
+
+    {% if block.type == 'low_stock' %}
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: {{ block.settings.bar_radius }}px;
+        background: {{ block.settings.bar_bg_color }};
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .scarcity-block {
+        flex: 1;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .scarcity-dot {
+        display: none;
+      }
+      .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-low-stock__icon {
+        font-size: {{ block.settings.icon_size }}px;
+        line-height: 1;
+      }
+    {% endif %}
+  {% endfor %}
+
+  .section-{{ section.id }} .lfqb-feature__head {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .section-{{ section.id }} .lfqb-feature__copy {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  @media screen and (max-width: 359px) {
+    .section-{{ section.id }} .lfqb-feature__features ul {
+      grid-template-columns: minmax(0, 1fr) !important;
+    }
+  }
+
+  .section-{{ section.id }} .lfqb-feature__toggle-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .section-{{ section.id }} .lfqb-feature__toggle {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .section-{{ section.id }} .lfqb-ingredients-modal {
+    width: min(1100px, calc(100vw - 16px));
+    max-width: calc(100vw - 16px);
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }} .lfqb-ingredients-modal::backdrop {
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  .section-{{ section.id }} .lfqb-ingredients-modal__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+    background: #fff;
+  }
+
+  .section-{{ section.id }} .lfqb-ingredients-modal__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .section-{{ section.id }} .lfqb-ingredients-modal__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    overflow: auto;
+    padding: clamp(16px, 4vw, 24px);
+  }
+
+  .section-{{ section.id }} .lfqb-ingredients-modal img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .section-{{ section.id }} .lfqb-ingredients-modal__footer {
+    border-top: 1px solid #eee;
+    padding: 16px 24px;
+    background: #faf8f6;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} .lfqb-grid {
+      grid-template-columns: {{ section.settings.image_column_width }}% minmax(0, 1fr);
+      gap: {{ section.settings.column_gap_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfqb-blocks {
+      gap: {{ section.settings.block_gap_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfqb-device-mobile { display: none !important; }
+
+    .section-{{ section.id }} .lfqb-ingredients-btn {
+      font-size: {{ section.settings.ingredients_button_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfqb-ingredients-modal__layout {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      max-height: 70vh;
+    }
+
+    {% for block in section.blocks %}
+      {% if block.type == 'text' %}
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} {
+          font-size: {{ block.settings.font_size_desktop }}px;
+          margin-bottom: {{ block.settings.margin_bottom_desktop }}px;
+        }
+        .section-{{ section.id }} .lfqb-block-{{ block.id }}.lfqb-text--heading {
+          font-size: {{ block.settings.font_size_desktop | plus: 8 }}px;
+        }
+      {% endif %}
+      {% if block.type == 'price' %}
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-price__current {
+          font-size: {{ block.settings.price_font_size_desktop }}px;
+        }
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-price__compare {
+          font-size: {{ block.settings.compare_price_font_size_desktop }}px;
+        }
+      {% endif %}
+      {% if block.type == 'feature' %}
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__title {
+          font-size: {{ block.settings.title_font_size_desktop }}px;
+        }
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__description {
+          font-size: {{ block.settings.description_font_size_desktop }}px;
+        }
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__features li {
+          font-size: {{ block.settings.feature_font_size_desktop }}px;
+        }
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-feature__savings {
+          font-size: {{ block.settings.savings_font_size_desktop }}px;
+        }
+      {% endif %}
+      {% if block.type == 'buy_buttons' %}
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-atc {
+          font-size: {{ block.settings.button_font_size_desktop }}px !important;
+        }
+      {% endif %}
+      {% if block.type == 'image_with_text' %}
+        {%- liquid
+          assign iwt_fit_d = block.settings.image_fit | default: 'contain'
+          assign iwt_width_d = block.settings.block_width | default: 'auto'
+        -%}
+        .section-{{ section.id }} .lfqb-blocks > .lfqb-block-{{ block.id }}.lfqb-iwt--auto,
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} {
+          gap: {{ block.settings.gap_desktop }}px;
+          {% if iwt_width_d == 'auto' %}
+            flex: 0 0 auto;
+            width: fit-content;
+            max-width: 100%;
+            align-self: flex-start;
+          {% else %}
+            flex: 0 0 100%;
+            width: 100%;
+          {% endif %}
+        }
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__image {
+          width: {{ block.settings.image_width_desktop }}px;
+          {% if iwt_fit_d == 'cover' %}
+            height: {{ block.settings.image_width_desktop }}px;
+          {% else %}
+            height: auto;
+            max-height: {{ block.settings.image_width_desktop }}px;
+          {% endif %}
+        }
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwt__text {
+          font-size: {{ block.settings.font_size_desktop }}px;
+        }
+      {% endif %}
+      {% if block.type == 'images_with_text' %}
+        {%- liquid
+          assign iwtm_fit_d = block.settings.image_fit | default: 'contain'
+        -%}
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} {
+          grid-template-columns: repeat({{ block.settings.columns | default: 2 }}, minmax(0, 1fr));
+          gap: {{ block.settings.gap_desktop }}px;
+        }
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwtm__image {
+          width: {{ block.settings.image_width_desktop }}px;
+          {% if iwtm_fit_d == 'cover' %}
+            height: {{ block.settings.image_width_desktop }}px;
+          {% else %}
+            height: auto;
+            max-height: {{ block.settings.image_width_desktop }}px;
+          {% endif %}
+        }
+        .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-iwtm__text {
+          font-size: {{ block.settings.font_size_desktop }}px;
+        }
+      {% endif %}
+    {% endfor %}
+  }
+</style>
+<script>
+  (function () {
+    const section = document.querySelector('[data-section-id="{{ section.id }}"][data-lfqb-section]');
+    if (!section) return;
+
+    const dataEl = section.querySelector('[data-lfqb-product-data]');
+    const form = section.querySelector('.lfqb-form');
+    if (!dataEl || !form) return;
+
+    let productData = {};
+    try {
+      productData = JSON.parse(dataEl.textContent);
+    } catch (e) {
+      return;
+    }
+
+    const variantInput = form.querySelector('[data-lfqb-variant-input]');
+    const variantSelect = form.querySelector('[data-lfqb-variant-select]');
+    const priceBlocks = section.querySelectorAll('[data-lfqb-price-block]');
+    const featureBlocks = section.querySelectorAll('[data-lfqb-feature]');
+    const atcButton = form.querySelector('[data-lfqb-atc]');
+    const atcLabel = form.querySelector('[data-lfqb-atc-label]');
+    let sellingPlanInput = form.querySelector('input[name="selling_plan"]');
+
+    function formatMoney(cents) {
+      const value = Math.round(Number(cents) || 0);
+      const format = productData.moneyFormat || '{{amount}}';
+      const amount = (value / 100).toFixed(2);
+      const amountParts = amount.split('.');
+      const intPart = amountParts[0];
+      const decPart = amountParts[1] || '00';
+      const amountNoDecimals = String(Math.round(value / 100));
+
+      const withThousands = function (numStr, sep) {
+        return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, sep);
+      };
+
+      const placeholders = {
+        amount_with_comma_separator: withThousands(intPart, '.') + ',' + decPart,
+        amount_no_decimals_with_comma_separator: withThousands(amountNoDecimals, '.'),
+        amount_with_apostrophe_separator: withThousands(intPart, "'") + '.' + decPart,
+        amount_no_decimals_with_apostrophe_separator: withThousands(amountNoDecimals, "'"),
+        amount_with_space_separator: withThousands(intPart, ' ') + ',' + decPart,
+        amount_no_decimals_with_space_separator: withThousands(amountNoDecimals, ' '),
+        amount_no_decimals: withThousands(amountNoDecimals, ','),
+        amount: withThousands(intPart, ',') + '.' + decPart
+      };
+
+      let output = String(format);
+      Object.keys(placeholders).forEach(function (key) {
+        output = output.replace(new RegExp('\\{\\{\\s*' + key + '\\s*\\}\\}', 'g'), placeholders[key]);
+      });
+
+      if (/\{\{\s*amount/.test(output) && typeof Shopify !== 'undefined' && typeof Shopify.formatMoney === 'function') {
+        try {
+          return Shopify.formatMoney(value, format);
+        } catch (e) {}
+      }
+      return output;
+    }
+
+    function getVariant() {
+      const id = Number(variantInput ? variantInput.value : productData.selectedVariantId);
+      return (productData.variants || []).find(function (variant) {
+        return Number(variant.id) === id;
+      });
+    }
+
+    function getActivePlanId(featureEl) {
+      const toggle = featureEl.querySelector('[data-lfqb-plan-toggle]');
+      if (!toggle || !toggle.checked || !productData.sellingPlansAvailable) return null;
+      const select = featureEl.querySelector('[data-lfqb-plan-select]');
+      if (select) return Number(select.value);
+      return Number(productData.defaultPlanId) || null;
+    }
+
+    function getPrices() {
+      const variant = getVariant();
+      if (!variant) return null;
+
+      let planId = null;
+      featureBlocks.forEach(function (featureEl) {
+        const active = getActivePlanId(featureEl);
+        if (active) planId = active;
+      });
+
+      let current = variant.price;
+      let compare = variant.compareAtPrice || 0;
+
+      if (planId) {
+        const allocation = (variant.allocations || []).find(function (item) {
+          return Number(item.planId) === Number(planId);
+        });
+        if (allocation) {
+          compare = variant.price;
+          current = allocation.price;
+        }
+      }
+
+      return {
+        current: current,
+        compare: compare,
+        savings: Math.max(0, compare - current),
+        available: !!variant.available
+      };
+    }
+
+    function syncSellingPlanInput() {
+      let planId = null;
+      featureBlocks.forEach(function (featureEl) {
+        const active = getActivePlanId(featureEl);
+        if (active) planId = active;
+      });
+
+      if (!sellingPlanInput) {
+        sellingPlanInput = document.createElement('input');
+        sellingPlanInput.type = 'hidden';
+        sellingPlanInput.name = 'selling_plan';
+        form.appendChild(sellingPlanInput);
+      }
+
+      if (planId) {
+        sellingPlanInput.value = planId;
+        sellingPlanInput.disabled = false;
+      } else {
+        sellingPlanInput.value = '';
+        sellingPlanInput.disabled = true;
+      }
+    }
+
+    function updatePrices() {
+      const prices = getPrices();
+      if (!prices) return;
+
+      priceBlocks.forEach(function (block) {
+        const currentEl = block.querySelector('[data-lfqb-price-current]');
+        const compareEl = block.querySelector('[data-lfqb-price-compare]');
+        if (currentEl) currentEl.textContent = formatMoney(prices.current);
+        if (compareEl) {
+          if (prices.compare > prices.current) {
+            compareEl.textContent = formatMoney(prices.compare);
+            compareEl.hidden = false;
+            block.classList.add('lfqb-price--on-sale');
+          } else {
+            compareEl.hidden = true;
+            block.classList.remove('lfqb-price--on-sale');
+          }
+        }
+      });
+
+      featureBlocks.forEach(function (featureEl) {
+        const savingsEl = featureEl.querySelector('[data-lfqb-savings]');
+        if (!savingsEl) return;
+        const template = savingsEl.dataset.template || savingsEl.textContent.trim();
+        if (!template) return;
+        const message = template
+          .replace(/\[\s*savings\s*\]/gi, formatMoney(prices.savings))
+          .replace(/\{\{\s*savings\s*\}\}/gi, formatMoney(prices.savings));
+        savingsEl.textContent = message;
+        savingsEl.hidden = !(getActivePlanId(featureEl) && prices.savings > 0);
+      });
+
+      if (atcButton) {
+        atcButton.disabled = !prices.available;
+        if (atcLabel) {
+          atcLabel.textContent = prices.available
+            ? (atcLabel.dataset.availableLabel || atcLabel.textContent)
+            : (atcLabel.dataset.soldOutLabel || 'Sold out');
+        }
+      }
+    }
+
+    function bindFeatureBlocks() {
+      featureBlocks.forEach(function (featureEl) {
+        const toggle = featureEl.querySelector('[data-lfqb-plan-toggle]');
+        const select = featureEl.querySelector('[data-lfqb-plan-select]');
+        const savingsEl = featureEl.querySelector('[data-lfqb-savings]');
+        if (savingsEl && !savingsEl.dataset.template) {
+          savingsEl.dataset.template = savingsEl.textContent.trim();
+        }
+        if (toggle) {
+          toggle.addEventListener('change', function () {
+            syncSellingPlanInput();
+            updatePrices();
+          });
+        }
+        if (select) {
+          select.addEventListener('change', function () {
+            syncSellingPlanInput();
+            updatePrices();
+          });
+        }
+      });
+    }
+
+    if (variantSelect && variantInput) {
+      variantSelect.addEventListener('change', function () {
+        variantInput.value = variantSelect.value;
+        syncSellingPlanInput();
+        updatePrices();
+      });
+    }
+
+    bindFeatureBlocks();
+    syncSellingPlanInput();
+    updatePrices();
+
+    const gallery = section.querySelector('[data-lfqb-gallery]');
+    if (gallery) {
+      const slides = Array.from(gallery.querySelectorAll('[data-lfqb-slide]'));
+      const thumbs = Array.from(gallery.querySelectorAll('[data-lfqb-thumb]'));
+      let activeIndex = slides.findIndex(function (slide) {
+        return slide.classList.contains('is-active');
+      });
+      if (activeIndex < 0) activeIndex = 0;
+
+      function showSlide(index) {
+        if (!slides.length) return;
+        activeIndex = (index + slides.length) % slides.length;
+        slides.forEach(function (slide, i) {
+          slide.classList.toggle('is-active', i === activeIndex);
+        });
+        thumbs.forEach(function (thumb, i) {
+          thumb.classList.toggle('is-active', i === activeIndex);
+        });
+      }
+
+      const prev = gallery.querySelector('[data-lfqb-prev]');
+      const next = gallery.querySelector('[data-lfqb-next]');
+      if (prev) prev.addEventListener('click', function () { showSlide(activeIndex - 1); });
+      if (next) next.addEventListener('click', function () { showSlide(activeIndex + 1); });
+      thumbs.forEach(function (thumb) {
+        thumb.addEventListener('click', function () {
+          showSlide(Number(thumb.dataset.index || 0));
+        });
+      });
+    }
+
+    const modal = section.querySelector('[data-lfqb-ingredients-modal]');
+    const openBtn = section.querySelector('[data-lfqb-open-ingredients]');
+    const closeBtn = section.querySelector('[data-lfqb-close-ingredients]');
+    if (modal && openBtn) {
+      openBtn.addEventListener('click', function () {
+        if (typeof modal.showModal === 'function') modal.showModal();
+      });
+    }
+    if (modal && closeBtn) {
+      closeBtn.addEventListener('click', function () {
+        modal.close();
+      });
+    }
+    if (modal) {
+      modal.addEventListener('click', function (event) {
+        if (event.target === modal) modal.close();
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "ltl-fry-quick-buy",
+  "tag": "section",
+  "class": "section-ltl-fry-quick-buy",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "header", "content": "Gallery" },
+    { "type": "range", "id": "image_column_width", "min": 35, "max": 65, "step": 1, "unit": "%", "label": "Image column width (desktop)", "default": 50 },
+    { "type": "select", "id": "gallery_aspect_ratio", "label": "Gallery aspect ratio", "options": [
+      { "value": "auto", "label": "Original" },
+      { "value": "1 / 1", "label": "1:1" },
+      { "value": "4 / 5", "label": "4:5" },
+      { "value": "3 / 4", "label": "3:4" }
+    ], "default": "4 / 5" },
+    { "type": "select", "id": "gallery_image_fit", "label": "Image fit", "options": [
+      { "value": "cover", "label": "Cover" },
+      { "value": "contain", "label": "Contain" }
+    ], "default": "cover" },
+    { "type": "range", "id": "gallery_radius", "min": 0, "max": 24, "step": 2, "unit": "px", "label": "Gallery radius", "default": 0 },
+    { "type": "color", "id": "gallery_bg_color", "label": "Gallery background", "default": "#f3eee9" },
+    { "type": "checkbox", "id": "show_save_badge", "label": "Show save badge", "default": true },
+    { "type": "text", "id": "save_badge_text", "label": "Save badge text", "default": "SAVE 40%" },
+    { "type": "color", "id": "save_badge_bg_color", "label": "Save badge background", "default": "#d64545" },
+    { "type": "color", "id": "save_badge_text_color", "label": "Save badge text color", "default": "#ffffff" },
+    { "type": "range", "id": "save_badge_font_size", "min": 10, "max": 18, "step": 1, "unit": "px", "label": "Save badge font size", "default": 12 },
+    { "type": "checkbox", "id": "show_quote_overlay", "label": "Show quote overlay", "default": true },
+    { "type": "image_picker", "id": "quote_image", "label": "Quote image" },
+    { "type": "text", "id": "quote_name", "label": "Quote name", "default": "Kari Thompson" },
+    { "type": "textarea", "id": "quote_text", "label": "Quote text" },
+    { "type": "header", "content": "Ingredients button" },
+    { "type": "text", "id": "ingredients_button_text", "label": "Button text", "default": "View ingredients" },
+    { "type": "color", "id": "ingredients_button_bg", "label": "Button background", "default": "#f6c9b8" },
+    { "type": "color", "id": "ingredients_button_color", "label": "Button text color", "default": "#111111" },
+    { "type": "range", "id": "ingredients_button_font_size_mobile", "min": 11, "max": 18, "step": 1, "unit": "px", "label": "Button size (mobile)", "default": 12 },
+    { "type": "range", "id": "ingredients_button_font_size_desktop", "min": 11, "max": 18, "step": 1, "unit": "px", "label": "Button size (desktop)", "default": 13 },
+    { "type": "range", "id": "ingredients_button_radius", "min": 0, "max": 20, "step": 1, "unit": "px", "label": "Button radius", "default": 4 },
+    { "type": "header", "content": "Ingredients modal" },
+    { "type": "html", "id": "ingredients_modal_content", "label": "Modal content (left)" },
+    { "type": "html", "id": "ingredients_modal_sidebar", "label": "Modal sidebar (right)" },
+    { "type": "html", "id": "ingredients_modal_footer", "label": "Modal footer" },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "column_gap_mobile", "min": 0, "max": 48, "step": 4, "unit": "px", "label": "Column gap (mobile)", "default": 24 },
+    { "type": "range", "id": "column_gap_desktop", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Column gap (desktop)", "default": 40 },
+    { "type": "range", "id": "block_gap_mobile", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Block gap (mobile)", "default": 12 },
+    { "type": "range", "id": "block_gap_desktop", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Block gap (desktop)", "default": 16 },
+    { "type": "header", "content": "Section style" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#ffffff" },
+    { "type": "checkbox", "id": "gradient_enabled", "label": "Use gradient background", "default": false },
+    { "type": "color_background", "id": "gradient_background", "label": "Gradient", "default": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#111111" },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [
+      { "value": "page", "label": "Section width" },
+      { "value": "full", "label": "Full width" }
+    ], "default": "page" },
+    { "type": "range", "id": "container_max_width", "min": 900, "max": 1400, "step": 10, "unit": "px", "label": "Container max width", "default": 1200, "info": "Applies when Section width is selected." },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (mobile)", "default": 24 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (mobile)", "default": 24 },
+    { "type": "range", "id": "padding_top_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (desktop)", "default": 40 },
+    { "type": "range", "id": "padding_bottom_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (desktop)", "default": 40 }
+  ],
+  "blocks": [
+    {
+      "type": "reviews",
+      "name": "Reviews",
+      "limit": 1,
+      "settings": [
+        { "type": "select", "id": "stars_rating_source", "label": "Stars rating", "options": [
+          { "value": "metafield", "label": "Metafield rating" },
+          { "value": "custom", "label": "Custom rating" },
+          { "value": "original", "label": "Original rating" }
+        ], "default": "custom" },
+        { "type": "range", "id": "rating", "min": 0, "max": 5, "step": 0.1, "label": "Custom rating", "default": 5 },
+        { "type": "checkbox", "id": "show_rating_text", "label": "Show rating text", "default": true },
+        { "type": "text", "id": "rating_text", "label": "Rating text", "default": "(7,391) 818K+ REJUVENATED WOMEN" },
+        { "type": "color", "id": "star_color", "label": "Star color", "default": "#f59e0b" },
+        { "type": "color", "id": "bg_star_color", "label": "Background star color", "default": "#e5e7eb" },
+        { "type": "range", "id": "size", "min": 10, "max": 24, "step": 1, "label": "Star size", "default": 16 },
+        { "type": "range", "id": "text_font_size", "min": 10, "max": 20, "step": 1, "unit": "px", "label": "Text size", "default": 13 },
+        { "type": "color", "id": "text_color", "label": "Text color", "default": "#111111" },
+        { "type": "range", "id": "margin_top", "min": 0, "max": 30, "step": 3, "unit": "px", "label": "Margin top", "default": 0 },
+        { "type": "range", "id": "margin_bottom", "min": 0, "max": 30, "step": 3, "unit": "px", "label": "Margin bottom", "default": 12 },
+        { "type": "select", "id": "visibility", "label": "Show on", "options": [
+          { "value": "all", "label": "All devices" },
+          { "value": "desktop", "label": "Desktop only" },
+          { "value": "mobile", "label": "Mobile only" }
+        ], "default": "all" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        { "type": "select", "id": "style", "label": "Style", "options": [
+          { "value": "body", "label": "Body" },
+          { "value": "heading", "label": "Heading" },
+          { "value": "eyebrow", "label": "Eyebrow" }
+        ], "default": "body" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>ARCTIC HERBS · 40-DAY SUPPLY</p><p><strong>The Complete System for Mature Women's Skin</strong></p><p>System Includes (40-day supply): Anti-Age &amp; Insane Glow Day Balm, Hyper Potent Dark Circles &amp; Eye Balm, Magic Wrinkle Eraser Night Balm, Ultra Cleanse &amp; Revive Face Scrub</p>" },
+        { "type": "select", "id": "font_source", "label": "Font", "options": [
+          { "value": "body", "label": "Body font" },
+          { "value": "custom", "label": "Custom font" }
+        ], "default": "body" },
+        { "type": "font_picker", "id": "font_regular", "label": "Regular font", "default": "helvetica_n4", "visible_if": "{{ block.settings.font_source == 'custom' }}" },
+        { "type": "select", "id": "font_weight_regular", "label": "Regular weight", "options": [
+          { "value": "400", "label": "Regular" },
+          { "value": "500", "label": "Medium" },
+          { "value": "600", "label": "Semibold" }
+        ], "default": "400" },
+        { "type": "font_picker", "id": "font_bold", "label": "Bold font", "default": "helvetica_n7", "visible_if": "{{ block.settings.font_source == 'custom' }}" },
+        { "type": "select", "id": "font_weight_bold", "label": "Bold weight", "options": [
+          { "value": "600", "label": "Semibold" },
+          { "value": "700", "label": "Bold" },
+          { "value": "800", "label": "Extra bold" }
+        ], "default": "700" },
+        { "type": "range", "id": "font_size_mobile", "min": 10, "max": 40, "step": 1, "unit": "px", "label": "Size (mobile)", "default": 15 },
+        { "type": "range", "id": "font_size_desktop", "min": 10, "max": 48, "step": 1, "unit": "px", "label": "Size (desktop)", "default": 16 },
+        { "type": "range", "id": "line_height", "min": 10, "max": 20, "step": 1, "label": "Line height", "default": 14 },
+        { "type": "range", "id": "letter_spacing", "min": 0, "max": 20, "step": 1, "label": "Letter spacing", "default": 0 },
+        { "type": "select", "id": "text_transform", "label": "Text transform", "options": [
+          { "value": "none", "label": "None" },
+          { "value": "uppercase", "label": "Uppercase" }
+        ], "default": "none" },
+        { "type": "color", "id": "color", "label": "Color", "default": "#111111" },
+        { "type": "select", "id": "text_align", "label": "Alignment", "options": [
+          { "value": "left", "label": "Left" },
+          { "value": "center", "label": "Center" }
+        ], "default": "left" },
+        { "type": "range", "id": "padding_top", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Padding top", "default": 0 },
+        { "type": "range", "id": "padding_bottom", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Padding bottom", "default": 0 },
+        { "type": "range", "id": "padding_left", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Padding left", "default": 0 },
+        { "type": "range", "id": "padding_right", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Padding right", "default": 0 },
+        { "type": "range", "id": "margin_bottom_mobile", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Margin bottom (mobile)", "default": 0 },
+        { "type": "range", "id": "margin_bottom_desktop", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Margin bottom (desktop)", "default": 0 },
+        { "type": "select", "id": "visibility", "label": "Show on", "options": [
+          { "value": "all", "label": "All devices" },
+          { "value": "desktop", "label": "Desktop only" },
+          { "value": "mobile", "label": "Mobile only" }
+        ], "default": "all" }
+      ]
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1,
+      "settings": [
+        { "type": "select", "id": "layout", "label": "Price order", "options": [
+          { "value": "price_first", "label": "Price first" },
+          { "value": "price_second", "label": "Compare price first" }
+        ], "default": "price_first" },
+        { "type": "range", "id": "price_gap", "min": 0, "max": 24, "step": 2, "unit": "px", "label": "Gap", "default": 8 },
+        { "type": "color", "id": "price_color", "label": "Price color", "default": "#111111" },
+        { "type": "range", "id": "price_font_size_mobile", "min": 14, "max": 40, "step": 1, "unit": "px", "label": "Price size (mobile)", "default": 28 },
+        { "type": "range", "id": "price_font_size_desktop", "min": 16, "max": 48, "step": 1, "unit": "px", "label": "Price size (desktop)", "default": 32 },
+        { "type": "range", "id": "price_font_weight", "min": 400, "max": 800, "step": 100, "label": "Price weight", "default": 700 },
+        { "type": "color", "id": "compare_price_color", "label": "Compare price color", "default": "#9ca3af" },
+        { "type": "range", "id": "compare_price_font_size_mobile", "min": 12, "max": 28, "step": 1, "unit": "px", "label": "Compare size (mobile)", "default": 16 },
+        { "type": "range", "id": "compare_price_font_size_desktop", "min": 12, "max": 28, "step": 1, "unit": "px", "label": "Compare size (desktop)", "default": 18 },
+        { "type": "range", "id": "compare_price_font_weight", "min": 400, "max": 700, "step": 100, "label": "Compare weight", "default": 400 },
+        { "type": "select", "id": "visibility", "label": "Show on", "options": [
+          { "value": "all", "label": "All devices" },
+          { "value": "desktop", "label": "Desktop only" },
+          { "value": "mobile", "label": "Mobile only" }
+        ], "default": "all" }
+      ]
+    },
+    {
+      "type": "feature",
+      "name": "Feature block",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Save 40% off with our flexible plan" },
+        { "type": "text", "id": "description", "label": "Description", "default": "No contracts. Cancel with ease." },
+        { "type": "richtext", "id": "features", "label": "Features", "default": "<ul><li>Free Shipping Forever</li><li>30% Off All Future Orders</li><li>60-Day Money-Back Guarantee</li><li>Skip, Pause Or Cancel Anytime</li><li>Consistent Results, Backed By Testing</li><li>Never Run Out Of Your Routine</li></ul>" },
+        { "type": "checkbox", "id": "default_enabled", "label": "Enable subscription by default", "default": true },
+        { "type": "checkbox", "id": "show_savings_message", "label": "Show savings message", "default": true },
+        { "type": "text", "id": "savings_message", "label": "Savings message", "default": "🎉 Congrats! You're saving [savings]", "info": "Use [savings] for the calculated amount." },
+        { "type": "range", "id": "feature_columns", "min": 1, "max": 3, "step": 1, "label": "Feature columns", "default": 2 },
+        { "type": "color", "id": "card_bg_color", "label": "Card background", "default": "#faf8f6" },
+        { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#e5e7eb" },
+        { "type": "range", "id": "card_border_radius", "min": 0, "max": 24, "step": 2, "unit": "px", "label": "Card radius", "default": 8 },
+        { "type": "color", "id": "toggle_on_color", "label": "Toggle on color", "default": "#16a34a" },
+        { "type": "color", "id": "toggle_off_color", "label": "Toggle off color", "default": "#d1d5db" },
+        { "type": "color", "id": "check_color", "label": "Checkmark color", "default": "#f59e0b" },
+        { "type": "range", "id": "title_font_size_mobile", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Title size (mobile)", "default": 15 },
+        { "type": "range", "id": "title_font_size_desktop", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Title size (desktop)", "default": 16 },
+        { "type": "range", "id": "title_font_weight", "min": 500, "max": 700, "step": 100, "label": "Title weight", "default": 600 },
+        { "type": "color", "id": "title_color", "label": "Title color", "default": "#111111" },
+        { "type": "range", "id": "description_font_size_mobile", "min": 11, "max": 18, "step": 1, "unit": "px", "label": "Description size (mobile)", "default": 13 },
+        { "type": "range", "id": "description_font_size_desktop", "min": 11, "max": 18, "step": 1, "unit": "px", "label": "Description size (desktop)", "default": 14 },
+        { "type": "color", "id": "description_color", "label": "Description color", "default": "#6b7280" },
+        { "type": "range", "id": "feature_font_size_mobile", "min": 11, "max": 16, "step": 1, "unit": "px", "label": "Feature size (mobile)", "default": 12 },
+        { "type": "range", "id": "feature_font_size_desktop", "min": 11, "max": 16, "step": 1, "unit": "px", "label": "Feature size (desktop)", "default": 13 },
+        { "type": "color", "id": "savings_bg_color", "label": "Savings background", "default": "#f3e8ff" },
+        { "type": "color", "id": "savings_text_color", "label": "Savings text color", "default": "#111111" },
+        { "type": "range", "id": "savings_font_size_mobile", "min": 11, "max": 18, "step": 1, "unit": "px", "label": "Savings size (mobile)", "default": 13 },
+        { "type": "range", "id": "savings_font_size_desktop", "min": 11, "max": 18, "step": 1, "unit": "px", "label": "Savings size (desktop)", "default": 14 },
+        { "type": "select", "id": "visibility", "label": "Show on", "options": [
+          { "value": "all", "label": "All devices" },
+          { "value": "desktop", "label": "Desktop only" },
+          { "value": "mobile", "label": "Mobile only" }
+        ], "default": "all" }
+      ]
+    },
+    {
+      "type": "custom_html",
+      "name": "Custom HTML",
+      "settings": [
+        { "type": "html", "id": "custom_html", "label": "HTML" },
+        { "type": "select", "id": "visibility", "label": "Show on", "options": [
+          { "value": "all", "label": "All devices" },
+          { "value": "desktop", "label": "Desktop only" },
+          { "value": "mobile", "label": "Mobile only" }
+        ], "default": "all" }
+      ]
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Add to cart",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" },
+        { "type": "text", "id": "sold_out_label", "label": "Sold out label", "default": "Sold out" },
+        { "type": "checkbox", "id": "uppercase_text", "label": "Uppercase label", "default": true },
+        { "type": "color", "id": "button_bg_color", "label": "Background", "default": "#c86b52" },
+        { "type": "color", "id": "button_text_color", "label": "Text color", "default": "#ffffff" },
+        { "type": "range", "id": "button_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Size (mobile)", "default": 14 },
+        { "type": "range", "id": "button_font_size_desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Size (desktop)", "default": 16 },
+        { "type": "range", "id": "button_font_weight", "min": 500, "max": 700, "step": 100, "label": "Weight", "default": 700 },
+        { "type": "range", "id": "button_border_radius", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Radius", "default": 4 },
+        { "type": "range", "id": "button_padding_vertical", "min": 10, "max": 24, "step": 1, "unit": "px", "label": "Padding vertical", "default": 16 },
+        { "type": "range", "id": "button_padding_horizontal", "min": 16, "max": 48, "step": 2, "unit": "px", "label": "Padding horizontal", "default": 24 },
+        { "type": "select", "id": "visibility", "label": "Show on", "options": [
+          { "value": "all", "label": "All devices" },
+          { "value": "desktop", "label": "Desktop only" },
+          { "value": "mobile", "label": "Mobile only" }
+        ], "default": "all" }
+      ]
+    },
+    {
+      "type": "image_with_text",
+      "name": "Image with text",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_alt", "label": "Image alt text" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Gentle with you &amp; with nature</p>" },
+        { "type": "select", "id": "text_position", "label": "Text position", "options": [
+          { "value": "right", "label": "Right of image" },
+          { "value": "left", "label": "Left of image" },
+          { "value": "top", "label": "Above image" },
+          { "value": "bottom", "label": "Below image" }
+        ], "default": "bottom" },
+        { "type": "select", "id": "content_align", "label": "Content alignment", "options": [
+          { "value": "left", "label": "Left" },
+          { "value": "center", "label": "Center" },
+          { "value": "right", "label": "Right" }
+        ], "default": "center" },
+        { "type": "select", "id": "block_width", "label": "Width", "options": [
+          { "value": "auto", "label": "Auto (same line)" },
+          { "value": "full", "label": "Full width" }
+        ], "default": "auto" },
+        { "type": "select", "id": "image_fit", "label": "Image fit", "options": [
+          { "value": "contain", "label": "Contain" },
+          { "value": "cover", "label": "Cover" }
+        ], "default": "contain" },
+        { "type": "select", "id": "vertical_align", "label": "Vertical alignment", "options": [
+          { "value": "flex-start", "label": "Top" },
+          { "value": "center", "label": "Center" }
+        ], "default": "center", "info": "Used when text is left or right of the image." },
+        { "type": "range", "id": "image_width_mobile", "min": 24, "max": 80, "step": 2, "unit": "px", "label": "Image size (mobile)", "default": 40 },
+        { "type": "range", "id": "image_width_desktop", "min": 24, "max": 80, "step": 2, "unit": "px", "label": "Image size (desktop)", "default": 44 },
+        { "type": "range", "id": "image_radius", "min": 0, "max": 100, "step": 2, "unit": "px", "label": "Image radius", "default": 0 },
+        { "type": "range", "id": "gap_mobile", "min": 8, "max": 24, "step": 2, "unit": "px", "label": "Gap (mobile)", "default": 10 },
+        { "type": "range", "id": "gap_desktop", "min": 8, "max": 24, "step": 2, "unit": "px", "label": "Gap (desktop)", "default": 12 },
+        { "type": "range", "id": "font_size_mobile", "min": 11, "max": 16, "step": 1, "unit": "px", "label": "Text size (mobile)", "default": 12 },
+        { "type": "range", "id": "font_size_desktop", "min": 11, "max": 16, "step": 1, "unit": "px", "label": "Text size (desktop)", "default": 13 },
+        { "type": "color", "id": "color", "label": "Text color", "default": "#374151" },
+        { "type": "select", "id": "visibility", "label": "Show on", "options": [
+          { "value": "all", "label": "All devices" },
+          { "value": "desktop", "label": "Desktop only" },
+          { "value": "mobile", "label": "Mobile only" }
+        ], "default": "all" }
+      ]
+    },
+    {
+      "type": "images_with_text",
+      "name": "Images with text",
+      "settings": [
+        { "type": "header", "content": "Item 1" },
+        { "type": "image_picker", "id": "image_1", "label": "Image" },
+        { "type": "text", "id": "image_alt_1", "label": "Image alt text" },
+        { "type": "richtext", "id": "text_1", "label": "Text", "default": "<p>Gentle with you &amp; with nature</p>" },
+        { "type": "header", "content": "Item 2" },
+        { "type": "image_picker", "id": "image_2", "label": "Image" },
+        { "type": "text", "id": "image_alt_2", "label": "Image alt text" },
+        { "type": "richtext", "id": "text_2", "label": "Text", "default": "<p>Better skin in 60 days money-back guarantee</p>" },
+        { "type": "header", "content": "Item 3" },
+        { "type": "image_picker", "id": "image_3", "label": "Image" },
+        { "type": "text", "id": "image_alt_3", "label": "Image alt text" },
+        { "type": "richtext", "id": "text_3", "label": "Text" },
+        { "type": "header", "content": "Item 4" },
+        { "type": "image_picker", "id": "image_4", "label": "Image" },
+        { "type": "text", "id": "image_alt_4", "label": "Image alt text" },
+        { "type": "richtext", "id": "text_4", "label": "Text" },
+        { "type": "header", "content": "Layout" },
+        { "type": "range", "id": "columns_mobile", "min": 1, "max": 3, "step": 1, "label": "Columns (mobile)", "default": 2 },
+        { "type": "range", "id": "columns", "min": 2, "max": 4, "step": 1, "label": "Columns (desktop)", "default": 2 },
+        { "type": "select", "id": "content_align", "label": "Content alignment", "options": [
+          { "value": "flex-start", "label": "Left" },
+          { "value": "center", "label": "Center" },
+          { "value": "flex-end", "label": "Right" }
+        ], "default": "center" },
+        { "type": "select", "id": "image_fit", "label": "Image fit", "options": [
+          { "value": "contain", "label": "Contain" },
+          { "value": "cover", "label": "Cover" }
+        ], "default": "contain" },
+        { "type": "range", "id": "image_width_mobile", "min": 24, "max": 80, "step": 2, "unit": "px", "label": "Image size (mobile)", "default": 40 },
+        { "type": "range", "id": "image_width_desktop", "min": 24, "max": 80, "step": 2, "unit": "px", "label": "Image size (desktop)", "default": 44 },
+        { "type": "range", "id": "image_radius", "min": 0, "max": 100, "step": 2, "unit": "px", "label": "Image radius", "default": 0 },
+        { "type": "range", "id": "item_gap", "min": 4, "max": 20, "step": 2, "unit": "px", "label": "Gap image to text", "default": 8 },
+        { "type": "range", "id": "gap_mobile", "min": 8, "max": 32, "step": 2, "unit": "px", "label": "Gap between items (mobile)", "default": 16 },
+        { "type": "range", "id": "gap_desktop", "min": 8, "max": 40, "step": 2, "unit": "px", "label": "Gap between items (desktop)", "default": 24 },
+        { "type": "range", "id": "font_size_mobile", "min": 11, "max": 16, "step": 1, "unit": "px", "label": "Text size (mobile)", "default": 12 },
+        { "type": "range", "id": "font_size_desktop", "min": 11, "max": 16, "step": 1, "unit": "px", "label": "Text size (desktop)", "default": 13 },
+        { "type": "color", "id": "color", "label": "Text color", "default": "#374151" },
+        { "type": "select", "id": "visibility", "label": "Show on", "options": [
+          { "value": "all", "label": "All devices" },
+          { "value": "desktop", "label": "Desktop only" },
+          { "value": "mobile", "label": "Mobile only" }
+        ], "default": "all" }
+      ]
+    },
+    {
+      "type": "low_stock",
+      "name": "Low stock counter",
+      "limit": 1,
+      "settings": [
+        { "type": "checkbox", "id": "show_icon", "label": "Show icon", "default": true },
+        { "type": "text", "id": "icon_text", "label": "Icon text", "default": "🔥" },
+        { "type": "range", "id": "icon_size", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Icon size", "default": 16 },
+        { "type": "number", "id": "stock_min", "label": "Minimum stock count", "default": 4 },
+        { "type": "number", "id": "stock_max", "label": "Maximum stock count", "default": 97 },
+        { "type": "number", "id": "reduction_minutes", "label": "Reduce stock every (minutes)", "default": 60 },
+        { "type": "number", "id": "reduction_amount", "label": "Reduce by (amount)", "default": 1, "info": "How much stock to subtract each interval." },
+        { "type": "text", "id": "text_prefix", "label": "Prefix text", "default": "Low Stock: only" },
+        { "type": "text", "id": "text_suffix", "label": "Suffix text", "default": "left" },
+        { "type": "color", "id": "bar_bg_color", "label": "Bar background", "default": "#fce7f3" },
+        { "type": "range", "id": "bar_radius", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Bar radius", "default": 50 },
+        { "type": "checkbox", "id": "match_text_to_dot_color", "label": "Match text color to dot", "default": false },
+        { "type": "color", "id": "text_color", "label": "Text color", "default": "#111111" },
+        { "type": "color", "id": "stock_color", "label": "Stock count color", "default": "#dc2626" },
+        { "type": "color", "id": "dot_color", "label": "Dot color", "default": "#dc2626" },
+        { "type": "color", "id": "min_dot_color", "label": "Dot color at minimum", "default": "#dc2626" },
+        { "type": "range", "id": "text_font_size", "min": 10, "max": 18, "step": 1, "unit": "px", "label": "Text size", "default": 13 },
+        { "type": "range", "id": "text_font_weight", "min": 400, "max": 700, "step": 100, "label": "Text weight", "default": 500 },
+        { "type": "range", "id": "count_font_weight", "min": 500, "max": 800, "step": 100, "label": "Count weight", "default": 700 },
+        { "type": "select", "id": "visibility", "label": "Show on", "options": [
+          { "value": "all", "label": "All devices" },
+          { "value": "desktop", "label": "Desktop only" },
+          { "value": "mobile", "label": "Mobile only" }
+        ], "default": "all" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ltl-fry-quick-buy",
+      "blocks": [
+        { "type": "reviews" },
+        { "type": "text" },
+        { "type": "price" },
+        { "type": "feature" },
+        { "type": "custom_html" },
+        { "type": "buy_buttons" },
+        { "type": "images_with_text" },
+        { "type": "low_stock" }
+      ]
+    }
+  ]
+}
+{% endschema %}

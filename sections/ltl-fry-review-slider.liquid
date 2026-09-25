@@ -1,0 +1,727 @@
+{% liquid
+  assign drag_value = 'true'
+  if section.settings.lock_drag
+    assign drag_value = 'false'
+  endif
+%}
+
+<section
+  class="ltl-fry-review-slider section-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+>
+  <div class="lf-wrap">
+    {% if section.settings.heading != blank %}
+      <h2 class="lfrs-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <splide-component
+        data-type="{{ section.settings.slider_type }}"
+        data-autoplay="{{ section.settings.autoplay }}"
+        data-autoplay-speed="{{ section.settings.autoplay_speed }}"
+        data-slides-desktop="{{ section.settings.columns_desktop }}"
+        data-slides-mobile="{{ section.settings.columns_mobile }}"
+        data-gap-desktop="{{ section.settings.gap_desktop }}"
+        data-gap-mobile="{{ section.settings.gap_mobile }}"
+        data-arrows="{{ section.settings.show_arrows }}"
+        data-pagination="{{ section.settings.show_pagination }}"
+        data-drag="{{ drag_value }}"
+      >
+        <div class="splide lfrs-splide">
+          <div class="splide__track">
+            <ul class="splide__list">
+              {% for block in section.blocks %}
+                {% if block.type == 'review' %}
+                  {% liquid
+                    assign media_type = block.settings.media_type | default: 'image'
+                    assign is_video = false
+                    if media_type == 'video'
+                      assign is_video = true
+                    endif
+                    assign video = block.settings.video
+                    assign placeholder = block.settings.placeholder
+                    if placeholder == blank and video != blank
+                      assign placeholder = video.preview_image
+                    endif
+                    assign has_video = false
+                    if video != blank
+                      assign has_video = true
+                    endif
+                    assign video_aspect = block.settings.video_aspect_ratio | default: '3 / 4'
+                  %}
+                  <li class="splide__slide lfrs-slide-{{ block.id }}" {{ block.shopify_attributes }}>
+                    <div class="lfrs-card" data-media-type="{{ media_type }}">
+                      {% if is_video %}
+                        {% if has_video or placeholder != blank %}
+                          <div class="lfrs-card__video-wrap" style="--lfrs-video-aspect: {{ video_aspect }};">
+                            {% if placeholder != blank %}
+                              <button
+                                type="button"
+                                class="lfrs-card__preview"
+                                {% unless has_video %}disabled{% endunless %}
+                                aria-label="Play {{ block.settings.name | escape }} review video"
+                              >
+                                {{ placeholder | image_url: width: 760 | image_tag: loading: 'lazy', class: 'lfrs-card__preview-image', alt: block.settings.name }}
+                                {% if has_video %}
+                                  <span class="lfrs-card__play" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 249 249" fill="none">
+                                      <circle cx="124.5" cy="124.5" r="124.5" fill="#D9D9D9" fill-opacity="0.5"></circle>
+                                      <path d="M188 124L93.5 178.56L93.5 69.4404L188 124Z" fill="white"></path>
+                                    </svg>
+                                  </span>
+                                {% endif %}
+                              </button>
+                            {% endif %}
+                            {% if has_video %}
+                              <video
+                                class="lfrs-card__video"
+                                controls
+                                playsinline
+                                preload="none"
+                                aria-label="{{ block.settings.name | escape }} - Customer review video"
+                              >
+                                {% for source in video.sources %}
+                                  <source src="{{ source.url }}" type="{{ source.mime_type }}">
+                                {% endfor %}
+                              </video>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+                      {% elsif block.settings.image != blank %}
+                        <div class="lfrs-card__image-wrap">
+                          {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'lfrs-card__image', alt: block.settings.name }}
+                        </div>
+                      {% endif %}
+
+                      <div class="lfrs-card__content">
+                        {% if block.settings.name != blank or block.settings.show_stars or block.settings.date != blank %}
+                          <div class="lfrs-card__meta">
+                            {% if block.settings.name != blank or block.settings.date != blank %}
+                              <div class="lfrs-card__identity">
+                                {% if block.settings.name != blank %}
+                                  <div class="lfrs-card__name">{{ block.settings.name }}</div>
+                                {% endif %}
+                                {% if is_video and block.settings.date != blank %}
+                                  <div class="lfrs-card__date">{{ block.settings.date }}</div>
+                                {% endif %}
+                              </div>
+                            {% endif %}
+                            {% if block.settings.show_stars %}
+                              <div class="lfrs-card__stars" aria-label="{{ block.settings.star_rating }} stars">
+                                {% for i in (1..block.settings.star_rating) %}★{% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+
+                        {% unless is_video %}
+                          {% liquid
+                            assign has_features = false
+                            if block.settings.feature_1_name != blank or block.settings.feature_1_logo != blank or block.settings.feature_2_name != blank or block.settings.feature_2_logo != blank or block.settings.feature_3_name != blank or block.settings.feature_3_logo != blank
+                              assign has_features = true
+                            endif
+                          %}
+                          {% if has_features %}
+                            <ul class="lfrs-card__features">
+                              {% for i in (1..3) %}
+                                {% liquid
+                                  assign feature_name = ''
+                                  assign feature_logo = nil
+                                  case i
+                                    when 1
+                                      assign feature_name = block.settings.feature_1_name
+                                      assign feature_logo = block.settings.feature_1_logo
+                                    when 2
+                                      assign feature_name = block.settings.feature_2_name
+                                      assign feature_logo = block.settings.feature_2_logo
+                                    when 3
+                                      assign feature_name = block.settings.feature_3_name
+                                      assign feature_logo = block.settings.feature_3_logo
+                                  endcase
+                                %}
+                                {% if feature_name != blank or feature_logo != blank %}
+                                  <li class="lfrs-card__feature">
+                                    {% if feature_logo != blank %}
+                                      {{ feature_logo | image_url: width: 64 | image_tag: loading: 'lazy', class: 'lfrs-card__feature-logo', alt: feature_name }}
+                                    {% endif %}
+                                    {% if feature_name != blank %}
+                                      <span class="lfrs-card__feature-name">{{ feature_name }}</span>
+                                    {% endif %}
+                                  </li>
+                                {% endif %}
+                              {% endfor %}
+                            </ul>
+                          {% endif %}
+
+                          {% if block.settings.quote != blank %}
+                            <div class="lfrs-card__quote rte">{{ block.settings.quote }}</div>
+                          {% endif %}
+                          {% if block.settings.description != blank %}
+                            <div
+                              class="lfrs-card__description"
+                              data-lfrs-description
+                              style="--lfrs-description-lines: {{ section.settings.description_line_clamp | default: 3 }};"
+                            >
+                              <div class="lfrs-card__description-text">{{ block.settings.description | newline_to_br }}</div>
+                              {% if section.settings.show_read_more %}
+                                <button type="button" class="lfrs-card__read-toggle" hidden data-lfrs-read-more>
+                                  <span data-lfrs-label-more>{{ section.settings.read_more_label | default: 'Read more' }}</span>
+                                  <span data-lfrs-label-less hidden>{{ section.settings.read_less_label | default: 'Read less' }}</span>
+                                </button>
+                              {% endif %}
+                            </div>
+                          {% endif %}
+                          {% if block.settings.product_label != blank %}
+                            <div class="lfrs-card__product">{{ block.settings.product_label }}</div>
+                          {% endif %}
+                        {% endunless %}
+
+                        {% liquid
+                          assign review_product = block.settings.product
+                          assign product_btn_label = block.settings.button_label | default: 'SHOP NOW'
+                        %}
+                        {% if review_product != blank %}
+                          <div class="lfrs-card__product-bar">
+                            <a href="{{ review_product.url }}" class="lfrs-card__product-bar-link">
+                              {% if review_product.featured_image %}
+                                {{ review_product.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', class: 'lfrs-card__product-thumb', alt: review_product.title }}
+                              {% endif %}
+                              <div class="lfrs-card__product-info">
+                                <div class="lfrs-card__product-title">{{ review_product.title }}</div>
+                                <div class="lfrs-card__product-price">
+                                  {% if review_product.price_varies %}
+                                    From {{ review_product.price_min | money }}
+                                  {% else %}
+                                    {{ review_product.price | money }}
+                                  {% endif %}
+                                </div>
+                              </div>
+                              <span class="lfrs-card__product-btn">{{ product_btn_label }}</span>
+                            </a>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </splide-component>
+    {% endif %}
+  </div>
+</section>
+
+{% render 'ltl-fry-section-base', section: section %}
+
+<style>
+  .section-{{ section.id }} .lfrs-heading {
+    font-size: {{ section.settings.heading_font_size_mobile }}px;
+    font-weight: {{ section.settings.heading_font_weight }};
+    color: {{ section.settings.heading_color }};
+    text-align: {{ section.settings.text_align }};
+    margin: 0 0 20px;
+    line-height: 1.25;
+  }
+
+  .section-{{ section.id }} .lfrs-card {
+    background: {{ section.settings.card_bg_color }};
+    border: {{ section.settings.card_border_width }}px solid {{ section.settings.card_border_color }};
+    border-radius: {{ section.settings.card_border_radius }}px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section-{{ section.id }} .lfrs-card__image,
+  .section-{{ section.id }} .lfrs-card__preview-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .section-{{ section.id }} .lfrs-card__video-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: var(--lfrs-video-aspect, 3 / 4);
+    background: #111;
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }} .lfrs-card__preview {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .section-{{ section.id }} .lfrs-card__preview:disabled {
+    cursor: default;
+  }
+
+  .section-{{ section.id }} .lfrs-card__preview.is-hidden {
+    display: none;
+  }
+
+  .section-{{ section.id }} .lfrs-card__preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .section-{{ section.id }} .lfrs-card__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .section-{{ section.id }} .lfrs-card__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .section-{{ section.id }} .lfrs-card__content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .section-{{ section.id }} .lfrs-card__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__stars {
+    color: {{ section.settings.star_color }};
+    font-size: {{ section.settings.star_size_mobile }}px;
+    letter-spacing: 1px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .section-{{ section.id }} .lfrs-card__features {
+    list-style: none;
+    margin: 0 0 12px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-family:"sub-title",'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  }
+
+  .section-{{ section.id }} .lfrs-card__feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__feature-logo {
+    width: {{ section.settings.feature_logo_size }}px;
+    height: {{ section.settings.feature_logo_size }}px;
+    object-fit: contain;
+    flex-shrink: 0;
+    display: block;
+    margin-top: 1px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__feature-name {
+    font-size: {{ section.settings.feature_font_size_mobile }}px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: {{ section.settings.feature_color }};
+    line-height: 1.35;
+  }
+
+  .section-{{ section.id }} .lfrs-card__quote {
+    font-size: {{ section.settings.quote_font_size_mobile }}px;
+    color: {{ section.settings.quote_color }};
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__description {
+    margin-bottom: 10px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__description-text {
+    font-size: {{ section.settings.description_font_size_mobile }}px;
+    color: {{ section.settings.description_color }};
+    line-height: 1.5;
+  }
+
+  .section-{{ section.id }} .lfrs-card__description:not(.is-expanded) .lfrs-card__description-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--lfrs-description-lines, 3);
+    line-clamp: var(--lfrs-description-lines, 3);
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }} .lfrs-card__read-toggle {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: {{ section.settings.read_more_color }};
+    font-size: {{ section.settings.read_more_font_size }}px;
+    font-weight: {{ section.settings.read_more_font_weight }};
+    line-height: 1.5;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+
+  .section-{{ section.id }} .lfrs-card__read-toggle[hidden] {
+    display: none;
+  }
+
+  .section-{{ section.id }} .lfrs-card__identity {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .section-{{ section.id }} .lfrs-card__name {
+    font-size: {{ section.settings.name_font_size_mobile }}px;
+    font-weight: 600;
+    color: {{ section.settings.name_color }};
+  }
+
+  .section-{{ section.id }} .lfrs-card__date {
+    font-size: {{ section.settings.label_font_size_mobile }}px;
+    color: {{ section.settings.label_color }};
+    line-height: 1.3;
+  }
+
+  .section-{{ section.id }} .lfrs-card__product {
+    font-size: {{ section.settings.label_font_size_mobile }}px;
+    color: {{ section.settings.label_color }};
+    margin-top: 4px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__product-bar {
+    margin-top: auto;
+    padding-top: 12px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__product-bar-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: {{ section.settings.product_bar_bg_color }};
+    border: {{ section.settings.product_bar_border_width }}px solid {{ section.settings.product_bar_border_color }};
+    border-radius: {{ section.settings.product_bar_border_radius }}px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .section-{{ section.id }} .lfrs-card__product-thumb {
+    width: {{ section.settings.product_thumb_size }}px;
+    height: {{ section.settings.product_thumb_size }}px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .section-{{ section.id }} .lfrs-card__product-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .section-{{ section.id }} .lfrs-card__product-title {
+    font-size: {{ section.settings.product_title_font_size }}px;
+    font-weight: 600;
+    color: {{ section.settings.product_title_color }};
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }} .lfrs-card__product-price {
+    font-size: {{ section.settings.product_price_font_size }}px;
+    color: {{ section.settings.product_price_color }};
+    line-height: 1.3;
+  }
+
+  .section-{{ section.id }} .lfrs-card__product-btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: {{ section.settings.button_padding_vertical }}px {{ section.settings.button_padding_horizontal }}px;
+    background: {{ section.settings.button_bg_color }};
+    color: {{ section.settings.button_text_color }};
+    border-radius: {{ section.settings.button_border_radius }}px;
+    font-size: {{ section.settings.button_font_size }}px;
+    font-weight: {{ section.settings.button_font_weight }};
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} .lfrs-heading {
+      font-size: {{ section.settings.heading_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfrs-card__stars {
+      font-size: {{ section.settings.star_size_mobile }}px;
+    }
+
+    .section-{{ section.id }} .lfrs-card__quote {
+      font-size: {{ section.settings.quote_font_size_mobile }}px;
+    }
+
+    .section-{{ section.id }} .lfrs-card__description-text {
+      font-size: {{ section.settings.description_font_size_mobile }}px;
+    }
+
+    .section-{{ section.id }} .lfrs-card__name {
+      font-size: {{ section.settings.name_font_size_mobile }}px;
+    }
+
+    .section-{{ section.id }} .lfrs-card__feature-name {
+      font-size: {{ section.settings.feature_font_size_mobile }}px;
+    }
+
+    .section-{{ section.id }} .lfrs-card__product,
+    .section-{{ section.id }} .lfrs-card__date {
+      font-size: {{ section.settings.label_font_size_mobile }}px;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var root = document.querySelector('.section-{{ section.id }}');
+    if (!root || root.dataset.lfrsBound === 'true') return;
+    root.dataset.lfrsBound = 'true';
+
+    root.addEventListener('click', function(event) {
+      var preview = event.target.closest('.lfrs-card__preview');
+      if (preview && !preview.disabled && root.contains(preview)) {
+        var wrap = preview.closest('.lfrs-card__video-wrap');
+        if (!wrap) return;
+        var video = wrap.querySelector('.lfrs-card__video');
+        if (!video) return;
+        preview.classList.add('is-hidden');
+        video.play().catch(function() {});
+        return;
+      }
+
+      var toggle = event.target.closest('[data-lfrs-read-more]');
+      if (!toggle || !root.contains(toggle)) return;
+      var description = toggle.closest('[data-lfrs-description]');
+      if (!description) return;
+      var expanded = description.classList.toggle('is-expanded');
+      var moreLabel = toggle.querySelector('[data-lfrs-label-more]');
+      var lessLabel = toggle.querySelector('[data-lfrs-label-less]');
+      if (moreLabel) moreLabel.hidden = expanded;
+      if (lessLabel) lessLabel.hidden = !expanded;
+      toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
+
+    function syncDescriptionToggles() {
+      root.querySelectorAll('[data-lfrs-description]').forEach(function(description) {
+        var text = description.querySelector('.lfrs-card__description-text');
+        var toggle = description.querySelector('[data-lfrs-read-more]');
+        if (!text || !toggle) return;
+        if (description.classList.contains('is-expanded')) return;
+        var overflows = text.scrollHeight > text.clientHeight + 1;
+        toggle.hidden = !overflows;
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    syncDescriptionToggles();
+    window.addEventListener('resize', syncDescriptionToggles);
+    document.addEventListener('shopify:section:load', function(event) {
+      if (event.detail && String(event.detail.sectionId) === '{{ section.id }}') {
+        syncDescriptionToggles();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "ltl-fry-review-slider",
+  "tag": "section",
+  "class": "section-ltl-fry-review-slider",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What customers say" },
+    { "type": "select", "id": "text_align", "label": "Heading alignment", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" },
+      { "value": "right", "label": "Right" }
+    ], "default": "center" },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [
+      { "value": "page", "label": "Section width" },
+      { "value": "full", "label": "Full width" }
+    ], "default": "page" },
+    { "type": "select", "id": "slider_type", "label": "Type", "options": [
+      { "value": "slide", "label": "Slide" },
+      { "value": "loop", "label": "Loop" }
+    ], "default": "slide" },
+    { "type": "checkbox", "id": "autoplay", "label": "Autoplay", "default": false },
+    { "type": "range", "id": "autoplay_speed", "min": 2, "max": 10, "step": 1, "unit": "s", "label": "Autoplay speed", "default": 5 },
+    { "type": "checkbox", "id": "lock_drag", "label": "Lock drag", "default": false },
+    { "type": "range", "id": "columns_mobile", "min": 1, "max": 3, "step": 1, "label": "Slides (mobile)", "default": 1 },
+    { "type": "range", "id": "columns_desktop", "min": 1, "max": 4, "step": 1, "label": "Slides (desktop)", "default": 3 },
+    { "type": "range", "id": "gap_mobile", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Gap (mobile)", "default": 16 },
+    { "type": "range", "id": "gap_desktop", "min": 0, "max": 60, "step": 2, "unit": "px", "label": "Gap (desktop)", "default": 24 },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show arrows", "default": true },
+    { "type": "checkbox", "id": "show_pagination", "label": "Show pagination", "default": false },
+    { "type": "color", "id": "card_bg_color", "label": "Card background", "default": "#ffffff" },
+    { "type": "range", "id": "card_border_width", "min": 0, "max": 4, "step": 1, "unit": "px", "label": "Border width", "default": 1 },
+    { "type": "color", "id": "card_border_color", "label": "Border color", "default": "#e5e7eb" },
+    { "type": "range", "id": "card_border_radius", "min": 0, "max": 24, "step": 1, "unit": "px", "label": "Border radius", "default": 8 },
+    { "type": "range", "id": "heading_font_size_mobile", "min": 20, "max": 48, "step": 2, "unit": "px", "label": "Heading size (mobile)", "default": 28 },
+    { "type": "range", "id": "heading_font_size_desktop", "min": 24, "max": 56, "step": 2, "unit": "px", "label": "Heading size (desktop)", "default": 40 },
+    { "type": "select", "id": "heading_font_weight", "label": "Heading weight", "options": [
+      { "value": "500", "label": "Medium" },
+      { "value": "600", "label": "Semibold" },
+      { "value": "700", "label": "Bold" }
+    ], "default": "600" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#1f2937" },
+    { "type": "color", "id": "star_color", "label": "Star color", "default": "#fba124" },
+    { "type": "range", "id": "star_size_mobile", "min": 12, "max": 24, "step": 1, "unit": "px", "label": "Star size", "default": 14 },
+    { "type": "range", "id": "quote_font_size_mobile", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Quote size", "default": 15 },
+    { "type": "color", "id": "quote_color", "label": "Quote color", "default": "#374151" },
+    { "type": "range", "id": "description_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Description size", "default": 14 },
+    { "type": "color", "id": "description_color", "label": "Description color", "default": "#4b5563" },
+    { "type": "header", "content": "Read more" },
+    { "type": "checkbox", "id": "show_read_more", "label": "Show read more toggle", "default": true },
+    { "type": "text", "id": "read_more_label", "label": "Read more label", "default": "Read more" },
+    { "type": "text", "id": "read_less_label", "label": "Read less label", "default": "Read less" },
+    { "type": "range", "id": "description_line_clamp", "min": 1, "max": 6, "step": 1, "label": "Description lines before truncate", "default": 3 },
+    { "type": "color", "id": "read_more_color", "label": "Read more color", "default": "#c45c26" },
+    { "type": "range", "id": "read_more_font_size", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Read more size", "default": 14 },
+    { "type": "select", "id": "read_more_font_weight", "label": "Read more weight", "options": [
+      { "value": "400", "label": "Regular" },
+      { "value": "500", "label": "Medium" },
+      { "value": "600", "label": "Semibold" },
+      { "value": "700", "label": "Bold" }
+    ], "default": "400" },
+    { "type": "range", "id": "name_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Name size", "default": 14 },
+    { "type": "color", "id": "name_color", "label": "Name color", "default": "#111827" },
+    { "type": "range", "id": "feature_logo_size", "min": 12, "max": 32, "step": 1, "unit": "px", "label": "Feature logo size", "default": 16 },
+    { "type": "range", "id": "feature_font_size_mobile", "min": 10, "max": 16, "step": 1, "unit": "px", "label": "Feature size", "default": 11 },
+    { "type": "color", "id": "feature_color", "label": "Feature color", "default": "#6b7280" },
+    { "type": "range", "id": "label_font_size_mobile", "min": 10, "max": 16, "step": 1, "unit": "px", "label": "Product label size", "default": 12 },
+    { "type": "color", "id": "label_color", "label": "Product label color", "default": "#9ca3af" },
+    { "type": "header", "content": "Product bar" },
+    { "type": "color", "id": "product_bar_bg_color", "label": "Product bar background", "default": "#f9fafb" },
+    { "type": "range", "id": "product_bar_border_width", "min": 0, "max": 4, "step": 1, "unit": "px", "label": "Product bar border", "default": 1 },
+    { "type": "color", "id": "product_bar_border_color", "label": "Product bar border color", "default": "#e5e7eb" },
+    { "type": "range", "id": "product_bar_border_radius", "min": 0, "max": 16, "step": 1, "unit": "px", "label": "Product bar radius", "default": 6 },
+    { "type": "range", "id": "product_thumb_size", "min": 36, "max": 72, "step": 2, "unit": "px", "label": "Product image size", "default": 48 },
+    { "type": "range", "id": "product_title_font_size", "min": 10, "max": 16, "step": 1, "unit": "px", "label": "Product title size", "default": 12 },
+    { "type": "color", "id": "product_title_color", "label": "Product title color", "default": "#111827" },
+    { "type": "range", "id": "product_price_font_size", "min": 10, "max": 16, "step": 1, "unit": "px", "label": "Product price size", "default": 12 },
+    { "type": "color", "id": "product_price_color", "label": "Product price color", "default": "#6b7280" },
+    { "type": "header", "content": "Product button" },
+    { "type": "color", "id": "button_bg_color", "label": "Button background", "default": "#c45c26" },
+    { "type": "color", "id": "button_text_color", "label": "Button text", "default": "#ffffff" },
+    { "type": "range", "id": "button_font_size", "min": 10, "max": 16, "step": 1, "unit": "px", "label": "Button size", "default": 11 },
+    { "type": "select", "id": "button_font_weight", "label": "Button weight", "options": [
+      { "value": "500", "label": "Medium" },
+      { "value": "600", "label": "Semibold" },
+      { "value": "700", "label": "Bold" }
+    ], "default": "700" },
+    { "type": "range", "id": "button_padding_vertical", "min": 4, "max": 16, "step": 1, "unit": "px", "label": "Button padding vertical", "default": 8 },
+    { "type": "range", "id": "button_padding_horizontal", "min": 8, "max": 28, "step": 1, "unit": "px", "label": "Button padding horizontal", "default": 12 },
+    { "type": "range", "id": "button_border_radius", "min": 0, "max": 20, "step": 1, "unit": "px", "label": "Button radius", "default": 4 },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#faf8f6" },
+    { "type": "checkbox", "id": "gradient_enabled", "label": "Use gradient background", "default": false },
+    { "type": "color_background", "id": "gradient_background", "label": "Gradient", "default": "linear-gradient(180deg, rgba(250,248,246,1), rgba(255,255,255,1) 100%)" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#000000" },
+    { "type": "range", "id": "container_max_width", "min": 600, "max": 1400, "step": 10, "unit": "px", "label": "Container max width", "default": 1100, "info": "Applies when Section width is selected." },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (mobile)", "default": 32 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (mobile)", "default": 32 },
+    { "type": "range", "id": "padding_top_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (desktop)", "default": 48 },
+    { "type": "range", "id": "padding_bottom_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (desktop)", "default": 48 }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "select", "id": "media_type", "label": "Review type", "options": [
+          { "value": "image", "label": "Image review" },
+          { "value": "video", "label": "Video review" }
+        ], "default": "image" },
+        { "type": "image_picker", "id": "image", "label": "Image", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "header", "content": "Video", "visible_if": "{{ block.settings.media_type == 'video' }}" },
+        { "type": "video", "id": "video", "label": "Video", "visible_if": "{{ block.settings.media_type == 'video' }}" },
+        { "type": "image_picker", "id": "placeholder", "label": "Placeholder", "info": "Image or GIF shown before the video plays. Falls back to the video thumbnail if empty.", "visible_if": "{{ block.settings.media_type == 'video' }}" },
+        { "type": "select", "id": "video_aspect_ratio", "label": "Video aspect ratio", "options": [
+          { "value": "3 / 4", "label": "3:4" },
+          { "value": "9 / 16", "label": "9:16" },
+          { "value": "1 / 1", "label": "1:1" },
+          { "value": "16 / 9", "label": "16:9" }
+        ], "default": "3 / 4", "visible_if": "{{ block.settings.media_type == 'video' }}" },
+        { "type": "checkbox", "id": "show_stars", "label": "Show stars", "default": true },
+        { "type": "range", "id": "star_rating", "min": 1, "max": 5, "step": 1, "label": "Star rating", "default": 5 },
+        { "type": "text", "id": "name", "label": "Customer name", "default": "Verified buyer" },
+        { "type": "text", "id": "date", "label": "Date / source", "info": "Example: Reviewed 09/27/2024 or Posted on TikTok 01/03/2025", "visible_if": "{{ block.settings.media_type == 'video' }}" },
+        { "type": "richtext", "id": "quote", "label": "Quote", "default": "<p>\"Amazing results in just a few weeks.\"</p>", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "textarea", "id": "description", "label": "Description", "info": "Truncates after 3 lines with a Read more toggle when needed.", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "text", "id": "product_label", "label": "Product label", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "header", "content": "Feature 1", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "text", "id": "feature_1_name", "label": "Feature name", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "image_picker", "id": "feature_1_logo", "label": "Logo", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "header", "content": "Feature 2", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "text", "id": "feature_2_name", "label": "Feature name", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "image_picker", "id": "feature_2_logo", "label": "Logo", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "header", "content": "Feature 3", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "text", "id": "feature_3_name", "label": "Feature name", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "image_picker", "id": "feature_3_logo", "label": "Logo", "visible_if": "{{ block.settings.media_type == 'image' }}" },
+        { "type": "header", "content": "Product" },
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "SHOP NOW" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ltl-fry-review-slider",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}

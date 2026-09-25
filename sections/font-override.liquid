@@ -1,28 +1,84 @@
 {% liquid
-  assign custom_font = section.settings.custom_font
+  assign heading_font = section.settings.custom_font
+  assign body_font = section.settings.body_font
+  assign heading_font_name = section.settings.heading_font_name | strip
+  assign body_font_name = section.settings.body_font_name | strip
+
+  if heading_font != blank and heading_font_name != blank
+    assign heading_font_family = "'" | append: heading_font_name | append: "', " | append: heading_font.fallback_families
+  elsif heading_font != blank
+    assign heading_font_family = heading_font.family | append: ', ' | append: heading_font.fallback_families
+  endif
+
+  if body_font != blank and body_font_name != blank
+    assign body_font_family = "'" | append: body_font_name | append: "', " | append: body_font.fallback_families
+  elsif body_font != blank
+    assign body_font_family = body_font.family | append: ', ' | append: body_font.fallback_families
+  endif
 %}
 
 {% style %}
+  {% if heading_font != blank and heading_font_name != blank %}
+    {% render 'named-font-loader', font: heading_font, name: heading_font_name %}
+  {% elsif heading_font != blank %}
+    {{ heading_font | font_face: font_display: 'swap' }}
+  {% endif %}
 
-/* Load selected Shopify font */
-{{ custom_font | font_face }}
+  {% if body_font != blank and body_font_name != blank %}
+    {% render 'named-font-loader', font: body_font, name: body_font_name %}
+  {% elsif body_font != blank %}
+    {{ body_font | font_face: font_display: 'swap' }}
+  {% endif %}
 
-/* Apply only on this template/page */
-body .shopify-section-group-main h1,
-body .shopify-section-group-main h2,
-body .shopify-section-group-main h3,
-body .shopify-section-group-main h4,
-body .shopify-section-group-main h5,
-body .shopify-section-group-main h6,
-body .shopify-section-group-main .h0,
-body .shopify-section-group-main .h1,
-body .shopify-section-group-main .h2,
-body .shopify-section-group-main .h3,
-body .shopify-section-group-main .h4,
-body .shopify-section-group-main .h5 {
-  font-family: {{ custom_font.family }}, {{ custom_font.fallback_families }} !important;
-}
+  {% for block in section.blocks %}
+    {% if block.type == 'font' and block.settings.font != blank and block.settings.font_name != blank %}
+      {% render 'named-font-loader', font: block.settings.font, name: block.settings.font_name %}
+    {% endif %}
+  {% endfor %}
 
+  {% if heading_font_family != blank or body_font_family != blank %}
+    :root {
+      {% if heading_font_family != blank %}
+        --page-font-heading: {{ heading_font_family }};
+        --font-heading-family: var(--page-font-heading);
+      {% endif %}
+      {% if body_font_family != blank %}
+        --page-font-body: {{ body_font_family }};
+        --font-body-family: var(--page-font-body);
+      {% endif %}
+    }
+  {% endif %}
+
+  {% for block in section.blocks %}
+    {% if block.type == 'font' and block.settings.font != blank and block.settings.font_name != blank %}
+      :root {
+        --page-font-{{ block.settings.font_name | handleize }}: '{{ block.settings.font_name }}', {{ block.settings.font.fallback_families }};
+      }
+    {% endif %}
+  {% endfor %}
+
+  {% if body_font_family != blank %}
+    body .shopify-section-group-main {
+      font-family: var(--page-font-body) !important;
+    }
+  {% endif %}
+
+  {% if heading_font_family != blank %}
+    body .shopify-section-group-main h1,
+    body .shopify-section-group-main h2,
+    body .shopify-section-group-main h3,
+    body .shopify-section-group-main h4,
+    body .shopify-section-group-main h5,
+    body .shopify-section-group-main h6,
+    body .shopify-section-group-main .h0,
+    body .shopify-section-group-main .h1,
+    body .shopify-section-group-main .h2,
+    body .shopify-section-group-main .h3,
+    body .shopify-section-group-main .h4,
+    body .shopify-section-group-main .h5 {
+      font-family: var(--page-font-heading) !important;
+    }
+  {% endif %}
 {% endstyle %}
 
 {% schema %}
@@ -30,15 +86,80 @@ body .shopify-section-group-main .h5 {
   "name": "Page Font Override",
   "settings": [
     {
+      "type": "header",
+      "content": "Heading font"
+    },
+    {
       "type": "font_picker",
       "id": "custom_font",
-      "label": "Heading Font",
+      "label": "Heading font",
       "default": "helvetica_n4"
+    },
+    {
+      "type": "text",
+      "id": "heading_font_name",
+      "label": "Heading font name",
+      "default": "page-heading",
+      "info": "Use in CSS as font-family: 'page-heading'. Also available as var(--page-font-heading)."
+    },
+    {
+      "type": "header",
+      "content": "Body font"
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body font",
+      "default": "helvetica_n4"
+    },
+    {
+      "type": "text",
+      "id": "body_font_name",
+      "label": "Body font name",
+      "default": "page-body",
+      "info": "Use in CSS as font-family: 'page-body'. Also available as var(--page-font-body)."
+    },
+    {
+      "type": "header",
+      "content": "Extra named fonts"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add extra fonts below for subtitles, labels, accents, etc. Pick a font, give it a name, then use font-family: 'your-name' anywhere in custom CSS or section settings."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "font",
+      "name": "Named font",
+      "settings": [
+        {
+          "type": "text",
+          "id": "font_name",
+          "label": "Font name",
+          "default": "subtitle",
+          "info": "Use in CSS as font-family: 'subtitle'"
+        },
+        {
+          "type": "font_picker",
+          "id": "font",
+          "label": "Font",
+          "default": "helvetica_n4"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "Page Font Override"
+      "name": "Page Font Override",
+      "blocks": [
+        {
+          "type": "font",
+          "settings": {
+            "font_name": "subtitle"
+          }
+        }
+      ]
     }
   ]
 }

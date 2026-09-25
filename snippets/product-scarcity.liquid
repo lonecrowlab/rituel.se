@@ -7,10 +7,12 @@
   assign stock_min = stock_min | default: 4
   assign stock_max = stock_max | default: 18
   assign reduction_minutes = reduction_minutes | default: 1
+  assign reduction_amount = reduction_amount | default: 1
   assign text_prefix = text_prefix | default: 'Endast'
   assign text_suffix = text_suffix | default: 'kvar i lager'
   assign dot_color = dot_color | default: '#f59e0b'
   assign min_dot_color = min_dot_color | default: '#ff0000'
+  assign stock_color = stock_color | default: ''
   assign text_font_size = text_font_size | default: 14
   assign text_font_weight = text_font_weight | default: 400
   assign count_font_weight = count_font_weight | default: 600
@@ -20,6 +22,9 @@
 
   if stock_min > stock_max
     assign stock_max = stock_min
+  endif
+  if reduction_amount < 1
+    assign reduction_amount = 1
   endif
 -%}
 
@@ -31,11 +36,12 @@
   data-stock-min="{{ stock_min }}"
   data-stock-max="{{ stock_max }}"
   data-reduction-minutes="{{ reduction_minutes }}"
+  data-reduction-amount="{{ reduction_amount }}"
   data-text-prefix="{{ text_prefix | escape }}"
   data-text-suffix="{{ text_suffix | escape }}"
   data-dot-color="{{ dot_color }}"
   data-min-dot-color="{{ min_dot_color }}"
-  style="--scarcity-dot-color: {{ dot_color }}; --scarcity-pulse-color: {{ dot_color }};"
+  style="--scarcity-dot-color: {{ dot_color }}; --scarcity-pulse-color: {{ dot_color }};{% if stock_color != blank %} --scarcity-stock-color: {{ stock_color }};{% endif %}"
   {{ block_attributes }}
 >
   <div class="scarcity-row scarcity-stock">
@@ -56,6 +62,9 @@
 </div>
 
 <style>
+  .scarcity-row {
+    justify-content: center;
+  }
   #scarcity-{{ scarcity_id }} {
     display: flex;
     width: 100%;
@@ -90,6 +99,9 @@
 
   #scarcity-{{ scarcity_id }} .scarcity-count-only {
     font-weight: {{ count_font_weight }};
+    {% if stock_color != blank %}
+      color: var(--scarcity-stock-color, {{ stock_color }});
+    {% endif %}
   }
 
   #scarcity-{{ scarcity_id }} .pulsing-dot {
@@ -130,6 +142,7 @@
     const stockMin = parseInt(root.dataset.stockMin, 10) || 4;
     const stockMax = parseInt(root.dataset.stockMax, 10) || 18;
     const reductionMinutes = Math.max(1, parseInt(root.dataset.reductionMinutes, 10) || 1);
+    const reductionAmount = Math.max(1, parseInt(root.dataset.reductionAmount, 10) || 1);
     const dotColor = root.dataset.dotColor || '#f59e0b';
     const minDotColor = root.dataset.minDotColor || '#ff0000';
     const countEl = root.querySelector('[data-scarcity-count]');
@@ -137,7 +150,7 @@
 
     const storageKey = 'scarcity_stock_' + productId;
     const configKey = 'scarcity_config_' + productId;
-    const configSignature = [stockMin, stockMax, reductionMinutes].join(':');
+    const configSignature = [stockMin, stockMax, reductionMinutes, reductionAmount].join(':');
     const intervalMs = reductionMinutes * 60 * 1000;
 
     function randomBetween(min, max) {
@@ -187,7 +200,7 @@
       const reductions = Math.floor(elapsed / intervalMs);
 
       if (reductions > 0 && state.count > stockMin) {
-        state.count = Math.max(stockMin, state.count - reductions);
+        state.count = Math.max(stockMin, state.count - reductions * reductionAmount);
         state.lastReductionAt += reductions * intervalMs;
         saveState(state);
       }
@@ -201,7 +214,7 @@
       if (!state || state.count <= stockMin) return;
 
       if (now - state.lastReductionAt >= intervalMs) {
-        state.count = Math.max(stockMin, state.count - 1);
+        state.count = Math.max(stockMin, state.count - reductionAmount);
         state.lastReductionAt += intervalMs;
         saveState(state);
         applyCount(state.count);

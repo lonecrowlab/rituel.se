@@ -1,0 +1,604 @@
+{% liquid
+  assign step_blocks = section.blocks | where: 'type', 'step'
+  assign heading_alt = section.settings.heading | strip_html
+  assign image_alt = section.settings.image.alt | default: heading_alt
+  assign image_secondary_alt = section.settings.image_secondary.alt | default: heading_alt
+%}
+
+<section
+  id="Lfss-{{ section.id }}"
+  class="ltl-fry-system-steps section-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-lfss-root
+>
+  <div class="lf-wrap">
+    {% if section.settings.subheading != blank %}
+      <p class="lfss-subheading">{{ section.settings.subheading }}</p>
+    {% endif %}
+    {% if section.settings.heading != blank %}
+      <h2 class="lfss-heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.description != blank %}
+      <p class="lfss-description">{{ section.settings.description }}</p>
+    {% endif %}
+
+    <div class="lfss-layout{% if section.settings.image == blank %} lfss-layout--no-media{% endif %}">
+      <div class="lfss-media">
+        {% if section.settings.image != blank %}
+          <div class="lfss-media__frame{% if section.settings.image_secondary != blank %} lfss-media__frame--stacked{% endif %}">
+            {{
+              section.settings.image
+              | image_url: width: 1600
+              | image_tag:
+                loading: 'lazy',
+                widths: '400, 600, 800, 1000, 1200, 1600',
+                sizes: '(min-width: 990px) 50vw, 100vw',
+                class: 'lfss-media__image lfss-media__image--main',
+                alt: image_alt
+            }}
+            {% if section.settings.image_secondary != blank %}
+              <div class="lfss-media__secondary">
+                {{
+                  section.settings.image_secondary
+                  | image_url: width: 600
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '200, 300, 400, 600',
+                    sizes: '(min-width: 990px) 18vw, 40vw',
+                    class: 'lfss-media__image lfss-media__image--secondary',
+                    alt: image_secondary_alt
+                }}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      {% if step_blocks.size > 0 %}
+        <div class="lfss-timeline">
+          <div class="lfss-track" aria-hidden="true" data-lfss-track>
+            <span class="lfss-track__base"></span>
+            <span class="lfss-track__fill" data-lfss-fill></span>
+          </div>
+
+          <ol class="lfss-steps">
+            {% for block in step_blocks %}
+              {% liquid
+                assign step_number = block.settings.step_number | strip
+                if step_number == blank
+                  assign step_number = forloop.index
+                endif
+              %}
+              <li class="lfss-step lfss-block-{{ block.id }}" data-lfss-step {{ block.shopify_attributes }}>
+                <span class="lfss-step__number" data-lfss-number>{{ step_number }}</span>
+                <div class="lfss-step__card">
+                  {% if block.settings.image != blank %}
+                    <div class="lfss-step__icon">
+                      {{
+                        block.settings.image
+                        | image_url: width: 120
+                        | image_tag:
+                          loading: 'lazy',
+                          class: 'lfss-step__icon-image',
+                          alt: block.settings.title
+                      }}
+                    </div>
+                  {% endif %}
+                  {% if block.settings.title != blank %}
+                    <h3 class="lfss-step__title">{{ block.settings.title }}</h3>
+                  {% endif %}
+                  {% if block.settings.text != blank %}
+                    <div class="lfss-step__text rte">{{ block.settings.text }}</div>
+                  {% endif %}
+                </div>
+              </li>
+            {% endfor %}
+          </ol>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% render 'ltl-fry-section-base', section: section %}
+
+<style>
+  .section-{{ section.id }} .lfss-subheading {
+    font-size: {{ section.settings.subheading_font_size_mobile }}px;
+    color: {{ section.settings.subheading_color }};
+    text-align: {{ section.settings.text_align }};
+    margin: 0 0 8px;
+    line-height: 1.4;
+  }
+
+  .section-{{ section.id }} .lfss-heading {
+    font-size: {{ section.settings.heading_font_size_mobile }}px;
+    font-weight: {{ section.settings.heading_font_weight }};
+    color: {{ section.settings.heading_color }};
+    text-align: {{ section.settings.text_align }};
+    margin: 0 0 8px;
+    line-height: 1.2;
+  }
+
+  .section-{{ section.id }} .lfss-description {
+    font-size: {{ section.settings.description_font_size_mobile }}px;
+    color: {{ section.settings.description_color }};
+    text-align: {{ section.settings.text_align }};
+    margin: 0 0 32px;
+    line-height: 1.5;
+  }
+
+  .section-{{ section.id }} .lfss-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .section-{{ section.id }} {
+    overflow-x: clip;
+  }
+
+  .section-{{ section.id }} .lfss-media__frame {
+    position: relative;
+    display: block;
+    {% if section.settings.image_full_width %}
+      width: 100vw;
+      max-width: none;
+      margin-left: calc(50% - 50vw);
+    {% else %}
+      width: 100%;
+      max-width: {{ section.settings.image_max_width }}px;
+      margin-left: auto;
+      margin-right: auto;
+    {% endif %}
+    overflow: visible;
+  }
+
+  .section-{{ section.id }} .lfss-media__frame--stacked {
+    padding-bottom: 14%;
+  }
+
+  .section-{{ section.id }} .lfss-media__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: {{ section.settings.image_border_radius }}px;
+  }
+
+  .section-{{ section.id }} .lfss-media__image--main {
+    object-fit: {{ section.settings.image_fit }};
+    object-position: center;
+    background: {{ section.settings.image_bg_color }};
+    {% if section.settings.image_aspect_ratio_mobile != 'adapt' %}
+      aspect-ratio: {{ section.settings.image_aspect_ratio_mobile }};
+    {% endif %}
+  }
+
+  {% if section.settings.image_full_width %}
+    .section-{{ section.id }} .lfss-media__image--main {
+      border-radius: 0;
+    }
+  {% endif %}
+
+  .section-{{ section.id }} .lfss-media__secondary {
+    position: absolute;
+    left: {% if section.settings.image_full_width %}16px{% else %}-8%{% endif %};
+    bottom: -12%;
+    width: 46%;
+    z-index: 1;
+  }
+
+  .section-{{ section.id }} .lfss-media__image--secondary {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .section-{{ section.id }} .lfss-timeline {
+    position: relative;
+    padding-left: {{ section.settings.number_size | plus: 20 }}px;
+  }
+
+  .section-{{ section.id }} .lfss-track {
+    position: absolute;
+    left: {{ section.settings.number_size | divided_by: 2 }}px;
+    top: 0;
+    bottom: 0;
+    width: {{ section.settings.line_width }}px;
+    transform: translateX(-50%);
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .section-{{ section.id }} .lfss-track__base,
+  .section-{{ section.id }} .lfss-track__fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    display: block;
+    border-radius: 999px;
+  }
+
+  .section-{{ section.id }} .lfss-track__base {
+    height: 100%;
+    background: {{ section.settings.line_color }};
+  }
+
+  .section-{{ section.id }} .lfss-track__fill {
+    height: 0%;
+    background: {{ section.settings.line_active_color }};
+    will-change: height;
+  }
+
+  .section-{{ section.id }} .lfss-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.step_spacing_mobile }}px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .section-{{ section.id }} .lfss-step {
+    position: relative;
+  }
+
+  .section-{{ section.id }} .lfss-step__number {
+    position: absolute;
+    left: -{{ section.settings.number_size | plus: 20 }}px;
+    top: 18px;
+    width: {{ section.settings.number_size }}px;
+    height: {{ section.settings.number_size }}px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: {{ section.settings.number_font_size_mobile }}px;
+    font-weight: 600;
+    background: {{ section.settings.number_bg_color }};
+    color: {{ section.settings.number_text_color }};
+    border: 1px solid {{ section.settings.number_border_color }};
+    box-shadow: 0 0 0 4px {{ section.settings.bg_color }};
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    z-index: 3;
+  }
+
+  .section-{{ section.id }} .lfss-step.is-active .lfss-step__number {
+    background: {{ section.settings.number_active_bg_color }};
+    color: {{ section.settings.number_active_text_color }};
+    border-color: {{ section.settings.number_active_bg_color }};
+  }
+
+  .section-{{ section.id }} .lfss-step__card {
+    background: {{ section.settings.step_bg_color }};
+    border-radius: {{ section.settings.step_border_radius }}px;
+    padding: 20px 22px;
+  }
+
+  .section-{{ section.id }} .lfss-step__icon {
+    width: {{ section.settings.icon_size }}px;
+    height: {{ section.settings.icon_size }}px;
+    border-radius: 50%;
+    background: {{ section.settings.icon_bg_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .section-{{ section.id }} .lfss-step__icon-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .section-{{ section.id }} .lfss-step__title {
+    font-size: {{ section.settings.step_title_size_mobile }}px;
+    font-weight: {{ section.settings.step_title_weight }};
+    color: {{ section.settings.step_title_color }};
+    margin: 0 0 8px;
+    line-height: 1.3;
+  }
+
+  .section-{{ section.id }} .lfss-step__text {
+    font-size: {{ section.settings.step_text_size_mobile }}px;
+    color: {{ section.settings.step_text_color }};
+    line-height: 1.5;
+  }
+
+  .section-{{ section.id }} .lfss-step__text p {
+    margin: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} .lfss-subheading {
+      font-size: {{ section.settings.subheading_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfss-heading {
+      font-size: {{ section.settings.heading_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfss-description {
+      font-size: {{ section.settings.description_font_size_desktop }}px;
+      margin-bottom: 48px;
+    }
+
+    .section-{{ section.id }} .lfss-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: {{ section.settings.column_gap }}px;
+      align-items: start;
+    }
+
+    .section-{{ section.id }} .lfss-layout--no-media {
+      grid-template-columns: minmax(0, 1fr);
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .section-{{ section.id }} .lfss-media {
+      position: sticky;
+      top: {{ section.settings.sticky_top }}px;
+    }
+
+    {% if section.settings.image_full_width %}
+      {% liquid
+        if section.settings.section_width == 'full'
+          assign bleed_offset = '0px'
+        else
+          assign bleed_offset = 'max(0px, (100vw - ' | append: section.settings.container_max_width | append: 'px) / 2) + 16px'
+        endif
+      %}
+      .section-{{ section.id }} .lfss-media__frame {
+        width: calc(100% + {{ bleed_offset }});
+        margin-left: calc(-1 * ({{ bleed_offset }}));
+      }
+
+      .section-{{ section.id }} .lfss-media__image--main {
+        border-radius: 0 {{ section.settings.image_border_radius }}px {{ section.settings.image_border_radius }}px 0;
+      }
+
+      .section-{{ section.id }} .lfss-media__secondary {
+        left: calc({{ bleed_offset }} - 8%);
+      }
+    {% endif %}
+
+    .section-{{ section.id }} .lfss-media__image--main {
+      {% if section.settings.image_aspect_ratio_desktop != 'adapt' %}
+        aspect-ratio: {{ section.settings.image_aspect_ratio_desktop }};
+      {% else %}
+        aspect-ratio: auto;
+      {% endif %}
+    }
+
+    .section-{{ section.id }} .lfss-steps {
+      gap: {{ section.settings.step_spacing_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfss-step__number {
+      font-size: {{ section.settings.number_font_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfss-step__title {
+      font-size: {{ section.settings.step_title_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfss-step__text {
+      font-size: {{ section.settings.step_text_size_desktop }}px;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const root = document.getElementById('Lfss-{{ section.id }}');
+    if (!root) return;
+
+    const fill = root.querySelector('[data-lfss-fill]');
+    const track = root.querySelector('[data-lfss-track]');
+    const steps = Array.from(root.querySelectorAll('[data-lfss-step]'));
+    if (!fill || !track || !steps.length) return;
+
+    let ticking = false;
+    const triggerRatio = {{ section.settings.scroll_trigger | divided_by: 100.0 }};
+
+    function update() {
+      const numbers = steps.map(function (step) {
+        return step.querySelector('[data-lfss-number]');
+      }).filter(Boolean);
+
+      if (!numbers.length) return;
+
+      const triggerY = window.innerHeight * triggerRatio;
+      const timeline = track.parentElement;
+      const timelineRect = timeline.getBoundingClientRect();
+      const firstRect = numbers[0].getBoundingClientRect();
+      const lastRect = numbers[numbers.length - 1].getBoundingClientRect();
+
+      const topOffset = firstRect.top + firstRect.height / 2 - timelineRect.top;
+      const bottomOffset = timelineRect.bottom - (lastRect.top + lastRect.height / 2);
+
+      track.style.top = Math.max(0, topOffset) + 'px';
+      track.style.bottom = Math.max(0, bottomOffset) + 'px';
+
+      const trackRect = track.getBoundingClientRect();
+      const trackHeight = track.offsetHeight || 1;
+      let fillHeight = triggerY - trackRect.top;
+      fillHeight = Math.max(0, Math.min(trackHeight, fillHeight));
+      fill.style.height = (fillHeight / trackHeight) * 100 + '%';
+
+      steps.forEach(function (step, index) {
+        const number = numbers[index];
+        if (!number) return;
+        const markerCenter = number.getBoundingClientRect().top + number.offsetHeight / 2;
+        step.classList.toggle('is-active', markerCenter <= triggerY);
+      });
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        update();
+        ticking = false;
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(onScroll);
+    }
+    update();
+
+    document.addEventListener('shopify:section:load', function (event) {
+      if (event.detail && event.detail.sectionId === '{{ section.id }}') update();
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "ltl-fry-system-steps",
+  "tag": "section",
+  "class": "section-ltl-fry-system-steps",
+  "settings": [
+    { "type": "header", "content": "Subheading" },
+    { "type": "inline_richtext", "id": "subheading", "label": "Subheading", "default": "BACKED BY SCIENCE" },
+    { "type": "range", "id": "subheading_font_size_mobile", "min": 10, "max": 22, "step": 1, "unit": "px", "label": "Size (mobile)", "default": 12 },
+    { "type": "range", "id": "subheading_font_size_desktop", "min": 10, "max": 22, "step": 1, "unit": "px", "label": "Size (desktop)", "default": 13 },
+    { "type": "color", "id": "subheading_color", "label": "Color", "default": "#b89aa6" },
+    { "type": "header", "content": "Heading" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "How The Complete System For Mature Skin Works" },
+    { "type": "range", "id": "heading_font_size_mobile", "min": 20, "max": 48, "step": 2, "unit": "px", "label": "Size (mobile)", "default": 28 },
+    { "type": "range", "id": "heading_font_size_desktop", "min": 24, "max": 56, "step": 2, "unit": "px", "label": "Size (desktop)", "default": 40 },
+    { "type": "select", "id": "heading_font_weight", "label": "Weight", "options": [
+      { "value": "500", "label": "Medium" },
+      { "value": "600", "label": "Semibold" },
+      { "value": "700", "label": "Bold" }
+    ], "default": "600" },
+    { "type": "color", "id": "heading_color", "label": "Color", "default": "#1f2937" },
+    { "type": "header", "content": "Description" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "5 clinically-backed mechanisms that reverse visible aging, no chemicals, just Arctic science." },
+    { "type": "range", "id": "description_font_size_mobile", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Size (mobile)", "default": 15 },
+    { "type": "range", "id": "description_font_size_desktop", "min": 12, "max": 22, "step": 1, "unit": "px", "label": "Size (desktop)", "default": 16 },
+    { "type": "color", "id": "description_color", "label": "Color", "default": "#374151" },
+    { "type": "select", "id": "text_align", "label": "Text alignment", "options": [
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" }
+    ], "default": "center" },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Main image" },
+    { "type": "image_picker", "id": "image_secondary", "label": "Secondary image" },
+    { "type": "checkbox", "id": "image_full_width", "label": "Full width image", "default": false, "info": "Stretches the image edge to edge on mobile and to the left edge of the screen on desktop." },
+    { "type": "range", "id": "image_max_width", "min": 200, "max": 800, "step": 10, "unit": "px", "label": "Image max width", "default": 800, "info": "Applies when Full width image is off." },
+    { "type": "select", "id": "image_fit", "label": "Image fit", "options": [
+      { "value": "cover", "label": "Cover" },
+      { "value": "contain", "label": "Contain" }
+    ], "default": "cover", "info": "Takes effect when an aspect ratio other than Original is selected." },
+    { "type": "select", "id": "image_aspect_ratio_mobile", "label": "Image aspect ratio (mobile)", "options": [
+      { "value": "adapt", "label": "Original" },
+      { "value": "1 / 1", "label": "Square (1:1)" },
+      { "value": "4 / 5", "label": "Portrait (4:5)" },
+      { "value": "3 / 4", "label": "Portrait (3:4)" },
+      { "value": "2 / 3", "label": "Tall (2:3)" },
+      { "value": "4 / 3", "label": "Landscape (4:3)" },
+      { "value": "3 / 2", "label": "Landscape (3:2)" },
+      { "value": "16 / 9", "label": "Wide (16:9)" }
+    ], "default": "adapt" },
+    { "type": "select", "id": "image_aspect_ratio_desktop", "label": "Image aspect ratio (desktop)", "options": [
+      { "value": "adapt", "label": "Original" },
+      { "value": "1 / 1", "label": "Square (1:1)" },
+      { "value": "4 / 5", "label": "Portrait (4:5)" },
+      { "value": "3 / 4", "label": "Portrait (3:4)" },
+      { "value": "2 / 3", "label": "Tall (2:3)" },
+      { "value": "4 / 3", "label": "Landscape (4:3)" },
+      { "value": "3 / 2", "label": "Landscape (3:2)" },
+      { "value": "16 / 9", "label": "Wide (16:9)" }
+    ], "default": "adapt" },
+    { "type": "color", "id": "image_bg_color", "label": "Image background", "default": "#faf8f6", "info": "Visible behind the image when fit is Contain." },
+    { "type": "range", "id": "image_border_radius", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Image radius", "default": 16 },
+    { "type": "range", "id": "column_gap", "min": 24, "max": 80, "step": 4, "unit": "px", "label": "Column gap", "default": 48 },
+    { "type": "range", "id": "sticky_top", "min": 20, "max": 160, "step": 4, "unit": "px", "label": "Sticky image offset", "default": 96 },
+    { "type": "header", "content": "Timeline" },
+    { "type": "range", "id": "scroll_trigger", "min": 30, "max": 70, "step": 5, "unit": "%", "label": "Highlight position", "default": 50, "info": "Viewport height where the active step is highlighted" },
+    { "type": "range", "id": "line_width", "min": 1, "max": 6, "step": 1, "unit": "px", "label": "Line width", "default": 2 },
+    { "type": "color", "id": "line_color", "label": "Line color", "default": "#e8e0e4" },
+    { "type": "color", "id": "line_active_color", "label": "Active line color", "default": "#b89aa6" },
+    { "type": "range", "id": "step_spacing_mobile", "min": 12, "max": 40, "step": 2, "unit": "px", "label": "Step spacing (mobile)", "default": 16 },
+    { "type": "range", "id": "step_spacing_desktop", "min": 12, "max": 48, "step": 2, "unit": "px", "label": "Step spacing (desktop)", "default": 16 },
+    { "type": "header", "content": "Step style" },
+    { "type": "color", "id": "step_bg_color", "label": "Step background", "default": "#faf8f6" },
+    { "type": "range", "id": "step_border_radius", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Step radius", "default": 16 },
+    { "type": "range", "id": "number_size", "min": 24, "max": 48, "step": 2, "unit": "px", "label": "Number circle size", "default": 28 },
+    { "type": "color", "id": "number_bg_color", "label": "Number background", "default": "#ffffff" },
+    { "type": "color", "id": "number_text_color", "label": "Number text", "default": "#c4b5bc" },
+    { "type": "color", "id": "number_border_color", "label": "Number border", "default": "#e8e0e4" },
+    { "type": "color", "id": "number_active_bg_color", "label": "Active number background", "default": "#c4b5bc" },
+    { "type": "color", "id": "number_active_text_color", "label": "Active number text", "default": "#ffffff" },
+    { "type": "range", "id": "number_font_size_mobile", "min": 11, "max": 18, "step": 1, "unit": "px", "label": "Number size (mobile)", "default": 12 },
+    { "type": "range", "id": "number_font_size_desktop", "min": 11, "max": 18, "step": 1, "unit": "px", "label": "Number size (desktop)", "default": 13 },
+    { "type": "range", "id": "icon_size", "min": 28, "max": 56, "step": 2, "unit": "px", "label": "Step icon size", "default": 36 },
+    { "type": "color", "id": "icon_bg_color", "label": "Step icon background", "default": "#d7c6cc" },
+    { "type": "header", "content": "Step typography" },
+    { "type": "range", "id": "step_title_size_mobile", "min": 14, "max": 28, "step": 1, "unit": "px", "label": "Step title size (mobile)", "default": 18 },
+    { "type": "range", "id": "step_title_size_desktop", "min": 16, "max": 32, "step": 1, "unit": "px", "label": "Step title size (desktop)", "default": 20 },
+    { "type": "select", "id": "step_title_weight", "label": "Step title weight", "options": [
+      { "value": "500", "label": "Medium" },
+      { "value": "600", "label": "Semibold" },
+      { "value": "700", "label": "Bold" }
+    ], "default": "600" },
+    { "type": "color", "id": "step_title_color", "label": "Step title color", "default": "#111827" },
+    { "type": "range", "id": "step_text_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Step text size (mobile)", "default": 14 },
+    { "type": "range", "id": "step_text_size_desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Step text size (desktop)", "default": 15 },
+    { "type": "color", "id": "step_text_color", "label": "Step text color", "default": "#4b5563" },
+    { "type": "header", "content": "Section style" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#ffffff" },
+    { "type": "checkbox", "id": "gradient_enabled", "label": "Use gradient background", "default": false },
+    { "type": "color_background", "id": "gradient_background", "label": "Gradient", "default": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#000000" },
+    { "type": "color", "id": "body_color", "label": "Body color", "default": "#374151" },
+    { "type": "range", "id": "body_font_size_mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Body size (mobile)", "default": 16 },
+    { "type": "range", "id": "body_font_size_desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "label": "Body size (desktop)", "default": 16 },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [
+      { "value": "page", "label": "Section width" },
+      { "value": "full", "label": "Full width" }
+    ], "default": "page" },
+    { "type": "range", "id": "container_max_width", "min": 600, "max": 1400, "step": 10, "unit": "px", "label": "Container max width", "default": 1100, "info": "Applies when Section width is selected." },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (mobile)", "default": 32 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (mobile)", "default": 32 },
+    { "type": "range", "id": "padding_top_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (desktop)", "default": 48 },
+    { "type": "range", "id": "padding_bottom_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (desktop)", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "step_number", "label": "Step number" },
+        { "type": "image_picker", "id": "image", "label": "Step image" },
+        { "type": "text", "id": "title", "label": "Step title", "default": "Step title" },
+        { "type": "richtext", "id": "text", "label": "Step description", "default": "<p>Describe this step.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ltl-fry-system-steps",
+      "blocks": [
+        { "type": "step", "settings": { "step_number": "1", "title": "Erases lines & wrinkles" } },
+        { "type": "step", "settings": { "step_number": "2", "title": "Rebuilds collagen & elastin" } },
+        { "type": "step", "settings": { "step_number": "3", "title": "Restores the skin barrier" } },
+        { "type": "step", "settings": { "step_number": "4", "title": "Fades dark circles" } },
+        { "type": "step", "settings": { "step_number": "5", "title": "Activates natural glow" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,942 @@
+{%- liquid
+  assign layout = section.settings.layout | default: 'split'
+  assign desktop_image = section.settings.image
+  assign mobile_image = section.settings.image_mobile
+  if mobile_image == blank
+    assign mobile_image = desktop_image
+  endif
+  assign desktop_alt = ''
+  assign mobile_alt = ''
+  if desktop_image != blank
+    assign desktop_alt = desktop_image.alt
+  endif
+  if mobile_image != blank
+    assign mobile_alt = mobile_image.alt
+  endif
+-%}
+
+<section
+  class="ltl-fry-result-progress section-{{ section.id }} lfrp-layout-{{ layout }} lfrp-image-{{ section.settings.image_position }} lfrp-image-mobile-{{ section.settings.image_position_mobile }}"
+  data-section-id="{{ section.id }}"
+>
+  <div class="lf-wrap">
+    <div class="lfrp-grid">
+      <div class="lfrp-media">
+        {% if desktop_image != blank %}
+          <div class="lfrp-media__picture lfrp-device-desktop">
+            {{ desktop_image | image_url: width: 1800 | image_tag: loading: 'lazy', class: 'lfrp-media__img', alt: desktop_alt }}
+          </div>
+        {% else %}
+          <div class="lfrp-media__picture lfrp-device-desktop lfrp-media__picture--placeholder">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'lfrp-media__placeholder' }}
+          </div>
+        {% endif %}
+
+        {% if mobile_image != blank %}
+          <div class="lfrp-media__picture lfrp-device-mobile">
+            {{ mobile_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'lfrp-media__img', alt: mobile_alt }}
+          </div>
+        {% elsif desktop_image == blank %}
+          <div class="lfrp-media__picture lfrp-device-mobile lfrp-media__picture--placeholder">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'lfrp-media__placeholder' }}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="lfrp-content">
+        {% for block in section.blocks %}
+          {%- liquid
+            assign visibility = block.settings.visibility | default: 'all'
+            assign device_class = 'lfrp-device-' | append: visibility
+          -%}
+
+          {% case block.type %}
+            {% when 'text' %}
+              <div
+                class="lfrp-text lfrp-text--{{ block.settings.style }} lfrp-block-{{ block.id }} {{ device_class }}"
+                {{ block.shopify_attributes }}
+              >{{ block.settings.text }}</div>
+
+            {% when 'image_with_text' %}
+              {%- liquid
+                assign iwt_alt = block.settings.image_alt
+                if block.settings.image != blank and block.settings.image.alt != blank
+                  assign iwt_alt = block.settings.image.alt
+                endif
+              -%}
+              <div
+                class="lfrp-iwt lfrp-iwt--{{ block.settings.image_position }} lfrp-block-{{ block.id }} {{ device_class }}"
+                {{ block.shopify_attributes }}
+              >
+                {% if block.settings.image != blank %}
+                  <div class="lfrp-iwt__media">
+                    {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'lfrp-iwt__image', alt: iwt_alt }}
+                  </div>
+                {% endif %}
+                {% if block.settings.text != blank %}
+                  <div class="lfrp-iwt__text rte">{{ block.settings.text }}</div>
+                {% endif %}
+              </div>
+
+            {% when 'progress', 'progress_item' %}
+              {%- liquid
+                assign progress_percent = block.settings.percent | default: block.settings.progress_percent | default: 0
+                if progress_percent < 0
+                  assign progress_percent = 0
+                elsif progress_percent > 100
+                  assign progress_percent = 100
+                endif
+                assign progress_prefix = block.settings.percent_prefix | default: '+'
+                assign show_percent = true
+                if block.type == 'progress' and block.settings.show_percent == false
+                  assign show_percent = false
+                endif
+              -%}
+              <div
+                class="lfrp-progress lfrp-block-{{ block.id }} {{ device_class }}"
+                {{ block.shopify_attributes }}
+              >
+                <div class="lfrp-progress__bar" role="img" aria-label="{{ progress_percent }} percent">
+                  <span class="lfrp-progress__fill" style="width: {{ progress_percent }}%;"></span>
+                  {% if show_percent %}
+                    <span class="lfrp-progress__percent">{{ progress_prefix }}{{ progress_percent }}%</span>
+                  {% endif %}
+                </div>
+                {% if block.settings.title != blank %}
+                  <p class="lfrp-progress__title">{{ block.settings.title }}</p>
+                {% endif %}
+                {% if block.settings.text != blank %}
+                  <div class="lfrp-progress__text rte">{{ block.settings.text }}</div>
+                {% endif %}
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% render 'ltl-fry-section-base', section: section %}
+
+<style>
+  {% for block in section.blocks %}
+    {% if block.type == 'text' %}
+      {% if block.settings.font_regular != blank %}
+        {{ block.settings.font_regular | font_face: font_display: 'swap' }}
+      {% endif %}
+      {% if block.settings.font_bold != blank %}
+        {{ block.settings.font_bold | font_face: font_display: 'swap' }}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% if section.settings.progress_label_font != blank %}
+    {{ section.settings.progress_label_font | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.progress_title_font != blank %}
+    {{ section.settings.progress_title_font | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.progress_text_font != blank %}
+    {{ section.settings.progress_text_font | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  .section-{{ section.id }} .lfrp-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: {{ section.settings.column_gap_mobile }}px;
+    align-items: {{ section.settings.content_vertical_align }};
+  }
+
+  .section-{{ section.id }}.lfrp-image-mobile-bottom .lfrp-media {
+    order: 2;
+  }
+
+  .section-{{ section.id }}.lfrp-image-mobile-bottom .lfrp-content {
+    order: 1;
+  }
+
+  .section-{{ section.id }} .lfrp-media {
+    min-width: 0;
+  }
+
+  .section-{{ section.id }} .lfrp-media__img,
+  .section-{{ section.id }} .lfrp-media__placeholder {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: {{ section.settings.image_fit }};
+    border-radius: {{ section.settings.image_radius }}px;
+  }
+
+  {% if section.settings.image_aspect != 'auto' %}
+    .section-{{ section.id }} .lfrp-media__picture {
+      aspect-ratio: {{ section.settings.image_aspect }};
+      overflow: hidden;
+      border-radius: {{ section.settings.image_radius }}px;
+    }
+  {% endif %}
+
+  {% if section.settings.image_visibility == 'hide_mobile' %}
+    .section-{{ section.id }} .lfrp-media {
+      display: none;
+    }
+  {% endif %}
+
+  .section-{{ section.id }} .lfrp-content {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.block_gap_mobile }}px;
+    min-width: 0;
+    max-width: {{ section.settings.content_max_width }}px;
+    padding: {{ section.settings.content_padding_mobile }}px;
+  }
+
+  .section-{{ section.id }}.lfrp-layout-split .lf-wrap {
+    max-width: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .section-{{ section.id }} .lfrp-text {
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .section-{{ section.id }} .lfrp-text p {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    line-height: inherit;
+  }
+
+  .section-{{ section.id }} .lfrp-progress.lfrp-device-mobile,
+  .section-{{ section.id }} .lfrp-progress.lfrp-device-all {
+    display: flex;
+  }
+
+  .section-{{ section.id }} .lfrp-iwt {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-{{ section.id }} .lfrp-iwt--right {
+    flex-direction: row-reverse;
+  }
+
+  .section-{{ section.id }} .lfrp-iwt__media {
+    flex-shrink: 0;
+  }
+
+  .section-{{ section.id }} .lfrp-iwt__image {
+    display: block;
+    object-fit: cover;
+  }
+
+  .section-{{ section.id }} .lfrp-iwt__text {
+    min-width: 0;
+    line-height: 1.5;
+  }
+
+  .section-{{ section.id }} .lfrp-iwt__text p {
+    margin: 0;
+  }
+
+  .section-{{ section.id }} .lfrp-progress {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section-{{ section.id }} .lfrp-progress__bar {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    background: {{ section.settings.bar_bg_color }};
+    height: {{ section.settings.bar_height }}px;
+    border-radius: {{ section.settings.bar_height }}px;
+  }
+
+  .section-{{ section.id }} .lfrp-progress__fill {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: {{ section.settings.bar_fill_gradient }};
+  }
+
+  .section-{{ section.id }} .lfrp-progress__percent {
+    position: absolute;
+    left: {{ section.settings.progress_label_inset }}px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    line-height: 1;
+    white-space: nowrap;
+    pointer-events: none;
+    font-size: {{ section.settings.progress_label_size_mobile }}px;
+    font-weight: {{ section.settings.progress_label_weight }};
+    color: {{ section.settings.progress_label_color }};
+    {% if section.settings.progress_label_font != blank %}
+      font-family: {{ section.settings.progress_label_font.family }}, {{ section.settings.progress_label_font.fallback_families }};
+    {% endif %}
+  }
+
+  .section-{{ section.id }} .lfrp-progress__title {
+    margin: {{ section.settings.progress_title_spacing }}px 0 0;
+    line-height: 1.3;
+    font-size: {{ section.settings.progress_title_size_mobile }}px;
+    font-weight: {{ section.settings.progress_title_weight }};
+    color: {{ section.settings.progress_title_color }};
+    letter-spacing: {{ section.settings.progress_title_letter_spacing | times: 0.01 }}em;
+    text-transform: {{ section.settings.progress_title_transform }};
+    {% if section.settings.progress_title_font != blank %}
+      font-family: {{ section.settings.progress_title_font.family }}, {{ section.settings.progress_title_font.fallback_families }};
+    {% endif %}
+  }
+
+  .section-{{ section.id }} .lfrp-progress__text {
+    margin-top: {{ section.settings.progress_text_spacing }}px;
+    line-height: 1.5;
+    font-size: {{ section.settings.progress_text_size_mobile }}px;
+    font-weight: {{ section.settings.progress_text_weight }};
+    color: {{ section.settings.progress_text_color }};
+    {% if section.settings.progress_text_font != blank %}
+      font-family: {{ section.settings.progress_text_font.family }}, {{ section.settings.progress_text_font.fallback_families }};
+    {% endif %}
+  }
+
+  .section-{{ section.id }} .lfrp-progress__text p {
+    margin: 0;
+  }
+
+  .section-{{ section.id }} .lfrp-device-desktop {
+    display: none;
+  }
+
+  .section-{{ section.id }} .lfrp-device-mobile {
+    display: block;
+  }
+
+  .section-{{ section.id }} .lfrp-iwt.lfrp-device-mobile {
+    display: flex;
+  }
+
+  {% for block in section.blocks %}
+    .section-{{ section.id }} .lfrp-block-{{ block.id }} {
+      {% if block.settings.text_align %}
+        text-align: {{ block.settings.text_align }};
+      {% endif %}
+      {% if block.settings.color != blank %}
+        color: {{ block.settings.color }};
+      {% endif %}
+      {% if block.settings.font_weight %}
+        font-weight: {{ block.settings.font_weight }};
+      {% endif %}
+      {% if block.settings.letter_spacing %}
+        letter-spacing: {{ block.settings.letter_spacing | times: 0.01 }}em;
+      {% endif %}
+      {% if block.settings.text_transform %}
+        text-transform: {{ block.settings.text_transform }};
+      {% endif %}
+      {% if block.settings.margin_bottom_mobile %}
+        margin-bottom: {{ block.settings.margin_bottom_mobile }}px;
+      {% endif %}
+    }
+
+    {% if block.type == 'text' %}
+      .section-{{ section.id }} .lfrp-block-{{ block.id }} {
+        font-size: {{ block.settings.font_size_mobile }}px;
+        line-height: {{ block.settings.line_height | times: 0.1 }};
+        {% if block.settings.max_width > 0 %}
+          max-width: {{ block.settings.max_width }}px;
+        {% endif %}
+        {% if block.settings.font_regular != blank %}
+          font-family: {{ block.settings.font_regular.family }}, {{ block.settings.font_regular.fallback_families }};
+        {% endif %}
+        font-weight: {{ block.settings.font_weight_regular | default: block.settings.font_weight }};
+      }
+
+      .section-{{ section.id }} .lfrp-block-{{ block.id }} strong,
+      .section-{{ section.id }} .lfrp-block-{{ block.id }} b {
+        {% if block.settings.font_bold != blank %}
+          font-family: {{ block.settings.font_bold.family }}, {{ block.settings.font_bold.fallback_families }};
+        {% endif %}
+        font-weight: {{ block.settings.font_weight_bold | default: '700' }};
+      }
+    {% endif %}
+
+    {% if block.type == 'image_with_text' %}
+      .section-{{ section.id }} .lfrp-block-{{ block.id }} {
+        align-items: {{ block.settings.vertical_align }};
+        gap: {{ block.settings.gap_mobile }}px;
+      }
+
+      .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-iwt__image {
+        width: {{ block.settings.image_width_mobile }}px;
+        height: {{ block.settings.image_width_mobile }}px;
+        border-radius: {{ block.settings.image_radius }}px;
+      }
+
+      .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-iwt__text {
+        font-size: {{ block.settings.font_size_mobile }}px;
+        color: {{ block.settings.color }};
+      }
+    {% endif %}
+  {% endfor %}
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} .lfrp-grid {
+      grid-template-columns: minmax(0, {{ section.settings.image_column_width }}%) minmax(0, {{ 100 | minus: section.settings.image_column_width }}%);
+      gap: {{ section.settings.column_gap_desktop }}px;
+    }
+
+    .section-{{ section.id }}.lfrp-image-right .lfrp-grid {
+      grid-template-columns: minmax(0, {{ 100 | minus: section.settings.image_column_width }}%) minmax(0, {{ section.settings.image_column_width }}%);
+    }
+
+    .section-{{ section.id }}.lfrp-image-right .lfrp-media {
+      order: 2;
+    }
+
+    .section-{{ section.id }}.lfrp-image-right .lfrp-content {
+      order: 1;
+    }
+
+    .section-{{ section.id }}.lfrp-image-mobile-bottom .lfrp-media,
+    .section-{{ section.id }}.lfrp-image-left .lfrp-media {
+      order: 0;
+    }
+
+    .section-{{ section.id }}.lfrp-image-mobile-bottom.lfrp-image-left .lfrp-content {
+      order: 0;
+    }
+
+    {% if section.settings.image_visibility == 'hide_desktop' %}
+      .section-{{ section.id }} .lfrp-media {
+        display: none;
+      }
+
+      .section-{{ section.id }} .lfrp-grid {
+        grid-template-columns: 1fr;
+      }
+    {% elsif section.settings.image_visibility == 'hide_mobile' %}
+      .section-{{ section.id }} .lfrp-media {
+        display: block;
+      }
+    {% endif %}
+
+    .section-{{ section.id }} .lfrp-content {
+      gap: {{ section.settings.block_gap_desktop }}px;
+      padding: {{ section.settings.content_padding_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfrp-progress__percent {
+      font-size: {{ section.settings.progress_label_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfrp-progress__title {
+      font-size: {{ section.settings.progress_title_size_desktop }}px;
+    }
+
+    .section-{{ section.id }} .lfrp-progress__text {
+      font-size: {{ section.settings.progress_text_size_desktop }}px;
+    }
+
+    .section-{{ section.id }}.lfrp-layout-split .lfrp-media,
+    .section-{{ section.id }}.lfrp-layout-split .lfrp-content {
+      min-height: {{ section.settings.split_min_height }}px;
+    }
+
+    .section-{{ section.id }}.lfrp-layout-split .lfrp-media__picture {
+      height: 100%;
+    }
+
+    .section-{{ section.id }}.lfrp-layout-split .lfrp-media__img,
+    .section-{{ section.id }}.lfrp-layout-split .lfrp-media__placeholder {
+      height: 100%;
+      min-height: {{ section.settings.split_min_height }}px;
+    }
+
+    .section-{{ section.id }} .lfrp-device-desktop {
+      display: block;
+    }
+
+    .section-{{ section.id }} .lfrp-device-mobile {
+      display: none;
+    }
+
+    .section-{{ section.id }} .lfrp-iwt.lfrp-device-desktop,
+    .section-{{ section.id }} .lfrp-progress.lfrp-device-desktop,
+    .section-{{ section.id }} .lfrp-progress.lfrp-device-all {
+      display: flex;
+    }
+
+    .section-{{ section.id }} .lfrp-iwt.lfrp-device-mobile {
+      display: none;
+    }
+
+    {% for block in section.blocks %}
+      .section-{{ section.id }} .lfrp-block-{{ block.id }} {
+        {% if block.settings.margin_bottom_desktop %}
+          margin-bottom: {{ block.settings.margin_bottom_desktop }}px;
+        {% endif %}
+      }
+
+      {% if block.type == 'text' %}
+        .section-{{ section.id }} .lfrp-block-{{ block.id }} {
+          font-size: {{ block.settings.font_size_desktop }}px;
+        }
+      {% endif %}
+
+      {% if block.type == 'image_with_text' %}
+        .section-{{ section.id }} .lfrp-block-{{ block.id }} {
+          gap: {{ block.settings.gap_desktop }}px;
+        }
+
+        .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-iwt__image {
+          width: {{ block.settings.image_width_desktop }}px;
+          height: {{ block.settings.image_width_desktop }}px;
+        }
+
+        .section-{{ section.id }} .lfrp-block-{{ block.id }} .lfrp-iwt__text {
+          font-size: {{ block.settings.font_size_desktop }}px;
+        }
+      {% endif %}
+    {% endfor %}
+  }
+</style>
+
+{% schema %}
+{
+  "name": "ltl-fry-result-progress",
+  "tag": "section",
+  "class": "section-ltl-fry-result-progress",
+  "settings": [
+    { "type": "header", "content": "Main image" },
+    { "type": "image_picker", "id": "image", "label": "Image (desktop)" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Image (mobile)", "info": "Falls back to the desktop image when empty." },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position (desktop)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "image_position_mobile",
+      "label": "Image position (mobile)",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ],
+      "default": "top"
+    },
+    { "type": "range", "id": "image_column_width", "min": 30, "max": 70, "step": 1, "unit": "%", "label": "Image column width (desktop)", "default": 50 },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "image_aspect",
+      "label": "Image aspect ratio",
+      "options": [
+        { "value": "auto", "label": "Original" },
+        { "value": "4 / 5", "label": "4:5" },
+        { "value": "3 / 4", "label": "3:4" },
+        { "value": "1 / 1", "label": "1:1" },
+        { "value": "16 / 9", "label": "16:9" }
+      ],
+      "default": "auto"
+    },
+    { "type": "range", "id": "image_radius", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Image radius", "default": 0 },
+    {
+      "type": "select",
+      "id": "image_visibility",
+      "label": "Image visibility",
+      "options": [
+        { "value": "all", "label": "All devices" },
+        { "value": "hide_mobile", "label": "Hide on mobile" },
+        { "value": "hide_desktop", "label": "Hide on desktop" }
+      ],
+      "default": "all"
+    },
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "split", "label": "Full-width split" },
+        { "value": "contained", "label": "Contained" }
+      ],
+      "default": "split"
+    },
+    {
+      "type": "select",
+      "id": "content_vertical_align",
+      "label": "Content vertical alignment",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Bottom" }
+      ],
+      "default": "center"
+    },
+    { "type": "range", "id": "column_gap_mobile", "min": 0, "max": 60, "step": 4, "unit": "px", "label": "Column gap (mobile)", "default": 0 },
+    { "type": "range", "id": "column_gap_desktop", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Column gap (desktop)", "default": 0 },
+    { "type": "range", "id": "block_gap_mobile", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Block gap (mobile)", "default": 16 },
+    { "type": "range", "id": "block_gap_desktop", "min": 0, "max": 48, "step": 2, "unit": "px", "label": "Block gap (desktop)", "default": 20 },
+    { "type": "range", "id": "content_max_width", "min": 280, "max": 800, "step": 10, "unit": "px", "label": "Content max width", "default": 560 },
+    { "type": "range", "id": "split_min_height", "min": 320, "max": 900, "step": 10, "unit": "px", "label": "Split min height (desktop)", "default": 640 },
+    { "type": "range", "id": "content_padding_mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Content padding (mobile)", "default": 24 },
+    { "type": "range", "id": "content_padding_desktop", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Content padding (desktop)", "default": 40 },
+    { "type": "header", "content": "Progress bar" },
+    { "type": "range", "id": "bar_height", "min": 20, "max": 64, "step": 1, "unit": "px", "label": "Bar height", "default": 44 },
+    { "type": "color", "id": "bar_bg_color", "label": "Bar background", "default": "#f3eee9" },
+    { "type": "color_background", "id": "bar_fill_gradient", "label": "Bar fill gradient", "default": "linear-gradient(90deg, rgba(196, 154, 154, 1), rgba(232, 213, 213, 0.35) 100%)" },
+    { "type": "header", "content": "Progress label" },
+    { "type": "font_picker", "id": "progress_label_font", "label": "Font", "default": "poppins_n7" },
+    {
+      "type": "select",
+      "id": "progress_label_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    { "type": "range", "id": "progress_label_size_mobile", "min": 12, "max": 36, "step": 1, "unit": "px", "label": "Size (mobile)", "default": 18 },
+    { "type": "range", "id": "progress_label_size_desktop", "min": 12, "max": 40, "step": 1, "unit": "px", "label": "Size (desktop)", "default": 20 },
+    { "type": "color", "id": "progress_label_color", "label": "Color", "default": "#ffffff" },
+    { "type": "range", "id": "progress_label_inset", "min": 8, "max": 32, "step": 1, "unit": "px", "label": "Label inset", "default": 16 },
+    { "type": "header", "content": "Progress title" },
+    { "type": "font_picker", "id": "progress_title_font", "label": "Font", "default": "poppins_n7" },
+    {
+      "type": "select",
+      "id": "progress_title_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    { "type": "range", "id": "progress_title_size_mobile", "min": 10, "max": 24, "step": 1, "unit": "px", "label": "Size (mobile)", "default": 13 },
+    { "type": "range", "id": "progress_title_size_desktop", "min": 10, "max": 28, "step": 1, "unit": "px", "label": "Size (desktop)", "default": 14 },
+    { "type": "color", "id": "progress_title_color", "label": "Color", "default": "#c49a9a" },
+    { "type": "range", "id": "progress_title_letter_spacing", "min": 0, "max": 20, "step": 1, "label": "Letter spacing", "default": 4, "info": "4 = 0.04em" },
+    {
+      "type": "select",
+      "id": "progress_title_transform",
+      "label": "Text transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" }
+      ],
+      "default": "uppercase"
+    },
+    { "type": "range", "id": "progress_title_spacing", "min": 0, "max": 24, "step": 1, "unit": "px", "label": "Spacing above title", "default": 10 },
+    { "type": "header", "content": "Progress text" },
+    { "type": "font_picker", "id": "progress_text_font", "label": "Font", "default": "poppins_n4" },
+    {
+      "type": "select",
+      "id": "progress_text_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semibold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    { "type": "range", "id": "progress_text_size_mobile", "min": 11, "max": 20, "step": 1, "unit": "px", "label": "Size (mobile)", "default": 13 },
+    { "type": "range", "id": "progress_text_size_desktop", "min": 11, "max": 22, "step": 1, "unit": "px", "label": "Size (desktop)", "default": 14 },
+    { "type": "color", "id": "progress_text_color", "label": "Color", "default": "#111111" },
+    { "type": "range", "id": "progress_text_spacing", "min": 0, "max": 16, "step": 1, "unit": "px", "label": "Spacing above text", "default": 4 },
+    { "type": "header", "content": "Section style" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#ffffff" },
+    { "type": "checkbox", "id": "gradient_enabled", "label": "Use gradient background", "default": false },
+    { "type": "color_background", "id": "gradient_background", "label": "Gradient", "default": "linear-gradient(180deg, rgba(255,255,255,1), rgba(250,248,246,1) 100%)" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#111111" },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [
+      { "value": "page", "label": "Section width" },
+      { "value": "full", "label": "Full width" }
+    ], "default": "page" },
+    { "type": "range", "id": "container_max_width", "min": 600, "max": 1600, "step": 10, "unit": "px", "label": "Container max width", "default": 1400, "info": "Applies when Section width is selected." },
+    { "type": "range", "id": "padding_top_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (mobile)", "default": 0 },
+    { "type": "range", "id": "padding_bottom_mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (mobile)", "default": 0 },
+    { "type": "range", "id": "padding_top_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top (desktop)", "default": 0 },
+    { "type": "range", "id": "padding_bottom_desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom (desktop)", "default": 0 }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "options": [
+            { "value": "eyebrow", "label": "Eyebrow" },
+            { "value": "heading", "label": "Heading" },
+            { "value": "body", "label": "Body" }
+          ],
+          "default": "body"
+        },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Add text</p>" },
+        { "type": "header", "content": "Typography" },
+        { "type": "font_picker", "id": "font_regular", "label": "Regular", "default": "poppins_n4" },
+        {
+          "type": "select",
+          "id": "font_weight_regular",
+          "label": "Font weight",
+          "options": [
+            { "value": "400", "label": "Regular" },
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semibold" },
+            { "value": "700", "label": "Bold" }
+          ],
+          "default": "400"
+        },
+        { "type": "font_picker", "id": "font_bold", "label": "Bold", "default": "poppins_n7" },
+        {
+          "type": "select",
+          "id": "font_weight_bold",
+          "label": "Font weight",
+          "options": [
+            { "value": "500", "label": "Medium" },
+            { "value": "600", "label": "Semibold" },
+            { "value": "700", "label": "Bold" },
+            { "value": "800", "label": "Extra bold" }
+          ],
+          "default": "700"
+        },
+        { "type": "range", "id": "font_size_mobile", "min": 10, "max": 48, "step": 1, "unit": "px", "label": "Font size (mobile)", "default": 15 },
+        { "type": "range", "id": "font_size_desktop", "min": 10, "max": 64, "step": 1, "unit": "px", "label": "Font size (desktop)", "default": 16 },
+        { "type": "range", "id": "line_height", "min": 10, "max": 20, "step": 1, "label": "Line height", "default": 14, "info": "10 = 1.0, 14 = 1.4" },
+        { "type": "range", "id": "letter_spacing", "min": 0, "max": 20, "step": 1, "label": "Letter spacing", "default": 0, "info": "0–20. 6 = 0.06em" },
+        {
+          "type": "select",
+          "id": "text_transform",
+          "label": "Text transform",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "uppercase", "label": "Uppercase" },
+            { "value": "capitalize", "label": "Capitalize" }
+          ],
+          "default": "none"
+        },
+        { "type": "color", "id": "color", "label": "Color", "default": "#111111" },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        { "type": "range", "id": "max_width", "min": 0, "max": 700, "step": 10, "unit": "px", "label": "Max width", "default": 0, "info": "0 is full width." },
+        { "type": "header", "content": "Spacing and device" },
+        { "type": "range", "id": "margin_bottom_mobile", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Margin bottom (mobile)", "default": 0 },
+        { "type": "range", "id": "margin_bottom_desktop", "min": 0, "max": 48, "step": 2, "unit": "px", "label": "Margin bottom (desktop)", "default": 0 },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Show on",
+          "options": [
+            { "value": "all", "label": "All devices" },
+            { "value": "desktop", "label": "Desktop only" },
+            { "value": "mobile", "label": "Mobile only" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "image_with_text",
+      "name": "Image with text",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_alt", "label": "Image alt text" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Add supporting copy next to the image.</p>" },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image position",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "select",
+          "id": "vertical_align",
+          "label": "Vertical alignment",
+          "options": [
+            { "value": "flex-start", "label": "Top" },
+            { "value": "center", "label": "Center" },
+            { "value": "flex-end", "label": "Bottom" }
+          ],
+          "default": "center"
+        },
+        { "type": "range", "id": "image_width_mobile", "min": 32, "max": 160, "step": 2, "unit": "px", "label": "Image size (mobile)", "default": 48 },
+        { "type": "range", "id": "image_width_desktop", "min": 32, "max": 200, "step": 2, "unit": "px", "label": "Image size (desktop)", "default": 56 },
+        { "type": "range", "id": "image_radius", "min": 0, "max": 100, "step": 2, "unit": "px", "label": "Image radius", "default": 100 },
+        { "type": "range", "id": "gap_mobile", "min": 8, "max": 32, "step": 2, "unit": "px", "label": "Gap (mobile)", "default": 12 },
+        { "type": "range", "id": "gap_desktop", "min": 8, "max": 40, "step": 2, "unit": "px", "label": "Gap (desktop)", "default": 16 },
+        { "type": "range", "id": "font_size_mobile", "min": 11, "max": 20, "step": 1, "unit": "px", "label": "Text size (mobile)", "default": 14 },
+        { "type": "range", "id": "font_size_desktop", "min": 11, "max": 22, "step": 1, "unit": "px", "label": "Text size (desktop)", "default": 15 },
+        { "type": "color", "id": "color", "label": "Text color", "default": "#4b5563" },
+        { "type": "range", "id": "margin_bottom_mobile", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Margin bottom (mobile)", "default": 0 },
+        { "type": "range", "id": "margin_bottom_desktop", "min": 0, "max": 48, "step": 2, "unit": "px", "label": "Margin bottom (desktop)", "default": 0 },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Show on",
+          "options": [
+            { "value": "all", "label": "All devices" },
+            { "value": "desktop", "label": "Desktop only" },
+            { "value": "mobile", "label": "Mobile only" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "progress",
+      "name": "Progress",
+      "settings": [
+        { "type": "number", "id": "percent", "label": "Percent", "default": 91, "info": "Enter any whole number from 0 to 100." },
+        { "type": "text", "id": "percent_prefix", "label": "Percent prefix", "default": "+" },
+        { "type": "checkbox", "id": "show_percent", "label": "Show percent", "default": true },
+        { "type": "text", "id": "title", "label": "Title", "default": "Glow" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Participants experienced a more youthful and glowing appearance.</p>" },
+        { "type": "header", "content": "Spacing and device" },
+        { "type": "range", "id": "margin_bottom_mobile", "min": 0, "max": 40, "step": 2, "unit": "px", "label": "Margin bottom (mobile)", "default": 0 },
+        { "type": "range", "id": "margin_bottom_desktop", "min": 0, "max": 48, "step": 2, "unit": "px", "label": "Margin bottom (desktop)", "default": 0 },
+        {
+          "type": "select",
+          "id": "visibility",
+          "label": "Show on",
+          "options": [
+            { "value": "all", "label": "All devices" },
+            { "value": "desktop", "label": "Desktop only" },
+            { "value": "mobile", "label": "Mobile only" }
+          ],
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "type": "progress_item",
+      "name": "Progress item",
+      "settings": [
+        { "type": "paragraph", "content": "Legacy block. Prefer the Progress block." },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "progress_label", "label": "Progress label", "default": "Week 4" },
+        { "type": "number", "id": "progress_percent", "label": "Progress percent", "default": 75, "info": "Enter any whole number from 0 to 100." },
+        { "type": "text", "id": "title", "label": "Title", "default": "Visible improvement" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Describe the result at this stage.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "ltl-fry-result-progress",
+      "blocks": [
+        {
+          "type": "text",
+          "settings": {
+            "style": "eyebrow",
+            "text": "<p>35 WOMEN. 60 DAYS.</p>",
+            "font_size_mobile": 12,
+            "font_size_desktop": 13,
+            "font_weight_regular": "500",
+            "letter_spacing": 6,
+            "text_transform": "uppercase",
+            "color": "#6b7280"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "style": "heading",
+            "text": "<p>Scientists Shocked by Results In Independent 60 Day Clinical Trial</p>",
+            "font_size_mobile": 26,
+            "font_size_desktop": 34,
+            "font_weight_regular": "600",
+            "line_height": 12,
+            "color": "#111111"
+          }
+        },
+        {
+          "type": "image_with_text",
+          "settings": {
+            "text": "<p>The Complete System for Mature Women's Skin was evaluated by multiple independent dermatologists. Here are the results from the clinical study:</p>"
+          }
+        },
+        {
+          "type": "progress",
+          "settings": {
+            "percent": 91,
+            "title": "Glow",
+            "text": "<p>Participants experienced a more youthful and glowing appearance.</p>"
+          }
+        },
+        {
+          "type": "progress",
+          "settings": {
+            "percent": 75,
+            "title": "Younger skin",
+            "text": "<p>Participants reported younger-looking skin at Day 60.</p>"
+          }
+        },
+        {
+          "type": "progress",
+          "settings": {
+            "percent": 48,
+            "title": "Dark circles",
+            "text": "<p>Reduced by dermatologist assessment at Day 60.</p>"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "style": "body",
+            "text": "<p>*Individual results may vary. Customer perception reporting the appearance of clearer and glowing skin in as little as 3 days after the product is used as directed. If dissatisfied with the results, please reach out after 60 days of use for a full, no-questions refund.</p>",
+            "font_size_mobile": 11,
+            "font_size_desktop": 12,
+            "color": "#9ca3af",
+            "line_height": 15
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

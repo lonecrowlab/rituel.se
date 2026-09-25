@@ -1,0 +1,45 @@
+{% comment %}
+  Loads a Shopify font_picker font under a custom font-family name.
+  Usage: {% render 'named-font-loader', font: section.settings.custom_font, name: section.settings.heading_font_name %}
+{% endcomment %}
+{% if font != blank and name != blank %}
+  {% unless font.system? %}
+    {% liquid
+      assign named_font_bold = font | font_modify: 'weight', 'bold'
+      assign named_font_italic = font | font_modify: 'style', 'italic'
+      assign named_font_bold_italic = named_font_bold | font_modify: 'style', 'italic'
+    %}
+
+    @font-face {
+      font-family: '{{ name }}';
+      src: url('{{ font | font_url }}') format('woff2');
+      font-weight: {{ font.weight }};
+      font-style: {{ font.style }};
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: '{{ name }}';
+      src: url('{{ named_font_bold | font_url }}') format('woff2');
+      font-weight: {{ named_font_bold.weight }};
+      font-style: {{ named_font_bold.style }};
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: '{{ name }}';
+      src: url('{{ named_font_italic | font_url }}') format('woff2');
+      font-weight: {{ named_font_italic.weight }};
+      font-style: {{ named_font_italic.style }};
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: '{{ name }}';
+      src: url('{{ named_font_bold_italic | font_url }}') format('woff2');
+      font-weight: {{ named_font_bold_italic.weight }};
+      font-style: {{ named_font_bold_italic.style }};
+      font-display: swap;
+    }
+  {% endunless %}
+{% endif %}
