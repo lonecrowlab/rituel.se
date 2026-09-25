@@ -2518,6 +2518,25 @@
     "ltl_fry_guarantee_xbQwYD": {
       "type": "ltl-fry-guarantee",
       "blocks": {
+        "button_gH3PWt": {
+          "type": "button",
+          "settings": {
+            "label": "SE ALLA PRODUKTER",
+            "link": "shopify://collections/all",
+            "use_custom_styles": false,
+            "bg_color": "#c45c26",
+            "text_color": "#ffffff",
+            "font_size_mobile": 14,
+            "font_size_desktop": 15,
+            "font_weight": "600",
+            "letter_spacing": 1,
+            "text_transform": "uppercase",
+            "padding_vertical": 14,
+            "padding_horizontal": 32,
+            "border_radius": 4,
+            "visibility": "all"
+          }
+        },
         "icon_fwBYqz": {
           "type": "icon",
           "settings": {
@@ -2584,6 +2603,7 @@
         }
       },
       "block_order": [
+        "button_gH3PWt",
         "icon_fwBYqz",
         "text_FWqxt3",
         "text_iH7dPL"
@@ -3411,6 +3431,25 @@
     "listicle_froya_guarantee_2": {
       "type": "ltl-fry-guarantee",
       "blocks": {
+        "button_jYPXGG": {
+          "type": "button",
+          "settings": {
+            "label": "SE ALLA PRODUKTER",
+            "link": "shopify://collections/all",
+            "use_custom_styles": false,
+            "bg_color": "#c45c26",
+            "text_color": "#ffffff",
+            "font_size_mobile": 14,
+            "font_size_desktop": 15,
+            "font_weight": "600",
+            "letter_spacing": 1,
+            "text_transform": "uppercase",
+            "padding_vertical": 14,
+            "padding_horizontal": 32,
+            "border_radius": 4,
+            "visibility": "all"
+          }
+        },
         "g_icon_2": {
           "type": "icon",
           "settings": {
@@ -3477,6 +3516,7 @@
         }
       },
       "block_order": [
+        "button_jYPXGG",
         "g_icon_2",
         "g_text_2",
         "text_T8ndXb"
