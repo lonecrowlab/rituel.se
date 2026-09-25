@@ -228,6 +228,10 @@
     justify-content: {{ section.settings.row_alignment }};
     gap: {{ section.settings.block_gap_mobile }}px;
     --cs-gap: {{ section.settings.block_gap_mobile }}px;
+    {% if section.settings.column_gap_mobile != blank %}
+      column-gap: {{ section.settings.column_gap_mobile }}px;
+      --cs-gap: {{ section.settings.column_gap_mobile }}px;
+    {% endif %}
   }
 
   .section-{{ section.id }} .cs__item {
@@ -737,6 +741,7 @@
     { "type": "range", "id": "content_max_width", "min": 600, "max": 1600, "step": 20, "unit": "px", "label": "Content max width", "default": 1100 },
     { "type": "range", "id": "block_gap_desktop", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Block gap (desktop)", "default": 24 },
     { "type": "range", "id": "block_gap_mobile", "min": 0, "max": 60, "step": 4, "unit": "px", "label": "Block gap (mobile)", "default": 16 },
+    { "type": "number", "id": "column_gap_mobile", "label": "Column gap (mobile, px)", "info": "Horizontal gap between blocks on mobile. Leave empty to use Block gap (mobile)." },
     {
       "type": "select",
       "id": "row_alignment",
