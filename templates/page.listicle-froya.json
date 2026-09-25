@@ -129,8 +129,8 @@
         "heading_ThbrWU": {
           "type": "heading",
           "settings": {
-            "heading": "<p>Synligt strålande hud på så lite som </p>",
-            "heading_accent": "48 timmar",
+            "heading": "<p>Synligt strålande hud på så lite som&nbsp;<br/><em>48 timmar</em></p>",
+            "heading_accent": "",
             "highlight_position": "inline_last",
             "use_theme_colors": false,
             "font_size_desktop": 40,
@@ -290,7 +290,7 @@
           "type": "icon_item",
           "settings": {
             "icon_level": "second",
-            "icon": "shopify://shop_images/Redness_irritation_soothed.svg",
+            "icon": "shopify://shop_images/Redness_irritation_soothed_ce15e34c-05c5-4042-9cb1-034085727a18.svg",
             "line_1": "",
             "line_2": "",
             "title": "",
@@ -312,7 +312,7 @@
           "type": "icon_item",
           "settings": {
             "icon_level": "second",
-            "icon": "shopify://shop_images/confidence.svg",
+            "icon": "shopify://shop_images/confidence_85a7b9fd-2289-44d6-b6db-bbd9a2b7f639.svg",
             "line_1": "",
             "line_2": "",
             "title": "",
