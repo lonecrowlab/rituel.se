@@ -51,6 +51,18 @@
         "padding_bottom": 0
       }
     },
+    "custom_liquid_AXEiFY": {
+      "type": "custom-liquid",
+      "name": "Custom Style",
+      "settings": {
+        "display_id": false,
+        "visibility": "always-display",
+        "custom_liquid": "",
+        "color_scheme": "background-1",
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "custom_hero_CVjkwi": {
       "type": "custom-hero",
       "blocks": {
@@ -1556,7 +1568,7 @@
             "font_size_desktop": 16,
             "line_height": 14,
             "letter_spacing": 0,
-            "text_transform": "none",
+            "text_transform": "uppercase",
             "color": "#111111",
             "text_align": "right",
             "padding_top": 0,
@@ -1625,6 +1637,9 @@
         "text_XNkbdH",
         "heading_HVMj89",
         "text_dMXJBW"
+      ],
+      "custom_css": [
+        "@media only screen and (max-width: 768px) {}"
       ],
       "name": "Custom Hero",
       "settings": {
@@ -3726,6 +3741,7 @@
   "order": [
     "font_override_froya",
     "custom_liquid_hide_header",
+    "custom_liquid_AXEiFY",
     "custom_hero_CVjkwi",
     "listicle_froya_icons_1",
     "listicle_froya_brands",
