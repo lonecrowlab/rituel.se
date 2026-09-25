@@ -134,15 +134,23 @@
     gap: 32px;
   }
 
+  .section-{{ section.id }} {
+    overflow-x: clip;
+  }
+
   .section-{{ section.id }} .lfss-media__frame {
     position: relative;
     display: block;
-    width: 100%;
-    {% unless section.settings.image_full_width %}
+    {% if section.settings.image_full_width %}
+      width: 100vw;
+      max-width: none;
+      margin-left: calc(50% - 50vw);
+    {% else %}
+      width: 100%;
       max-width: {{ section.settings.image_max_width }}px;
       margin-left: auto;
       margin-right: auto;
-    {% endunless %}
+    {% endif %}
     overflow: visible;
   }
 
@@ -166,9 +174,15 @@
     {% endif %}
   }
 
+  {% if section.settings.image_full_width %}
+    .section-{{ section.id }} .lfss-media__image--main {
+      border-radius: 0;
+    }
+  {% endif %}
+
   .section-{{ section.id }} .lfss-media__secondary {
     position: absolute;
-    left: -8%;
+    left: {% if section.settings.image_full_width %}16px{% else %}-8%{% endif %};
     bottom: -12%;
     width: 46%;
     z-index: 1;
@@ -333,6 +347,28 @@
       top: {{ section.settings.sticky_top }}px;
     }
 
+    {% if section.settings.image_full_width %}
+      {% liquid
+        if section.settings.section_width == 'full'
+          assign bleed_offset = '0px'
+        else
+          assign bleed_offset = 'max(0px, (100vw - ' | append: section.settings.container_max_width | append: 'px) / 2) + 16px'
+        endif
+      %}
+      .section-{{ section.id }} .lfss-media__frame {
+        width: calc(100% + {{ bleed_offset }});
+        margin-left: calc(-1 * ({{ bleed_offset }}));
+      }
+
+      .section-{{ section.id }} .lfss-media__image--main {
+        border-radius: 0 {{ section.settings.image_border_radius }}px {{ section.settings.image_border_radius }}px 0;
+      }
+
+      .section-{{ section.id }} .lfss-media__secondary {
+        left: calc({{ bleed_offset }} - 8%);
+      }
+    {% endif %}
+
     .section-{{ section.id }} .lfss-media__image--main {
       {% if section.settings.image_aspect_ratio_desktop != 'adapt' %}
         aspect-ratio: {{ section.settings.image_aspect_ratio_desktop }};
@@ -460,8 +496,8 @@
     { "type": "header", "content": "Image" },
     { "type": "image_picker", "id": "image", "label": "Main image" },
     { "type": "image_picker", "id": "image_secondary", "label": "Secondary image" },
-    { "type": "checkbox", "id": "image_full_width", "label": "Full width image", "default": true, "info": "Fills the full width of the image column. Turn off to use a max width." },
-    { "type": "range", "id": "image_max_width", "min": 200, "max": 800, "step": 10, "unit": "px", "label": "Image max width", "default": 480, "info": "Applies when Full width image is off." },
+    { "type": "checkbox", "id": "image_full_width", "label": "Full width image", "default": false, "info": "Stretches the image edge to edge on mobile and to the left edge of the screen on desktop." },
+    { "type": "range", "id": "image_max_width", "min": 200, "max": 800, "step": 10, "unit": "px", "label": "Image max width", "default": 800, "info": "Applies when Full width image is off." },
     { "type": "select", "id": "image_fit", "label": "Image fit", "options": [
       { "value": "cover", "label": "Cover" },
       { "value": "contain", "label": "Contain" }
