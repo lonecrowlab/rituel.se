@@ -1496,6 +1496,9 @@
         "images_with_text_NMLp4N",
         "low_stock_ahbzJf"
       ],
+      "custom_css": [
+        ".lfqb-ingredients-btn {font-size: 18px; background: var( --Gradient, linear-gradient( 92deg, rgba(223, 177, 66, 0.3) 10%, rgba(233, 128, 68, 0.3) 49.5%, rgba(175, 137, 152, 0.3) 100% ) ); color: #000; font-weight: 500; font-family:'body-font','Inter';}"
+      ],
       "settings": {
         "product": "pdrn-collagen-volume-balm",
         "image_column_width": 50,
