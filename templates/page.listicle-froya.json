@@ -168,7 +168,7 @@
           "settings": {
             "button_text": "PROVA RISKFRI – SPARA 40%",
             "button_link": "",
-            "scroll_to_section": "",
+            "scroll_to_section": "shopify-section-template--20549868060847__listicle_froya_quick_buy",
             "use_custom_styles": true,
             "button_text_color": "#ffffff",
             "button_bg_color": "#cc667c",
