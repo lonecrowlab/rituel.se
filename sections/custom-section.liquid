@@ -345,7 +345,6 @@
     display: block;
     width: 100%;
     height: 100%;
-
     object-fit: contain;
   }
 
@@ -502,6 +501,10 @@
         margin-right: auto;
       }
 
+      .section-{{ section.id }} .cs-block-{{ block.id }} .cs-iwt__image {
+        padding: {{ block.settings.image_padding_mobile | default: 0 }}px;
+      }
+
       .section-{{ section.id }} .cs-block-{{ block.id }} .cs-iwt__title {
         {% if block.settings.title_font != blank %}
           font-family: {{ block.settings.title_font.family }}, {{ block.settings.title_font.fallback_families }};
@@ -655,6 +658,10 @@
         .section-{{ section.id }} .cs-block-{{ block.id }}.cs-iwt--image_bottom .cs-iwt__media {
           width: {{ block.settings.image_size_desktop }}px;
           height: {{ block.settings.image_size_desktop }}px;
+        }
+
+        .section-{{ section.id }} .cs-block-{{ block.id }} .cs-iwt__image {
+          padding: {{ block.settings.image_padding_desktop | default: 0 }}px;
         }
 
         .section-{{ section.id }} .cs-block-{{ block.id }} .cs-iwt__title {
@@ -1007,6 +1014,8 @@
         { "type": "range", "id": "image_size_mobile", "min": 32, "max": 200, "step": 4, "unit": "px", "label": "Image size (mobile)", "default": 96 },
         { "type": "color", "id": "image_bg_color", "label": "Image background", "default": "#f5d5c8" },
         { "type": "range", "id": "image_radius", "min": 0, "max": 50, "step": 2, "unit": "px", "label": "Image radius", "default": 16 },
+        { "type": "range", "id": "image_padding_desktop", "min": 0, "max": 60, "step": 1, "unit": "px", "label": "Image padding (desktop)", "default": 0 },
+        { "type": "range", "id": "image_padding_mobile", "min": 0, "max": 60, "step": 1, "unit": "px", "label": "Image padding (mobile)", "default": 0 },
         { "type": "header", "content": "Title typography" },
         { "type": "font_picker", "id": "title_font", "label": "Title font", "default": "poppins_n7" },
         {
