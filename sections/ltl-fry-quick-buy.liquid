@@ -452,15 +452,59 @@
     color: #6b7280;
   }
 
+  .section-{{ section.id }} {
+    overflow-x: clip;
+  }
+
+  .section-{{ section.id }},
+  .section-{{ section.id }} *,
+  .section-{{ section.id }} *::before,
+  .section-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
   .section-{{ section.id }} .lfqb-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: {{ section.settings.column_gap_mobile }}px;
     align-items: start;
+    width: 100%;
+  }
+
+  .section-{{ section.id }} .lfqb-grid > *,
+  .section-{{ section.id }} .lfqb-gallery,
+  .section-{{ section.id }} .lfqb-form,
+  .section-{{ section.id }} .lfqb-blocks {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .section-{{ section.id }} .lfqb-blocks img,
+  .section-{{ section.id }} .lfqb-blocks video,
+  .section-{{ section.id }} .lfqb-blocks iframe,
+  .section-{{ section.id }} .lfqb-blocks svg,
+  .section-{{ section.id }} .lfqb-blocks table {
+    max-width: 100%;
+  }
+
+  .section-{{ section.id }} .lfqb-blocks img {
+    height: auto;
+  }
+
+  .section-{{ section.id }} .lfqb-blocks,
+  .section-{{ section.id }} .lfqb-blocks * {
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  .section-{{ section.id }} .lfqb-custom-html {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .section-{{ section.id }} .lfqb-gallery__stage {
     position: relative;
+    width: 100%;
     overflow: hidden;
     border-radius: {{ section.settings.gallery_radius }}px;
     background: {{ section.settings.gallery_bg_color }};
@@ -528,9 +572,9 @@
 
   .section-{{ section.id }} .lfqb-gallery__quote {
     position: absolute;
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
+    left: clamp(8px, 3vw, 16px);
+    right: clamp(8px, 3vw, 16px);
+    bottom: clamp(8px, 3vw, 16px);
     z-index: 2;
     display: flex;
     gap: 10px;
@@ -538,6 +582,11 @@
     background: rgba(255, 255, 255, 0.94);
     border-radius: 12px;
     padding: 10px 12px;
+    min-width: 0;
+  }
+
+  .section-{{ section.id }} .lfqb-gallery__quote-body {
+    min-width: 0;
   }
 
   .section-{{ section.id }} .lfqb-gallery__quote-image {
@@ -564,14 +613,27 @@
     display: flex;
     gap: 8px;
     margin-top: 12px;
+    width: 100%;
+    min-width: 0;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
     padding-bottom: 4px;
   }
 
+  .section-{{ section.id }} .lfqb-gallery__thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
   .section-{{ section.id }} .lfqb-gallery__thumb {
-    flex: 0 0 64px;
-    width: 64px;
-    height: 64px;
+    flex: 0 0 calc((100% - 32px) / 5);
+    min-width: 48px;
+    max-width: 80px;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    scroll-snap-align: start;
     padding: 0;
     border: 2px solid transparent;
     border-radius: 8px;
@@ -602,6 +664,9 @@
     font-size: {{ section.settings.ingredients_button_font_size_mobile }}px;
     font-weight: 700;
     letter-spacing: 0.08em;
+    line-height: 1.3;
+    white-space: normal;
+    overflow-wrap: break-word;
     text-transform: uppercase;
     cursor: pointer;
   }
@@ -609,6 +674,7 @@
   .section-{{ section.id }} .lfqb-offer {
     display: flex;
     flex-direction: column;
+    min-width: 0;
   }
 
   .section-{{ section.id }} .lfqb-form {
@@ -823,6 +889,11 @@
     {% if block.type == 'buy_buttons' %}
       .section-{{ section.id }} .lfqb-block-{{ block.id }} .lfqb-atc {
         width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        white-space: normal;
+        line-height: 1.3;
+        overflow-wrap: break-word;
         border: none !important;
         border-radius: {{ block.settings.button_border_radius }}px !important;
         padding: {{ block.settings.button_padding_vertical }}px {{ block.settings.button_padding_horizontal }}px !important;
@@ -1013,6 +1084,17 @@
     align-items: flex-start;
   }
 
+  .section-{{ section.id }} .lfqb-feature__copy {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  @media screen and (max-width: 359px) {
+    .section-{{ section.id }} .lfqb-feature__features ul {
+      grid-template-columns: minmax(0, 1fr) !important;
+    }
+  }
+
   .section-{{ section.id }} .lfqb-feature__toggle-wrap {
     position: relative;
     flex-shrink: 0;
@@ -1026,8 +1108,10 @@
   }
 
   .section-{{ section.id }} .lfqb-ingredients-modal {
-    width: min(1100px, calc(100vw - 32px));
-    max-height: calc(100vh - 32px);
+    width: min(1100px, calc(100vw - 16px));
+    max-width: calc(100vw - 16px);
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
     border: none;
     border-radius: 16px;
     padding: 0;
@@ -1042,7 +1126,8 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    max-height: calc(100vh - 32px);
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
     background: #fff;
   }
 
@@ -1063,10 +1148,15 @@
 
   .section-{{ section.id }} .lfqb-ingredients-modal__layout {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0;
     overflow: auto;
-    padding: 24px;
+    padding: clamp(16px, 4vw, 24px);
+  }
+
+  .section-{{ section.id }} .lfqb-ingredients-modal img {
+    max-width: 100%;
+    height: auto;
   }
 
   .section-{{ section.id }} .lfqb-ingredients-modal__footer {
@@ -1092,7 +1182,7 @@
     }
 
     .section-{{ section.id }} .lfqb-ingredients-modal__layout {
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
       max-height: 70vh;
     }
 
