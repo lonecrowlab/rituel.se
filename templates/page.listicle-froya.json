@@ -2457,7 +2457,91 @@
         "image_fm8cpt": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/raw_reviews-m.webp",
+            "image": "shopify://shop_images/testminoial-1.jpg",
+            "image_alt": "",
+            "link": "",
+            "image_width_mode": "custom",
+            "image_width_desktop": 600,
+            "image_width_mobile": 160,
+            "image_radius": 0,
+            "image_fit": "contain",
+            "alignment": "center",
+            "width_desktop": "full",
+            "width_mobile": "full",
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0,
+            "margin_top_desktop": 0,
+            "margin_bottom_desktop": 0,
+            "visibility": "all"
+          }
+        },
+        "image_cf77gb": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/testminoial-2.jpg",
+            "image_alt": "",
+            "link": "",
+            "image_width_mode": "custom",
+            "image_width_desktop": 600,
+            "image_width_mobile": 160,
+            "image_radius": 0,
+            "image_fit": "contain",
+            "alignment": "center",
+            "width_desktop": "full",
+            "width_mobile": "full",
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0,
+            "margin_top_desktop": 0,
+            "margin_bottom_desktop": 0,
+            "visibility": "all"
+          }
+        },
+        "image_WxHJTD": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/testminoial-3.jpg",
+            "image_alt": "",
+            "link": "",
+            "image_width_mode": "custom",
+            "image_width_desktop": 600,
+            "image_width_mobile": 160,
+            "image_radius": 0,
+            "image_fit": "contain",
+            "alignment": "center",
+            "width_desktop": "full",
+            "width_mobile": "full",
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0,
+            "margin_top_desktop": 0,
+            "margin_bottom_desktop": 0,
+            "visibility": "all"
+          }
+        },
+        "image_dRzhrN": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/testminoial-4_49b292ae-9a93-42b8-8acf-2ecb11181f9a.jpg",
+            "image_alt": "",
+            "link": "",
+            "image_width_mode": "custom",
+            "image_width_desktop": 600,
+            "image_width_mobile": 160,
+            "image_radius": 0,
+            "image_fit": "contain",
+            "alignment": "center",
+            "width_desktop": "full",
+            "width_mobile": "full",
+            "margin_top_mobile": 32,
+            "margin_bottom_mobile": 0,
+            "margin_top_desktop": 0,
+            "margin_bottom_desktop": 0,
+            "visibility": "all"
+          }
+        },
+        "image_UziNqf": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/testimonials-5_be0632b1-4176-4b58-bb31-317aa9b22e90.jpg",
             "image_alt": "",
             "link": "",
             "image_width_mode": "custom",
@@ -2479,7 +2563,11 @@
       "block_order": [
         "text_6tURzT",
         "heading_tGG6J3",
-        "image_fm8cpt"
+        "image_fm8cpt",
+        "image_cf77gb",
+        "image_WxHJTD",
+        "image_dRzhrN",
+        "image_UziNqf"
       ],
       "name": "Custom section",
       "settings": {
