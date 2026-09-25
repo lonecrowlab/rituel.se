@@ -32,6 +32,7 @@
         },
         "announcement_7wVMdc": {
           "type": "announcement",
+          "disabled": true,
           "settings": {
             "text": "<strong>Fri försäkrad</strong> <strong>frakt</strong> över 450 kr",
             "text_alignment": "center",
@@ -71,7 +72,7 @@
         "scroll_speed": 40,
         "infinite_scroll_spacing_desktop": 40,
         "infinite_scroll_spacing_mobile": 24,
-        "slider_mobile": true,
+        "slider_mobile": false,
         "slider_desktop": false,
         "type": "loop",
         "autoplay": true,
