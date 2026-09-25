@@ -477,7 +477,7 @@
       },
       "alternative_payment_method_banner": {
         "or": "Svensk kundtjänst svarar inom 24 timmar",
-        "express_checkout": "Betala på 30 sekunder. Ingen adress att fylla i"
+        "express_checkout": "Betala på 30 sekunder. Ingen adress att fylla i."
       },
       "local_pickup": {
         "selected_pickup_option_no_longer_available": {
