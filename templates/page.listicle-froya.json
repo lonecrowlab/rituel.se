@@ -522,7 +522,7 @@
       ],
       "custom_css": [
         ".lfb-heading {font-family: \"sub-title\";}",
-        "p.lfb-brand__caption {font-family: quote-font; line-height: 1 !important; font-weight: 600;}"
+        "p.lfb-brand__caption {font-family: quote-font; line-height: 1.2 !important; font-weight: 600;}"
       ],
       "settings": {
         "heading": "\"RITÚEL ÄR UTAN TVEKAN NR 1 INOM HUDVÅRD FÖR MOGEN HUD\"",
