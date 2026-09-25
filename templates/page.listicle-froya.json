@@ -951,7 +951,7 @@
           "type": "step",
           "settings": {
             "step_number": "",
-            "image": "shopify://shop_images/Erases_Lines_Wrinkles.webp",
+            "image": "shopify://shop_images/Erases_Lines_Wrinkles_430x_CC667C.png",
             "title": "Utplånar linjer och rynkor",
             "text": "<p>Arnica, granatäpple och nypon, kliniskt bevisat 92 % effektivt för att minska rynkdjup.</p>"
           }
@@ -960,7 +960,7 @@
           "type": "step",
           "settings": {
             "step_number": "",
-            "image": "shopify://shop_images/Rebuilds_Collagen_Elastin.webp",
+            "image": "shopify://shop_images/Rebuilds_Collagen_Elastin_430x_CC667C.png",
             "title": "Bygger upp kollagen och elastin",
             "text": "<p>Naturligt E-vitamin från solrosor tar bort fria radikaler som bromsar kollagenproduktionen och gör huden synligt fastare.<br/><br/></p>"
           }
@@ -969,7 +969,7 @@
           "type": "step",
           "settings": {
             "step_number": "",
-            "image": "shopify://shop_images/Restores_The_Skin_Barrier_Locks_In_Moisture.webp",
+            "image": "shopify://shop_images/Restores_The_Skin_Barrier_Locks_In_Moisture_430x_CC667C.png",
             "title": "Återställer hudbarriären och låser in fukt",
             "text": "<p>Bivax och tistel läker och förseglar hudbarriären. 92 % hade mer återfuktad hud efter bara 2 veckor.</p>"
           }
@@ -987,7 +987,7 @@
           "type": "step",
           "settings": {
             "step_number": "5",
-            "image": "shopify://shop_images/Activates_Natural_Glow.webp",
+            "image": "shopify://shop_images/Activates_Natural_Glow_430x_CC667C.png",
             "title": "Aktiverar naturlig lyster",
             "text": "<p>Havtorn ger 17 gånger mer C-vitamin än apelsiner och har visat sig aktivera stamceller och ge nytt liv åt matt hud.</p>"
           }
