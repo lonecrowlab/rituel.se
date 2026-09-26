@@ -2040,7 +2040,13 @@
             "reference": "Referanse",
             "amount": "Beløp",
             "find_nearest_atm": "Finn nærmeste minibank",
-            "buyer_action_info": "Din betaling på %{amount_due} forfaller."
+            "buyer_action_info": "Din betaling på %{amount_due} forfaller.",
+            "label": "Multibanco",
+            "pay": "Betal %{amount}",
+            "expiry_date_time": "%{date} kl. %{time}",
+            "expires_at": "Går ut %{date}",
+            "expired": "Gikk ut %{date}",
+            "expired_title": "Betalingsreferansen har utløpt"
           },
           "oxxo": {
             "pay": "Betal %{amount}",
@@ -2069,6 +2075,18 @@
             "days_left": {
               "one": "%{count} dag",
               "other": "%{count} dager"
+            }
+          },
+          "apple_wallet": {
+            "badge_alt": "Legg til i Apple Wallet",
+            "pass": {
+              "description": "%{shop_name} betalingsgiro",
+              "logo_text": "Betalingsgiro",
+              "store_label": "Butikk",
+              "expiry_date_label": "Utløpsdato",
+              "payment_due_label": "Å betale",
+              "reference_number_label": "Referansenummer",
+              "ordered_on_label": "Bestillingsdato"
             }
           }
         },
@@ -2253,9 +2271,20 @@
                   "5": "Ta med kupongen til kassen innen 30 minutter og betal kontant"
                 },
                 "ministop": {
-                  "1": "Velg 各種番号をお持ちの方 (\"Jeg har et nummer\") på Loppi-terminalen"
+                  "1": "Velg 各種番号をお持ちの方 (\"Jeg har et nummer\") på Loppi-terminalen",
+                  "2": "Skriv inn betalingskoden din og trykk på 次へ («Neste»)",
+                  "3": "Angi bekreftelseskoden din og trykk på Neste",
+                  "4": "Kontroller opplysningene og trykk på はい («Ja») for å skrive ut kupongen din",
+                  "5": "Ta med kupongen til kassen innen 30 minutter og betal kontant"
                 },
-                "1": "Ta med betalingskoden og bekreftelseskoden til butikkens terminal eller kasse, og betal kontant før verdikupongen utløper."
+                "1": "Ta med betalingskoden og bekreftelseskoden til butikkens terminal eller kasse, og betal kontant før verdikupongen utløper.",
+                "seicomart": {
+                  "1": "Velg インターネット支払い (”Internettbetaling”) i kassen",
+                  "2": "Oppgi betalingskoden din på kundeskjermen og velg 登録 («Oppgi»)",
+                  "3": "Angi bekreftelseskoden din og velg Registrer",
+                  "4": "Kontroller opplysningene og velg OK",
+                  "5": "Betal kontant"
+                }
               },
               "pay": "Betal %{amount}",
               "choose_outlet": "Velg en Konbini for å se kodene dine og hvordan du betaler",
@@ -2265,11 +2294,30 @@
               "code_copied": "Kopiert",
               "keep_receipt": "Lagre kvitteringen din som betalingsbevis",
               "expired_title": "Betalingskoden har utløpt",
-              "expired": "Gikk ut %{date}"
+              "expired": "Gikk ut %{date}",
+              "view_instructions": "Vis betalingsinstruksjoner",
+              "view_instructions_accessibility_label": "Vis betalingsinstruksjoner (åpnes i en ny fane)"
+            }
+          },
+          "multibanco": {
+            "voucher": {
+              "label": "Multibanco",
+              "codes": {
+                "entity": "Entitet",
+                "reference_number": "Referanse"
+              },
+              "steps": {
+                "pay_at_atm_or_online": "Betal i en Multibanco-uttaksautomat eller via nettbanken din med opplysningene nedenfor."
+              }
             }
           }
         },
-        "konbini_label": "Nærbutikk"
+        "konbini_label": "Nærbutikk",
+        "purchase_options_subscription_confirmation_title": "Bekreft abonnementet",
+        "purchase_options_subscription_agreement_label_wallets": "Handlevognen din inneholder et abonnement som fornyes automatisk. Ved å bruke hurtigkassen %{consent_text} %{cancellation_instructions}",
+        "paynow_label": "Betal nå",
+        "paypay_label": "PayPay",
+        "scalapay_label": "Scalapay"
       },
       "payment_errors": {
         "generic_error": "Det oppstod en feil under behandlingen av betalingen. Prøv igjen eller bruk en annen betalingsmetode.",
@@ -2339,7 +2387,10 @@
         "missing_cvc": "Angi en sikkerhetskode",
         "custom_redeemable_no_longer_available": "Dette tilbudet er ikke lenger tilgjengelig.",
         "local_payment_method_amount_out_of_range": "%{payment_method} kan kun brukes til betalinger mellom %{minimum} og %{maximum}.",
-        "local_payment_method_unavailable": "%{payment_method} er ikke tilgjengelig"
+        "local_payment_method_unavailable": "%{payment_method} er ikke tilgjengelig",
+        "duplicate_autopay_card": "Dette kortet er knyttet til kommende avbetalinger. Betal på en annen måte eller {{update_payment_details_link}}",
+        "duplicate_autopay_card_link": "Oppdater betalingsopplysninger",
+        "duplicate_autopay_card_without_link": "Dette kortet er knyttet til kommende avbetalinger. Betal på en annen måte."
       },
       "payment_challenge_modal": {
         "instructions": "Fullfør kjøpet med din {{paymentMethod}}-kode",
@@ -2349,7 +2400,9 @@
         "qr_code": {
           "instructions": "Fullfør kjøpet med din {{paymentMethod}}-kode",
           "wechat_instructions": "Skann denne QR-koden med WeChat-appen på telefonen din for å fullføre kjøpet ditt i kinesiske yuan.",
-          "wechat_instructions_mobile": "Skann denne QR-koden med WeChat-appen på en annen enhet for å fullføre kjøpet ditt i kinesiske yuan."
+          "wechat_instructions_mobile": "Skann denne QR-koden med WeChat-appen på en annen enhet for å fullføre kjøpet ditt i kinesiske yuan.",
+          "paynow_instructions": "Skann denne QR-koden med en tilkoblet bank- eller betalingsapp. Ikke betal ved å angi UEN manuelt. Manuelle overføringer kan ikke knyttes til bestillingen din og kan ikke refunderes. Betalingsmottakeren vises som Stripe.",
+          "paynow_instructions_mobile": "Lagre eller ta et skjermbilde av denne QR-koden, åpne deretter en tilkoblet bank- eller betalingsapp og skann den fra bildene dine. Ikke betal ved å angi UEN manuelt. Manuelle overføringer kan ikke knyttes til bestillingen din og kan ikke refunderes. Betalingsmottakeren vises som Stripe."
         },
         "external": {
           "instructions": "Bekreft betalingen i appen for å fullføre kjøpet"
