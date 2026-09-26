@@ -598,7 +598,7 @@
         "title_font_weight": "600",
         "title_margin_bottom": 2,
         "use_custom_product_rating": true,
-        "show_product_rating_count": true,
+        "show_product_rating_count": false,
         "product_rating_count_text": "[rating.ave]/5",
         "show_rating_stars": false,
         "product_ratings": "1,2,3,4",
