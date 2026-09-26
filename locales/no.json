@@ -3089,6 +3089,22 @@
             "pickup_in_store": "%{items} vil bli hentet i butikk.",
             "remove_items": "%{items} har blitt fjernet fra handlekurven."
           }
+        },
+        "pickup_and_ship": "Henting og levering",
+        "ship_all_items": "Leverer alle artiklene",
+        "separate_pickup_email_notice": "Du får en separat e-postmelding når bestillingen din er klar for henting.",
+        "pickup_items_count": {
+          "one": "Hent %{count} vare",
+          "other": "Hent %{count} artikler"
+        },
+        "ship_items_count": {
+          "one": "Lever %{count} vareolyse",
+          "other": "Lever %{count} artikler"
+        },
+        "all_items": "Alle artikler",
+        "items_count": {
+          "one": "%{count} artikkel",
+          "other": "%{count} artikler"
         }
       },
       "subscriptions": {
@@ -3693,7 +3709,9 @@
             "instructions": "{{walletName}} er for øyeblikket ikke tilgjengelig for bestillingen. Velg en annen betalingsmetode for å fortsette kjøpet."
           },
           "processing_error_checkout_as_guest": "Det oppstod en feil under behandlingen av betalingen. Prøv igjen eller {{checkout_as_guest_link}}.",
-          "subscription_review_required": "Bestillingen din inneholder et abonnement. Du må gjennomgå vilkårene nedenfor før du fullfører bestillingen."
+          "subscription_review_required": "Bestillingen din inneholder et abonnement. Du må gjennomgå vilkårene nedenfor før du fullfører bestillingen.",
+          "sdk_load_failure": "Det oppstod et problem med å laste inn {{walletName}}. {{refresh_link}} for å prøve igjen, eller bruk en annen betalingsmåte.",
+          "refresh_link": "Oppdater"
         },
         "return_to_store": "Tilbake til butikk",
         "redirect_hint": "Du vil bli bedt om å logge inn med {{walletName}}.",
@@ -3711,8 +3729,10 @@
         "place_order": "Bestill",
         "recovery_notice": "Det er et problem med bestillingsinformasjonen din. Oppdater informasjonen din for å fullføre betalingen.",
         "deceleration": {
-          "one_more_step": "Ett steg til..."
-        }
+          "one_more_step": "Ett steg til...",
+          "one_more_step_to_complete_order": "Ett steg gjenstår for å fullføre bestillingen"
+        },
+        "continue_with": "Fortsett med {{walletName}}"
       },
       "vaulted": {
         "change_button": "Endre",
@@ -3722,6 +3742,16 @@
       "ucp": {
         "standard_errors": {
           "item_unavailable": "Artikkelen kan ikke kjøpes"
+        },
+        "totals": {
+          "subtotal": "Delsum",
+          "items_discount": "Vare rabatter",
+          "discount": "Orderrabatter",
+          "fulfillment": "Frakt",
+          "tax": "Skatt",
+          "duty": "Tull",
+          "fee": "Avgift",
+          "total": "Totalt"
         }
       },
       "shop_wallet": {
@@ -4160,6 +4190,11 @@
       "buyer_consent_product": "Denne artikkelen er et tilbakevendende kjøp eller et kjøp med utsatt betaling. Ved å fortsette godtar jeg %{cancellationPolicyLink}. Jeg godtar også at dere belaster min betalingsmetode på de datoene, med de prisene og den frekvensen som er angitt på denne siden, inntil min bestilling er levert eller til jeg avbryter, hvis dette er tillatt.",
       "buyer_consent_cart": "En eller flere artikler i handlekurven din er et tilbakevendende kjøp eller et kjøp med utsatt betaling. Ved å fortsette godtar jeg %{cancellationPolicyLink}. Jeg godtar også at dere belaster betalingsmetoden min på de datoene, med de prisene og den frekvensen som er angitt på denne siden, inntil bestillingen min er levert eller til jeg avbryter, hvis dette er tillatt.",
       "cancellation_policy": "avbestillingspolicyen"
+    },
+    "managed_markets": {
+      "buyer_consent": "Ved å legge inn bestillingen samtykker du til å kjøpe fra Global-e som ansvarlig selger, i henhold til Global-e sine %{termsAndConditionsLink} og %{privacyPolicyLink}, samt til å dele opplysningene dine med %{shopName}.",
+      "terms_and_conditions": "Regler og vilkår",
+      "privacy_policy": "Integritetspolicy"
     }
   },
   "sections": {
