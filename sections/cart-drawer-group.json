@@ -251,7 +251,7 @@
             "slider_type": "slide",
             "slider_autoplay": false,
             "slider_autoplay_speed": 5,
-            "slider_show_pagination": true,
+            "slider_show_pagination": false,
             "slider_pagination_color": "#cccccc",
             "slider_pagination_active_color": "#000000",
             "slider_card_width_percent": 75,
