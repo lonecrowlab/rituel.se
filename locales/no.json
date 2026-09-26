@@ -773,7 +773,11 @@
         "address_ward_too_long": "Navnet på det administrative området er for langt (maks. {{count}} tegn)",
         "address_ward_contains_emojis": "Administrativt område kan ikke inneholde emojier",
         "address_ward_contains_html_tags": "Det administrative området kan ikke inneholde HTML-tagger.",
-        "address_ward_contains_mathematical_symbols": "Administrativt område kan ikke inneholde matematiske symboler"
+        "address_ward_contains_mathematical_symbols": "Administrativt område kan ikke inneholde matematiske symboler",
+        "split_quantity_per_delivery_line_not_allowed": "Minst én handelsvarelinje refereres til av flere leveranselinjer.",
+        "split_cart_tax_engine_not_supported": "Alle varer må bruke den samme leveringsmetoden for skatteberegningsmotoren som brukes på butikkens lokasjon.",
+        "split_cart_not_allowed": "Ugyldig økt eller funksjonen er ikke aktivert for den angitte butikken.",
+        "gift_card_not_found": "Dette gavekortet ble ikke funnet"
       },
       "failed_payment": {
         "page_title": "Betalingen kunne ikke gjennomføres",
@@ -986,7 +990,8 @@
             "title_empty": "Variabelnavnet er tomt.",
             "mixed_currencies": "Kassen inneholder poster med forskjellige valutaer.",
             "product_not_published_in_buyer_location": "Produktet er ikke tilgjengelig på kjøperens nåværende sted.",
-            "combined_listing_parent_not_purchasable": "Overordnede produkter i en kombinert liste kan ikke kjøpes direkte."
+            "combined_listing_parent_not_purchasable": "Overordnede produkter i en kombinert liste kan ikke kjøpes direkte.",
+            "fixed_selling_plans_not_supported_for_draft_orders": "Dette kjøpsalternativet støttes ikke for ordreutkast."
           },
           "discount": {
             "discounts_not_allowed_for_b2b": "Rabatter er ikke tillatt i B2B-butikker.",
@@ -1756,7 +1761,10 @@
         "product_disclosures": {
           "title": "Produktopplysninger"
         },
-        "discount_title_with_position": "Rabatt %{position}"
+        "discount_title_with_position": "Rabatt %{position}",
+        "item_discounts_label": "Vare rabatter",
+        "tax_label": "Skatt",
+        "duty_label": "Tull"
       },
       "payment": {
         "amazon_payments_label": "Amazon Pay",
@@ -2215,8 +2223,53 @@
               },
               "barcode_alt": "Strekkoden til OXXO-verdibeviset for referansenummeret %{reference_number}"
             }
+          },
+          "konbini": {
+            "voucher": {
+              "label": "Nærbutikk",
+              "outlets": {
+                "familymart": "FamilyMart",
+                "lawson": "Lawson",
+                "ministop": "Ministop",
+                "seicomart": "Seicomart"
+              },
+              "codes": {
+                "reference_number": "Betalingskode",
+                "confirmation_number": "Bekreftelseskode"
+              },
+              "steps": {
+                "familymart": {
+                  "1": "Velg 代金支払い／チャージ («Betaling/avgift») på multifunksjonsmaskinen",
+                  "2": "Angi betalingskoden din og trykk på OK",
+                  "3": "Angi bekreftelseskoden din og trykk på OK",
+                  "4": "Kontroller opplysningene og trykk på 確認 («Bekreft») for å skrive ut kupongen din",
+                  "5": "Ta med kupongen til kassen innen 30 minutter og betal kontant eller med FamiPay"
+                },
+                "lawson": {
+                  "1": "Velg 各種番号をお持ちの方 (\"Jeg har et nummer\") på Loppi-terminalen",
+                  "2": "Skriv inn betalingskoden din og trykk på 次へ («Neste»)",
+                  "3": "Angi bekreftelseskoden din og trykk på Neste",
+                  "4": "Kontroller opplysningene og trykk på はい («Ja») for å skrive ut kupongen din",
+                  "5": "Ta med kupongen til kassen innen 30 minutter og betal kontant"
+                },
+                "ministop": {
+                  "1": "Velg 各種番号をお持ちの方 (\"Jeg har et nummer\") på Loppi-terminalen"
+                },
+                "1": "Ta med betalingskoden og bekreftelseskoden til butikkens terminal eller kasse, og betal kontant før verdikupongen utløper."
+              },
+              "pay": "Betal %{amount}",
+              "choose_outlet": "Velg en Konbini for å se kodene dine og hvordan du betaler",
+              "expires_at": "Utløper %{date}",
+              "expiry_date_time": "%{date} kl. %{time} JST",
+              "copy_code": "Kopier %{label}",
+              "code_copied": "Kopiert",
+              "keep_receipt": "Lagre kvitteringen din som betalingsbevis",
+              "expired_title": "Betalingskoden har utløpt",
+              "expired": "Gikk ut %{date}"
+            }
           }
-        }
+        },
+        "konbini_label": "Nærbutikk"
       },
       "payment_errors": {
         "generic_error": "Det oppstod en feil under behandlingen av betalingen. Prøv igjen eller bruk en annen betalingsmetode.",
@@ -3668,6 +3721,11 @@
           "message": "Gå tilbake til Hatch og prøv å åpne Shop Pay igjen."
         },
         "ready_status": "Shop Pay-lommeboken din er klar. Velg en betalingsmåte."
+      },
+      "hsa_qualification_errors": {
+        "ineligible": "Denne bestillingen kvalifiserer ikke for HSA/FSA.",
+        "processing_error": "Det oppstod et problem under behandlingen av HSA/FSA-forespørselen din. Prøv igjen eller betal uten HSA/FSA.",
+        "unsupported_checkout": "HSA/FSA er ikke tilgjengelig for denne bestillingen."
       }
     },
     "attributes": {
