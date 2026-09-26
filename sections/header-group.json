@@ -73,7 +73,7 @@
         "infinite_scroll_spacing_mobile": 24,
         "slider_mobile": true,
         "slider_desktop": false,
-        "type": "loop",
+        "type": "slide",
         "autoplay": false,
         "autoplay_speed": 4.5,
         "hidden_products": "munn-rynker",
