@@ -254,7 +254,7 @@
             "slider_show_pagination": false,
             "slider_pagination_color": "#cccccc",
             "slider_pagination_active_color": "#000000",
-            "slider_card_width_percent": 85,
+            "slider_card_width_percent": 75,
             "slider_gap": 10,
             "scrollbar_height": 8,
             "scrollbar_track_color": "#0000001a",
