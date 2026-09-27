@@ -443,9 +443,9 @@
         "image_KNGghG": {
           "type": "image",
           "settings": {
-            "image_desktop": "shopify://shop_images/rituel_product_photos-16.png",
+            "image_desktop": "shopify://shop_images/rituel_product_photos-16.webp",
             "aspect_ratio_desktop": "1 / 1",
-            "image_mobile": "shopify://shop_images/rituel_product_photos-16.png",
+            "image_mobile": "shopify://shop_images/rituel_product_photos-16.webp",
             "aspect_ratio_mobile": "1 / 1",
             "border_radius": 0,
             "max_width": 100,
@@ -531,9 +531,9 @@
         "image_eEdedU": {
           "type": "image",
           "settings": {
-            "image_desktop": "shopify://shop_images/Rituel_Product_photo-71.png",
+            "image_desktop": "shopify://shop_images/Rituel_Product_photo-71.webp",
             "aspect_ratio_desktop": "1 / 1",
-            "image_mobile": "shopify://shop_images/Rituel_Product_photo-71.png",
+            "image_mobile": "shopify://shop_images/Rituel_Product_photo-71.webp",
             "aspect_ratio_mobile": "1 / 1",
             "border_radius": 0,
             "max_width": 100,
@@ -619,9 +619,9 @@
         "image_Hzj86t": {
           "type": "image",
           "settings": {
-            "image_desktop": "shopify://shop_images/magnific_make-her-4550-years-old.-_2979885091.png",
+            "image_desktop": "shopify://shop_images/magnific_make-her-4550-years-old.-_2979885091.webp",
             "aspect_ratio_desktop": "1 / 1",
-            "image_mobile": "shopify://shop_images/magnific_make-her-4550-years-old.-_2979885091.png",
+            "image_mobile": "shopify://shop_images/magnific_make-her-4550-years-old.-_2979885091.webp",
             "aspect_ratio_mobile": "1 / 1",
             "border_radius": 0,
             "max_width": 100,
@@ -898,9 +898,9 @@
         "image_GnAfWP": {
           "type": "image",
           "settings": {
-            "image_desktop": "shopify://shop_images/magnific_using-the-attached-refere_ONs23pnynm.png",
+            "image_desktop": "shopify://shop_images/magnific_using-the-attached-refere_ONs23pnynm.webp",
             "aspect_ratio_desktop": "auto",
-            "image_mobile": "shopify://shop_images/magnific_using-the-attached-refere_ONs23pnynm.png",
+            "image_mobile": "shopify://shop_images/magnific_using-the-attached-refere_ONs23pnynm.webp",
             "aspect_ratio_mobile": "auto",
             "border_radius": 0,
             "max_width": 100,
