@@ -343,7 +343,7 @@
           }
         },
         "rapi_rapi_bundle_KmgXWT": {
-          "type": "shopify://apps/rapi-bundle/blocks/rapi-bundle/99617c17-a32b-4e70-a883-7a155610d032",
+          "type": "shopify://apps/rapid-bundle/blocks/rapi-bundle/99617c17-a32b-4e70-a883-7a155610d032",
           "settings": {
             "product": "{{product}}"
           }
@@ -654,12 +654,20 @@
             "backdrop_blur": 0,
             "function": "add_to_cart",
             "button_label": "Lägg I Kundvagn",
+            "button_note": "",
+            "button_note_color": "",
+            "button_note_font_size_desktop": 12,
+            "button_note_font_size_mobile": 11,
+            "button_note_font_weight": "400",
+            "button_note_margin_top": 2,
             "enable_custom_btn_color": true,
             "custom_btn_color": "#0f0f0f",
             "enable_button_gradient": false,
             "button_gradient": "linear-gradient(180deg, rgba(255, 228, 49, 1), rgba(249, 32, 32, 1) 100%)",
             "button_padding_top_bottom": 18,
             "button_padding_left_right": 17,
+            "button_padding_top_bottom_desktop": 14,
+            "button_padding_left_right_desktop": 24,
             "button_border_width": 1,
             "button_border_color": "#000000",
             "button_border_radius": 50,
@@ -667,6 +675,7 @@
             "button_font_size_desktop": 15,
             "button_font_size_mobile": 14,
             "button_font_weight": "600",
+            "title_label": "",
             "desktop_show_title": true,
             "mobile_show_title": false,
             "title_color": "#000000",
@@ -1919,6 +1928,30 @@
             "icon_material_filled": false,
             "icon_svg": ""
           }
+        },
+        "faq_item_Xt9hMk": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Fullständig ingredienslista",
+            "answer": "<p>Aqua, Butylene Glycol, Dipropylene Glycol, Niacinamide, Xylitol, 1,2-Hexanediol, Glycereth-26, Ectoin, Carbomer, C12-14 Alketh-12, Tromethamine, Ethylhexylglycerin, Theobroma Cacao Seed Extract, Dextrin, Adenosine, Methyl Dipropionamide, Disodium EDTA, Cyanocobalamin, Hydrogenated Phosphatidylcholine, sh-Oligopeptide-1, Glycerin, Rosa Canina Fruit Oil, Nicotinamide Adenine Dinucleotide, Xylitylglucoside, Anhydroxylitol, Sorbitan Laurate, Lecithin, Caprylyl Glycol, Polyglyceryl-10 Laurate, Hydroxyethylcellulose, Acetyl Glutamine, Acetyl Dipeptide-1 Cetyl Ester, Hydrogenated Lecithin, Bacillus/Soybean Ferment Extract, Vaccinium Myrtillus Fruit Extract, Vaccinium Macrocarpon Fruit Extract, Vaccinium Angustifolium Fruit Extract, Vaccinium Myrtillus Fruit Extract, Vaccinium Vitis-Idaea Fruit Extract, Vaccinium Angustifolium Fruit Extract, Vaccinium Macrocarpon Fruit Extract, Sambucus Nigra Fruit Extract, Rubus Idaeus Fruit Extract, Rubus Fruticosus Fruit Extract, Pyrus Communis Fruit Extract, Punica Granatum Fruit Extract, Prunus Persica Fruit Extract, Carica Papaya Fruit Extract, Pinus Palustris Leaf Extract, Oenothera Biennis Flower Extract, Collagen Extract, Palmitoyl Tripeptide-5, Hibiscus Sabdariffa Flower Extract, Acetyl Hexapeptide-1, Acetyl Octapeptide-3, Sodium Hyaluronate, Folic Acid, Ficus Carica Fruit Extract, Glutathione, Copper Tripeptide-1, Oligopeptide-3, Oligopeptide-2, Oligopeptide-1, Hexapeptide-11</p>",
+            "custom_html": "",
+            "open_by_default": false,
+            "badge_text": "",
+            "badge_override_section": false,
+            "badge_bg_color": "#000000",
+            "badge_text_color": "#ffffff",
+            "badge_font_size": 12,
+            "badge_font_weight": "600",
+            "badge_border_color": "#000000",
+            "badge_border_width": 0,
+            "badge_border_radius": 4,
+            "badge_padding_vertical": 4,
+            "badge_padding_horizontal": 12,
+            "badge_margin_bottom": 8,
+            "icon_material": "",
+            "icon_material_filled": false,
+            "icon_svg": ""
+          }
         }
       },
       "block_order": [
@@ -1928,7 +1961,8 @@
         "faq_item_nEFhDN",
         "faq_item_mhhBGd",
         "faq_item_WWkNjm",
-        "faq_item_cG3QjL"
+        "faq_item_cG3QjL",
+        "faq_item_Xt9hMk"
       ],
       "name": "Accordion",
       "settings": {

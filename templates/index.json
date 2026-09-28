@@ -366,7 +366,7 @@
         "desktop_content_alignment": "left",
         "mobile_content_alignment": "center",
         "hero_image": "shopify://shop_images/magnific_dont-change-anything-exce_2987866711.png",
-        "hero_image_mobile": "shopify://shop_images/Untitled_design-4.png",
+        "hero_image_mobile": "shopify://shop_images/Untitled_design-4-2-2.png",
         "image_position": "left",
         "fit_image_to_height": false,
         "overlay_content_desktop": false,
@@ -598,7 +598,7 @@
         "title_font_weight": "600",
         "title_margin_bottom": 2,
         "use_custom_product_rating": true,
-        "show_product_rating_count": true,
+        "show_product_rating_count": false,
         "product_rating_count_text": "[rating.ave]/5",
         "show_rating_stars": false,
         "product_ratings": "1,2,3,4",
@@ -1568,9 +1568,9 @@
         "layout_gap": 40,
         "show_image": true,
         "media_type": "video",
-        "video": "shopify://files/videos/video.mp4",
+        "video": "shopify://files/videos/video-2.mp4",
         "mobile_media_type": "video",
-        "video_mobile": "shopify://files/videos/video.mp4",
+        "video_mobile": "shopify://files/videos/video-2.mp4",
         "image_width": 45,
         "media_height_desktop": 496,
         "media_height_mobile": 320,
@@ -1738,10 +1738,10 @@
           "type": "media",
           "settings": {
             "media_type": "image",
-            "image": "shopify://shop_images/HEYOZ_11.png",
+            "image": "shopify://shop_images/HEYOZ_11-2.png",
             "video": "shopify://files/videos/video.mp4",
             "mobile_media_type": "image",
-            "image_mobile": "shopify://shop_images/HEYOZ_11.png",
+            "image_mobile": "shopify://shop_images/HEYOZ_11-2.png",
             "video_mobile": "shopify://files/videos/video.mp4",
             "media_border_radius": 12,
             "media_height_desktop": 496,
@@ -2101,25 +2101,25 @@
         "video_3CWjge": {
           "type": "video",
           "settings": {
-            "video": "shopify://files/videos/Sequence 01_2.mp4"
+            "video": "shopify://files/videos/Rituel ads-2.mp4"
           }
         },
         "video_qVV9pf": {
           "type": "video",
           "settings": {
-            "video": "shopify://files/videos/HOME PAGE VIDS_3.mp4"
+            "video": "shopify://files/videos/HOME PAGE VIDS_3-2.mp4"
           }
         },
         "video_wedX3h": {
           "type": "video",
           "settings": {
-            "video": "shopify://files/videos/HOME PAGE VIDS_2.mp4"
+            "video": "shopify://files/videos/HOME PAGE VIDS_2-2.mp4"
           }
         },
         "video_PcNEkW": {
           "type": "video",
           "settings": {
-            "video": "shopify://files/videos/HOME PAGE VIDS.mp4"
+            "video": "shopify://files/videos/HOME PAGE VIDS-2.mp4"
           }
         }
       },
@@ -2637,7 +2637,7 @@
         "section_background_gradient": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(245, 245, 245, 1) 100%)",
         "section_padding_top": 0,
         "section_padding_bottom": 0,
-        "image_mobile": "shopify://shop_images/Untitled_design-2.png",
+        "image_mobile": "shopify://shop_images/Untitled_design-2-2.png",
         "full_width": true,
         "image_ratio": "square",
         "inherit_image_height": true,

@@ -377,7 +377,7 @@
           }
         },
         "rapi_rapi_bundle_KmgXWT": {
-          "type": "shopify://apps/rapi-bundle/blocks/rapi-bundle/99617c17-a32b-4e70-a883-7a155610d032",
+          "type": "shopify://apps/rapid-bundle/blocks/rapi-bundle/99617c17-a32b-4e70-a883-7a155610d032",
           "settings": {
             "product": "{{product}}"
           }
@@ -519,6 +519,13 @@
             "separator_length": 10,
             "margin_top": 0,
             "margin_bottom": 8
+          }
+        },
+        "custom_liquid_kj8teT": {
+          "type": "custom_liquid",
+          "name": "Payment Methods",
+          "settings": {
+            "custom_liquid": "<div class=\"payment-icons\" style=\"margin-left:auto;margin-right:auto;text-align:center;\">\n  {{ 'klarna' | payment_type_svg_tag }}\n  {{ 'swish' | payment_type_svg_tag }}\n  {{ 'apple_pay' | payment_type_svg_tag }}\n  {{ 'visa' | payment_type_svg_tag }}\n  {{ 'master' | payment_type_svg_tag }}\n  {{ 'american_express' | payment_type_svg_tag }}\n  {{ 'shopify_pay' | payment_type_svg_tag }}\n</div>"
           }
         },
         "icon_text_card_TptYYk": {
@@ -737,12 +744,20 @@
             "backdrop_blur": 0,
             "function": "add_to_cart",
             "button_label": "Lägg I Kundvagn",
+            "button_note": "",
+            "button_note_color": "",
+            "button_note_font_size_desktop": 12,
+            "button_note_font_size_mobile": 11,
+            "button_note_font_weight": "400",
+            "button_note_margin_top": 2,
             "enable_custom_btn_color": true,
             "custom_btn_color": "#0f0f0f",
             "enable_button_gradient": false,
             "button_gradient": "linear-gradient(180deg, rgba(255, 228, 49, 1), rgba(249, 32, 32, 1) 100%)",
             "button_padding_top_bottom": 18,
             "button_padding_left_right": 17,
+            "button_padding_top_bottom_desktop": 14,
+            "button_padding_left_right_desktop": 24,
             "button_border_width": 1,
             "button_border_color": "#000000",
             "button_border_radius": 50,
@@ -750,6 +765,7 @@
             "button_font_size_desktop": 15,
             "button_font_size_mobile": 14,
             "button_font_weight": "600",
+            "title_label": "",
             "desktop_show_title": true,
             "mobile_show_title": false,
             "title_color": "#000000",
@@ -787,13 +803,6 @@
             "mobile_show_image": false,
             "mobile_image_width": 55,
             "mobile_full_button_width": true
-          }
-        },
-        "custom_liquid_kj8teT": {
-          "type": "custom_liquid",
-          "name": "Payment Methods",
-          "settings": {
-            "custom_liquid": "<div class=\"payment-icons\" style=\"margin-left:auto;margin-right:auto;text-align:center;\">\n  {{ 'klarna' | payment_type_svg_tag }}\n  {{ 'swish' | payment_type_svg_tag }}\n  {{ 'apple_pay' | payment_type_svg_tag }}\n  {{ 'visa' | payment_type_svg_tag }}\n  {{ 'master' | payment_type_svg_tag }}\n  {{ 'american_express' | payment_type_svg_tag }}\n  {{ 'shopify_pay' | payment_type_svg_tag }}\n</div>"
           }
         }
       },
@@ -2140,10 +2149,9 @@
         },
         "faq_item_WWkNjm": {
           "type": "faq_item",
-          "disabled": true,
           "settings": {
-            "question": "När märks resultat?",
-            "answer": "<p>De flesta märker en första skillnad redan efter 7–14 dagar. Huden känns mer återfuktad, jämnare och får tillbaka sin lyster. Tydligare resultat på fina linjer och fasthet visar sig efter 3–4 veckors regelbunden användning.</p><p>För maximal effekt rekommenderar vi att applicera balmen morgon och kväll i minst 8 veckor. Eftersom PDRN och Volufiline arbetar med hudens egna förnyelseprocesser blir resultaten kumulativa. Ju längre du använder, desto tydligare blir effekten.</p>",
+            "question": "Fullständig ingredienslista",
+            "answer": "<p>Aqua, Glycerin, Niacinamide, Methylpropanediol, Propanediol, 1,2-Hexanediol, Dipropylene Glycol, Caprylic/Capric Triglyceride, Butylene Glycol, Glycereth-26, Arginine, Carbomer, Cetearyl Alcohol, Cetearyl Olivate, Ethylhexyl Palmitate, Sorbitan Olivate, Squalane, Ammonium Acryloyldimethyltaurate/VP Copolymer, Simethicone, Ethylhexylglycerin, Lithospermum Erythrorhizon Root Extract, Adenosine, Helianthus Annuus Seed Oil, Polyacrylate-13, Sodium DNA, Disodium EDTA, Polyisobutene, Glyceryl Stearate, Hydrolyzed Sclerotium Gum, Pyrus Communis Fruit Extract, Alkanna Tinctoria Root Extract, Rosa Damascena Flower Water, Iris Florentina Root Extract, Polysorbate 20, Cucumis Melo Fruit Extract, Sorbitan Isostearate, Hedera Helix Leaf/Stem Extract, Glutathione, Sodium Hyaluronate, Octyldodecanol, Salmon Egg Extract, Hydroxypropyltrimonium Hyaluronate, Tocopherol, Hydrogenated Lecithin, Ceramide NP, Cyanocobalamin, Thioctic Acid, Sodium Acetylated Hyaluronate, Hydrolyzed Collagen Extract, Hydrolyzed Hyaluronic Acid, Acetyl Hexapeptide-8, Copper Tripeptide-1, Caprylyl Glycol, Hyaluronic Acid, Palmitoyl Pentapeptide-4, Palmitoyl Hexapeptide-12, Sodium Hyaluronate Crosspolymer, Hydrolyzed Sodium Hyaluronate, Potassium Hyaluronate</p>",
             "custom_html": "",
             "open_by_default": false,
             "badge_text": "",

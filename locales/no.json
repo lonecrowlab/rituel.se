@@ -773,7 +773,11 @@
         "address_ward_too_long": "Navnet på det administrative området er for langt (maks. {{count}} tegn)",
         "address_ward_contains_emojis": "Administrativt område kan ikke inneholde emojier",
         "address_ward_contains_html_tags": "Det administrative området kan ikke inneholde HTML-tagger.",
-        "address_ward_contains_mathematical_symbols": "Administrativt område kan ikke inneholde matematiske symboler"
+        "address_ward_contains_mathematical_symbols": "Administrativt område kan ikke inneholde matematiske symboler",
+        "split_quantity_per_delivery_line_not_allowed": "Minst én handelsvarelinje refereres til av flere leveranselinjer.",
+        "split_cart_tax_engine_not_supported": "Alle varer må bruke den samme leveringsmetoden for skatteberegningsmotoren som brukes på butikkens lokasjon.",
+        "split_cart_not_allowed": "Ugyldig økt eller funksjonen er ikke aktivert for den angitte butikken.",
+        "gift_card_not_found": "Dette gavekortet ble ikke funnet"
       },
       "failed_payment": {
         "page_title": "Betalingen kunne ikke gjennomføres",
@@ -986,7 +990,8 @@
             "title_empty": "Variabelnavnet er tomt.",
             "mixed_currencies": "Kassen inneholder poster med forskjellige valutaer.",
             "product_not_published_in_buyer_location": "Produktet er ikke tilgjengelig på kjøperens nåværende sted.",
-            "combined_listing_parent_not_purchasable": "Overordnede produkter i en kombinert liste kan ikke kjøpes direkte."
+            "combined_listing_parent_not_purchasable": "Overordnede produkter i en kombinert liste kan ikke kjøpes direkte.",
+            "fixed_selling_plans_not_supported_for_draft_orders": "Dette kjøpsalternativet støttes ikke for ordreutkast."
           },
           "discount": {
             "discounts_not_allowed_for_b2b": "Rabatter er ikke tillatt i B2B-butikker.",
@@ -1756,7 +1761,10 @@
         "product_disclosures": {
           "title": "Produktopplysninger"
         },
-        "discount_title_with_position": "Rabatt %{position}"
+        "discount_title_with_position": "Rabatt %{position}",
+        "item_discounts_label": "Vare rabatter",
+        "tax_label": "Skatt",
+        "duty_label": "Tull"
       },
       "payment": {
         "amazon_payments_label": "Amazon Pay",
@@ -2032,7 +2040,13 @@
             "reference": "Referanse",
             "amount": "Beløp",
             "find_nearest_atm": "Finn nærmeste minibank",
-            "buyer_action_info": "Din betaling på %{amount_due} forfaller."
+            "buyer_action_info": "Din betaling på %{amount_due} forfaller.",
+            "label": "Multibanco",
+            "pay": "Betal %{amount}",
+            "expiry_date_time": "%{date} kl. %{time}",
+            "expires_at": "Går ut %{date}",
+            "expired": "Gikk ut %{date}",
+            "expired_title": "Betalingsreferansen har utløpt"
           },
           "oxxo": {
             "pay": "Betal %{amount}",
@@ -2061,6 +2075,18 @@
             "days_left": {
               "one": "%{count} dag",
               "other": "%{count} dager"
+            }
+          },
+          "apple_wallet": {
+            "badge_alt": "Legg til i Apple Wallet",
+            "pass": {
+              "description": "%{shop_name} betalingsgiro",
+              "logo_text": "Betalingsgiro",
+              "store_label": "Butikk",
+              "expiry_date_label": "Utløpsdato",
+              "payment_due_label": "Å betale",
+              "reference_number_label": "Referansenummer",
+              "ordered_on_label": "Bestillingsdato"
             }
           }
         },
@@ -2215,8 +2241,83 @@
               },
               "barcode_alt": "Strekkoden til OXXO-verdibeviset for referansenummeret %{reference_number}"
             }
+          },
+          "konbini": {
+            "voucher": {
+              "label": "Nærbutikk",
+              "outlets": {
+                "familymart": "FamilyMart",
+                "lawson": "Lawson",
+                "ministop": "Ministop",
+                "seicomart": "Seicomart"
+              },
+              "codes": {
+                "reference_number": "Betalingskode",
+                "confirmation_number": "Bekreftelseskode"
+              },
+              "steps": {
+                "familymart": {
+                  "1": "Velg 代金支払い／チャージ («Betaling/avgift») på multifunksjonsmaskinen",
+                  "2": "Angi betalingskoden din og trykk på OK",
+                  "3": "Angi bekreftelseskoden din og trykk på OK",
+                  "4": "Kontroller opplysningene og trykk på 確認 («Bekreft») for å skrive ut kupongen din",
+                  "5": "Ta med kupongen til kassen innen 30 minutter og betal kontant eller med FamiPay"
+                },
+                "lawson": {
+                  "1": "Velg 各種番号をお持ちの方 (\"Jeg har et nummer\") på Loppi-terminalen",
+                  "2": "Skriv inn betalingskoden din og trykk på 次へ («Neste»)",
+                  "3": "Angi bekreftelseskoden din og trykk på Neste",
+                  "4": "Kontroller opplysningene og trykk på はい («Ja») for å skrive ut kupongen din",
+                  "5": "Ta med kupongen til kassen innen 30 minutter og betal kontant"
+                },
+                "ministop": {
+                  "1": "Velg 各種番号をお持ちの方 (\"Jeg har et nummer\") på Loppi-terminalen",
+                  "2": "Skriv inn betalingskoden din og trykk på 次へ («Neste»)",
+                  "3": "Angi bekreftelseskoden din og trykk på Neste",
+                  "4": "Kontroller opplysningene og trykk på はい («Ja») for å skrive ut kupongen din",
+                  "5": "Ta med kupongen til kassen innen 30 minutter og betal kontant"
+                },
+                "1": "Ta med betalingskoden og bekreftelseskoden til butikkens terminal eller kasse, og betal kontant før verdikupongen utløper.",
+                "seicomart": {
+                  "1": "Velg インターネット支払い (”Internettbetaling”) i kassen",
+                  "2": "Oppgi betalingskoden din på kundeskjermen og velg 登録 («Oppgi»)",
+                  "3": "Angi bekreftelseskoden din og velg Registrer",
+                  "4": "Kontroller opplysningene og velg OK",
+                  "5": "Betal kontant"
+                }
+              },
+              "pay": "Betal %{amount}",
+              "choose_outlet": "Velg en Konbini for å se kodene dine og hvordan du betaler",
+              "expires_at": "Utløper %{date}",
+              "expiry_date_time": "%{date} kl. %{time} JST",
+              "copy_code": "Kopier %{label}",
+              "code_copied": "Kopiert",
+              "keep_receipt": "Lagre kvitteringen din som betalingsbevis",
+              "expired_title": "Betalingskoden har utløpt",
+              "expired": "Gikk ut %{date}",
+              "view_instructions": "Vis betalingsinstruksjoner",
+              "view_instructions_accessibility_label": "Vis betalingsinstruksjoner (åpnes i en ny fane)"
+            }
+          },
+          "multibanco": {
+            "voucher": {
+              "label": "Multibanco",
+              "codes": {
+                "entity": "Entitet",
+                "reference_number": "Referanse"
+              },
+              "steps": {
+                "pay_at_atm_or_online": "Betal i en Multibanco-uttaksautomat eller via nettbanken din med opplysningene nedenfor."
+              }
+            }
           }
-        }
+        },
+        "konbini_label": "Nærbutikk",
+        "purchase_options_subscription_confirmation_title": "Bekreft abonnementet",
+        "purchase_options_subscription_agreement_label_wallets": "Handlevognen din inneholder et abonnement som fornyes automatisk. Ved å bruke hurtigkassen %{consent_text} %{cancellation_instructions}",
+        "paynow_label": "Betal nå",
+        "paypay_label": "PayPay",
+        "scalapay_label": "Scalapay"
       },
       "payment_errors": {
         "generic_error": "Det oppstod en feil under behandlingen av betalingen. Prøv igjen eller bruk en annen betalingsmetode.",
@@ -2286,7 +2387,10 @@
         "missing_cvc": "Angi en sikkerhetskode",
         "custom_redeemable_no_longer_available": "Dette tilbudet er ikke lenger tilgjengelig.",
         "local_payment_method_amount_out_of_range": "%{payment_method} kan kun brukes til betalinger mellom %{minimum} og %{maximum}.",
-        "local_payment_method_unavailable": "%{payment_method} er ikke tilgjengelig"
+        "local_payment_method_unavailable": "%{payment_method} er ikke tilgjengelig",
+        "duplicate_autopay_card": "Dette kortet er knyttet til kommende avbetalinger. Betal på en annen måte eller {{update_payment_details_link}}",
+        "duplicate_autopay_card_link": "Oppdater betalingsopplysninger",
+        "duplicate_autopay_card_without_link": "Dette kortet er knyttet til kommende avbetalinger. Betal på en annen måte."
       },
       "payment_challenge_modal": {
         "instructions": "Fullfør kjøpet med din {{paymentMethod}}-kode",
@@ -2296,7 +2400,9 @@
         "qr_code": {
           "instructions": "Fullfør kjøpet med din {{paymentMethod}}-kode",
           "wechat_instructions": "Skann denne QR-koden med WeChat-appen på telefonen din for å fullføre kjøpet ditt i kinesiske yuan.",
-          "wechat_instructions_mobile": "Skann denne QR-koden med WeChat-appen på en annen enhet for å fullføre kjøpet ditt i kinesiske yuan."
+          "wechat_instructions_mobile": "Skann denne QR-koden med WeChat-appen på en annen enhet for å fullføre kjøpet ditt i kinesiske yuan.",
+          "paynow_instructions": "Skann denne QR-koden med en tilkoblet bank- eller betalingsapp. Ikke betal ved å angi UEN manuelt. Manuelle overføringer kan ikke knyttes til bestillingen din og kan ikke refunderes. Betalingsmottakeren vises som Stripe.",
+          "paynow_instructions_mobile": "Lagre eller ta et skjermbilde av denne QR-koden, åpne deretter en tilkoblet bank- eller betalingsapp og skann den fra bildene dine. Ikke betal ved å angi UEN manuelt. Manuelle overføringer kan ikke knyttes til bestillingen din og kan ikke refunderes. Betalingsmottakeren vises som Stripe."
         },
         "external": {
           "instructions": "Bekreft betalingen i appen for å fullføre kjøpet"
@@ -2983,6 +3089,22 @@
             "pickup_in_store": "%{items} vil bli hentet i butikk.",
             "remove_items": "%{items} har blitt fjernet fra handlekurven."
           }
+        },
+        "pickup_and_ship": "Henting og levering",
+        "ship_all_items": "Leverer alle artiklene",
+        "separate_pickup_email_notice": "Du får en separat e-postmelding når bestillingen din er klar for henting.",
+        "pickup_items_count": {
+          "one": "Hent %{count} vare",
+          "other": "Hent %{count} artikler"
+        },
+        "ship_items_count": {
+          "one": "Lever %{count} vareolyse",
+          "other": "Lever %{count} artikler"
+        },
+        "all_items": "Alle artikler",
+        "items_count": {
+          "one": "%{count} artikkel",
+          "other": "%{count} artikler"
         }
       },
       "subscriptions": {
@@ -3587,7 +3709,9 @@
             "instructions": "{{walletName}} er for øyeblikket ikke tilgjengelig for bestillingen. Velg en annen betalingsmetode for å fortsette kjøpet."
           },
           "processing_error_checkout_as_guest": "Det oppstod en feil under behandlingen av betalingen. Prøv igjen eller {{checkout_as_guest_link}}.",
-          "subscription_review_required": "Bestillingen din inneholder et abonnement. Du må gjennomgå vilkårene nedenfor før du fullfører bestillingen."
+          "subscription_review_required": "Bestillingen din inneholder et abonnement. Du må gjennomgå vilkårene nedenfor før du fullfører bestillingen.",
+          "sdk_load_failure": "Det oppstod et problem med å laste inn {{walletName}}. {{refresh_link}} for å prøve igjen, eller bruk en annen betalingsmåte.",
+          "refresh_link": "Oppdater"
         },
         "return_to_store": "Tilbake til butikk",
         "redirect_hint": "Du vil bli bedt om å logge inn med {{walletName}}.",
@@ -3605,8 +3729,10 @@
         "place_order": "Bestill",
         "recovery_notice": "Det er et problem med bestillingsinformasjonen din. Oppdater informasjonen din for å fullføre betalingen.",
         "deceleration": {
-          "one_more_step": "Ett steg til..."
-        }
+          "one_more_step": "Ett steg til...",
+          "one_more_step_to_complete_order": "Ett steg gjenstår for å fullføre bestillingen"
+        },
+        "continue_with": "Fortsett med {{walletName}}"
       },
       "vaulted": {
         "change_button": "Endre",
@@ -3616,6 +3742,16 @@
       "ucp": {
         "standard_errors": {
           "item_unavailable": "Artikkelen kan ikke kjøpes"
+        },
+        "totals": {
+          "subtotal": "Delsum",
+          "items_discount": "Vare rabatter",
+          "discount": "Orderrabatter",
+          "fulfillment": "Frakt",
+          "tax": "Skatt",
+          "duty": "Tull",
+          "fee": "Avgift",
+          "total": "Totalt"
         }
       },
       "shop_wallet": {
@@ -3668,6 +3804,11 @@
           "message": "Gå tilbake til Hatch og prøv å åpne Shop Pay igjen."
         },
         "ready_status": "Shop Pay-lommeboken din er klar. Velg en betalingsmåte."
+      },
+      "hsa_qualification_errors": {
+        "ineligible": "Denne bestillingen kvalifiserer ikke for HSA/FSA.",
+        "processing_error": "Det oppstod et problem under behandlingen av HSA/FSA-forespørselen din. Prøv igjen eller betal uten HSA/FSA.",
+        "unsupported_checkout": "HSA/FSA er ikke tilgjengelig for denne bestillingen."
       }
     },
     "attributes": {
@@ -4049,6 +4190,11 @@
       "buyer_consent_product": "Denne artikkelen er et tilbakevendende kjøp eller et kjøp med utsatt betaling. Ved å fortsette godtar jeg %{cancellationPolicyLink}. Jeg godtar også at dere belaster min betalingsmetode på de datoene, med de prisene og den frekvensen som er angitt på denne siden, inntil min bestilling er levert eller til jeg avbryter, hvis dette er tillatt.",
       "buyer_consent_cart": "En eller flere artikler i handlekurven din er et tilbakevendende kjøp eller et kjøp med utsatt betaling. Ved å fortsette godtar jeg %{cancellationPolicyLink}. Jeg godtar også at dere belaster betalingsmetoden min på de datoene, med de prisene og den frekvensen som er angitt på denne siden, inntil bestillingen min er levert eller til jeg avbryter, hvis dette er tillatt.",
       "cancellation_policy": "avbestillingspolicyen"
+    },
+    "managed_markets": {
+      "buyer_consent": "Ved å legge inn bestillingen samtykker du til å kjøpe fra Global-e som ansvarlig selger, i henhold til Global-e sine %{termsAndConditionsLink} og %{privacyPolicyLink}, samt til å dele opplysningene dine med %{shopName}.",
+      "terms_and_conditions": "Regler og vilkår",
+      "privacy_policy": "Integritetspolicy"
     }
   },
   "sections": {

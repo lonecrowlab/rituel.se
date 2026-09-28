@@ -337,7 +337,7 @@
           }
         },
         "rapi_rapi_bundle_KmgXWT": {
-          "type": "shopify://apps/rapi-bundle/blocks/rapi-bundle/99617c17-a32b-4e70-a883-7a155610d032",
+          "type": "shopify://apps/rapid-bundle/blocks/rapi-bundle/99617c17-a32b-4e70-a883-7a155610d032",
           "settings": {
             "product": "{{product}}"
           }
@@ -452,6 +452,13 @@
             "separator_length": 10,
             "margin_top": 0,
             "margin_bottom": 8
+          }
+        },
+        "custom_liquid_kj8teT": {
+          "type": "custom_liquid",
+          "name": "Payment Methods",
+          "settings": {
+            "custom_liquid": "<div class=\"payment-icons\" style=\"margin-left:auto;margin-right:auto;text-align:center;\">\n  {{ 'klarna' | payment_type_svg_tag }}\n  {{ 'swish' | payment_type_svg_tag }}\n  {{ 'apple_pay' | payment_type_svg_tag }}\n  {{ 'visa' | payment_type_svg_tag }}\n  {{ 'master' | payment_type_svg_tag }}\n  {{ 'american_express' | payment_type_svg_tag }}\n  {{ 'shopify_pay' | payment_type_svg_tag }}\n</div>"
           }
         },
         "icon_text_card_TptYYk": {
@@ -569,12 +576,20 @@
             "backdrop_blur": 0,
             "function": "add_to_cart",
             "button_label": "Lägg I Kundvagn",
+            "button_note": "",
+            "button_note_color": "",
+            "button_note_font_size_desktop": 12,
+            "button_note_font_size_mobile": 11,
+            "button_note_font_weight": "400",
+            "button_note_margin_top": 2,
             "enable_custom_btn_color": true,
             "custom_btn_color": "#0f0f0f",
             "enable_button_gradient": false,
             "button_gradient": "linear-gradient(180deg, rgba(255, 228, 49, 1), rgba(249, 32, 32, 1) 100%)",
             "button_padding_top_bottom": 18,
             "button_padding_left_right": 17,
+            "button_padding_top_bottom_desktop": 14,
+            "button_padding_left_right_desktop": 24,
             "button_border_width": 1,
             "button_border_color": "#000000",
             "button_border_radius": 50,
@@ -582,6 +597,7 @@
             "button_font_size_desktop": 15,
             "button_font_size_mobile": 14,
             "button_font_weight": "600",
+            "title_label": "",
             "desktop_show_title": true,
             "mobile_show_title": false,
             "title_color": "#000000",
@@ -619,13 +635,6 @@
             "mobile_show_image": false,
             "mobile_image_width": 55,
             "mobile_full_button_width": true
-          }
-        },
-        "custom_liquid_kj8teT": {
-          "type": "custom_liquid",
-          "name": "Payment Methods",
-          "settings": {
-            "custom_liquid": "<div class=\"payment-icons\" style=\"margin-left:auto;margin-right:auto;text-align:center;\">\n  {{ 'klarna' | payment_type_svg_tag }}\n  {{ 'swish' | payment_type_svg_tag }}\n  {{ 'apple_pay' | payment_type_svg_tag }}\n  {{ 'visa' | payment_type_svg_tag }}\n  {{ 'master' | payment_type_svg_tag }}\n  {{ 'american_express' | payment_type_svg_tag }}\n  {{ 'shopify_pay' | payment_type_svg_tag }}\n</div>"
           }
         }
       },
@@ -1743,10 +1752,9 @@
         },
         "faq_item_cG3QjL": {
           "type": "faq_item",
-          "disabled": true,
           "settings": {
-            "question": "Är det kliniskt testat?",
-            "answer": "<p>Ja, PDRN Collagen Volume Balm är dermatologiskt testad för säkerhet och hudkompatibilitet. Formuleringen bygger på dokumenterad forskning kring de aktiva ingredienserna — bland annat 5% Volufiline från Sederma (Frankrike), en patenterad och kliniskt utvärderad ingrediens, samt Salmon PDRN, som länge använts inom klinisk hudvård i Sydkorea.</p><p>Produkten är formulerad enligt EU:s strikta kosmetikaregleringar och tillverkad i Sydkorea — ett av världens mest avancerade länder inom dermatologisk hudvårdsutveckling.</p>",
+            "question": "Fullständig ingredienslista",
+            "answer": "<p>Aqua, Glycerin, Butylene Glycol, 1,2-Hexanediol, Dipropylene Glycol, Niacinamide, Propanediol, Trehalose, Polysorbate 60, Glycereth-25 PCA Isostearate, Ammonium Acryloyldimethyltaurate/VP Copolymer, Hydroxyethylcellulose, Parfum, Ethylhexylglycerin, Adenosine, Disodium EDTA, Hydrolyzed Collagen, Sodium Hyaluronate, Soluble Collagen, Hyaluronic Acid, Disodium Phosphate, Atelocollagen, Desamido Collagen, Sodium Phosphate, Hydrolyzed Hyaluronic Acid, Collagen, Collagen Amino Acids, Procollagen, Collagen Extract</p>",
             "custom_html": "",
             "open_by_default": false,
             "badge_text": "",
