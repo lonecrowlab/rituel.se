@@ -39,11 +39,11 @@
           "settings": {
             "show_stars": true,
             "star_rating": 5,
-            "star_size": 18,
+            "star_size": 16,
             "star_color": "#fba124",
             "star_spacing": 0,
             "review_count": "<p>15 422+ kvinnor har slutat leta</p>",
-            "font_size": 14,
+            "font_size": 13,
             "font_weight": "400",
             "text_color": "#5c5c5c",
             "bg_color": "#fdf8f5",
