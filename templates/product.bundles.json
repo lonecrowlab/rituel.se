@@ -365,7 +365,7 @@
         "pulsing_scarcity_AjEjV3": {
           "type": "pulsing_scarcity",
           "settings": {
-            "stock_min": 6,
+            "stock_min": 5,
             "stock_max": 12,
             "reduction_minutes": 1,
             "text_prefix": "Endast",
