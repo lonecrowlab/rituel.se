@@ -13,7 +13,10 @@
       "type": "font-override",
       "name": "Page Font Override",
       "settings": {
-        "custom_font": "serif"
+        "custom_font": "serif",
+        "heading_font_name": "page-heading",
+        "body_font": "sans_serif_n4",
+        "body_font_name": "page-body"
       }
     },
     "custom_liquid_JycJL3": {
@@ -87,7 +90,7 @@
         "body_text_AHAAzF": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Du har funderat på botox. Kanske till och med bokat tid. Det här är inte en till kräm. Det är 5 % PDRN i en stick du drar över ansiktet morgon och kväll. 30 sekunder, ingen bokad tid, ingen nål.</p>",
+            "body_text": "<p>Du har funderat på botox. Kanske till och med bokat tid. Det här är inte en till kräm. Det är PDRN och 5% Volufiline i en stick du drar över ansiktet morgon och kväll. 30 sekunder, ingen bokad tid, ingen nål.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -351,7 +354,7 @@
             "show_stars": true,
             "star_rating": 5,
             "star_size": 18,
-            "star_color": "#fbbf24",
+            "star_color": "#FBA124",
             "star_spacing": 4,
             "customer_name": "Anna. B",
             "name_size": 15,
@@ -726,7 +729,7 @@
             "quote_size": 16,
             "quote_weight": "400",
             "quote_color": "#000000",
-            "highlight_color": "#fbbf24",
+            "highlight_color": "#FBA124",
             "bg_color": "#ededed",
             "enable_gradient": false,
             "gradient_bg": "",
