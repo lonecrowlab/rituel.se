@@ -10,15 +10,35 @@
     <meta name="theme-color" content="">
     <link rel="canonical" href="{{ canonical_url }}">
 
+    {%- if template.name == 'product' and product.featured_media -%}
+      {%- assign lcp_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+      {%- if lcp_media.media_type == 'image' -%}
+        <link
+          rel="preload"
+          as="image"
+          href="{{ lcp_media | image_url: width: 750 }}"
+          imagesrcset="{{ lcp_media | image_url: width: 375 }} 375w, {{ lcp_media | image_url: width: 550 }} 550w, {{ lcp_media | image_url: width: 750 }} 750w"
+          imagesizes="(max-width: 749px) 100vw, 50vw"
+          fetchpriority="high"
+        >
+      {%- elsif lcp_media.preview_image -%}
+        <link
+          rel="preload"
+          as="image"
+          href="{{ lcp_media.preview_image | image_url: width: 750 }}"
+          imagesrcset="{{ lcp_media.preview_image | image_url: width: 375 }} 375w, {{ lcp_media.preview_image | image_url: width: 550 }} 550w, {{ lcp_media.preview_image | image_url: width: 750 }} 750w"
+          imagesizes="(max-width: 749px) 100vw, 50vw"
+          fetchpriority="high"
+        >
+      {%- endif -%}
+    {%- endif -%}
+
     {% comment %} Advanced Resource Hints for Optimal Performance {% endcomment %}
     <!-- DNS Prefetch and Preconnect for faster resource loading -->
     <link rel="dns-prefetch" href="https://cdn.shopify.com">
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://shopify.jsdeliver.cloud">
 
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     {% comment %} Prefetch key resources that will be needed soon {% endcomment %}
     {% if template contains 'collection' %}
@@ -62,9 +82,6 @@
     <script src="{{ 'safe-performance.js' | asset_url }}" defer="defer"></script>
 
     {% comment %} Component coordinator - manages variant picker, quantity breaks, subscription, free gifts {% endcomment %}
-
-    <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Google Material Icons - Loaded after page loads for better performance -->
     <script src="{{ 'font-loader.js' | asset_url }}" defer></script>

@@ -89,7 +89,8 @@
       flex-shrink: 0;
     }
 
-    #product-flag-{{ block.id }} .product-flag__icon-1 .material-icon {
+    #product-flag-{{ block.id }} .product-flag__icon-1 .material-icon,
+    #product-flag-{{ block.id }} .product-flag__icon-1 .material-icon-svg {
       font-size: {{ block.settings.icon_1_size }}px;
       color: {{ block.settings.icon_1_color }};
     }
@@ -97,7 +98,10 @@
     #product-flag-{{ block.id }} .product-flag__icon-1 svg {
       width: 100%;
       height: 100%;
-      /* Custom SVG colors take priority - no fill override */
+    }
+
+    #product-flag-{{ block.id }} .product-flag__icon-1 .material-icon-svg svg {
+      fill: currentColor;
     }
 
     /* Text 1 Styles - Font size and color for all elements */
@@ -140,7 +144,8 @@
       flex-shrink: 0;
     }
 
-    #product-flag-{{ block.id }} .product-flag__icon-2 .material-icon {
+    #product-flag-{{ block.id }} .product-flag__icon-2 .material-icon,
+    #product-flag-{{ block.id }} .product-flag__icon-2 .material-icon-svg {
       font-size: {{ block.settings.icon_2_size }}px;
       color: {{ block.settings.icon_2_color }};
     }
@@ -148,7 +153,10 @@
     #product-flag-{{ block.id }} .product-flag__icon-2 svg {
       width: 100%;
       height: 100%;
-      /* Custom SVG colors take priority - no fill override */
+    }
+
+    #product-flag-{{ block.id }} .product-flag__icon-2 .material-icon-svg svg {
+      fill: currentColor;
     }
 
     /* Text 2 Styles - Font size and color for all elements */
@@ -200,7 +208,7 @@
       </div>
     {%- elsif block.settings.icon_1 != blank -%}
       <div class="product-flag__icon-1">
-        {% render 'material-icon', icon: block.settings.icon_1, filled: block.settings.icon_1_filled %}
+        {% render 'material-icon', icon: block.settings.icon_1, filled: block.settings.icon_1_filled, color: block.settings.icon_1_color %}
       </div>
     {%- endif -%}
 
@@ -223,7 +231,7 @@
         </div>
       {%- elsif block.settings.icon_2 != blank -%}
         <div class="product-flag__icon-2">
-          {% render 'material-icon', icon: block.settings.icon_2, filled: block.settings.icon_2_filled %}
+          {% render 'material-icon', icon: block.settings.icon_2, filled: block.settings.icon_2_filled, color: block.settings.icon_2_color %}
         </div>
       {%- endif -%}
 

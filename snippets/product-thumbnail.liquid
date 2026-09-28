@@ -35,8 +35,8 @@
   else
     assign lazy = 'eager'
     assign fetch_priority = 'high'
-    assign image_widths = '246, 493, 600, 713, 823, 990'
-    assign image_max_width = 990
+    assign image_widths = '375, 550, 750'
+    assign image_max_width = 750
   endunless
 
   assign desktop_columns = 1
@@ -164,7 +164,7 @@
           >
             {% for source in media.sources %}
               <source
-                {% if is_autoplay %}data-{% endif -%}src="{{ source.url }}"
+                {% if is_autoplay %}src{% else %}data-src{% endif %}="{{ source.url }}"
                 type="{{ source.mime_type }}"
               >
             {% endfor %}
