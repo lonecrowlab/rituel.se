@@ -53,9 +53,9 @@
                 {{ block.settings[icon_svg] }}
               </div>
             {% elsif block.settings[icon_name] != blank %}
-              {%- comment -%} Google Material Icon {%- endcomment -%}
-              <span class="material-symbols-outlined product-icon__material-{{ block.id }}" style="color: {{ custom_icon_color }};">
-                {{ block.settings[icon_name] }}
+              {%- comment -%} Google Material Icon (SVG when available) {%- endcomment -%}
+              <span class="product-icon__material-{{ block.id }}" style="color: {{ custom_icon_color }};">
+                {% render 'material-icon', icon: block.settings[icon_name] %}
               </span>
             {% endif %}
           </div>
@@ -207,11 +207,3 @@
   }
 </style>
 
-{%- comment -%}
-  Load Google Material Symbols font if any icon uses it
-  To use: Go to https://fonts.google.com/icons and find your icon name
-  Examples: local_shipping, verified, lock, star, favorite, eco, recycling
-{%- endcomment -%}
-{% unless block.settings.icon_1_svg != blank and block.settings.icon_2_svg != blank and block.settings.icon_3_svg != blank and block.settings.icon_4_svg != blank %}
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-{% endunless %}

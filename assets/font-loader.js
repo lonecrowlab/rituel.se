@@ -1,56 +1,47 @@
-// Updated by Elevate: 2026-01-02T23:25:06.198Z
-// Lazy load Google Fonts for better performance
-(function() {
+// Lazy load Material Symbols for below-fold icon usage only (fixed axes, single family)
+(function () {
   'use strict';
 
-  // Check if fonts are already loaded
-  function isFontLoaded(href) {
-    const links = document.querySelectorAll('link[rel="stylesheet"]');
-    for (let link of links) {
-      if (link.href && link.href.includes(href)) {
+  var FONT_URL =
+    'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap';
+
+  function isFontLoaded() {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      if (links[i].href && links[i].href.indexOf('Material+Symbols+Outlined') !== -1) {
         return true;
       }
     }
     return false;
   }
 
-  // Load fonts with requestIdleCallback for better performance
   function loadFonts() {
-    const fontsToLoad = [
-      // Material Icons and variants
-      'https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone',
-      // Material Symbols variants
-      'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200',
-      'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200',
-      'https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200'
-    ];
+    if (isFontLoaded()) return;
 
-    fontsToLoad.forEach(function(fontUrl) {
-      // Skip if already loaded
-      if (isFontLoaded(fontUrl)) return;
-
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = fontUrl + '&display=swap'; // Add font-display: swap
-      link.media = 'print'; // Load as print first
-      link.onload = function() {
-        this.media = 'all'; // Switch to all media when loaded
-        this.onload = null; // Prevent multiple calls
-      };
-
-      // Add crossorigin for Google Fonts
-      if (fontUrl.includes('fonts.googleapis.com')) {
-        link.crossOrigin = 'anonymous';
-      }
-
-      document.head.appendChild(link);
-    });
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = FONT_URL;
+    link.media = 'print';
+    link.crossOrigin = 'anonymous';
+    link.onload = function () {
+      this.media = 'all';
+      this.onload = null;
+      document.documentElement.classList.add('material-fonts-loaded');
+    };
+    document.head.appendChild(link);
   }
 
-  // Use requestIdleCallback if available, otherwise use setTimeout
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(loadFonts, { timeout: 3000 });
+  function scheduleLoad() {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadFonts, { timeout: 8000 });
+    } else {
+      setTimeout(loadFonts, 5000);
+    }
+  }
+
+  if (document.readyState === 'complete') {
+    scheduleLoad();
   } else {
-    setTimeout(loadFonts, 100);
+    window.addEventListener('load', scheduleLoad, { once: true });
   }
 })();

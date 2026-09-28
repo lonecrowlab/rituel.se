@@ -4,8 +4,6 @@
   Follows established section patterns with heading scaffold and comparison blocks
 {% endcomment %}
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 <section class="us-vs-them section-{{ section.id }}" data-section-id="{{ section.id }}">
   <div class="container page-width">
     <div class="uvt-content-wrapper">
@@ -179,8 +177,8 @@
                     {{ block.settings.us_custom_svg }}
                   </div>
                 {% elsif block.settings.us_value == 'google_icon' %}
-                  <span class="material-icons uvt-google-icon uvt-google-icon-us-{{ block.id }}" style="font-size: {{ us_size }}px; color: {{ us_color }};">
-                    {{ block.settings.us_google_icon }}
+                  <span class="uvt-google-icon uvt-google-icon-us-{{ block.id }}" style="font-size: {{ us_size }}px; color: {{ us_color }};">
+                    {% render 'material-icon', icon: block.settings.us_google_icon %}
                   </span>
                 {% elsif block.settings.us_value == 'text' %}
                   {{ block.settings.us_custom_text }}
@@ -264,8 +262,8 @@
                     {{ block.settings.them_custom_svg }}
                   </div>
                 {% elsif block.settings.them_value == 'google_icon' %}
-                  <span class="material-icons uvt-google-icon uvt-google-icon-them-{{ block.id }}" style="font-size: {{ them_size }}px; color: {{ them_color }};">
-                    {{ block.settings.them_google_icon }}
+                  <span class="uvt-google-icon uvt-google-icon-them-{{ block.id }}" style="font-size: {{ them_size }}px; color: {{ them_color }};">
+                    {% render 'material-icon', icon: block.settings.them_google_icon %}
                   </span>
                 {% elsif block.settings.them_value == 'text' %}
                   {{ block.settings.them_custom_text }}
@@ -421,8 +419,8 @@
                     {{ block.settings.us_custom_svg }}
                   </div>
                 {% elsif block.settings.us_value == 'google_icon' %}
-                  <span class="material-icons uvt-google-icon uvt-google-icon-us-{{ block.id }}" style="font-size: {{ us_size }}px; color: {{ us_color }};">
-                    {{ block.settings.us_google_icon }}
+                  <span class="uvt-google-icon uvt-google-icon-us-{{ block.id }}" style="font-size: {{ us_size }}px; color: {{ us_color }};">
+                    {% render 'material-icon', icon: block.settings.us_google_icon %}
                   </span>
                 {% elsif block.settings.us_value == 'text' %}
                   {{ block.settings.us_custom_text }}
@@ -442,8 +440,8 @@
                     {{ block.settings.them_custom_svg }}
                   </div>
                 {% elsif block.settings.them_value == 'google_icon' %}
-                  <span class="material-icons uvt-google-icon uvt-google-icon-them-{{ block.id }}" style="font-size: {{ them_size }}px; color: {{ them_color }};">
-                    {{ block.settings.them_google_icon }}
+                  <span class="uvt-google-icon uvt-google-icon-them-{{ block.id }}" style="font-size: {{ them_size }}px; color: {{ them_color }};">
+                    {% render 'material-icon', icon: block.settings.them_google_icon %}
                   </span>
                 {% elsif block.settings.them_value == 'text' %}
                   {{ block.settings.them_custom_text }}

@@ -64,8 +64,6 @@
   assign mobile_gap = mobile_gap | default: 20
 -%}
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
-
 <div class="icon-text-card" data-card-id="{{ card_id }}">
   <style>
     .icon-text-card[data-card-id="{{ card_id }}"] {
@@ -260,12 +258,8 @@
             {{ custom_svg }}
           </div>
         {% else %}
-          {%- comment -%} Google Material Icon (default) {%- endcomment -%}
-          {% if icon_style == 'outlined' %}
-            <span class="material-icons-outlined">{{ google_icon }}</span>
-          {% else %}
-            <span class="material-icons">{{ google_icon }}</span>
-          {% endif %}
+          {%- comment -%} Google Material Icon (SVG when available) {%- endcomment -%}
+          {% render 'material-icon', icon: google_icon %}
         {% endif %}
 
         {% if title_text != blank %}
@@ -288,12 +282,8 @@
           {{ custom_svg }}
         </div>
       {% else %}
-        {%- comment -%} Google Material Icon (default) {%- endcomment -%}
-        {% if icon_style == 'outlined' %}
-          <span class="material-icons-outlined">{{ google_icon }}</span>
-        {% else %}
-          <span class="material-icons">{{ google_icon }}</span>
-        {% endif %}
+        {%- comment -%} Google Material Icon (SVG when available) {%- endcomment -%}
+        {% render 'material-icon', icon: google_icon %}
       {% endif %}
 
       <div class="text-content">
