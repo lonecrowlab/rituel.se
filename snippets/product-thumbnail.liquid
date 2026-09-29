@@ -29,14 +29,12 @@
 {%- liquid
   assign image_widths = '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
   assign image_max_width = 1946
-  assign is_lcp_slide = false
 
   unless lazy_load == false
     assign lazy = 'lazy'
   else
     assign lazy = 'eager'
     assign fetch_priority = 'high'
-    assign is_lcp_slide = true
     assign image_widths = '246, 493, 600, 713, 823, 990'
     assign image_max_width = 990
   endunless
@@ -137,41 +135,23 @@
       {% if media.media_type == 'video' and section.settings.video_player != 'modal' %}
         {% liquid
           assign is_autoplay = false
-          if section.settings.video_player == 'autoplay'
+          if section.settings.video_player == 'autoplay' 
             assign is_autoplay = true
           endif
           assign no_play_button = false
           if section.setttings.autoplay_videos_pause_btn == false and is_autoplay
             assign no_play_button = true
           endif
-          assign defer_lcp_video = false
-          if is_lcp_slide and is_autoplay
-            assign defer_lcp_video = true
-          endif
         %}
-        {% if defer_lcp_video %}
-          {{ media.preview_image | image_url: width: image_max_width | image_tag:
-            class: 'product__media-lcp-poster',
-            loading: 'eager',
-            fetchpriority: 'high',
-            sizes: sizes,
-            widths: image_widths
-          }}
-        {% endif %}
         <internal-video
-          class="internal-video{% if is_autoplay and defer_lcp_video == false %} internal-video--playing internal-video--muted{% endif %}{% if defer_lcp_video %} internal-video--muted{% endif %}"
-          {% if defer_lcp_video %}
-            data-lcp-deferred-video="true"
-            data-autoplay="false"
-          {% else %}
-            data-autoplay="{{ is_autoplay }}"
-          {% endif %}
+          class="internal-video{% if is_autoplay %} internal-video--playing internal-video--muted{% endif %}"
+          data-autoplay="{{ is_autoplay }}"
           data-no-play-btn="{{ no_play_button }}"
         >
           <video
             width="100%"
             height="auto"
-            preload="{% if defer_lcp_video %}none{% elsif is_autoplay %}metadata{% else %}none{% endif %}"
+            preload="{% if is_autoplay %}metadata{% else %}none{% endif %}"
             poster="{{ media.preview_image | image_url }}"
             {% if is_autoplay or section.settings.enable_video_looping %}
               loop
@@ -184,7 +164,7 @@
           >
             {% for source in media.sources %}
               <source
-                {% if is_autoplay or defer_lcp_video %}data-{% endif -%}src="{{ source.url }}"
+                {% if is_autoplay %}data-{% endif -%}src="{{ source.url }}"
                 type="{{ source.mime_type }}"
               >
             {% endfor %}
