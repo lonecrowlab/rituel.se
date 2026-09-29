@@ -1,5 +1,6 @@
 {% comment %}Updated by Elevate: 2026-01-02T23:27:54.960Z{% endcomment %}
-{{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+<link rel="preload" href="{{ 'component-list-social.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ 'component-list-social.css' | asset_url }}"></noscript>
 
 {%- liquid
   assign footer_bg_color = section.settings.footer_bg_color

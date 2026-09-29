@@ -148,7 +148,7 @@
                       {% if section.settings.show_customer_image %}
                         <div class="crs-card-image crs-aspect-{{ section.settings.image_aspect_ratio }}">
                           {% if block.settings.customer_image != blank %}
-                            {{ block.settings.customer_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'crs-image', alt: block.settings.customer_name | default: 'Customer photo' }}
+                            {{ block.settings.customer_image | image_url: width: 500 | image_tag: loading: 'lazy', class: 'crs-image', alt: block.settings.customer_name | default: 'Customer photo', widths: '352, 500', sizes: '(max-width: 749px) 92vw, 500px' }}
                           {% else %}
                             <div class="crs-image-placeholder">
                               {{ 'image' | placeholder_svg_tag: 'placeholder-svg crs-image' }}

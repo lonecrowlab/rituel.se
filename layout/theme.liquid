@@ -530,8 +530,9 @@
       </style>
     </noscript>
 
-    {% comment %} Load base CSS immediately for core styles {% endcomment %}
-    <link rel="stylesheet" href="{{ 'base.css' | asset_url }}">
+    {% comment %} Load base CSS asynchronously — critical layout rules are inlined above {% endcomment %}
+    <link rel="preload" href="{{ 'base.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{{ 'base.css' | asset_url }}"></noscript>
 
     {% comment %} Non-critical CSS loaded asynchronously {% endcomment %}
     <link rel="preload" href="{{ 'accent-color-override.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">

@@ -51,34 +51,9 @@
     });
   }
 
-  // Optimize Shopify responsive images
-  function optimizeResponsiveImages() {
-    const images = document.querySelectorAll('img[src*="cdn.shopify.com"]:not([srcset])');
-
-    images.forEach(img => {
-      if (!img.src || img.srcset) return;
-
-      // Generate responsive srcset for Shopify images
-      const src = img.src;
-      const widths = [165, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048];
-
-      // Only create srcset for reasonably sized images
-      if (img.width > 100 || img.naturalWidth > 100) {
-        const srcset = widths
-          .filter(w => w <= (img.naturalWidth || img.width || 2048) * 2)
-          .map(w => {
-            const url = src.replace(/(_\d+x\d*)?(\.\w+)(\?.*)?$/, `_${w}x$2$3`);
-            return `${url} ${w}w`;
-          })
-          .join(', ');
-
-        if (srcset) {
-          img.srcset = srcset;
-          img.sizes = img.sizes || '(min-width: 750px) 50vw, 100vw';
-        }
-      }
-    });
-  }
+  // Disabled: auto-generated srcset caused oversized downloads (e.g. 900px for 88px icons).
+  // Responsive widths are set in Liquid templates instead.
+  function optimizeResponsiveImages() {}
 
   // Stabilize header dimensions
   function stabilizeHeader() {
