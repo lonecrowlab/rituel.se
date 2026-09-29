@@ -488,7 +488,8 @@
         "card_security_notice": "Vill du betala med Swish? Välj Klarna längre ner, så kan du välja Swish i nästa steg."
       },
       "contact": {
-        "optional_phone_label": "Telefon (valfritt) få leveransuppdateringar via sms"
+        "optional_phone_label": "Mobilnummer (valfritt) få leveransbesked via sms",
+        "phone_tooltip": "Få ett sms när ditt paket är på väg och när det har levererats."
       }
     }
   }
