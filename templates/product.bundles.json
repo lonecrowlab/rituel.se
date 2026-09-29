@@ -961,9 +961,8 @@
         "result_FHXYt8": {
           "type": "result",
           "settings": {
-            "before_image": "shopify://shop_images/Emma--1.webp",
+            "before_image": "shopify://shop_images/Emma_e4e25bc7-5647-442d-9195-161a6abe1b5a.webp",
             "before_day": "Dag 1",
-            "after_image": "shopify://shop_images/Emma--2.webp",
             "after_day": "Dag 21",
             "stars": 5,
             "title": "Synliga resultat på mogen hud",
@@ -974,9 +973,8 @@
         "result_RTPCdk": {
           "type": "result",
           "settings": {
-            "before_image": "shopify://shop_images/anna-1.webp",
+            "before_image": "shopify://shop_images/anna.png",
             "before_day": "Dag 1",
-            "after_image": "shopify://shop_images/anna-2.webp",
             "after_day": "Dag 42",
             "stars": 5,
             "title": "Mjukare textur & slätare panna",
@@ -987,9 +985,8 @@
         "result_qejyMm": {
           "type": "result",
           "settings": {
-            "before_image": "shopify://shop_images/maja-1.webp",
+            "before_image": "shopify://shop_images/maja.webp",
             "before_day": "Dag 1",
-            "after_image": "shopify://shop_images/maja-2.webp",
             "after_day": "Dag 30",
             "stars": 5,
             "title": "Mindre synliga fina linjer",
@@ -1000,9 +997,8 @@
         "result_nTjPYX": {
           "type": "result",
           "settings": {
-            "before_image": "shopify://shop_images/sofia--1.webp",
+            "before_image": "shopify://shop_images/sofia-4.webp",
             "before_day": "Dag 1",
-            "after_image": "shopify://shop_images/sofia--2.webp",
             "after_day": "Dag 21",
             "stars": 5,
             "title": "Synlig skillnad under ögonen",
@@ -1013,9 +1009,8 @@
         "result_VmFnrK": {
           "type": "result",
           "settings": {
-            "before_image": "shopify://shop_images/eva--1.webp",
+            "before_image": "shopify://shop_images/eva.webp",
             "before_day": "Dag 1",
-            "after_image": "shopify://shop_images/eva--2.webp",
             "after_day": "Dag 60",
             "stars": 5,
             "title": "Huden känns verkligt annorlunda",
@@ -1031,11 +1026,10 @@
         "result_nTjPYX",
         "result_VmFnrK"
       ],
-      "disabled": true,
       "name": "Before & After Slider v2",
       "settings": {
-        "title": "Verkliga resultat",
-        "description": "<p>Före och efter från verifierade kunder. Dra i bilden för att se skillnaden.</p>",
+        "title": "Kvinnor som provat allt. Tills nu.",
+        "description": "",
         "heading_tag": "h2",
         "heading_alignment": "center",
         "header_spacing": 40,
@@ -1199,6 +1193,7 @@
         "review_eYME8q",
         "review_aj63ka"
       ],
+      "disabled": true,
       "name": "Customer Review Slider",
       "settings": {
         "use_theme_colors": true,
