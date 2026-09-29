@@ -12,10 +12,18 @@
   assign card_gap = section.settings.card_gap | default: 24
   assign image_radius = section.settings.slider_border_radius | default: 16
   assign card_radius = section.settings.card_border_radius | default: 16
+  assign image_render_width = section.settings.image_render_width | default: 368
+  assign image_width_half = image_render_width | divided_by: 2
+  assign image_width_three_quarter = image_render_width | times: 3 | divided_by: 4
+  assign image_widths = image_width_half | append: ', ' | append: image_width_three_quarter | append: ', ' | append: image_render_width
+  assign image_sizes = '(min-width: 990px) calc(' | append: desktop_slide_width | append: 'vw - 1rem), (min-width: 750px) calc(' | append: tablet_slide_width | append: 'vw - 1rem), calc(' | append: mobile_slide_width | append: 'vw - 1rem)'
+
+  assign result_blocks = section.blocks | where: 'type', 'result'
+  assign result_count = result_blocks.size
 -%}
 
 <section
-  class="bas-v2 section-{{ section.id }}{% if equal_height %} bas-v2--equal-height{% endif %}"
+  class="bas-v2 section-{{ section.id }}{% if equal_height %} bas-v2--equal-height{% endif %}{% if result_count == 1 %} bas-v2--single-card{% endif %}"
   data-section-id="{{ section.id }}"
 >
   <div class="bas-v2__container page-width">
@@ -38,69 +46,106 @@
       <div class="bas-v2__track" data-bas-v2-track>
         {%- for block in section.blocks -%}
           {%- if block.type == 'result' -%}
+            {%- liquid
+              assign has_before = false
+              assign has_after = false
+              if block.settings.before_image != blank
+                assign has_before = true
+              endif
+              if block.settings.after_image != blank
+                assign has_after = true
+              endif
+              assign is_comparison = false
+              if has_before and has_after
+                assign is_comparison = true
+              endif
+              assign single_image = null
+              if has_before and has_after == false
+                assign single_image = block.settings.before_image
+              elsif has_after and has_before == false
+                assign single_image = block.settings.after_image
+              endif
+            -%}
             <article class="bas-v2__card" {{ block.shopify_attributes }}>
-              <div
-                class="bas-v2__slider bas-v2__slider--aspect-{{ section.settings.slider_aspect_ratio }}"
-                data-bas-v2-slider
-                data-auto-slide="{{ section.settings.auto_slide }}"
-                data-auto-speed="{{ section.settings.auto_slide_speed }}"
-              >
-                <div class="bas-v2__image bas-v2__image--before">
-                  {%- if block.settings.before_image != blank -%}
+              {%- if is_comparison -%}
+                <div
+                  class="bas-v2__slider bas-v2__slider--aspect-{{ section.settings.slider_aspect_ratio }}"
+                  data-bas-v2-slider
+                  data-auto-slide="{{ section.settings.auto_slide }}"
+                  data-auto-speed="{{ section.settings.auto_slide_speed }}"
+                >
+                  <div class="bas-v2__image bas-v2__image--before">
                     {{
                       block.settings.before_image
-                      | image_url: width: 800
+                      | image_url: width: image_render_width
                       | image_tag:
                         loading: 'lazy',
                         class: 'bas-v2__img',
-                        widths: '320, 480, 640, 800',
-                        sizes: '(min-width: 990px) 28vw, (min-width: 750px) 50vw, 85vw'
+                        widths: image_widths,
+                        sizes: image_sizes
                     }}
-                  {%- else -%}
-                    <div class="bas-v2__placeholder">
-                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                    </div>
-                  {%- endif -%}
-                </div>
+                  </div>
 
-                <div class="bas-v2__image bas-v2__image--after">
-                  {%- if block.settings.after_image != blank -%}
+                  <div class="bas-v2__image bas-v2__image--after">
                     {{
                       block.settings.after_image
-                      | image_url: width: 800
+                      | image_url: width: image_render_width
                       | image_tag:
                         loading: 'lazy',
                         class: 'bas-v2__img',
-                        widths: '320, 480, 640, 800',
-                        sizes: '(min-width: 990px) 28vw, (min-width: 750px) 50vw, 85vw'
+                        widths: image_widths,
+                        sizes: image_sizes
                     }}
-                  {%- else -%}
-                    <div class="bas-v2__placeholder">
-                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+
+                  {%- if section.settings.show_day_labels -%}
+                    {%- if block.settings.before_day != blank -%}
+                      <span class="bas-v2__day bas-v2__day--before">{{ block.settings.before_day }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.after_day != blank -%}
+                      <span class="bas-v2__day bas-v2__day--after">{{ block.settings.after_day }}</span>
+                    {%- endif -%}
+                  {%- endif -%}
+
+                  <div class="bas-v2__control" data-bas-v2-handle>
+                    <div class="bas-v2__handle" aria-hidden="true">
+                      <svg class="bas-v2__chevron bas-v2__chevron--left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                        <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <svg class="bas-v2__chevron bas-v2__chevron--right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                        <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
                     </div>
-                  {%- endif -%}
-                </div>
-
-                {%- if section.settings.show_day_labels -%}
-                  {%- if block.settings.before_day != blank -%}
-                    <span class="bas-v2__day bas-v2__day--before">{{ block.settings.before_day }}</span>
-                  {%- endif -%}
-                  {%- if block.settings.after_day != blank -%}
-                    <span class="bas-v2__day bas-v2__day--after">{{ block.settings.after_day }}</span>
-                  {%- endif -%}
-                {%- endif -%}
-
-                <div class="bas-v2__control" data-bas-v2-handle>
-                  <div class="bas-v2__handle" aria-hidden="true">
-                    <svg class="bas-v2__chevron bas-v2__chevron--left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
-                      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <svg class="bas-v2__chevron bas-v2__chevron--right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
-                      <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
                   </div>
                 </div>
-              </div>
+              {%- elsif single_image != blank -%}
+                <div class="bas-v2__slider bas-v2__slider--static bas-v2__slider--aspect-{{ section.settings.slider_aspect_ratio }}">
+                  <div class="bas-v2__image bas-v2__image--single">
+                    {{
+                      single_image
+                      | image_url: width: image_render_width
+                      | image_tag:
+                        loading: 'lazy',
+                        class: 'bas-v2__img',
+                        widths: image_widths,
+                        sizes: image_sizes
+                    }}
+                  </div>
+                  {%- if section.settings.show_day_labels -%}
+                    {%- if block.settings.before_day != blank and has_before -%}
+                      <span class="bas-v2__day bas-v2__day--before">{{ block.settings.before_day }}</span>
+                    {%- elsif block.settings.after_day != blank and has_after -%}
+                      <span class="bas-v2__day bas-v2__day--after">{{ block.settings.after_day }}</span>
+                    {%- endif -%}
+                  {%- endif -%}
+                </div>
+              {%- else -%}
+                <div class="bas-v2__slider bas-v2__slider--static bas-v2__slider--aspect-{{ section.settings.slider_aspect_ratio }}">
+                  <div class="bas-v2__placeholder">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                </div>
+              {%- endif -%}
 
               <div class="bas-v2__content">
                 {%- if block.settings.stars > 0 -%}
@@ -309,6 +354,32 @@
     }
   }
 
+  .section-{{ section.id }}.bas-v2--single-card .bas-v2__viewport {
+    overflow-x: hidden;
+    cursor: default;
+    padding-bottom: 0;
+  }
+
+  .section-{{ section.id }}.bas-v2--single-card .bas-v2__card {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  @media screen and (max-width: 749px) {
+    .section-{{ section.id }}.bas-v2--single-card .bas-v2__viewport {
+      margin-right: 0;
+      padding-right: 0;
+    }
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .section-{{ section.id }}.bas-v2--single-card .bas-v2__viewport {
+      margin-right: 0;
+      padding-right: 0;
+    }
+  }
+
   /* Before/After comparison — radius on top only */
   .section-{{ section.id }} .bas-v2__slider {
     position: relative;
@@ -345,6 +416,27 @@
   .section-{{ section.id }} .bas-v2__image--after {
     z-index: 2;
     clip-path: inset(0 0 0 50%);
+  }
+
+  .section-{{ section.id }} .bas-v2__slider--static {
+    cursor: default;
+    touch-action: auto;
+  }
+
+  .section-{{ section.id }} .bas-v2__image--single {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .section-{{ section.id }} .bas-v2__slider--static .bas-v2__placeholder {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
   }
 
   .section-{{ section.id }} .bas-v2__img {
@@ -734,7 +826,9 @@
       });
 
       const viewport = sectionEl.querySelector('[data-bas-v2-viewport]');
-      if (viewport) initNativeScrollDrag(viewport);
+      if (viewport && !sectionEl.classList.contains('bas-v2--single-card')) {
+        initNativeScrollDrag(viewport);
+      }
     });
   }
 
@@ -943,6 +1037,17 @@
         { "value": "original", "label": "Original" }
       ],
       "default": "square"
+    },
+    {
+      "type": "range",
+      "id": "image_render_width",
+      "min": 200,
+      "max": 800,
+      "step": 8,
+      "unit": "px",
+      "label": "Image render width",
+      "default": 368,
+      "info": "Max CDN width for before/after images (?width=368). Lower = smaller files. One image only = static display, no drag slider."
     },
     {
       "type": "range",
