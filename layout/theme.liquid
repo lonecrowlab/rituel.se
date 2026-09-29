@@ -10,35 +10,15 @@
     <meta name="theme-color" content="">
     <link rel="canonical" href="{{ canonical_url }}">
 
-    {%- if template.name == 'product' and product.featured_media -%}
-      {%- assign lcp_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
-      {%- if lcp_media.media_type == 'image' -%}
-        <link
-          rel="preload"
-          as="image"
-          href="{{ lcp_media | image_url: width: 750 }}"
-          imagesrcset="{{ lcp_media | image_url: width: 375 }} 375w, {{ lcp_media | image_url: width: 550 }} 550w, {{ lcp_media | image_url: width: 750 }} 750w"
-          imagesizes="(max-width: 749px) 100vw, 50vw"
-          fetchpriority="high"
-        >
-      {%- elsif lcp_media.preview_image -%}
-        <link
-          rel="preload"
-          as="image"
-          href="{{ lcp_media.preview_image | image_url: width: 750 }}"
-          imagesrcset="{{ lcp_media.preview_image | image_url: width: 375 }} 375w, {{ lcp_media.preview_image | image_url: width: 550 }} 550w, {{ lcp_media.preview_image | image_url: width: 750 }} 750w"
-          imagesizes="(max-width: 749px) 100vw, 50vw"
-          fetchpriority="high"
-        >
-      {%- endif -%}
-    {%- endif -%}
-
     {% comment %} Advanced Resource Hints for Optimal Performance {% endcomment %}
     <!-- DNS Prefetch and Preconnect for faster resource loading -->
     <link rel="dns-prefetch" href="https://cdn.shopify.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="dns-prefetch" href="https://shopify.jsdeliver.cloud">
 
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     {% comment %} Prefetch key resources that will be needed soon {% endcomment %}
     {% if template contains 'collection' %}
@@ -68,20 +48,19 @@
       }
     </style>
 
-    {% comment %} Core JavaScript - main.js deferred for menu/cart; secondary/cart-fixes load after window load {% endcomment %}
+    {% comment %} Core JavaScript - Load immediately with defer for menu/cart functionality {% endcomment %}
     <script src="{{ 'main.js' | asset_url }}" defer="defer" data-country-list-function="{{ settings.country_list_function }}" data-country-list="{{ settings.country_list }}" data-country-list-error="{{ settings.country_invalid_error_msg }}" data-animations-type="{{ settings.animations_type }}"></script>
-    <script>
-      window.__deferredThemeScriptSources = [
-        {{ 'secondary.js' | asset_url | json }},
-        {{ 'cart-fixes.js' | asset_url | json }}
-      ];
-    </script>
-    <script src="{{ 'deferred-theme-scripts.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'secondary.js' | asset_url }}" defer="defer"></script>
+
+    {% comment %} Plain-JS reliability fixes for cart quantity buttons/input and upsell toggle switches {% endcomment %}
+    <script src="{{ 'cart-fixes.js' | asset_url }}" defer="defer"></script>
 
     {% comment %} Safe performance optimizations - prevent layout shifts {% endcomment %}
     <script src="{{ 'safe-performance.js' | asset_url }}" defer="defer"></script>
 
     {% comment %} Component coordinator - manages variant picker, quantity breaks, subscription, free gifts {% endcomment %}
+
+    <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 
     <!-- Google Material Icons - Loaded after page loads for better performance -->
     <script src="{{ 'font-loader.js' | asset_url }}" defer></script>

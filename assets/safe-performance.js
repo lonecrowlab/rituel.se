@@ -100,6 +100,42 @@
     }
   }
 
+  // Defer first-slide autoplay product video until after window load (poster is LCP)
+  function startDeferredLcpVideos() {
+    document.querySelectorAll('internal-video[data-lcp-deferred-video]').forEach(function(el) {
+      if (el.dataset.lcpVideoStarted) return;
+      el.dataset.lcpVideoStarted = 'true';
+
+      var video = el.querySelector('video');
+      if (!video) return;
+
+      el.querySelectorAll('source[data-src]').forEach(function(source) {
+        source.src = source.getAttribute('data-src');
+        source.removeAttribute('data-src');
+      });
+
+      video.load();
+      el.classList.add('internal-video--playing', 'internal-video--muted');
+
+      var playPromise = video.play();
+      if (playPromise && playPromise.catch) {
+        playPromise.catch(function() {});
+      }
+
+      var mediaContainer = el.closest('.product__media');
+      if (mediaContainer) {
+        var poster = mediaContainer.querySelector('.product__media-lcp-poster');
+        if (poster) poster.style.display = 'none';
+      }
+    });
+  }
+
+  if (document.readyState === 'complete') {
+    startDeferredLcpVideos();
+  } else {
+    window.addEventListener('load', startDeferredLcpVideos, { once: true });
+  }
+
   // Initialize performance optimizations
   function init() {
     // Run immediately
