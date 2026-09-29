@@ -21,7 +21,7 @@
             "rating_text": "[original.rating]  baserat på  [original.count]   recensioner",
             "show_popup_chevron": true,
             "chevron_color": "#343f20",
-            "text_color": "#59595A",
+            "text_color": "#59595a",
             "text_font_size": 13,
             "text_font_weight": "400",
             "text_margin_top": 0,
@@ -1026,6 +1026,9 @@
         "result_nTjPYX",
         "result_VmFnrK"
       ],
+      "custom_css": [
+        "span.bas-v2__day.bas-v2__day--before {display: none;}"
+      ],
       "name": "Before & After Slider v2",
       "settings": {
         "title": "Kvinnor som provat allt. Tills nu.",
@@ -1046,6 +1049,7 @@
         "auto_slide": false,
         "auto_slide_speed": 3000,
         "slider_aspect_ratio": "square",
+        "image_render_width": 368,
         "slider_border_radius": 16,
         "handle_color": "#f5f0e8",
         "handle_arrow_color": "#3a3a3a",
