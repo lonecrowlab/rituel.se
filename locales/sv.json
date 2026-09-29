@@ -489,7 +489,7 @@
       },
       "contact": {
         "optional_phone_label": "Mobilnummer (valfritt) få leveransbesked via sms",
-        "phone_tooltip": "Få ett sms när ditt paket är på väg och när det har levererats."
+        "phone_tooltip": "Få ett sms när ditt paket är på väg och när det har levererats. Ingen reklam."
       }
     }
   }
