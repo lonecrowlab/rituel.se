@@ -190,6 +190,7 @@
         },
         "body_text_xkWDRN": {
           "type": "body_text",
+          "disabled": true,
           "settings": {
             "body_text": "<p><em>Helena E., 52 år.</em></p>",
             "font_weight": "400",
