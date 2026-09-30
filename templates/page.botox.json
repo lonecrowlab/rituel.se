@@ -416,7 +416,7 @@
             "star_size": 18,
             "star_color": "#fba124",
             "star_spacing": 4,
-            "customer_name": "Anna. B",
+            "customer_name": "Anna B.",
             "name_size": 15,
             "name_weight": "400",
             "name_color": "#000000",
@@ -662,7 +662,7 @@
         "body_text_mxydFK": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>ritúel PDRN Collagen Volume Balm innehåller 5% Volufiline, Och sen fyra ingredienser till som faktiskt gör något:</p><p><strong>Liposomalt PDRN</strong>: laxe-DNA-fragment, ingrediensen bakom den koreanska klinktrenden. Liposomalt betyder att den är inkapslad för att ta sig dit den ska.</p><p><strong>Hyaluronsyra</strong>: djup återfuktning. Ger en fastare, mer spänstig hudkänsla.</p><p><strong>Hydrolyserat kollagen</strong>: nedbrutet till mindre fragment för att hyn ska se slätare ut.</p><p><strong>Peptider</strong>: hjälper hyn att se jämnare och mer samlad ut.</p><p>Fem aktiva ingredienser. En stick. Inte fem flaskor på en hylla.</p><p>Det är inte en fuktighetskräm. En fuktighetskräm gör hyn mjuk i två timmar. Det här är en daglig ritual.</p>",
+            "body_text": "<p>ritúel PDRN Collagen Volume Balm innehåller 5 % Volufiline, och sen fyra ingredienser till som faktiskt gör något:</p><p><strong>Liposomalt PDRN</strong>: lax-DNA-fragment, ingrediensen bakom den koreanska kliniktrenden. Liposomalt betyder att den är inkapslad för att ta sig dit den ska.</p><p><strong>Hyaluronsyra</strong>: djup återfuktning. Ger en fastare, mer spänstig hudkänsla.</p><p><strong>Hydrolyserat kollagen</strong>: nedbrutet till mindre fragment för att hyn ska se slätare ut.</p><p><strong>Peptider</strong>: hjälper hyn att se jämnare och mer samlad ut.</p><p>Fem aktiva ingredienser. En stick. Inte fem flaskor på en hylla.</p><p>Det är inte en fuktighetskräm. En fuktighetskräm gör hyn mjuk i två timmar. Det här är en daglig ritual.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -723,7 +723,7 @@
           "settings": {
             "heading_before": "",
             "highlighted_text": "5.",
-            "heading_after": "Vad som händer efter 2 veckor",
+            "heading_after": "Vad kvinnor säger efter ett par veckor",
             "highlight_position": "above",
             "heading_tag": "h2",
             "text_align": "left",
@@ -750,7 +750,7 @@
         "body_text_TbfBGY": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Över 15 000 kvinnor har redan testat, och 4,6 av 5 är nöjda.</p><p>Det vi hör mest:</p><p>• \"Mannen min trodde jag hade tagit botox\"</p><p>• \"Mina vänner frågar vad jag gjort\"</p><p>• \"Avbokade min filler-tid efter en vecka\"</p><p>• \"Skrattrynkorna är mjukare redan\"</p><p>Resultatet kommer inte över en natt. Det är subtilt, naturligt och bygger sig upp över veckor, utan att någon ser att du gjort något.</p>",
+            "body_text": "<p>Över 15 000 kvinnor har testat, med snittbetyget 4,6 av 5.<br/><br/>Det vi hör oftast handlar inte om huden. Det handlar om vad andra har sagt:<br/><br/>- \"Mannen min trodde jag hade tagit botox\" - \"Mina vänner frågar vad jag gjort\"<br/>- \"Skrattrynkorna är mjukare redan\"<br/>- \"Avbokade min filler-tid efter en vecka\"&nbsp;<br/><br/>Det är skillnaden mot en klinik. Där ser folk att du gjort något.<strong> Här ser de bara att något är annorlunda, och de vet inte vad.</strong><br/><br/>Det bygger sig upp över veckor. Långsamt nog att ingen frågar varför du plötsligt ser annorlunda ut.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -803,7 +803,7 @@
             "star_size": 18,
             "star_color": "#fba124",
             "star_spacing": 4,
-            "customer_name": "Sandra. R",
+            "customer_name": "Sandra R.",
             "name_size": 15,
             "name_weight": "400",
             "name_color": "#000000",
@@ -1186,7 +1186,7 @@
         "them_image_enabled": true,
         "them_image": "shopify://shop_images/LISTICLE_IMAGES-8.webp",
         "them_image_width": 120,
-        "them_image_width_mobile": 100,
+        "them_image_width_mobile": 70,
         "them_image_position": "above",
         "them_image_visibility": "always",
         "them_use_image_as_label": false,
@@ -1260,7 +1260,7 @@
         "body_text_PyqN9A": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>En av de vanligaste frågorna som dyker upp är var den går att köpa. Svaret är enkelt: den säljs bara via ritúels officiella hemsida, och skickas direkt hem till dig. Det har dykt upp liknande sticks på andra sajter, men de innehåller varken PDRN eller Volufiline.</p><p><strong>OBS: Enligt ritúel produceras varje batch i begränsad mängd. Den förra sålde slut på 11 dagar, och det dröjde 3 veckor innan nästa fanns i lager igen.&nbsp;</strong></p><p>Just nu kör ritúel ett introduktionspris för nya kunder, med upp till 55 % rabatt när man tar flera sticks.</p>",
+            "body_text": "<p>En av de vanligaste frågorna som dyker upp är var den går att köpa. Svaret är enkelt: den säljs bara via ritúels officiella hemsida, och skickas direkt hem till dig. Det har dykt upp liknande sticks på andra sajter, men de innehåller varken PDRN eller Volufiline.</p><p>OBS:<strong> </strong>Enligt ritúel produceras varje batch i begränsad mängd. Den förra<strong> sålde slut på 11 dagar, </strong>och det dröjde 3 veckor innan nästa fanns i lager igen.&nbsp;</p><p>Just nu kör ritúel ett introduktionspris för nya kunder, med upp till 55 % rabatt när man tar flera sticks.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
