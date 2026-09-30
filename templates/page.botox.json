@@ -22,7 +22,7 @@
         "backdrop_blur": 13,
         "bar_padding_mobile": 10,
         "bar_padding_desktop": 16,
-        "max_width": 600,
+        "max_width": 880,
         "z_index": 9900,
         "button_bg_color": "#0f0f0f",
         "enable_button_gradient": false,
@@ -42,7 +42,7 @@
         "button_max_width_desktop": 480,
         "note_color": "#FFFFFF",
         "note_font_size_mobile": 14,
-        "note_font_size_desktop": 9,
+        "note_font_size_desktop": 15,
         "note_font_weight": "400",
         "note_margin_top": 3
       }
