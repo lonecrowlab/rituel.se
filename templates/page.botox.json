@@ -936,7 +936,7 @@
         "body_text_PyqN9A": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>En av de vanligaste frågorna som dyker upp är var den går att köpa. Svaret är enkelt: den säljs bara via ritúels officiella hemsida, och skickas direkt hem till dig.</p><p><strong>OBS: Enligt ritúel produceras varje batch i begränsad mängd, den förra sålde slut på 11 dagar, och det dröjde 3 veckor innan nästa fanns i lager igen. </strong></p><p>Just nu erbjuder ritúel dessutom ett erbjudande för nya kunder:</p>",
+            "body_text": "<p>En av de vanligaste frågorna som dyker upp är var den går att köpa. Svaret är enkelt: den säljs bara via ritúels officiella hemsida, och skickas direkt hem till dig. Det har dykt upp liknande sticks på andra sajter, men de innehåller varken PDRN eller Volufiline.</p><p><strong>OBS: Enligt ritúel produceras varje batch i begränsad mängd. Den förra sålde slut på 11 dagar, och det dröjde 3 veckor innan nästa fanns i lager igen.&nbsp;</strong></p><p>Just nu kör ritúel ett introduktionspris för nya kunder, med upp till 55 % rabatt när man tar flera sticks.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -996,31 +996,38 @@
             "margin_bottom": -8
           }
         },
-        "custom_html_k6Xkyd": {
-          "type": "custom_html",
+        "three_icons_NUXzwh": {
+          "type": "three_icons",
           "settings": {
-            "custom_html": "<div class=\"trust-strip\">\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">60-DAGARS NÖJDHETSGARANTI</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">DERMATOLOGISKT TESTAD</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">I LAGER JUST NU</span>\n  </span>\n</div>\n\n<style>\n  .trust-strip {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-wrap: wrap;\n    gap: 24px;\n    padding: 16px 12px;\n    background: transparent;\n    font-family: inherit;\n  }\n\n  .trust-strip__item {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    color: #1a1a1a;\n    font-size: 12px;\n    font-weight: 400;\n    letter-spacing: 0.08em;\n    white-space: nowrap;\n  }\n\n  .trust-strip__check {\n    color: #d9879a;\n    font-weight: 700;\n    font-size: 13px;\n    line-height: 1;\n  }\n\n  .trust-strip__text {\n    line-height: 1;\n  }\n\n  @media (max-width: 480px) {\n    .trust-strip {\n      gap: 14px;\n      padding: 14px 8px;\n    }\n    .trust-strip__item {\n      font-size: 11px;\n      letter-spacing: 0.06em;\n    }\n  }\n</style>",
-            "padding": 0,
-            "bg_color": "rgba(0,0,0,0)",
-            "border_width": 0,
-            "border_color": "#e5e7eb",
-            "border_style": "solid",
-            "border_radius": 0,
-            "desktop_alignment": "center"
-          }
-        },
-        "custom_html_BEADBf": {
-          "type": "custom_html",
-          "disabled": true,
-          "settings": {
-            "custom_html": "<div class=\"trust-strip\">\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">FRI FRAKT</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">60-DAGARS GARANTI</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">SÄKER BETALNING</span>\n  </span>\n</div>\n\n<style>\n  .trust-strip {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-wrap: wrap;\n    gap: 24px;\n    padding: 16px 12px;\n    background: transparent;\n    font-family: inherit;\n  }\n\n  .trust-strip__item {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    color: #1a1a1a;\n    font-size: 12px;\n    font-weight: 400;\n    letter-spacing: 0.08em;\n    white-space: nowrap;\n  }\n\n  .trust-strip__check {\n    color: #d9879a;\n    font-weight: 700;\n    font-size: 13px;\n    line-height: 1;\n  }\n\n  .trust-strip__text {\n    line-height: 1;\n  }\n\n  @media (max-width: 480px) {\n    .trust-strip {\n      gap: 14px;\n      padding: 14px 8px;\n    }\n    .trust-strip__item {\n      font-size: 11px;\n      letter-spacing: 0.06em;\n    }\n  }\n</style>",
-            "padding": 0,
-            "bg_color": "rgba(0,0,0,0)",
-            "border_width": 0,
-            "border_color": "#e5e7eb",
-            "border_style": "solid",
-            "border_radius": 0,
-            "desktop_alignment": "center"
+            "feature_1_icon": "checkmark_icon",
+            "feature_1_svg": "",
+            "feature_1_content": "<p>60 dagars nöjdhetsgaranti</p>",
+            "feature_2_icon": "checkmark_icon",
+            "feature_2_svg": "",
+            "feature_2_content": "<p>Kliniskt testad</p>",
+            "feature_3_icon": "checkmark_icon",
+            "feature_3_svg": "",
+            "feature_3_content": "<p>I lager just nu</p>",
+            "icon_color": "#cc667c",
+            "icon_size": 14,
+            "text_size": 11,
+            "text_color": "#1f2937",
+            "icon_text_gap": 6,
+            "items_gap": 12,
+            "icon_size_mobile": 16,
+            "text_size_mobile": 12,
+            "icon_text_gap_mobile": 6,
+            "items_gap_mobile": 10,
+            "flex_direction_desktop": "row",
+            "justify_content_desktop": "space-between",
+            "align_items_desktop": "center",
+            "flex_wrap_desktop": "nowrap",
+            "flex_direction_mobile": "row",
+            "justify_content_mobile": "center",
+            "align_items_mobile": "center",
+            "flex_wrap_mobile": "wrap",
+            "margin_top": 12,
+            "margin_bottom": 0
           }
         }
       },
@@ -1029,8 +1036,7 @@
         "image_GnAfWP",
         "body_text_PyqN9A",
         "button_mzwWUW",
-        "custom_html_k6Xkyd",
-        "custom_html_BEADBf"
+        "three_icons_NUXzwh"
       ],
       "name": "Image with Blocks",
       "settings": {
@@ -1357,17 +1363,38 @@
             "margin_bottom": 0
           }
         },
-        "custom_html_FKkzw7": {
-          "type": "custom_html",
+        "three_icons_qjdrpi": {
+          "type": "three_icons",
           "settings": {
-            "custom_html": "<div class=\"trust-strip\">\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">DERMATOLOGISKT TESTAD</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">60-DAGARS NÖJDHETSGARANTI</span>\n  </span>\n  <span class=\"trust-strip__item\">\n    <span class=\"trust-strip__check\">✓</span>\n    <span class=\"trust-strip__text\">SÄKER BETALNING</span>\n  </span>\n</div>\n\n<style>\n  .trust-strip {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-wrap: wrap;\n    gap: 24px;\n    padding: 16px 12px;\n    background: transparent;\n    font-family: inherit;\n  }\n\n  .trust-strip__item {\n    display: inline-flex;\n    align-items: center;\n    gap: 6px;\n    color: #1a1a1a;\n    font-size: 12px;\n    font-weight: 400;\n    letter-spacing: 0.08em;\n    white-space: nowrap;\n  }\n\n  .trust-strip__check {\n    color: #d9879a;\n    font-weight: 700;\n    font-size: 13px;\n    line-height: 1;\n  }\n\n  .trust-strip__text {\n    line-height: 1;\n  }\n\n  @media (max-width: 480px) {\n    .trust-strip {\n      gap: 14px;\n      padding: 14px 8px;\n    }\n    .trust-strip__item {\n      font-size: 11px;\n      letter-spacing: 0.06em;\n    }\n  }\n</style>",
-            "padding": 0,
-            "bg_color": "rgba(0,0,0,0)",
-            "border_width": 0,
-            "border_color": "#e5e7eb",
-            "border_style": "solid",
-            "border_radius": 0,
-            "desktop_alignment": "center"
+            "feature_1_icon": "checkmark_icon",
+            "feature_1_svg": "",
+            "feature_1_content": "<p>60 dagars nöjdhetsgaranti</p>",
+            "feature_2_icon": "checkmark_icon",
+            "feature_2_svg": "",
+            "feature_2_content": "<p>Kliniskt testad</p>",
+            "feature_3_icon": "checkmark_icon",
+            "feature_3_svg": "",
+            "feature_3_content": "<p>I lager just nu</p>",
+            "icon_color": "#cc667c",
+            "icon_size": 14,
+            "text_size": 11,
+            "text_color": "#1f2937",
+            "icon_text_gap": 6,
+            "items_gap": 12,
+            "icon_size_mobile": 16,
+            "text_size_mobile": 12,
+            "icon_text_gap_mobile": 6,
+            "items_gap_mobile": 10,
+            "flex_direction_desktop": "row",
+            "justify_content_desktop": "space-between",
+            "align_items_desktop": "center",
+            "flex_wrap_desktop": "nowrap",
+            "flex_direction_mobile": "row",
+            "justify_content_mobile": "center",
+            "align_items_mobile": "center",
+            "flex_wrap_mobile": "wrap",
+            "margin_top": 8,
+            "margin_bottom": 0
           }
         }
       },
@@ -1375,7 +1402,7 @@
         "heading_XH6yjm",
         "body_text_8TJdpb",
         "button_xecnAG",
-        "custom_html_FKkzw7"
+        "three_icons_qjdrpi"
       ],
       "name": "Image with Blocks",
       "settings": {
@@ -1386,8 +1413,8 @@
         "heading_position": "top-content",
         "vertical_alignment": "center",
         "background_color": "#faf8f6",
-        "section_padding_top": 60,
-        "section_padding_bottom": 30,
+        "section_padding_top": 35,
+        "section_padding_bottom": 35,
         "block_spacing_mobile": 20,
         "block_spacing_desktop": 12,
         "content_block_spacing_mobile": 12,
@@ -1488,7 +1515,6 @@
         "text_qBkqXH",
         "text_bhKcfm"
       ],
-      "disabled": true,
       "settings": {
         "icon_position": "left",
         "icon_position_mobile": "top",
