@@ -134,7 +134,7 @@
       "type": "header",
       "settings": {
         "sticky_header_type": "always",
-        "show_line_separator": true,
+        "show_line_separator": false,
         "bg_color": "#ffffff",
         "background_opacity": 60,
         "backdrop_blur": 19,
