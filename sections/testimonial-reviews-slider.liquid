@@ -4,7 +4,7 @@
   A slider showcasing customer reviews and testimonials
 {% endcomment %}
 
-<section class="testimonial-reviews-slider section-{{ section.id }} {% if section.settings.hide_on_mobile %}hide-mobile{% endif %} {% if section.settings.hide_on_desktop %}hide-desktop{% endif %}" data-section-id="{{ section.id }}">
+<section class="testimonial-reviews-slider section-{{ section.id }} trs-mobile-{{ section.settings.mobile_layout | default: 'slider' }} {% if section.settings.hide_on_mobile %}hide-mobile{% endif %} {% if section.settings.hide_on_desktop %}hide-desktop{% endif %}" data-section-id="{{ section.id }}">
   <style>
     /* ===========================
        Section Background & Padding
@@ -201,6 +201,27 @@
       display: flex;
       gap: {{ section.settings.cards_gap }}px;
       width: max-content;
+    }
+
+    @media screen and (max-width: 749px) {
+      .section-{{ section.id }}.trs-mobile-stack .trs-slider-container {
+        overflow: visible;
+        padding-bottom: 0;
+        scrollbar-width: none;
+      }
+
+      .section-{{ section.id }}.trs-mobile-stack .trs-slider-container::-webkit-scrollbar {
+        display: none;
+      }
+
+      .section-{{ section.id }}.trs-mobile-stack .trs-slider-track {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .section-{{ section.id }}.trs-mobile-stack .trs-card {
+        width: 100%;
+      }
     }
 
     /* ===========================
@@ -577,6 +598,11 @@
  },
  {"type":"range","id":"intro_text_margin_bottom","min": 0,"max": 60,"step": 4,"unit":"px","label":"Intro Text Margin Bottom","default": 16
  },
+ {"type":"header","content":"Layout"},
+ {"type":"select","id":"mobile_layout","label":"Mobile layout","options": [
+ {"value":"slider","label":"Slider"},
+ {"value":"stack","label":"Stack"}
+ ],"default":"slider","info":"On mobile, show reviews as a horizontal slider or stacked in a column. Desktop always uses a slider."},
  {"type":"header","content":"Card Styling"},
  {"type":"range","id":"card_width_mobile","min": 200,"max": 400,"step": 10,"unit":"px","label":"Card Width (Mobile)","default": 280
  },
