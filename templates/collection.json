@@ -19,7 +19,7 @@
             "star_color": "#b8576e",
             "bg_stars_style": "full",
             "bg_star_color": "#ececec",
-            "label": "<strong>4,6</strong> baserat på <strong>700+</strong> recensioner",
+            "label": "<strong>4,6</strong> baserat på <strong>1 100+</strong> recensioner",
             "size": 14,
             "text_color": "#000000",
             "margin_top": 15,
@@ -29,7 +29,7 @@
         "heading_3N4cxb": {
           "type": "heading",
           "settings": {
-            "heading": "Koreansk hudvård. Hemma i ditt badrum.",
+            "heading": "<p>Koreansk hudvård. Hemma i ditt badrum.</p>",
             "heading_accent": "",
             "highlight_position": "below",
             "use_theme_colors": false,
