@@ -2924,6 +2924,7 @@
         "intro_text_font_size_mobile": 14,
         "intro_text_font_size_desktop": 18,
         "intro_text_margin_bottom": 16,
+        "mobile_layout": "stack",
         "card_width_mobile": 280,
         "card_width_desktop": 320,
         "card_min_height": 230,
