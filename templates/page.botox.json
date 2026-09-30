@@ -9,6 +9,44 @@
  */
 {
   "sections": {
+    "listicle_sticky_cta_cLbxFf": {
+      "type": "listicle-sticky-cta",
+      "name": "Listicle sticky CTA",
+      "settings": {
+        "button_label": "SE ERBJUDANDET →",
+        "button_note": "Utan nålar, utan bokad tid",
+        "button_link": "shopify://products/pdrn-collagen-volume-balm",
+        "cta_selector": ".iwb-button, [data-listicle-cta]",
+        "bar_background": "rgba(0,0,0,0)",
+        "bar_opacity": 0,
+        "backdrop_blur": 13,
+        "bar_padding_mobile": 10,
+        "bar_padding_desktop": 16,
+        "max_width": 600,
+        "z_index": 9900,
+        "button_bg_color": "#0f0f0f",
+        "enable_button_gradient": false,
+        "button_gradient": "linear-gradient(180deg, rgba(255, 228, 49, 1), rgba(249, 32, 32, 1) 100%)",
+        "button_text_color": "#ffffff",
+        "button_border_color": "#000000",
+        "button_border_width": 0,
+        "button_border_radius": 6,
+        "button_font_weight": "600",
+        "button_font_size_mobile": 16,
+        "button_font_size_desktop": 18,
+        "button_padding_vertical_mobile": 11,
+        "button_padding_horizontal_mobile": 27,
+        "button_padding_vertical_desktop": 14,
+        "button_padding_horizontal_desktop": 24,
+        "full_width_desktop": false,
+        "button_max_width_desktop": 480,
+        "note_color": "#FFFFFF",
+        "note_font_size_mobile": 14,
+        "note_font_size_desktop": 9,
+        "note_font_weight": "400",
+        "note_margin_top": 3
+      }
+    },
     "font_override_BC6cBh": {
       "type": "font-override",
       "name": "Page Font Override",
@@ -1146,7 +1184,7 @@
         "them_label_font_weight": 400,
         "them_label_color": "#000000",
         "them_image_enabled": true,
-        "them_image": "shopify://shop_images/LISTICLE_IMAGES-6.webp",
+        "them_image": "shopify://shop_images/LISTICLE_IMAGES-8.webp",
         "them_image_width": 120,
         "them_image_width_mobile": 100,
         "them_image_position": "above",
@@ -1531,7 +1569,7 @@
         "icon_bg_color": "rgba(0,0,0,0)",
         "icon_bg_color_active": "rgba(0,0,0,0)",
         "icon_border_width": 0,
-        "icon_border_color": "#000000",
+        "icon_border_color": "#FFFFFF",
         "icon_border_color_active": "#000000",
         "icon_border_radius": 0,
         "icon_padding": 0,
@@ -1557,6 +1595,19 @@
     "image_with_blocks_3T38fW": {
       "type": "image-with-blocks",
       "blocks": {
+        "image_YDQJVB": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image_desktop": "shopify://shop_images/HEYOZ_11-2.png",
+            "aspect_ratio_desktop": "1 / 1",
+            "aspect_ratio_mobile": "auto",
+            "border_radius": 10,
+            "max_width": 100,
+            "margin_top": 0,
+            "margin_bottom": 0
+          }
+        },
         "heading_XH6yjm": {
           "type": "heading",
           "settings": {
@@ -1685,6 +1736,7 @@
         }
       },
       "block_order": [
+        "image_YDQJVB",
         "heading_XH6yjm",
         "body_text_8TJdpb",
         "button_xecnAG",
@@ -1712,10 +1764,9 @@
       "blocks": {
         "button_4fG8JY": {
           "type": "button",
-          "disabled": true,
           "settings": {
-            "label": "SE ALLA PRODUKTER",
-            "link": "shopify://collections/all",
+            "label": "PROVA RISKFRITT I 60 DAGAR",
+            "link": "shopify://products/pdrn-collagen-volume-balm",
             "use_custom_styles": false,
             "bg_color": "#c45c26",
             "text_color": "#ffffff",
@@ -1841,13 +1892,13 @@
         "button_align": "center",
         "button_bg_color": "#cc667c",
         "button_text_color": "#ffffff",
-        "button_font_size_mobile": 18,
+        "button_font_size_mobile": 15,
         "button_font_size_desktop": 18,
         "button_font_weight": "600",
         "button_letter_spacing": 1,
         "button_text_transform": "uppercase",
         "button_padding_vertical": 14,
-        "button_padding_horizontal": 32,
+        "button_padding_horizontal": 18,
         "button_border_radius": 4,
         "bg_color": "#ffffff",
         "gradient_enabled": false,
@@ -1863,6 +1914,7 @@
     }
   },
   "order": [
+    "listicle_sticky_cta_cLbxFf",
     "font_override_BC6cBh",
     "custom_liquid_JycJL3",
     "image_with_blocks_RWNk7B",
