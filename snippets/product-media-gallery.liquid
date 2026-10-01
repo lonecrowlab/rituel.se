@@ -337,7 +337,12 @@
         id="Slider-Thumbnails-{{ section.id }}{{ id_append }}"
         class="thumbnail-list list-unstyled slider slider--mobile{% if section.settings.gallery_layout == 'thumbnail_slider' %} slider--tablet-up{% endif %}"
       >
-        {%- capture sizes -%}94px{%- endcapture -%}
+        {%- capture sizes -%}
+          (min-width: {{ settings.page_width }}px) calc(({{ settings.page_width | minus: 100 | times: media_width | round }} - 4rem) / 4),
+          (min-width: 990px) calc(({{ media_width | times: 100 }}vw - 4rem) / 4),
+          (min-width: 750px) calc((100vw - 15rem) / 8),
+          calc((100vw - 8rem) / 3)
+        {%- endcapture -%}
 
         {%- if featured_media != null and section.settings.display_variant_image_first -%}
           {%- liquid
@@ -375,11 +380,11 @@
             >
               {{
                 featured_media.preview_image
-                | image_url: width: 208
+                | image_url: width: 416
                 | image_tag:
                   loading: 'lazy',
                   sizes: sizes,
-                  widths: '74, 104, 162, 208',
+                  widths: '54, 74, 104, 162, 208, 324, 416',
                   id: thumbnail_id,
                   alt: featured_media.alt
                 | escape
@@ -449,11 +454,11 @@
               >
                 {{
                   media.preview_image
-                  | image_url: width: 208
+                  | image_url: width: 416
                   | image_tag:
                     loading: 'lazy',
                     sizes: sizes,
-                    widths: '74, 104, 162, 208',
+                    widths: '54, 74, 104, 162, 208, 324, 416',
                     id: thumbnail_id,
                     alt: media.alt
                   | escape

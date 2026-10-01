@@ -135,8 +135,7 @@
     }
 
     .icon-text-card[data-card-id="{{ card_id }}"] .material-icons,
-    .icon-text-card[data-card-id="{{ card_id }}"] .material-icons-outlined,
-    .icon-text-card[data-card-id="{{ card_id }}"] .material-icon-svg {
+    .icon-text-card[data-card-id="{{ card_id }}"] .material-icons-outlined {
       flex-shrink: 0;
       font-size: {{ icon_size }}px;
       width: {{ icon_size }}px;
@@ -221,15 +220,13 @@
 
       .icon-text-card[data-card-id="{{ card_id }}"] .material-icons,
       .icon-text-card[data-card-id="{{ card_id }}"] .material-icons-outlined,
-      .icon-text-card[data-card-id="{{ card_id }}"] .material-icon-svg,
       .icon-text-card[data-card-id="{{ card_id }}"] .custom-icon-svg {
         width: {{ mobile_icon_size }}px;
         height: {{ mobile_icon_size }}px;
       }
 
       .icon-text-card[data-card-id="{{ card_id }}"] .material-icons,
-      .icon-text-card[data-card-id="{{ card_id }}"] .material-icons-outlined,
-      .icon-text-card[data-card-id="{{ card_id }}"] .material-icon-svg {
+      .icon-text-card[data-card-id="{{ card_id }}"] .material-icons-outlined {
         font-size: {{ mobile_icon_size }}px;
       }
 
@@ -262,7 +259,7 @@
           </div>
         {% else %}
           {%- comment -%} Google Material Icon (SVG when available) {%- endcomment -%}
-          {% render 'material-icon', icon: google_icon, color: icon_color %}
+          {% render 'material-icon', icon: google_icon %}
         {% endif %}
 
         {% if title_text != blank %}
@@ -286,7 +283,7 @@
         </div>
       {% else %}
         {%- comment -%} Google Material Icon (SVG when available) {%- endcomment -%}
-        {% render 'material-icon', icon: google_icon, color: icon_color %}
+        {% render 'material-icon', icon: google_icon %}
       {% endif %}
 
       <div class="text-content">

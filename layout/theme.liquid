@@ -48,12 +48,15 @@
       }
     </style>
 
-    {% comment %} Core JavaScript - Load immediately with defer for menu/cart functionality {% endcomment %}
+    {% comment %} Core JavaScript - main.js deferred for menu/cart; secondary/cart-fixes load after window load {% endcomment %}
     <script src="{{ 'main.js' | asset_url }}" defer="defer" data-country-list-function="{{ settings.country_list_function }}" data-country-list="{{ settings.country_list }}" data-country-list-error="{{ settings.country_invalid_error_msg }}" data-animations-type="{{ settings.animations_type }}"></script>
-    <script src="{{ 'secondary.js' | asset_url }}" defer="defer"></script>
-
-    {% comment %} Plain-JS reliability fixes for cart quantity buttons/input and upsell toggle switches {% endcomment %}
-    <script src="{{ 'cart-fixes.js' | asset_url }}" defer="defer"></script>
+    <script>
+      window.__deferredThemeScriptSources = [
+        {{ 'secondary.js' | asset_url | json }},
+        {{ 'cart-fixes.js' | asset_url | json }}
+      ];
+    </script>
+    <script src="{{ 'deferred-theme-scripts.js' | asset_url }}" defer="defer"></script>
 
     {% comment %} Safe performance optimizations - prevent layout shifts {% endcomment %}
     <script src="{{ 'safe-performance.js' | asset_url }}" defer="defer"></script>
@@ -61,6 +64,7 @@
     {% comment %} Component coordinator - manages variant picker, quantity breaks, subscription, free gifts {% endcomment %}
 
     <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Google Material Icons - Loaded after page loads for better performance -->
     <script src="{{ 'font-loader.js' | asset_url }}" defer></script>
