@@ -2011,7 +2011,7 @@
         "link_letter_spacing": 1,
         "link_text_transform": "uppercase",
         "button_align": "center",
-        "button_bg_color": "#cc667c",
+        "button_bg_color": "#010101",
         "button_text_color": "#ffffff",
         "button_font_size_mobile": 15,
         "button_font_size_desktop": 18,
