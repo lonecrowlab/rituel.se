@@ -142,7 +142,7 @@
             "font_size_desktop": 16,
             "desktop_alignment": "left",
             "margin_top": 0,
-            "margin_bottom": 12
+            "margin_bottom": 8
           }
         },
         "review_gGTXnz": {
@@ -172,6 +172,7 @@
         },
         "button_iqinH8": {
           "type": "button",
+          "disabled": true,
           "settings": {
             "button_text": "PROVA RISKFRITT I 60 DAGAR",
             "button_link": "shopify://products/pdrn-collagen-volume-balm",
@@ -222,15 +223,14 @@
             "aspect_ratio_mobile": "auto",
             "border_radius": 0,
             "max_width": 100,
-            "margin_top": 8,
+            "margin_top": 0,
             "margin_bottom": 0
           }
         },
         "body_text_xkWDRN": {
           "type": "body_text",
-          "disabled": true,
           "settings": {
-            "body_text": "<p><em>Helena E., 52 år.</em></p>",
+            "body_text": "<p><em>Helena E., 52 år. </em>Fem veckor, två gånger om dagen.</p>",
             "font_weight": "400",
             "text_color": "#4a4a4a",
             "bg_color": "rgba(0,0,0,0)",
