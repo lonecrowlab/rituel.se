@@ -269,7 +269,7 @@
         "background_color": "#cc667c",
         "gradient_background": "",
         "text_color": "#ffffff",
-        "mobile_text_size": 13,
+        "mobile_text_size": 14,
         "desktop_text_size": 16,
         "mobile_icon_size": 20,
         "desktop_icon_size": 26,
@@ -936,7 +936,7 @@
         "body_text_PyqN9A": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>En av de vanligaste frågorna som dyker upp är var den går att köpa. Svaret är enkelt: den säljs bara via ritúels officiella hemsida, och skickas direkt hem till dig.</p><p><strong>OBS: Enligt ritúel produceras varje batch i begränsad mängd, den förra sålde slut på 11 dagar, och det dröjde 3 veckor innan nästa fanns i lager igen. </strong></p><p>Just nu erbjuder ritúel dessutom ett erbjudande för nya kunder:</p>",
+            "body_text": "<p>En av de vanligaste frågorna som dyker upp är var den går att köpa. Svaret är enkelt: den säljs bara via ritúels officiella hemsida, och skickas direkt hem till dig.</p><p><strong>OBS: Enligt ritúel produceras varje batch i begränsad mängd, den förra sålde slut på 11 dagar, och det dröjde 3 veckor innan nästa fanns i lager igen.&nbsp;</strong></p><p>Just nu erbjuder ritúel dessutom ett erbjudande för nya kunder:</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
