@@ -1141,7 +1141,7 @@
         "hide_desktop_image_on_mobile": true,
         "desktop_image_position": "left",
         "desktop_image_alignment": "center",
-        "desktop_image_width": 45,
+        "desktop_image_width": 50,
         "desktop_image_gap": 30,
         "desktop_image_border_radius": 0,
         "benefit_column_label": "",
