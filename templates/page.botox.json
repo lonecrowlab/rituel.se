@@ -172,7 +172,6 @@
         },
         "button_iqinH8": {
           "type": "button",
-          "disabled": true,
           "settings": {
             "button_text": "PROVA RISKFRITT I 60 DAGAR",
             "button_link": "shopify://products/pdrn-collagen-volume-balm",
@@ -224,7 +223,7 @@
             "border_radius": 0,
             "max_width": 100,
             "margin_top": 0,
-            "margin_bottom": 0
+            "margin_bottom": 8
           }
         },
         "body_text_xkWDRN": {
