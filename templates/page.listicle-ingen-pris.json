@@ -325,7 +325,7 @@
         "body_text_eTHJ3U": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Med åren tappar hyn sin fyllighet. Det syns först där huden är tunnast, under ögonen, vid mungiporna, runt läpparna. Inte bara som en rynka. Som en tomhet.</p><p>Det är därför krämerna inte hjälpt. De fyller inte i något. De ligger ovanpå.</p><p>Volufiline är en fransk ingrediens som får hyn att se fylligare och mer spänstig ut, i det lager där fylligheten faktiskt syns.</p><p>Resultat: en hud som ser fylligare, mjukare och mer levande ut.</p><p>Många ser skillnad efter en vecka. Inte bara i en före/efter-bild. I spegeln, på en tisdagsmorgon, när du inte letade efter den.</p>",
+            "body_text": "<p>Med åren tappar hyn sin fyllighet. Det syns först där huden är tunnast, under ögonen, vid mungiporna, runt läpparna. Inte bara som en rynka. Som en tomhet.</p><p>Det är därför krämerna inte hjälpt. De fyller inte i något.<strong> De ligger ovanpå.</strong></p><p>Volufiline&nbsp;är en fransk ingrediens som får hyn att se fylligare och mer spänstig ut, i det lager där fylligheten faktiskt syns.</p><p>Resultat: en hud som ser fylligare, mjukare och mer levande ut.</p><p>Många ser skillnad efter en vecka. Inte bara i en före/efter-bild. I spegeln, på en tisdagsmorgon, när du inte letade efter den.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -448,7 +448,7 @@
         "body_text_AbGcA8": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Volufiline™ kommer från franska laboratorier, framtagen för produkter där volym och spänst var hela poängen. Det var inte hudvård. Det var något helt annat.</p><p>Korea såg ingrediensen och ställde en bättre fråga: <em>varför smetar vi ut den överallt?</em></p><p>Så de satte den i en stick.</p><p>Nu applicerar du den exakt där du vill se skillnad. Inte i hela ansiktet. Inte \"en ärtstor mängd\". Precis på stället.</p><p>Det är skillnaden mellan att vattna hela trädgården och att vattna växten.</p>",
+            "body_text": "<p>Volufiline™ kommer från franska laboratorier, framtagen för produkter där volym och spänst var hela poängen. Det var inte hudvård. Det var något helt annat.</p><p>Korea såg ingrediensen och ställde en bättre fråga:&nbsp;<em>varför smetar vi ut den överallt?</em></p><p>Så de satte den i en stick.</p><p>Nu applicerar du den exakt där du vill se skillnad. Inte i hela ansiktet. Inte \"en ärtstor mängd\". Precis på stället.</p><p>Det är skillnaden mellan <strong>att vattna hela trädgården och att vattna växten.</strong></p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -536,7 +536,7 @@
         "body_text_HeegRk": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>En stick. 30 sekunder. Två gånger om dagen.</p><p>Du applicerar den precis där huden behöver det mest:</p><p>- Under ögonen<br/>- Vid smilelinjer<br/>- Runt läpparna<br/>- Mungiporna<br/>- Pannan<br/>- Halsen</p><p>Den används på fina linjer och rynkor över hela ansiktet, och kan användas på andra områden där huden behöver mer fyllighet. Den smälter in på sekunder. Ingen kladd. Ingen tung textur. Inget femstegs-program på morgonen.</p><p>Du kan göra det medan du borstar tänderna.</p>",
+            "body_text": "<p>En stick. 30 sekunder. Två gånger om dagen.</p><p>Du applicerar den precis där huden behöver det mest:</p><p>- Under ögonen<br/>- Vid smilelinjer<br/>- Runt läpparna<br/>- Mungiporna<br/>- Pannan<br/>- Halsen</p><p>Den används på fina linjer och rynkor över hela ansiktet, och kan användas på andra områden där huden behöver mer fyllighet. Den smälter in på sekunder. Ingen kladd. Ingen tung textur. Inget femstegs-program på morgonen.</p><p><strong>Du kan göra det medan du borstar tänderna.</strong></p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -685,7 +685,7 @@
           "settings": {
             "heading_before": "",
             "highlighted_text": "5.",
-            "heading_after": "Vad som händer efter 2 veckor",
+            "heading_after": "Vad kvinnor säger efter ett par veckor",
             "highlight_position": "above",
             "heading_tag": "h2",
             "text_align": "left",
@@ -712,7 +712,7 @@
         "body_text_TbfBGY": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Över 15 000 kvinnor har redan testat, och 4,6 av 5 är nöjda.</p><p>Det vi hör mest:</p><p>• \"Mannen min trodde jag hade tagit botox\"</p><p>• \"Mina vänner frågar vad jag gjort\"</p><p>• \"Avbokade min filler-tid efter en vecka\"</p><p>• \"Skrattrynkorna är mjukare redan\"</p><p>Resultatet kommer inte över en natt. Det är subtilt, naturligt och bygger sig upp över veckor, utan att någon ser att du gjort något.</p>",
+            "body_text": "<p>Över 15 000 kvinnor har testat, med snittbetyget 4,6 av 5.<br/><br/>Det vi hör oftast handlar inte om huden. Det handlar om vad andra har sagt:<br/><br/>- \"Mannen min trodde jag hade tagit botox\" - \"Mina vänner frågar vad jag gjort\"<br/>- \"Skrattrynkorna är mjukare redan\"<br/>- \"Avbokade min filler-tid efter en vecka\"&nbsp;<br/><br/>Det är skillnaden mot en klinik. Där ser folk att du gjort något.<strong> Här ser de bara att något är annorlunda, och de vet inte vad.</strong> Det bygger sig upp över veckor. Långsamt nog att ingen frågar varför du plötsligt ser annorlunda ut.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -835,7 +835,7 @@
         "body_text_7NrTb6": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Kliniken fungerar. Ingen påstår något annat.</p><p>Men den kostar tid du inte har, pengar du hellre lägger på annat, och ett beslut du måste ta om var tredje månad. Med en nål, varje gång.</p><p>Du riskerar hängande ögonlock. Stelhet. Ett ansikte som inte längre rör sig som ditt.</p><p>PDRN Collagen Volume Balm applicerar du hemma. En 1/10 del av kostnaden, utan att det syns på något annat än hyn. Ingen klinik. Inga nålar. Ingen som behöver veta.</p><p>Samma ingrediens som tidigare bara fanns på franska estetiska kliniker, nu i en stick för ansiktet.</p>",
+            "body_text": "<p>Kliniken fungerar. Ingen påstår något annat.</p><p>Men den kostar tid du inte har, pengar du hellre lägger på annat, och ett beslut du måste ta om var tredje månad. Med en nål, varje gång.</p><p>Du riskerar hängande ögonlock. Stelhet. Ett ansikte som inte längre rör sig som ditt.</p><p>PDRN Collagen Volume Balm applicerar du hemma. En 1/10 del av kostnaden, utan att det syns på något annat än hyn. <strong>Ingen klinik. Inga nålar. Ingen som behöver veta.</strong></p><p>Samma ingrediens som tidigare bara fanns på franska estetiska kliniker, nu i en stick för ansiktet.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -936,7 +936,7 @@
         "body_text_PyqN9A": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>En av de vanligaste frågorna som dyker upp är var den går att köpa. Svaret är enkelt: den säljs bara via ritúels officiella hemsida, och skickas direkt hem till dig.</p><p><strong>OBS: Enligt ritúel produceras varje batch i begränsad mängd, den förra sålde slut på 11 dagar, och det dröjde 3 veckor innan nästa fanns i lager igen.&nbsp;</strong></p><p>Just nu erbjuder ritúel dessutom ett erbjudande för nya kunder:</p>",
+            "body_text": "<p>En av de vanligaste frågorna som dyker upp är var den går att köpa. Svaret är enkelt: den säljs bara via ritúels officiella hemsida och skickas direkt hem till dig. Det har dykt upp liknande sticks på andra sajter, men de innehåller varken PDRN eller Volufiline.</p><p>OBS:<strong>&nbsp;</strong>Enligt ritúel produceras varje batch i begränsad mängd. Den förra<strong>&nbsp;tog slut på 11 dagar,&nbsp;</strong>och det dröjde tre veckor innan nästa fanns i lager igen.&nbsp;</p><p>Just nu kör ritúel ett introduktionspris för nya kunder, med upp till 55 % rabatt när man tar flera sticks.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
