@@ -1079,7 +1079,7 @@
           "type": "review",
           "settings": {
             "title": "Inte längre torr som en ödla",
-            "description": "Jag jobbar på spa och har provat de flesta märkena. Inget av dem återfuktar och suddar ut fina linjer som den här",
+            "description": "Jag jobbar på spa och har provat de flesta märkena. Inget av dem återfuktar och suddar ut fina linjer som den här.",
             "star_rating": 5,
             "name": "Eva-Lena Å., 55 år · 19 juli 2026",
             "show_verified": false
@@ -1312,10 +1312,10 @@
         "heading_margin_top": 0,
         "heading_margin_bottom": 16,
         "highlighted_gradient_enabled": false,
-        "highlighted_color": "#000000",
+        "highlighted_color": "#CC667C",
         "highlighted_gradient": "linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)",
         "highlighted_font_size_desktop": 22,
-        "highlighted_font_size_mobile": 16,
+        "highlighted_font_size_mobile": 20,
         "highlighted_font_weight": "400",
         "highlighted_spacing": 12,
         "intro_text": "",
