@@ -711,7 +711,7 @@
         "body_text_TbfBGY": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Över 15 000 kvinnor har testat, med snittbetyget 4,6 av 5.<br/><br/>Det vi hör oftast handlar inte om huden. Det handlar om vad andra har sagt:<br/><br/>- \"Mannen min trodde jag hade tagit botox\" - \"Mina vänner frågar vad jag gjort\"<br/>- \"Skrattrynkorna är mjukare redan\"<br/>- \"Avbokade min filler-tid efter en vecka\"&nbsp;<br/><br/>Det är skillnaden mot en klinik. Där ser folk att du gjort något.<strong> Här ser de bara att något är annorlunda, och de vet inte vad.</strong> Det bygger sig upp över veckor. Långsamt nog att ingen frågar varför du plötsligt ser annorlunda ut.</p>",
+            "body_text": "<p>Över 15 000 kvinnor har testat, med snittbetyget 4,6 av 5.<br/><br/>Det vi hör oftast handlar inte om huden. Det handlar om vad andra har sagt:<br/><br/>- \"Mannen min trodde jag hade tagit botox\" - \"Mina vänner frågar vad jag gjort\"<br/>- \"Skrattrynkorna är mjukare redan\"<br/>- \"Avbokade min filler-tid efter en vecka\"&nbsp;<br/><br/>Det är skillnaden mot en klinik. Där ser folk att du gjort något.<strong> Här ser de bara att något är annorlunda, och de vet inte vad.</strong><br/><br/>Det bygger sig upp över veckor. Långsamt nog att ingen frågar varför du plötsligt ser annorlunda ut.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
