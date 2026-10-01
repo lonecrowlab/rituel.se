@@ -1199,6 +1199,7 @@
         "review_eYME8q",
         "review_aj63ka"
       ],
+      "disabled": true,
       "name": "Customer Review Slider",
       "settings": {
         "use_theme_colors": true,
