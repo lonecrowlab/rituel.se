@@ -14,16 +14,15 @@
       "blocks": {
         "rating_stars_neWaWD": {
           "type": "rating_stars",
-          "disabled": true,
           "settings": {
             "stars_rating_source": "original",
             "rating": 4.4,
             "show_rating_text": true,
-            "rating_text": "[original.rating] / 5 · [original.count] happy customers!",
-            "show_popup_chevron": true,
+            "rating_text": "[original.rating]  baserat på  [original.count] recensioner",
+            "show_popup_chevron": false,
             "chevron_color": "#343f20",
-            "text_color": "#000000",
-            "text_font_size": 12,
+            "text_color": "#545454",
+            "text_font_size": 14,
             "text_font_weight": "400",
             "text_margin_top": 0,
             "scroll_id": "",
@@ -68,6 +67,7 @@
         },
         "trustwill_trustoo_star_rating_widget_CCjHME": {
           "type": "shopify://apps/cwilltrustoo-reviews/blocks/star-rating-widget/c8f15077-6475-4e86-ad06-b66038d5ba2c",
+          "disabled": true,
           "settings": {
             "star_size": 15,
             "font_size": 14,
@@ -864,7 +864,7 @@
         "section_bg_gradient": "linear-gradient(135deg, rgba(102, 126, 234, 1), rgba(118, 75, 162, 1) 100%)",
         "overlay_info_on_image_mobile": false,
         "display_variant_image_first": false,
-        "disable_prepend": false,
+        "disable_prepend": true,
         "hide_variants": false,
         "variant_image_filtering": "none",
         "image_zoom": "none",
