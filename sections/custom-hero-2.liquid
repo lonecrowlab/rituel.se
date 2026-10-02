@@ -609,6 +609,7 @@
     html.ch2-th-ready .section-header:not(:has(#Details-menu-drawer-container[open])) .header__icons .header__icon:not(.header__icon--menu),
     html.ch2-th-ready .section-header:not(:has(#Details-menu-drawer-container[open])) .header__icons .header__icon:not(.header__icon--menu) svg,
     html.ch2-th-ready .section-header:not(:has(#Details-menu-drawer-container[open])) .header__icons .header__icon:not(.header__icon--menu) .material-icon,
+    html.ch2-th-ready .section-header:not(:has(#Details-menu-drawer-container[open])) .header__icons .header__icon:not(.header__icon--menu) .material-icon-svg,
     html.ch2-th-ready .section-header:not(:has(#Details-menu-drawer-container[open])) .header__heading-link,
     html.ch2-th-ready .section-header:not(:has(#Details-menu-drawer-container[open])) .header__inline-menu .header__menu-item {
       transition: color 0.35s ease, fill 0.35s ease;
@@ -637,6 +638,7 @@
       html.ch2-th-overlay .section-header:not(:has(#Details-menu-drawer-container[open])) .header__icons .header__icon:not(.header__icon--menu),
       html.ch2-th-overlay .section-header:not(:has(#Details-menu-drawer-container[open])) .header__icons .header__icon:not(.header__icon--menu) svg,
       html.ch2-th-overlay .section-header:not(:has(#Details-menu-drawer-container[open])) .header__icons .header__icon:not(.header__icon--menu) .material-icon,
+      html.ch2-th-overlay .section-header:not(:has(#Details-menu-drawer-container[open])) .header__icons .header__icon:not(.header__icon--menu) .material-icon-svg,
       html.ch2-th-overlay .section-header:not(:has(#Details-menu-drawer-container[open])) .header__heading,
       html.ch2-th-overlay .section-header:not(:has(#Details-menu-drawer-container[open])) .header__heading-link,
       html.ch2-th-overlay .section-header:not(:has(#Details-menu-drawer-container[open])) .header__inline-menu .header__menu-item,
@@ -648,7 +650,8 @@
       html.ch2-th-overlay .section-header header-drawer > details:not([open]) > summary.header__icon--menu,
       html.ch2-th-overlay .section-header header-drawer > details:not([open]) > summary.header__icon--menu .icon-hamburger,
       html.ch2-th-overlay .section-header header-drawer > details:not([open]) > summary.header__icon--menu .icon-hamburger svg,
-      html.ch2-th-overlay .section-header header-drawer > details:not([open]) > summary.header__icon--menu .icon-hamburger .material-icon {
+      html.ch2-th-overlay .section-header header-drawer > details:not([open]) > summary.header__icon--menu .icon-hamburger .material-icon,
+      html.ch2-th-overlay .section-header header-drawer > details:not([open]) > summary.header__icon--menu .icon-hamburger .material-icon-svg {
         color: #FFFFFF !important;
         fill: #FFFFFF !important;
       }
@@ -662,6 +665,7 @@
       html.ch2-th-overlay .section-header:not(:has(#Details-menu-drawer-container[open])) .header__icons .header__icon:not(.header__icon--menu),
       html.ch2-th-overlay .section-header:not(:has(#Details-menu-drawer-container[open])) .header__icons .header__icon:not(.header__icon--menu) svg,
       html.ch2-th-overlay .section-header:not(:has(#Details-menu-drawer-container[open])) .header__icons .header__icon:not(.header__icon--menu) .material-icon,
+      html.ch2-th-overlay .section-header:not(:has(#Details-menu-drawer-container[open])) .header__icons .header__icon:not(.header__icon--menu) .material-icon-svg,
       html.ch2-th-overlay .section-header:not(:has(#Details-menu-drawer-container[open])) .header__heading,
       html.ch2-th-overlay .section-header:not(:has(#Details-menu-drawer-container[open])) .header__heading-link,
       html.ch2-th-overlay .section-header:not(:has(#Details-menu-drawer-container[open])) .header__inline-menu .header__menu-item,
@@ -672,7 +676,8 @@
       html.ch2-th-overlay .section-header header-drawer > details:not([open]) > summary.header__icon--menu,
       html.ch2-th-overlay .section-header header-drawer > details:not([open]) > summary.header__icon--menu .icon-hamburger,
       html.ch2-th-overlay .section-header header-drawer > details:not([open]) > summary.header__icon--menu .icon-hamburger svg,
-      html.ch2-th-overlay .section-header header-drawer > details:not([open]) > summary.header__icon--menu .icon-hamburger .material-icon {
+      html.ch2-th-overlay .section-header header-drawer > details:not([open]) > summary.header__icon--menu .icon-hamburger .material-icon,
+      html.ch2-th-overlay .section-header header-drawer > details:not([open]) > summary.header__icon--menu .icon-hamburger .material-icon-svg {
         color: #000000 !important;
         fill: #000000 !important;
       }
@@ -683,10 +688,12 @@
     html.ch2-th-ready .section-header #menu-drawer .menu-drawer__close-btn svg,
     html.ch2-th-ready .section-header #menu-drawer .menu-drawer__close-btn .icon,
     html.ch2-th-ready .section-header #menu-drawer .menu-drawer__close-btn .material-icon,
+    html.ch2-th-ready .section-header #menu-drawer .menu-drawer__close-btn .material-icon-svg,
     html.ch2-th-overlay .section-header #menu-drawer .menu-drawer__close-btn,
     html.ch2-th-overlay .section-header #menu-drawer .menu-drawer__close-btn svg,
     html.ch2-th-overlay .section-header #menu-drawer .menu-drawer__close-btn .icon,
-    html.ch2-th-overlay .section-header #menu-drawer .menu-drawer__close-btn .material-icon {
+    html.ch2-th-overlay .section-header #menu-drawer .menu-drawer__close-btn .material-icon,
+    html.ch2-th-overlay .section-header #menu-drawer .menu-drawer__close-btn .material-icon-svg {
       color: var(--drawer-text) !important;
       fill: var(--drawer-text) !important;
     }

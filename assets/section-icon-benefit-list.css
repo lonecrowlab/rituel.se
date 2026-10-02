@@ -224,7 +224,8 @@
   fill: currentColor;
 }
 
-.icon-benefit-item__icon .material-icons {
+.icon-benefit-item__icon .material-icons,
+.icon-benefit-item__icon .material-icon-svg {
   font-size: var(--icon-size, 40px);
   width: 1em;
   height: 1em;
@@ -305,7 +306,8 @@
     height: var(--icon-size-mobile, 32px);
   }
 
-  .icon-benefit-item__icon .material-icons {
+  .icon-benefit-item__icon .material-icons,
+.icon-benefit-item__icon .material-icon-svg {
     font-size: var(--icon-size-mobile, 32px);
   }
 

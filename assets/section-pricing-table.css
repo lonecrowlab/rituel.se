@@ -42,7 +42,8 @@
 .plan-card__icon img {
   width: var(--icon-size);
 }
-.plan-card__icon .material-icon {
+.plan-card__icon .material-icon,
+.plan-card__icon .material-icon-svg {
   font-size: var(--icon-size);
 }
 
@@ -258,7 +259,8 @@
   object-fit: cover;
   object-fit: contain;
 }
-.plan-card-style-3 .plan-card__icon .material-icon {
+.plan-card-style-3 .plan-card__icon .material-icon,
+.plan-card__icon .material-icon-svg {
   font-size: calc(var(--icon-size) * 0.8);
 }
 .plan-card-style-3 .plan-card__icon--small {

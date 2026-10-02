@@ -178,7 +178,7 @@
                   </div>
                 {% elsif block.settings.us_value == 'google_icon' %}
                   <span class="uvt-google-icon uvt-google-icon-us-{{ block.id }}" style="font-size: {{ us_size }}px; color: {{ us_color }};">
-                    {% render 'material-icon', icon: block.settings.us_google_icon %}
+                    {% render 'material-icon', icon: block.settings.us_google_icon, color: us_color, size: us_size %}
                   </span>
                 {% elsif block.settings.us_value == 'text' %}
                   {{ block.settings.us_custom_text }}
@@ -263,7 +263,7 @@
                   </div>
                 {% elsif block.settings.them_value == 'google_icon' %}
                   <span class="uvt-google-icon uvt-google-icon-them-{{ block.id }}" style="font-size: {{ them_size }}px; color: {{ them_color }};">
-                    {% render 'material-icon', icon: block.settings.them_google_icon %}
+                    {% render 'material-icon', icon: block.settings.them_google_icon, color: them_color, size: them_size %}
                   </span>
                 {% elsif block.settings.them_value == 'text' %}
                   {{ block.settings.them_custom_text }}
@@ -420,7 +420,7 @@
                   </div>
                 {% elsif block.settings.us_value == 'google_icon' %}
                   <span class="uvt-google-icon uvt-google-icon-us-{{ block.id }}" style="font-size: {{ us_size }}px; color: {{ us_color }};">
-                    {% render 'material-icon', icon: block.settings.us_google_icon %}
+                    {% render 'material-icon', icon: block.settings.us_google_icon, color: us_color, size: us_size %}
                   </span>
                 {% elsif block.settings.us_value == 'text' %}
                   {{ block.settings.us_custom_text }}
@@ -441,7 +441,7 @@
                   </div>
                 {% elsif block.settings.them_value == 'google_icon' %}
                   <span class="uvt-google-icon uvt-google-icon-them-{{ block.id }}" style="font-size: {{ them_size }}px; color: {{ them_color }};">
-                    {% render 'material-icon', icon: block.settings.them_google_icon %}
+                    {% render 'material-icon', icon: block.settings.them_google_icon, color: them_color, size: them_size %}
                   </span>
                 {% elsif block.settings.them_value == 'text' %}
                   {{ block.settings.them_custom_text }}
@@ -1211,6 +1211,13 @@
 
 .section-{{ section.id }} .uvt-icon-cross {
   color: {{ section.settings.cross_icon_color }};
+}
+
+.section-{{ section.id }} .uvt-google-icon .material-icon-svg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
 }
 
 /* Custom SVG Icons */

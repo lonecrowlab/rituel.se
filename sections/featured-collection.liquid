@@ -300,7 +300,8 @@
     flex-shrink: 0;
   }
 
-  .section-{{ section.id }} .fc-badge-icon .material-icon {
+  .section-{{ section.id }} .fc-badge-icon .material-icon,
+  .section-{{ section.id }} .fc-badge-icon .material-icon-svg {
     font-size: {{ section.settings.custom_badge_icon_size }}px;
     width: {{ section.settings.custom_badge_icon_size }}px;
     height: {{ section.settings.custom_badge_icon_size }}px;
@@ -379,7 +380,8 @@
     transform: translateY(-2px);
   }
 
-  .section-{{ section.id }} .fc-view-all-btn .material-icon {
+  .section-{{ section.id }} .fc-view-all-btn .material-icon,
+  .section-{{ section.id }} .fc-view-all-btn .material-icon-svg {
     font-size: {{ section.settings.view_all_icon_size }}px;
     color: {{ section.settings.view_all_icon_color }};
     width: {{ section.settings.view_all_icon_size }}px;
@@ -546,7 +548,8 @@
     transform: translateY(-2px);
   }
 
-  .section-{{ section.id }} .fc-view-product-btn .material-icon {
+  .section-{{ section.id }} .fc-view-product-btn .material-icon,
+  .section-{{ section.id }} .fc-view-product-btn .material-icon-svg {
     font-size: {{ section.settings.button_icon_size }}px;
     color: {{ section.settings.button_icon_color }};
     width: {{ section.settings.button_icon_size }}px;

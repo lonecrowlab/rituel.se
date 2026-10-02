@@ -44,7 +44,7 @@
   {%- unless heading_1_empty -%}
     <li class="icon-with-text__item">
       {%- if block.settings.image_1 == null -%}
-        {% render 'material-icon', icon: block.settings.icon_1, filled: block.settings.icon_1_fill, custom_color: block.settings.icon_color %}
+        {% render 'material-icon', icon: block.settings.icon_1, filled: block.settings.icon_1_fill, color: block.settings.icon_color %}
       {%- else -%}
         <img
           src="{{ block.settings.image_1 | image_url }}"
@@ -66,7 +66,7 @@
   {%- unless heading_2_empty -%}
     <li class="icon-with-text__item">
       {%- if block.settings.image_2 == null -%}
-        {% render 'material-icon', icon: block.settings.icon_2, filled: block.settings.icon_2_fill, custom_color: block.settings.icon_color %}
+        {% render 'material-icon', icon: block.settings.icon_2, filled: block.settings.icon_2_fill, color: block.settings.icon_color %}
       {%- else -%}
         <img
           src="{{ block.settings.image_2 | image_url }}"
@@ -88,7 +88,7 @@
   {%- unless heading_3_empty -%}
     <li class="icon-with-text__item">
       {%- if block.settings.image_3 == null -%}
-        {% render 'material-icon', icon: block.settings.icon_3, filled: block.settings.icon_3_fill, custom_color: block.settings.icon_color %}
+        {% render 'material-icon', icon: block.settings.icon_3, filled: block.settings.icon_3_fill, color: block.settings.icon_color %}
       {%- else -%}
         <img
           src="{{ block.settings.image_3 | image_url }}"

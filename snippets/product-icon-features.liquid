@@ -28,6 +28,9 @@
           if custom_icon_color == blank
             assign custom_icon_color = block.settings.icon_color
           endif
+          if custom_icon_color == blank
+            assign custom_icon_color = '#b8576e'
+          endif
           if custom_icon_bg == blank
             assign custom_icon_bg = block.settings.icon_bg_color
           endif
@@ -55,7 +58,7 @@
             {% elsif block.settings[icon_name] != blank %}
               {%- comment -%} Google Material Icon (SVG when available) {%- endcomment -%}
               <span class="product-icon__material-{{ block.id }}" style="color: {{ custom_icon_color }};">
-                {% render 'material-icon', icon: block.settings[icon_name] %}
+                {% render 'material-icon', icon: block.settings[icon_name], color: custom_icon_color, size: block.settings.material_icon_size %}
               </span>
             {% endif %}
           </div>
@@ -134,8 +137,11 @@
     fill: {{ block.settings.icon_color }};
   }
 
-  .product-icon__material-{{ block.id }} {
+  .product-icon__material-{{ block.id }},
+  .product-icon__material-{{ block.id }} .material-icon-svg {
     font-size: {{ block.settings.material_icon_size }}px;
+    width: {{ block.settings.material_icon_size }}px;
+    height: {{ block.settings.material_icon_size }}px;
     color: {{ block.settings.icon_color }};
     line-height: 1;
     font-variation-settings:

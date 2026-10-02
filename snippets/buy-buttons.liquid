@@ -59,6 +59,7 @@
   #ProductSubmitButton-{{ section_id }}.loading .main-atc__label,
   #ProductSubmitButton-{{ section_id }}.loading .atc-button__icon-svg,
   #ProductSubmitButton-{{ section_id }}.loading .material-icon,
+  #ProductSubmitButton-{{ section_id }}.loading .material-icon-svg,
   #ProductSubmitButton-{{ section_id }}.loading .loading-overlay__spinner {
     opacity: 0;
   }
@@ -68,7 +69,8 @@
     100% { transform: rotate(360deg); }
   }
 
-  #ProductSubmitButton-{{ section_id }} .material-icon {
+  #ProductSubmitButton-{{ section_id }} .material-icon,
+  #ProductSubmitButton-{{ section_id }} .material-icon-svg {
     font-size: var(--atc-icon-size, 20px) !important;
     color: var(--atc-icon-color, #ffffff) !important;
     width: var(--atc-icon-size, 20px) !important;
@@ -81,6 +83,10 @@
     line-height: 1 !important;
     vertical-align: middle !important;
     margin: 0 !important;
+  }
+
+  #ProductSubmitButton-{{ section_id }} .material-icon-svg svg {
+    fill: var(--atc-icon-color, #ffffff) !important;
   }
 
   #ProductSubmitButton-{{ section_id }} .atc-button__icon-svg {

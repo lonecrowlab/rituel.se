@@ -136,8 +136,11 @@
       fill: {{ section.settings.icon_color }};
     }
 
-    .section-{{ section.id }} .ht-item-icon .material-icon {
+    .section-{{ section.id }} .ht-item-icon .material-icon,
+    .section-{{ section.id }} .ht-item-icon .material-icon-svg {
       font-size: {{ section.settings.icon_size }}px;
+      width: {{ section.settings.icon_size }}px;
+      height: {{ section.settings.icon_size }}px;
       color: {{ section.settings.icon_color }};
     }
 
@@ -190,7 +193,7 @@
               </div>
             {% elsif block.settings.icon != blank %}
               <div class="ht-item-icon">
-                {% render 'material-icon', icon: block.settings.icon, filled: block.settings.icon_filled %}
+                {% render 'material-icon', icon: block.settings.icon, filled: block.settings.icon_filled, color: section.settings.icon_color, size: section.settings.icon_size %}
               </div>
             {% endif %}
 
@@ -222,7 +225,7 @@
               </div>
             {% elsif block.settings.icon != blank %}
               <div class="ht-item-icon">
-                {% render 'material-icon', icon: block.settings.icon, filled: block.settings.icon_filled %}
+                {% render 'material-icon', icon: block.settings.icon, filled: block.settings.icon_filled, color: section.settings.icon_color, size: section.settings.icon_size %}
               </div>
             {% endif %}
 
