@@ -16,6 +16,7 @@
     - media_fit: {String} Method ("contain" or "cover") to fit image into container
     - media_width: {Float} The width percentage that the media column occupies on desktop.
     - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
+    - lcp_candidate: {Boolean} Mark as LCP candidate. Default: true (optional)
 
     Usage:
     {% render 'product-thumbnail',
@@ -29,15 +30,21 @@
 {%- liquid
   assign image_widths = '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
   assign image_max_width = 1946
+  assign is_lcp = false
 
-  unless lazy_load == false
-    assign lazy = 'lazy'
-  else
+  unless lcp_candidate == false
+    if lazy_load == false or position == 1
+      assign is_lcp = true
+    endif
+  endunless
+
+  if is_lcp
     assign lazy = 'eager'
-    assign fetch_priority = 'high'
     assign image_widths = '246, 493, 600, 713, 823, 990'
     assign image_max_width = 990
-  endunless
+  else
+    assign lazy = 'lazy'
+  endif
 
   assign desktop_columns = 1
   if desktop_layout == 'columns' and media_count > 1
@@ -51,6 +58,14 @@
 
   if media.media_type == 'image'
     assign image_class = 'image-magnify-' | append: section.settings.image_zoom
+  endif
+
+  if is_lcp
+    if image_class != blank
+      assign image_class = image_class | append: ' lcp-image'
+    else
+      assign image_class = 'lcp-image'
+    endif
   endif
 
   assign has_modal = false
@@ -94,24 +109,42 @@
     {%- if has_video_modal or media.media_type == 'external_video' -%}
       <span class="product__media-icon motion-reduce quick-add-hidden">{% render 'icon-play' %}</span>
       <div class="product__media media">
-        {{ media.preview_image | image_url: width: image_max_width | image_tag:
-          loading: lazy,
-          fetchpriority: fetch_priority,
-          sizes: sizes,
-          widths: image_widths
-        }}
+        {% if is_lcp %}
+          {{ media.preview_image | image_url: width: image_max_width | image_tag:
+            class: image_class,
+            loading: 'eager',
+            fetchpriority: 'high',
+            sizes: sizes,
+            widths: image_widths
+          }}
+        {% else %}
+          {{ media.preview_image | image_url: width: image_max_width | image_tag:
+            loading: 'lazy',
+            sizes: sizes,
+            widths: image_widths
+          }}
+        {% endif %}
       </div>
       <a href="{% if media.media_type == 'video' %}{{ media.sources[1].url }}{% else %}{{ media | external_video_url }}{% endif %}" class="product__media-toggle">
         <span class="visually-hidden">{{ 'products.product.video_exit_message' | t: title: product.title | escape }}</span>
       </a>
     {%- else -%}
       <div class="product__media media">
-        {{ media.preview_image | image_url: width: image_max_width | image_tag:
-          loading: lazy,
-          fetchpriority: fetch_priority,
-          sizes: sizes,
-          widths: image_widths
-        }}
+        {% if is_lcp %}
+          {{ media.preview_image | image_url: width: image_max_width | image_tag:
+            class: image_class,
+            loading: 'eager',
+            fetchpriority: 'high',
+            sizes: sizes,
+            widths: image_widths
+          }}
+        {% else %}
+          {{ media.preview_image | image_url: width: image_max_width | image_tag:
+            loading: 'lazy',
+            sizes: sizes,
+            widths: image_widths
+          }}
+        {% endif %}
       </div>
     {%- endif -%}
   </noscript>
@@ -190,13 +223,22 @@
           {% endif %}
         </internal-video>
       {% else %}
-        {{ media.preview_image | image_url: width: image_max_width | image_tag:
-          class: image_class,
-          loading: lazy,
-          fetchpriority: fetch_priority,
-          sizes: sizes,
-          widths: image_widths
-        }}
+        {% if is_lcp %}
+          {{ media.preview_image | image_url: width: image_max_width | image_tag:
+            class: image_class,
+            loading: 'eager',
+            fetchpriority: 'high',
+            sizes: sizes,
+            widths: image_widths
+          }}
+        {% else %}
+          {{ media.preview_image | image_url: width: image_max_width | image_tag:
+            class: image_class,
+            loading: 'lazy',
+            sizes: sizes,
+            widths: image_widths
+          }}
+        {% endif %}
       {% endif %}
     </div>
     <button class="product__media-toggle quick-add-hidden product__media-zoom-{{ section.settings.image_zoom }}{% if is_no_modal_video %} hidden{% endif %}" type="button" aria-haspopup="dialog" data-media-id="{{ media.id }}">
@@ -222,12 +264,21 @@
           {%- render 'icon-play' -%}
         {%- endif -%}
       </span>
-      {{ media.preview_image | image_url: width: image_max_width | image_tag:
-        loading: lazy,
-        fetchpriority: fetch_priority,
-        sizes: sizes,
-        widths: image_widths
-      }}
+      {% if is_lcp %}
+        {{ media.preview_image | image_url: width: image_max_width | image_tag:
+          class: image_class,
+          loading: 'eager',
+          fetchpriority: 'high',
+          sizes: sizes,
+          widths: image_widths
+        }}
+      {% else %}
+        {{ media.preview_image | image_url: width: image_max_width | image_tag:
+          loading: 'lazy',
+          sizes: sizes,
+          widths: image_widths
+        }}
+      {% endif %}
     </button>
     <template>
       {%- liquid

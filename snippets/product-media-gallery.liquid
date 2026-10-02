@@ -55,8 +55,10 @@
   endif
 
   assign id_append = ''
+  assign lcp_candidate = true
   if is_duplicate
     assign id_append = '-duplicate'
+    assign lcp_candidate = false
   endif
 
   assign first_featured_media = false
@@ -173,7 +175,7 @@
           data-media-id="{{ section.id }}-{{ featured_media.id }}"
           data-alt="{{ featured_media.alt }}"
         >
-          {% render 'product-thumbnail', media: featured_media, media_count: media_count, position: media_position, desktop_layout: section.settings.gallery_layout, mobile_layout: section.settings.mobile_thumbnails, loop: section.settings.enable_video_looping, modal_id: section.id, xr_button: true, media_width: media_width, media_fit: section.settings.media_fit, constrain_to_viewport: section.settings.constrain_to_viewport, lazy_load: false %}
+          {% render 'product-thumbnail', media: featured_media, media_count: media_count, position: media_position, desktop_layout: section.settings.gallery_layout, mobile_layout: section.settings.mobile_thumbnails, loop: section.settings.enable_video_looping, modal_id: section.id, xr_button: true, media_width: media_width, media_fit: section.settings.media_fit, constrain_to_viewport: section.settings.constrain_to_viewport, lazy_load: false, lcp_candidate: lcp_candidate %}
         </li>
       {%- endif -%}
       {%- for media in product.media -%}
@@ -196,7 +198,7 @@
             data-media-id="{{ section.id }}-{{ media.id }}"
             data-alt="{{ media.alt }}"
           >
-            {% render 'product-thumbnail', media: media, media_count: media_count, position: media_position, desktop_layout: section.settings.gallery_layout, mobile_layout: section.settings.mobile_thumbnails, loop: section.settings.enable_video_looping, modal_id: section.id, xr_button: true, media_width: media_width, media_fit: section.settings.media_fit, constrain_to_viewport: section.settings.constrain_to_viewport, lazy_load: lazy_load %}
+            {% render 'product-thumbnail', media: media, media_count: media_count, position: media_position, desktop_layout: section.settings.gallery_layout, mobile_layout: section.settings.mobile_thumbnails, loop: section.settings.enable_video_looping, modal_id: section.id, xr_button: true, media_width: media_width, media_fit: section.settings.media_fit, constrain_to_viewport: section.settings.constrain_to_viewport, lazy_load: lazy_load, lcp_candidate: lcp_candidate %}
           </li>
         {%- endif -%}
       {%- endfor -%}

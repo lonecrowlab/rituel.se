@@ -20,6 +20,39 @@
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    {%- if request.page_type == 'product' and product -%}
+      {%- liquid
+        assign lcp_media = product.selected_or_first_available_variant.featured_media
+        if lcp_media == null
+          assign lcp_media = product.featured_media
+        endif
+        if lcp_media == null and product.media.size > 0
+          assign lcp_media = product.media.first
+        endif
+      -%}
+      {%- if lcp_media -%}
+        {%- liquid
+          assign lcp_image = lcp_media.preview_image
+          if lcp_media.media_type == 'image'
+            assign lcp_image = lcp_media
+          endif
+          assign lcp_widths = '493,600,713,823,990' | split: ','
+        -%}
+        {%- capture lcp_srcset -%}
+          {%- for width in lcp_widths -%}
+            {{- lcp_image | image_url: width: width }} {{ width }}w{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+        <link
+          rel="preload"
+          as="image"
+          href="{{ lcp_image | image_url: width: 990 }}"
+          imagesrcset="{{ lcp_srcset | strip }}"
+          imagesizes="(min-width: 990px) 55vw, 100vw"
+        >
+      {%- endif -%}
+    {%- endif -%}
+
     {% comment %} Prefetch key resources that will be needed soon {% endcomment %}
     {% if template contains 'collection' %}
       <link rel="prefetch" href="{{ 'template-collection.css' | asset_url }}" as="style">

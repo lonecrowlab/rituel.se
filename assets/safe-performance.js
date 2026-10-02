@@ -3,11 +3,21 @@
 (function() {
   'use strict';
 
+  function isProtectedLcpImage(img) {
+    if (!img || img.tagName !== 'IMG') return false;
+    if (img.classList.contains('lcp-image')) return true;
+    if (img.getAttribute('fetchpriority') === 'high') return true;
+    if (img.getAttribute('loading') === 'eager') return true;
+    return Boolean(img.closest('.product__media-item.is-active .product__media'));
+  }
+
   // Add dimensions to images to prevent layout shifts
   function preventImageShifts() {
     const images = document.querySelectorAll('img:not([data-dims-set])');
 
     images.forEach(img => {
+      const isLcp = isProtectedLcpImage(img);
+
       // Mark as processed
       img.dataset.dimsSet = 'true';
 
@@ -33,17 +43,16 @@
         });
       }
 
-      // Set loading attribute for better performance
+      // Never override LCP image loading/priority — those must stay in initial HTML
+      if (isLcp) return;
+
+      // Set loading attribute for below-the-fold images only
       const rect = img.getBoundingClientRect();
       const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
 
       if (!img.loading) {
         if (inViewport) {
           img.loading = 'eager';
-          // Priority for above-the-fold images
-          if (rect.top < window.innerHeight / 2) {
-            img.fetchpriority = 'high';
-          }
         } else {
           img.loading = 'lazy';
         }
@@ -53,7 +62,7 @@
 
   // Optimize Shopify responsive images
   function optimizeResponsiveImages() {
-    const images = document.querySelectorAll('img[src*="cdn.shopify.com"]:not([srcset])');
+    const images = document.querySelectorAll('img[src*="cdn.shopify.com"]:not([srcset]):not(.lcp-image)');
 
     images.forEach(img => {
       if (!img.src || img.srcset) return;
