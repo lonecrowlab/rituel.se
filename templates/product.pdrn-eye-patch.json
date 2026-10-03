@@ -15,8 +15,8 @@
         "trustwill_trustoo_star_rating_widget_CCjHME": {
           "type": "shopify://apps/cwilltrustoo-reviews/blocks/star-rating-widget/c8f15077-6475-4e86-ad06-b66038d5ba2c",
           "settings": {
-            "star_size": 15,
-            "font_size": 13,
+            "star_size": 16,
+            "font_size": 15,
             "text_color": "#585858",
             "block_aligment": "left",
             "rating_decimal_places": "1",
@@ -30,7 +30,7 @@
             "custom_title": "{{ product.title }}",
             "title_color": "#432700",
             "title_gradient": "linear-gradient(46deg, rgba(0, 0, 0, 1) 98%, rgba(135, 110, 155, 1) 100%)",
-            "title_font_size_mobile": 20,
+            "title_font_size_mobile": 24,
             "title_font_size_desktop": 30,
             "title_font_weight": 600,
             "title_alignment": "left",
