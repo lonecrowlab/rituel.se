@@ -284,7 +284,7 @@
         "enable_pagination": false,
         "pagination_amount": 12,
         "show_all_collections": false,
-        "show_search_bar": true,
+        "show_search_bar": false,
         "search_in_nav_bar": false,
         "search_placeholder": "Sök produkter...",
         "heading_before": "",
