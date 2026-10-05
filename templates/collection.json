@@ -390,7 +390,7 @@
         "button_icon_size": 18,
         "button_icon_gap": 6,
         "button_icon_color": "#ffffff",
-        "use_custom_product_rating": false,
+        "use_custom_product_rating": true,
         "show_product_rating_count": false,
         "product_rating_count_text": "[rating.count] reviews!",
         "show_rating_stars": false,
