@@ -405,7 +405,7 @@
         "badge_position": "top-left",
         "badge_offset_x": 4,
         "badge_offset_y": 4,
-        "custom_badge_padding_x": 12,
+        "custom_badge_padding_x": 10,
         "custom_badge_padding_y": 4,
         "custom_badge_border_radius": 6,
         "custom_badge_font_size": 12,
