@@ -128,7 +128,7 @@
         "body_text_AHAAzF": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Kliniken injicerar tillväxtfaktorer och NAD+ i huden. 2 000 till 3 000 kr per gång beroende på klinik, och du behöver två till tre gånger innan något syns.</p><p>Samma aktiva ingredienser. Ingen nål, ingen bokning, ingen återhämtning. 399 kr.</p>",
+            "body_text": "<p>Kliniken injicerar tillväxtfaktorer och NAD+ i huden. 2 000 till 3 000 kr per gång beroende på klinik, och du behöver två till tre gånger innan något syns.</p><p>Samma aktiva ingredienser. Ingen nål, ingen bokning, ingen återhämtning.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
