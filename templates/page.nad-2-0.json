@@ -15,7 +15,7 @@
       "settings": {
         "button_label": "PROVA RISKFRITT I 60 DAGAR →",
         "button_note": "Utan nålar, utan bokad tid",
-        "button_link": "shopify://products/pdrn-collagen-volume-balm",
+        "button_link": "shopify://products/egf-nad-firming-serum",
         "cta_selector": ".iwb-button, [data-listicle-cta]",
         "bar_background": "rgba(0,0,0,0)",
         "bar_opacity": 0,
@@ -99,7 +99,7 @@
         "heading_k3aVKe": {
           "type": "heading",
           "settings": {
-            "heading_before": "6 anledningar till att kvinnor över 40 avbokar sina botox-tider",
+            "heading_before": "6 anledningar till att kvinnor över 40 slutar betala 2500 kr på klinik",
             "highlighted_text": "",
             "heading_after": "",
             "highlight_position": "inline_second",
@@ -128,7 +128,7 @@
         "body_text_AHAAzF": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Du har funderat på botox. Kanske till och med bokat tid. Det här är inte en till kräm. Det är PDRN och 5 % Volufiline i en stick du stryker över ansiktet morgon och kväll. 30 sekunder, ingen bokad tid, ingen nål.</p>",
+            "body_text": "<p>Kliniken injicerar tillväxtfaktorer och NAD+ i huden. 2 000 till 3 000 kr per gång beroende på klinik, och du behöver två till tre gånger innan något syns.</p><p>Samma aktiva ingredienser. Ingen nål, ingen bokning, ingen återhämtning. 399 kr.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -174,7 +174,7 @@
           "type": "button",
           "settings": {
             "button_text": "PROVA RISKFRITT I 60 DAGAR",
-            "button_link": "shopify://products/pdrn-collagen-volume-balm",
+            "button_link": "shopify://products/egf-nad-firming-serum",
             "scroll_to_section": "",
             "hide_on_desktop": false,
             "hide_on_mobile": false,
@@ -335,7 +335,7 @@
           "settings": {
             "heading_before": "",
             "highlighted_text": "1.",
-            "heading_after": "Ingrediensen som ger huden sin fyllighet tillbaka",
+            "heading_after": "Du betalar för ingredienserna, inte för nålen",
             "highlight_position": "above",
             "heading_tag": "h2",
             "text_align": "left",
@@ -362,7 +362,7 @@
         "body_text_eTHJ3U": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Med åren tappar hyn sin fyllighet. Det syns först där huden är tunnast, under ögonen, vid mungiporna, runt läpparna. Inte bara som en rynka. Som en tomhet.</p><p>Det är därför krämerna inte hjälpt. De fyller inte i något. <strong>De ligger ovanpå.</strong></p><p>Volufiline&nbsp;är en fransk ingrediens som får hyn att se fylligare och mer spänstig ut, i det lager där fylligheten faktiskt syns.</p><p>Resultat: en hud som ser fylligare, mjukare och mer levande ut.</p><p>Många ser skillnad efter en vecka. Inte bara i en före/efter-bild. I spegeln, på en tisdagsmorgon, när du inte letade efter den.</p>",
+            "body_text": "<p>En mesoterapibehandling är två saker: ett ämne och ett sätt att få in det.<br/><br/>Ämnet är oftast tillväxtfaktorer, peptider och NAD+. Det är det som gör jobbet.<br/><br/><strong>Nålen är bara transporten.</strong> Och det är nålen du betalar 2 500 kr för, inte innehållet.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -458,7 +458,7 @@
           "settings": {
             "heading_before": "",
             "highlighted_text": "2.",
-            "heading_after": "Från franska kliniker till koreansk hudritual",
+            "heading_after": "NAD+ är inte ett modeord. Det är i varenda cell du har.",
             "highlight_position": "above",
             "heading_tag": "h2",
             "text_align": "left",
@@ -485,7 +485,7 @@
         "body_text_AbGcA8": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Volufiline™ kommer från franska laboratorier, framtagen för produkter där volym och spänst var hela poängen. Det var inte hudvård. Det var något helt annat.</p><p>Korea såg ingrediensen och ställde en bättre fråga:&nbsp;<em>varför smetar vi ut den överallt?</em></p><p>Så de satte den i en stick.</p><p>Nu applicerar du den exakt där du vill se skillnad. Inte i hela ansiktet. Inte \"en ärtstor mängd\". Precis på stället.</p><p>Det är skillnaden mellan <strong>att vattna hela trädgården och att vattna växten.</strong></p>",
+            "body_text": "<p>NAD+ är ett koenzym. Det är det som får cellerna att göra sitt jobb, varje sekund, i hela kroppen.</p><p><strong>Mängden sjunker med åren.</strong> Det är en av anledningarna till att hud beter sig annorlunda vid femtiotvå än vid trettiotvå.</p><p>Det är därför kliniker tagit in det. Och det är därför vi la det överst i formeln.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -546,7 +546,7 @@
           "settings": {
             "heading_before": "",
             "highlighted_text": "3.",
-            "heading_after": "Din nya ritual. På 30 sekunder",
+            "heading_after": "EGF är det koreanska kliniker bygger hela behandlingar på",
             "highlight_position": "above",
             "heading_tag": "h2",
             "text_align": "left",
@@ -573,7 +573,7 @@
         "body_text_HeegRk": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>En stick. 30 sekunder. Två gånger om dagen.</p><p>Du applicerar den precis där huden behöver det mest:</p><p>- Under ögonen<br/>- Vid smilelinjer<br/>- Runt läpparna<br/>- Mungiporna<br/>- Pannan<br/>- Halsen</p><p>Den används på fina linjer och rynkor över hela ansiktet, och kan användas på andra områden där huden behöver mer fyllighet. Den smälter in på sekunder. Ingen kladd. Ingen tung textur. Inget femstegs-program på morgonen.</p><p><strong>Du kan göra det medan du borstar tänderna.</strong></p>",
+            "body_text": "<p>EGF är en fermenterad ingrediens som används i koreansk klinikhudvård för fuktbalans och lyster.&nbsp;</p><p>Den är dyr att framställa. <strong>Det är därför den sällan dyker upp i ett serum under tusenlappen.</strong></p><p>Vår är formulerad i Korea, där ingrediensen kommer ifrån och där klinikerna har använt den längst.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -634,7 +634,7 @@
           "settings": {
             "heading_before": "",
             "highlighted_text": "4.",
-            "heading_after": "Mer än Volufiline. En komplett PDRN formula.",
+            "heading_after": "Lågmolekylärt kollagen kommer ner. Vanligt gör det inte.",
             "highlight_position": "above",
             "heading_tag": "h2",
             "text_align": "left",
@@ -661,7 +661,7 @@
         "body_text_mxydFK": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>ritúel PDRN Collagen Volume Balm innehåller 5 % Volufiline, och sen fyra ingredienser till som faktiskt gör något:</p><p><strong>Liposomalt PDRN</strong>: lax-DNA-fragment, ingrediensen bakom den koreanska kliniktrenden. Liposomalt betyder att den är inkapslad för att ta sig dit den ska.</p><p><strong>Hyaluronsyra</strong>: djup återfuktning. Ger en fastare, mer spänstig hudkänsla.</p><p><strong>Hydrolyserat kollagen</strong>: nedbrutet till mindre fragment för att hyn ska se slätare ut.</p><p><strong>Peptider</strong>: hjälper hyn att se jämnare och mer samlad ut.</p><p>Fem aktiva ingredienser. En stick. Inte fem flaskor på en hylla.</p><p>Det är inte en fuktighetskräm. En fuktighetskräm gör hyn mjuk i två timmar. Det här är en daglig ritual.</p>",
+            "body_text": "<p>De flesta kollagenserum lägger sig ovanpå huden och torkar. Kollagenmolekylen är för stor.</p><p>Därför bygger vårt serum inte på att trycka in kollagen. <strong>Det bygger på åtta peptider, små nog att ta sig ner och starta hudens egen produktion.</strong></p><p>Skillnaden mellan ett serum som känns bra och ett som gör något.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -722,7 +722,7 @@
           "settings": {
             "heading_before": "",
             "highlighted_text": "5.",
-            "heading_after": "Vad kvinnor säger efter ett par veckor",
+            "heading_after": "Två droppar. Trettio sekunder. Inget efteråt.",
             "highlight_position": "above",
             "heading_tag": "h2",
             "text_align": "left",
@@ -749,7 +749,7 @@
         "body_text_TbfBGY": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Över 19 422 kvinnor har testat, med snittbetyget 4,6 av 5.<br/><br/>Det vi hör oftast handlar inte om huden. Det handlar om vad andra har sagt:<br/><br/>- \"Mannen min trodde jag hade tagit botox\"&nbsp;<br/>- \"Mina vänner frågar vad jag gjort\"<br/>- \"Skrattrynkorna är mjukare redan\"<br/>- \"Avbokade min filler-tid efter en vecka\"&nbsp;<br/><br/>Det är skillnaden mot en klinik. Där ser folk att du gjort något.<strong> Här ser de bara att något är annorlunda, och de vet inte vad.</strong><br/><br/>Det bygger sig upp över veckor. Långsamt nog att ingen frågar varför du plötsligt ser annorlunda ut.</p>",
+            "body_text": "<p>Rengör, torka lätt, två till tre droppar, massera uppåt. Sedan sticken eller din vanliga kräm ovanpå. Morgon och kväll.</p><p><strong>Du kan gå rakt ut efteråt, sminka dig direkt, träna samma dag.</strong></p><p>Ingen rodnad att vänta ut, ingen helg som planeras runt en behandling.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -845,7 +845,7 @@
           "settings": {
             "heading_before": "",
             "highlighted_text": "6.",
-            "heading_after": "Därför väljer över 19422 kvinnor ritúel framför nålar",
+            "heading_after": "Därför väljer 19 422 kvinnor ritúel framför kliniken",
             "highlight_position": "above",
             "heading_tag": "h2",
             "text_align": "left",
@@ -872,7 +872,7 @@
         "body_text_7NrTb6": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Kliniken fungerar. Ingen påstår något annat.</p><p>Men den kostar tid du inte har, pengar du hellre lägger på annat, och ett beslut du måste ta om var tredje månad. Med en nål, varje gång.</p><p>Du riskerar hängande ögonlock. Stelhet. Ett ansikte som inte längre rör sig som ditt.</p><p>PDRN Collagen Volume Balm applicerar du hemma. En 1/10 del av kostnaden, utan att det syns på något annat än hyn. <strong>Ingen klinik. Inga nålar. Ingen som behöver veta.</strong></p><p>Samma ingrediens som tidigare bara fanns på franska estetiska kliniker, nu i en stick för ansiktet.</p>",
+            "body_text": "<p>Mesoterapi fungerar. Ingen påstår något annat.</p><p>Men en omgång är två till tre behandlingar, 4000 till 9000 kr, och sedan börjar du om var tredje månad. Med nålar i ansiktet, varje gång.</p><p>Du får rodnad och sticksmärken i ett till två dygn. Inget smink på tolv timmar. Ingen träning på ett till två dygn. Och ett resultat som försvinner precis när du vant dig vid det.</p><p>NAD+ EGF Firming Serum använder du hemma. 399 kr, en sjättedel av vad en enda behandling kostar, utan att det syns på något annat än hyn. <strong>Ingen klinik. Inga nålar. Ingen som behöver veta.</strong></p><p>4,7 av 5 · 1100+ omdömen.</p><p>Samma aktiva ingredienser som kliniken injicerar. Skillnaden är att du slipper nålen och räkningen.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -932,15 +932,15 @@
         "comparison_row_V87E8E": {
           "type": "comparison_row",
           "settings": {
-            "benefit_text": "Pris per gång",
+            "benefit_text": "Pris",
             "us_value": "text",
-            "us_custom_text": "180 kr/stick",
+            "us_custom_text": "399 kr",
             "us_custom_svg": "",
             "us_google_icon": "check_circle",
             "us_icon_color": "#ffffff",
             "us_icon_size": 24,
             "them_value": "text",
-            "them_custom_text": "Från 3 500 kr",
+            "them_custom_text": "2000 – 3000 kr per gång",
             "them_custom_svg": "",
             "them_google_icon": "arrow_right_alt",
             "them_icon_color": "#ef4444",
@@ -950,15 +950,15 @@
         "comparison_row_jLiLW6": {
           "type": "comparison_row",
           "settings": {
-            "benefit_text": "Per år",
+            "benefit_text": "För ett resultat",
             "us_value": "text",
-            "us_custom_text": "Cirka 2 200 kr",
+            "us_custom_text": "En flaska",
             "us_custom_svg": "",
             "us_google_icon": "check_circle",
             "us_icon_color": "#10b981",
             "us_icon_size": 24,
             "them_value": "text",
-            "them_custom_text": "6 000 – 12 000 kr",
+            "them_custom_text": "2–3 behandlingar, 4000 – 9000 kr",
             "them_custom_svg": "",
             "them_google_icon": "cancel",
             "them_icon_color": "#ef4444",
@@ -986,15 +986,15 @@
         "comparison_row_6GrAxq": {
           "type": "comparison_row",
           "settings": {
-            "benefit_text": "Stelt uttryck",
+            "benefit_text": "Tid",
             "us_value": "text",
-            "us_custom_text": "Ingen risk",
+            "us_custom_text": "30 sekunder",
             "us_custom_svg": "",
             "us_google_icon": "check_circle",
             "us_icon_color": "#10b981",
             "us_icon_size": 24,
             "them_value": "text",
-            "them_custom_text": "Möjlig biverkning",
+            "them_custom_text": "Bokad tid, 20-45 min",
             "them_custom_svg": "",
             "them_google_icon": "cancel",
             "them_icon_color": "#ef4444",
@@ -1012,7 +1012,7 @@
             "us_icon_color": "#10b981",
             "us_icon_size": 24,
             "them_value": "text",
-            "them_custom_text": "Ingen träning 24t. Inte ligga ner 4t. Blåmärken möjliga.",
+            "them_custom_text": "Rodnad 1–2 dygn, inget smink",
             "them_custom_svg": "",
             "them_google_icon": "cancel",
             "them_icon_color": "#ef4444",
@@ -1022,15 +1022,15 @@
         "comparison_row_BNF9VF": {
           "type": "comparison_row",
           "settings": {
-            "benefit_text": "Tid",
+            "benefit_text": "Första skillnaden",
             "us_value": "text",
-            "us_custom_text": "30 sekunder",
+            "us_custom_text": "1 vecka",
             "us_custom_svg": "",
             "us_google_icon": "check_circle",
             "us_icon_color": "#ffffff",
             "us_icon_size": 24,
             "them_value": "text",
-            "them_custom_text": "Bokad tid",
+            "them_custom_text": "2 veckor",
             "them_custom_svg": "",
             "them_google_icon": "cancel",
             "them_icon_color": "#ef4444",
@@ -1040,15 +1040,15 @@
         "comparison_row_GCm8a6": {
           "type": "comparison_row",
           "settings": {
-            "benefit_text": "Innan det syns",
+            "benefit_text": "underhåll",
             "us_value": "text",
-            "us_custom_text": "1–2 veckor",
+            "us_custom_text": "Nej",
             "us_custom_svg": "",
             "us_google_icon": "check_circle",
             "us_icon_color": "#ffffff",
             "us_icon_size": 24,
             "them_value": "text",
-            "them_custom_text": "1–2 veckor",
+            "them_custom_text": "Månadsvis",
             "them_custom_svg": "",
             "them_google_icon": "cancel",
             "them_icon_color": "#ef4444",
@@ -1066,7 +1066,7 @@
             "us_icon_color": "#ffffff",
             "us_icon_size": 24,
             "them_value": "text",
-            "them_custom_text": "Du väntar 3–4 månader",
+            "them_custom_text": "Pengarna är borta",
             "them_custom_svg": "",
             "them_google_icon": "cancel",
             "them_icon_color": "#ef4444",
@@ -1146,7 +1146,7 @@
         "desktop_image_border_radius": 0,
         "benefit_column_label": "",
         "us_column_label": "RITÚEL",
-        "them_column_label": "BOTOX",
+        "them_column_label": "MESOTERAPI",
         "label_image_spacing": 8,
         "label_image_border_radius": 8,
         "header_background": "rgba(0,0,0,0)",
@@ -1166,7 +1166,7 @@
         "us_label_font_weight": 700,
         "us_label_color": "#ffffff",
         "us_image_enabled": true,
-        "us_image": "shopify://shop_images/5.webp",
+        "us_image": "shopify://shop_images/rituel_product_photos-5.webp",
         "us_image_width": 120,
         "us_image_width_mobile": 70,
         "us_image_position": "above",
@@ -1183,7 +1183,7 @@
         "them_label_font_weight": 400,
         "them_label_color": "#000000",
         "them_image_enabled": true,
-        "them_image": "shopify://shop_images/LISTICLE_IMAGES-8.webp",
+        "them_image": "shopify://shop_images/rituel_product_photos-4.webp",
         "them_image_width": 120,
         "them_image_width_mobile": 70,
         "them_image_position": "above",
@@ -1219,7 +1219,7 @@
           "settings": {
             "heading_before": "",
             "highlighted_text": "",
-            "heading_after": "Så får man tag på ritúel PDRN Collagen Volume Balm",
+            "heading_after": "Så får man tag på ritúel NAD+ EGF Firming Serum",
             "highlight_position": "above",
             "heading_tag": "h2",
             "text_align": "left",
@@ -1259,7 +1259,7 @@
         "body_text_PyqN9A": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>En av de vanligaste frågorna som dyker upp är var den går att köpa. Svaret är enkelt: den säljs bara via ritúels officiella hemsida och skickas direkt hem till dig. Det har dykt upp liknande sticks på andra sajter, men de innehåller varken PDRN eller Volufiline.</p><p>OBS:<strong>&nbsp;</strong>Enligt ritúel produceras varje batch i begränsad mängd. Den förra<strong>&nbsp;tog slut på 11 dagar,&nbsp;</strong>och det dröjde tre veckor innan nästa fanns i lager igen.&nbsp;</p><p>Just nu kör ritúel ett introduktionspris för nya kunder, med upp till 55 % rabatt när man tar flera sticks.</p>",
+            "body_text": "<p>En av de vanligaste frågorna som dyker upp är var den går att köpa. Svaret är enkelt: den säljs bara via ritúels officiella hemsida och skickas direkt hem till dig.</p><p>Det finns gott om serum som nämner EGF. Få har det tillsammans med NAD+ och åtta peptider, och nästan inga under tusenlappen.&nbsp;</p><p>OBS: Enligt ritúel produceras varje batch i begränsad mängd. Formuleringen görs i Korea, och <strong>det tar 5 veckor att fylla på när en batch tar slut.&nbsp;</strong></p><p>Just nu kör ritúel ett introduktionspris för nya kunder, med upp till 55 % rabatt när man tar flera flaskor.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -1280,7 +1280,7 @@
           "type": "button",
           "settings": {
             "button_text": "PROVA RISKFRITT I 60 DAGAR",
-            "button_link": "shopify://products/pdrn-collagen-volume-balm",
+            "button_link": "shopify://products/egf-nad-firming-serum",
             "scroll_to_section": "",
             "hide_on_desktop": false,
             "hide_on_mobile": false,
@@ -1622,6 +1622,7 @@
         "images_with_text_Ae9Qeq",
         "low_stock_W7xjch"
       ],
+      "disabled": true,
       "custom_css": [
         ".lfqb-ingredients-btn {font-size: 18px; background: var( --Gradient, linear-gradient( 92deg, rgba(223, 177, 66, 0.3) 10%, rgba(233, 128, 68, 0.3) 49.5%, rgba(175, 137, 152, 0.3) 100% ) ); color: #000; font-weight: 500; font-family: \"body-font\", \"Inter\";}"
       ],
@@ -2069,7 +2070,7 @@
           "type": "button",
           "settings": {
             "button_text": "PROVA RISKFRITT I 60 DAGAR",
-            "button_link": "shopify://products/pdrn-collagen-volume-balm",
+            "button_link": "shopify://products/egf-nad-firming-serum",
             "scroll_to_section": "",
             "hide_on_desktop": false,
             "hide_on_mobile": false,
@@ -2174,7 +2175,7 @@
           "type": "button",
           "settings": {
             "label": "PROVA RISKFRITT I 60 DAGAR",
-            "link": "shopify://products/pdrn-collagen-volume-balm",
+            "link": "shopify://products/egf-nad-firming-serum",
             "use_custom_styles": false,
             "bg_color": "#c45c26",
             "text_color": "#ffffff",
