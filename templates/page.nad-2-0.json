@@ -218,7 +218,7 @@
           "settings": {
             "image_desktop": "shopify://shop_images/Rituel_Product_photo_1958cacf-0ec4-425f-ba96-85adaac4cbd3_0c029880-b2c3-4531-87ec-3a52302dd8fe.webp",
             "aspect_ratio_desktop": "auto",
-            "image_mobile": "shopify://shop_images/bassq5bupeizky3vcs83.webp",
+            "image_mobile": "shopify://shop_images/hf_20261010_095606_d78922fc-511e-49cd-931b-e9ae0903906b-2.webp",
             "aspect_ratio_mobile": "auto",
             "border_radius": 0,
             "max_width": 100,
@@ -228,8 +228,9 @@
         },
         "body_text_xkWDRN": {
           "type": "body_text",
+          "disabled": true,
           "settings": {
-            "body_text": "<p>Helena E., 52 år.<em> Fem veckor, två gånger om dagen.</em></p>",
+            "body_text": "<p>Helena E., 52 år.<em> Fem veckor</em></p>",
             "font_weight": "400",
             "text_color": "#4a4a4a",
             "bg_color": "rgba(0,0,0,0)",
@@ -279,7 +280,7 @@
         "announcement_3iWxKy": {
           "type": "announcement",
           "settings": {
-            "text": "60 DAGARS GARANTI • SVERIGES FÖRSTA PDRN COLLAGEN BALM • DERMATOLOGISKT TESTAD",
+            "text": "60 DAGARS GARANTI • DERMATOLOGISKT TESTAD",
             "text_alignment": "center",
             "icon_type": "google",
             "icon": "",
@@ -303,10 +304,10 @@
         "desktop_spacing": 28,
         "mobile_spacing": 18,
         "show_separator": false,
-        "background_color": "#cc667c",
+        "background_color": "#000000",
         "gradient_background": "",
         "text_color": "#ffffff",
-        "mobile_text_size": 14,
+        "mobile_text_size": 13,
         "desktop_text_size": 16,
         "mobile_icon_size": 20,
         "desktop_icon_size": 26,
