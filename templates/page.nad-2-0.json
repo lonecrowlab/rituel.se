@@ -1246,9 +1246,9 @@
         "image_GnAfWP": {
           "type": "image",
           "settings": {
-            "image_desktop": "shopify://shop_images/magnific_using-the-attached-refere_ONs23pnynm.webp",
+            "image_desktop": "shopify://shop_images/rituel_product_photos-6_6b6f0c5d-46cb-470d-96d0-18181a28c055.webp",
             "aspect_ratio_desktop": "auto",
-            "image_mobile": "shopify://shop_images/magnific_using-the-attached-refere_ONs23pnynm.webp",
+            "image_mobile": "shopify://shop_images/rituel_product_photos-6.webp",
             "aspect_ratio_mobile": "auto",
             "border_radius": 0,
             "max_width": 100,
@@ -1685,8 +1685,8 @@
         "review_cKKwUk": {
           "type": "review",
           "settings": {
-            "title": "Min kollega märkte det före mig",
-            "description": "Trodde inte det skulle märkas. Efter en månad frågade en kollega om jag hade sovit bättre. Linjerna i pannan är inte helt borta, men de är mjukare.",
+            "title": "Jag har testat behandlingar på klinik",
+            "description": "Jag har testat behandlingar på klinik tidigare och ville hitta något enklare att använda hemma. Serumet är lätt att applicera och huden känns mjuk efteråt. Har fortsatt använda det i min rutin.",
             "star_rating": 5,
             "name": "Karin B., 42 år · 2 sep 2026",
             "show_verified": false
@@ -1695,8 +1695,8 @@
         "review_Lfrrdy": {
           "type": "review",
           "settings": {
-            "title": "Inte längre torr som en ödla",
-            "description": "Jag jobbar på spa och har provat de flesta märkena. Inget av dem återfuktar och suddar ut fina linjer som den här.",
+            "title": "Min syster frågade faktiskt",
+            "description": "Efter några veckor frågade min syster om jag hade bytt hudvård. Hon tyckte att jag såg extra fräsch ut! Det gjorde mig verkligen glad.",
             "star_rating": 5,
             "name": "Eva-Lena Å., 55 år · 19 juli 2026",
             "show_verified": false
@@ -1705,8 +1705,8 @@
         "review_fNN3AG": {
           "type": "review",
           "settings": {
-            "title": "Min syster trodde jag hade fått injektioner",
-            "description": "Jag har provat allt genom åren, så jag var skeptisk. Efter tre veckor frågade hon vad jag hade gjort. Det här är det första som faktiskt gör något på mogen hud.",
+            "title": "Skeptisk i början",
+            "description": "Jag har testat många serum genom åren och var ganska skeptisk. Men efter ungefär tre veckor kändes huden mjukare och mer återfuktad. Jag fortsätter gärna använda det!",
             "star_rating": 5,
             "name": "Emma N., 56 år · 5 aug 2026",
             "show_verified": false
@@ -1806,8 +1806,8 @@
         "faq_item_JGhpc3": {
           "type": "faq_item",
           "settings": {
-            "question": "Passar den alla hudtyper?",
-            "answer": "<p>Ja, PDRN Collagen Volume Balm är formulerad för alla hudtyper, inklusive känslig och mogen hud. Vi rekommenderar ett patchtest om du har särskilt reaktiv hud.</p>",
+            "question": "Passar det känslig hud?",
+            "answer": "<p>Lätt textur, suger in direkt, ingen film. Dermatologiskt testat, inga parabener, inga sulfater, icke-komedogent. Är du ovan vid aktiva ingredienser, börja med en gång om dagen i en vecka.</p>",
             "custom_html": "",
             "open_by_default": true,
             "badge_text": "",
@@ -1830,8 +1830,8 @@
         "faq_item_Y9Ewaa": {
           "type": "faq_item",
           "settings": {
-            "question": "Hur snabbt ser jag resultat?",
-            "answer": "<p>De flesta märker en skillnad redan efter en vecka. För bästa resultat rekommenderar vi daglig användning morgon och kväll. Tydligast resultat efter 3 till 4 veckor.</p>",
+            "question": "Kan jag använda det med retinol eller syror?",
+            "answer": "<p>Inte i samma rutin. Inte farligt, men huden blir irriterad i onödan och då slutar man med båda.</p>",
             "custom_html": "",
             "open_by_default": true,
             "badge_text": "",
@@ -1854,8 +1854,8 @@
         "faq_item_iK87Ct": {
           "type": "faq_item",
           "settings": {
-            "question": "Vad är PDRN och varför är det effektivt?",
-            "answer": "<p>PDRN är en ingrediens som används inom klinisk hudvård för att stimulera cellförnyelse och kollagenproduktion. Det är samma teknologi som används vid klinikbehandlingar, nu tillgänglig hemma.</p>",
+            "question": "Varför är det rött?",
+            "answer": "<p>Det är ingredienserna. Inget färgämne är tillsatt.</p>",
             "custom_html": "",
             "open_by_default": true,
             "badge_text": "",
