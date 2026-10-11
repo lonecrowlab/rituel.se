@@ -12,34 +12,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "rating_stars_6wh6EW": {
-          "type": "rating_stars",
-          "disabled": true,
-          "settings": {
-            "stars_rating_source": "metafield",
-            "rating": 4.6,
-            "show_rating_text": true,
-            "rating_text": "[rating.ave]/5 · [rating.count] happy customers!",
-            "show_popup_chevron": true,
-            "chevron_color": "#343f20",
-            "text_color": "#000000",
-            "text_font_size": 13,
-            "text_font_weight": "400",
-            "text_margin_top": 0,
-            "scroll_id": "",
-            "bg_stars_style": "filled",
-            "star_color": "#b8576e",
-            "bg_star_color": "#e0e0e0",
-            "size": 16,
-            "alignment": "flex-start",
-            "mobile_alignment": "flex-start",
-            "margin_top": 0,
-            "margin_bottom": 9,
-            "overlay_on_image_mobile": false,
-            "mobile_vertical_position": "top",
-            "mobile_position_offset": 15
-          }
-        },
         "trustwill_trustoo_star_rating_widget_CCjHME": {
           "type": "shopify://apps/cwilltrustoo-reviews/blocks/star-rating-widget/c8f15077-6475-4e86-ad06-b66038d5ba2c",
           "settings": {
@@ -76,7 +48,7 @@
             "pill_1_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" zoomandpan=\"magnify\" viewbox=\"0 0 450 299.999988\" height=\"400\" preserveaspectratio=\"xMidYMid meet\" version=\"1.0\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><defs><clippath id=\"6aba9d7aa2\"><path d=\"M 13.734375 0.75 L 436.734375 0.75 L 436.734375 299.25 L 13.734375 299.25 Z M 13.734375 0.75 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"771946a088\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"60a4c65a12\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"1e1e740acd\"><path d=\"M 15 2 L 435 2 L 435 298 L 15 298 Z M 15 2 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"43ca5323c1\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"bb05d68c30\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"53e0c0f42e\"><path d=\"M 88 38 L 148 38 L 148 97 L 88 97 Z M 88 38 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"12c5e18444\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"c3818fdbb0\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"de6d3b5211\"><path d=\"M 99 49 L 159 49 L 159 109 L 99 109 Z M 99 49 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"0870957795\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"54623d2eed\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"2af5ce2933\"><path d=\"M 111 60 L 170 60 L 170 120 L 111 120 Z M 111 60 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"64d572a06e\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"041b6c73c6\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"fafafb1e0e\"><path d=\"M 302 38 L 362 38 L 362 97 L 302 97 Z M 302 38 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"ad4bb2897e\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"ff7954d85d\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"fe77fbe18d\"><path d=\"M 291 49 L 350 49 L 350 109 L 291 109 Z M 291 49 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"f21b826dc1\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"0a24f54954\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"bb4da59a50\"><path d=\"M 279 60 L 339 60 L 339 120 L 279 120 Z M 279 60 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"ae3c28df37\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"c9e4e3aa1c\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"74c1dfb659\"><path d=\"M 111 180 L 170 180 L 170 240 L 111 240 Z M 111 180 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"caaa97662d\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"51ca8d20ee\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"b6c6ae0297\"><path d=\"M 99 191 L 159 191 L 159 251 L 99 251 Z M 99 191 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"722bf26588\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"9c0ebb24b5\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"f9373b8932\"><path d=\"M 88 203 L 148 203 L 148 262 L 88 262 Z M 88 203 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"19b86dfd4e\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"866107c5ee\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"c8248e96e3\"><path d=\"M 279 180 L 339 180 L 339 240 L 279 240 Z M 279 180 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"765284e9f3\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"1704f53599\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"6b4676f910\"><path d=\"M 290 191 L 350 191 L 350 251 L 290 251 Z M 290 191 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"35475ef79c\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"78f166c15c\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"e16e5ed1ad\"><path d=\"M 302 203 L 362 203 L 362 262 L 302 262 Z M 302 203 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"ed07ad4e59\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"d35b5beabc\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"d94f6a2766\"><path d=\"M 158 135 L 284 135 L 284 217 L 158 217 Z M 158 135 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"ef4f4baa75\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"24f3e0e29a\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"e45f236304\"><path d=\"M 158 83 L 292 83 L 292 182 L 158 182 Z M 158 83 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"c2a82f39a3\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"fa35d74332\"><path d=\"M 22.886719 0.898438 L 427.113281 0.898438 C 432.085938 0.898438 436.113281 4.929688 436.113281 9.898438 L 436.113281 290.101562 C 436.113281 295.070312 432.085938 299.101562 427.113281 299.101562 L 22.886719 299.101562 C 17.914062 299.101562 13.886719 295.070312 13.886719 290.101562 L 13.886719 9.898438 C 13.886719 4.929688 17.914062 0.898438 22.886719 0.898438 Z M 22.886719 0.898438 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"3b5d413cd2\"><path d=\"M 12.984375 0 L 436.734375 0 L 436.734375 300 L 12.984375 300 Z M 12.984375 0 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"54a5c872f6\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.015625 300 C 432.984375 300 437.015625 295.96875 437.015625 291 L 437.015625 9 C 437.015625 4.03125 432.984375 0 428.015625 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath><clippath id=\"02230d18f8\"><path d=\"M 12.984375 9 L 12.984375 291 C 12.984375 295.96875 17.015625 300 21.984375 300 L 428.003906 300 C 432.976562 300 437.003906 295.96875 437.003906 291 L 437.003906 9 C 437.003906 4.03125 432.976562 0 428.003906 0 L 21.984375 0 C 17.015625 0 12.984375 4.03125 12.984375 9 Z M 12.984375 9 \" clip-rule=\"nonzero\"></path></clippath></defs><g clip-path=\"url(#6aba9d7aa2)\"><g clip-path=\"url(#771946a088)\"><g clip-path=\"url(#60a4c65a12)\"><path fill=\"#000000\" d=\"M 13.066406 0 L 436.601562 0 L 436.601562 299.980469 L 13.066406 299.980469 Z M 13.066406 0 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#1e1e740acd)\"><g clip-path=\"url(#43ca5323c1)\"><g clip-path=\"url(#bb05d68c30)\"><path fill=\"#ffffff\" d=\"M 15.519531 2.457031 L 434.148438 2.457031 L 434.148438 297.527344 L 15.519531 297.527344 Z M 15.519531 2.457031 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#53e0c0f42e)\"><g clip-path=\"url(#12c5e18444)\"><g clip-path=\"url(#c3818fdbb0)\"><path fill=\"#000000\" d=\"M 147.398438 45.871094 L 96.417969 96.886719 L 88.648438 89.113281 L 139.632812 38.097656 Z M 147.398438 45.871094 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#de6d3b5211)\"><g clip-path=\"url(#0870957795)\"><g clip-path=\"url(#54623d2eed)\"><path fill=\"#000000\" d=\"M 158.570312 57.046875 L 107.589844 108.0625 L 99.820312 100.289062 L 150.800781 49.273438 Z M 158.570312 57.046875 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#2af5ce2933)\"><g clip-path=\"url(#64d572a06e)\"><g clip-path=\"url(#041b6c73c6)\"><path fill=\"#000000\" d=\"M 169.863281 68.347656 L 118.882812 119.363281 L 111.113281 111.589844 L 162.09375 60.574219 Z M 169.863281 68.347656 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#fafafb1e0e)\"><g clip-path=\"url(#ad4bb2897e)\"><g clip-path=\"url(#ff7954d85d)\"><path fill=\"#000000\" d=\"M 361.019531 89.113281 L 337.65625 65.734375 L 329.890625 73.507812 L 353.25 96.882812 Z M 333.398438 61.472656 L 325.628906 69.246094 L 302.269531 45.871094 L 310.035156 38.097656 Z M 333.398438 61.472656 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#fe77fbe18d)\"><g clip-path=\"url(#f21b826dc1)\"><g clip-path=\"url(#0a24f54954)\"><path fill=\"#000000\" d=\"M 298.867188 49.269531 L 349.851562 100.285156 L 342.082031 108.058594 L 291.101562 57.042969 Z M 298.867188 49.269531 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#bb4da59a50)\"><g clip-path=\"url(#ae3c28df37)\"><g clip-path=\"url(#c9e4e3aa1c)\"><path fill=\"#000000\" d=\"M 338.554688 111.589844 L 315.195312 88.214844 L 307.425781 95.988281 L 330.785156 119.363281 Z M 310.933594 83.949219 L 303.167969 91.722656 L 279.804688 68.347656 L 287.574219 60.574219 Z M 310.933594 83.949219 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#74c1dfb659)\"><g clip-path=\"url(#caaa97662d)\"><g clip-path=\"url(#51ca8d20ee)\"><path fill=\"#000000\" d=\"M 118.878906 180.613281 L 169.859375 231.628906 L 162.09375 239.402344 L 111.113281 188.386719 Z M 118.878906 180.613281 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#b6c6ae0297)\"><g clip-path=\"url(#722bf26588)\"><g clip-path=\"url(#9c0ebb24b5)\"><path fill=\"#000000\" d=\"M 158.695312 242.808594 L 135.335938 219.429688 L 127.566406 227.207031 L 150.925781 250.582031 Z M 131.074219 215.167969 L 123.304688 222.941406 L 99.945312 199.566406 L 107.710938 191.792969 Z M 131.074219 215.167969 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#f9373b8932)\"><g clip-path=\"url(#19b86dfd4e)\"><g clip-path=\"url(#866107c5ee)\"><path fill=\"#000000\" d=\"M 96.417969 203.09375 L 147.402344 254.109375 L 139.632812 261.882812 L 88.648438 210.867188 Z M 96.417969 203.09375 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#c8248e96e3)\"><g clip-path=\"url(#765284e9f3)\"><g clip-path=\"url(#1704f53599)\"><path fill=\"#000000\" d=\"M 279.804688 231.632812 L 303.167969 208.257812 L 310.9375 216.03125 L 287.574219 239.40625 Z M 307.425781 203.996094 L 315.195312 211.769531 L 338.554688 188.394531 L 330.789062 180.617188 Z M 307.425781 203.996094 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#6b4676f910)\"><g clip-path=\"url(#35475ef79c)\"><g clip-path=\"url(#78f166c15c)\"><path fill=\"#000000\" d=\"M 290.972656 242.808594 L 314.335938 219.429688 L 322.105469 227.207031 L 298.742188 250.582031 Z M 318.59375 215.167969 L 326.363281 222.941406 L 349.722656 199.566406 L 341.957031 191.792969 Z M 318.59375 215.167969 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#e16e5ed1ad)\"><g clip-path=\"url(#ed07ad4e59)\"><g clip-path=\"url(#d35b5beabc)\"><path fill=\"#000000\" d=\"M 302.269531 254.109375 L 325.628906 230.734375 L 333.398438 238.507812 L 310.039062 261.882812 Z M 329.890625 226.472656 L 337.660156 234.246094 L 361.019531 210.871094 L 353.25 203.09375 Z M 329.890625 226.472656 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#d94f6a2766)\"><g clip-path=\"url(#ef4f4baa75)\"><g clip-path=\"url(#24f3e0e29a)\"><path fill=\"#004cbf\" d=\"M 226.835938 216.648438 C 251.269531 215.914062 272.238281 202.105469 283.238281 182.128906 C 284.640625 179.566406 280.476562 159.722656 278.601562 156.1875 C 264.984375 130.511719 239.007812 129.253906 218.25 149.304688 C 215.734375 151.734375 212.964844 154.257812 209.496094 156.683594 C 192.375 168.640625 168.871094 161.261719 158.394531 144.726562 C 158.210938 147.117188 158.144531 149.542969 158.21875 151.992188 C 159.324219 188.808594 190.042969 217.753906 226.835938 216.648438 Z M 226.835938 216.648438 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#e45f236304)\"><g clip-path=\"url(#c2a82f39a3)\"><g clip-path=\"url(#fa35d74332)\"><path fill=\"#e82e2e\" d=\"M 158.394531 144.726562 C 170.648438 165.523438 192.148438 171.992188 209.265625 160.03125 C 212.734375 157.605469 215.503906 155.085938 218.023438 152.652344 C 238.78125 132.601562 263.96875 134.066406 277.582031 159.742188 C 281.449219 167.035156 282.855469 175.390625 283.320312 181.976562 C 288.832031 171.910156 291.820312 160.289062 291.449219 147.988281 C 290.347656 111.175781 259.625 82.226562 222.832031 83.332031 C 188.492188 84.363281 161.003906 111.21875 158.394531 144.726562 Z M 158.394531 144.726562 \" fill-opacity=\"1\" fill-rule=\"evenodd\"></path></g></g></g><g clip-path=\"url(#3b5d413cd2)\"><g clip-path=\"url(#54a5c872f6)\"><g clip-path=\"url(#02230d18f8)\"><path stroke-linecap=\"butt\" transform=\"matrix(0.75, 0, 0, 0.75, 12.985873, -0.000000000000042633)\" fill=\"none\" stroke-linejoin=\"miter\" d=\"M -0.00199795 12.000001 L -0.00199795 388.000032 C -0.00199795 394.625032 5.373002 400.000033 11.998003 400.000033 L 553.357422 400.000033 C 559.987631 400.000033 565.357423 394.625032 565.357423 388.000032 L 565.357423 12.000001 C 565.357423 5.375 559.987631 0.000000000000056843 553.357422 0.000000000000056843 L 11.998003 0.000000000000056843 C 5.373002 0.000000000000056843 -0.00199795 5.375 -0.00199795 12.000001 Z M -0.00199795 12.000001 \" stroke=\"#000000\" stroke-width=\"4\" stroke-opacity=\"1\" stroke-miterlimit=\"4\"></path></g></g></g></svg>",
             "pill_1_text": "FORMULERAD I KOREA",
             "pill_2_icon": "",
-            "pill_2_text": "",
+            "pill_2_text": "BÄSTSÄLJARE",
             "pill_3_icon": "",
             "pill_3_text": "",
             "pills_alignment": "flex-start",
@@ -100,46 +72,12 @@
             "pill_icon_gap": 8,
             "pill_icon_gap_mobile": 6,
             "text_size": 13,
-            "text_size_mobile": 11,
+            "text_size_mobile": 12,
             "text_weight": "500",
             "text_color": "#000000",
             "text_transform": "none",
             "margin_top": 0,
             "margin_bottom": 0
-          }
-        },
-        "price_dpLDPD": {
-          "type": "price",
-          "settings": {
-            "layout": "price_first",
-            "price_gap": 6,
-            "badge_gap": 0,
-            "price_color": "#000000",
-            "price_font_size_mobile": 18,
-            "price_font_size_desktop": 21,
-            "price_font_weight": 700,
-            "compare_price_color": "#999999",
-            "compare_price_font_size_mobile": 12,
-            "compare_price_font_size_desktop": 15,
-            "compare_price_font_weight": 400,
-            "show_sale_badge": false,
-            "override_badge_settings": true,
-            "badge_text_color": "#ffffff",
-            "badge_bg_color": "#ff0000",
-            "enable_badge_gradient": true,
-            "badge_gradient": "linear-gradient(135deg, rgba(255, 0, 0, 1), rgba(204, 0, 0, 1) 100%)",
-            "badge_font_size": 10,
-            "badge_font_weight": 600,
-            "badge_padding_vertical": 0,
-            "badge_padding_horizontal": 5,
-            "badge_border_radius": 4,
-            "badge_border_width": 0,
-            "badge_border_color": "#000000",
-            "margin_top": 9,
-            "margin_bottom": 4,
-            "overlay_on_image_mobile": false,
-            "mobile_vertical_position": "bottom",
-            "mobile_position_offset": 15
           }
         },
         "product_text_block_fgTzXK": {
@@ -149,7 +87,7 @@
             "highlight_text": "",
             "text_color": "#000000",
             "font_size_desktop": 16,
-            "font_size_mobile": 15,
+            "font_size_mobile": 17,
             "line_height_desktop": 1.6,
             "line_height_mobile": 1.5,
             "text_align": "left",
@@ -190,7 +128,7 @@
             "image_size": 30,
             "mobile_image_size": 22,
             "text_font_size": 15,
-            "mobile_text_font_size": 15,
+            "mobile_text_font_size": 16,
             "text_font_weight": 400,
             "text_color": "#333333",
             "text_line_height": 1.2,
@@ -302,50 +240,28 @@
             "icon_4_border_color": ""
           }
         },
-        "benefit_list_rwhCiA": {
-          "type": "benefit_list",
-          "disabled": true,
-          "settings": {
-            "item_1_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"currentColor\"><path fill-rule=\"evenodd\" d=\"M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z\" clip-rule=\"evenodd\"></path></svg>",
-            "item_1_text": "Djupåterfuktning",
-            "item_2_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"currentColor\"><path fill-rule=\"evenodd\" d=\"M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z\" clip-rule=\"evenodd\"></path></svg>",
-            "item_2_text": "Eliminerar rynkor",
-            "item_3_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"currentColor\"><path fill-rule=\"evenodd\" d=\"M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z\" clip-rule=\"evenodd\"></path></svg>",
-            "item_3_text": "Fylligare & strålande hy",
-            "list_alignment": "flex-start",
-            "list_gap": 6,
-            "list_gap_mobile": 4,
-            "item_max_width": 100,
-            "item_background": "rgba(0,0,0,0)",
-            "item_gradient_enabled": false,
-            "item_gradient": "linear-gradient(135deg, rgba(243, 244, 246, 1), rgba(229, 231, 235, 1) 100%)",
-            "item_padding_vertical": 0,
-            "item_padding_horizontal": 0,
-            "item_padding_vertical_mobile": 0,
-            "item_padding_horizontal_mobile": 0,
-            "item_border_radius": 0,
-            "item_border_width": 0,
-            "item_border_style": "solid",
-            "item_border_color": "#e5e7eb",
-            "icon_size": 24,
-            "icon_size_mobile": 24,
-            "icon_color": "#000000",
-            "icon_text_gap": 12,
-            "icon_text_gap_mobile": 10,
-            "text_size": 15,
-            "text_size_mobile": 14,
-            "text_weight": "400",
-            "text_color": "#1f2937",
-            "text_line_height": 1.5,
-            "item_vertical_alignment": "center",
-            "margin_top": 16,
-            "margin_bottom": 16
-          }
-        },
         "rapi_rapi_bundle_KmgXWT": {
           "type": "shopify://apps/rapid-bundle/blocks/rapi-bundle/99617c17-a32b-4e70-a883-7a155610d032",
           "settings": {
             "product": "{{product}}"
+          }
+        },
+        "pulsing_scarcity_KDW3YU": {
+          "type": "pulsing_scarcity",
+          "disabled": true,
+          "settings": {
+            "stock_min": 5,
+            "stock_max": 12,
+            "reduction_minutes": 1,
+            "text_prefix": "Endast",
+            "text_suffix": "kvar i lager",
+            "text_font_size": 14,
+            "text_font_weight": 400,
+            "count_font_weight": 600,
+            "match_text_to_dot_color": true,
+            "text_color": "#121212",
+            "dot_color": "#f59e0b",
+            "min_dot_color": "#f59e0b"
           }
         },
         "buy_buttons": {
@@ -472,25 +388,18 @@
             "mobile_stack": false,
             "title_color": "#ffffff",
             "title_font_size": 20,
-            "title_font_size_mobile": 16,
+            "title_font_size_mobile": 18,
             "title_font_weight": 700,
             "title_line_height": 12,
             "title_text_transform": "none",
             "title_margin_bottom": 4,
             "paragraph_color": "#ffffff",
             "paragraph_font_size": 14,
-            "paragraph_font_size_mobile": 14,
+            "paragraph_font_size_mobile": 15,
             "paragraph_font_weight": 400,
             "paragraph_line_height": 15,
             "margin_top": 12,
             "margin_bottom": 12
-          }
-        },
-        "custom_liquid_KtjAiH": {
-          "type": "custom_liquid",
-          "disabled": true,
-          "settings": {
-            "custom_liquid": "<style>\n  .pdrn-glow-bundle {\n    display: flex;\n    align-items: center;\n    gap: 14px;\n    background: #ffffff;\n    border: 1px solid #4a4a4a;\n    border-radius: 14px;\n    padding: 12px 16px;\n    max-width: 100%;\n    font-family: inherit;\n    box-sizing: border-box;\n  }\n  \n  .pdrn-glow-bundle__image {\n    flex-shrink: 0;\n    width: 58px;\n    height: 58px;\n    border-radius: 12px;\n    overflow: hidden;\n    background: #fce4ec;\n  }\n  \n  .pdrn-glow-bundle__image img {\n    width: 100%;\n    height: 100%;\n    object-fit: cover;\n    display: block;\n  }\n  \n  .pdrn-glow-bundle__content {\n    flex: 1;\n    min-width: 0;\n  }\n  \n  .pdrn-glow-bundle__title {\n    font-size: 15px;\n    font-weight: 600;\n    color: #1a1a1a;\n    margin: 0;\n    line-height: 1.3;\n  }\n  \n  .pdrn-glow-bundle__right {\n    display: flex;\n    flex-direction: column;\n    align-items: flex-end;\n    gap: 6px;\n    flex-shrink: 0;\n  }\n  \n  .pdrn-glow-bundle__price {\n    font-size: 13px;\n    color: #999;\n    text-decoration: line-through;\n    line-height: 1;\n  }\n  \n  .pdrn-glow-bundle__badge {\n    background: #4caf50;\n    color: #ffffff;\n    font-size: 12px;\n    font-weight: 600;\n    padding: 6px 12px;\n    border-radius: 999px;\n    white-space: nowrap;\n    line-height: 1;\n  }\n  \n  @media (max-width: 480px) {\n    .pdrn-glow-bundle {\n      padding: 10px 12px;\n      gap: 10px;\n    }\n    .pdrn-glow-bundle__image {\n      width: 50px;\n      height: 50px;\n    }\n    .pdrn-glow-bundle__title {\n      font-size: 14px;\n    }\n  }\n</style>\n<div class=\"pdrn-glow-bundle\">\n  <div class=\"pdrn-glow-bundle__image\">\n    <img \n      src=\"https://cdn.shopify.com/s/files/1/0663/9458/7239/files/From-7_f86853eb-bbe5-4290-ad1b-8ee632d3a934.png?v=1778699677\" \n      alt=\"The PDRN Glow Guide\"\n      loading=\"lazy\"\n    />\n  </div>\n  <div class=\"pdrn-glow-bundle__content\">\n    <p class=\"pdrn-glow-bundle__title\">PDRN Glow Guide</p>\n  </div>\n  <div class=\"pdrn-glow-bundle__right\">\n    <span class=\"pdrn-glow-bundle__price\">149 kr</span>\n    <span class=\"pdrn-glow-bundle__badge\">Ingår gratis</span>\n  </div>\n</div>"
           }
         },
         "product_info_accordion_gBhAhe": {
@@ -508,11 +417,11 @@
             "question_text_color": "#000000",
             "question_text_color_active": "#000000",
             "question_font_size": 16,
-            "question_font_size_mobile": 14,
+            "question_font_size_mobile": 15,
             "question_font_weight": 600,
             "question_padding_vertical_desktop": 16,
             "question_padding_horizontal_desktop": 20,
-            "question_padding_vertical_mobile": 10,
+            "question_padding_vertical_mobile": 14,
             "question_padding_horizontal_mobile": 16,
             "answer_bg_color": "#ffffff",
             "answer_text_color": "#474747",
@@ -549,12 +458,12 @@
             "open_6": false
           }
         },
-        "product_upsell_Y4YWRX": {
+        "product_upsell_Y3aGak": {
           "type": "product_upsell",
           "settings": {
             "product_list": [
-              "pdrn-collagen-volume-balm",
-              "pdrn-collagen-eye-patches"
+              "pdrn-collagen-eye-patches",
+              "salmon-pdrn-collagen-mask"
             ],
             "show_section_title": true,
             "section_title_before": "Komplettera din rutin",
@@ -562,7 +471,7 @@
             "section_title_after": "",
             "section_highlight_position": "inline_last",
             "section_title_font_size": 16,
-            "section_title_font_weight": "700",
+            "section_title_font_weight": "600",
             "section_title_color": "#000000",
             "section_title_alignment": "left",
             "section_title_margin_bottom": 12,
@@ -581,7 +490,7 @@
             "scrollbar_track_color": "#0000001a",
             "scrollbar_thumb_color": "#000000",
             "scrollbar_border_radius": 4,
-            "stacked_container_padding_horizontal": 14,
+            "stacked_container_padding_horizontal": 6,
             "stacked_container_padding_vertical": 0,
             "stacked_gap_between_upsells": 10,
             "card_padding_vertical": 6,
@@ -595,12 +504,12 @@
             "upsell_price_font_size": 13,
             "upsell_compare_price_font_size": 14,
             "show_compare_price": false,
-            "silent_add_to_cart": true,
-            "add_button_label": "Add",
-            "add_button_added_label": "Added",
-            "upsell_bg_color": "#ffffff",
+            "silent_add_to_cart": false,
+            "add_button_label": "Lägg till",
+            "add_button_added_label": "Tillagd",
+            "upsell_bg_color": "#f5f5f5",
             "upsell_border_color": "#e5e5e5",
-            "upsell_border_width": 0,
+            "upsell_border_width": 1,
             "upsell_border_radius": 8,
             "image_to_info_gap": 0,
             "toggle_inactive_bg": "#cccccc",
@@ -642,7 +551,7 @@
             "savings_badge_padding_horizontal": 8
           }
         },
-        "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5": {
+        "sticky_atc_Gmezjc": {
           "type": "sticky_atc",
           "settings": {
             "display_when": "after_scroll",
@@ -650,44 +559,44 @@
             "text_color": "#000000",
             "enable_background_gradient": false,
             "background_gradient": "linear-gradient(133deg, rgba(250, 220, 54, 1) 11%, rgba(254, 98, 146, 1) 49%, rgba(250, 220, 54, 1) 87%)",
-            "background_opacity": 0,
+            "background_opacity": 50,
             "backdrop_blur": 0,
-            "function": "add_to_cart",
-            "button_label": "Lägg I Kundvagn",
-            "button_note": "",
-            "button_note_color": "",
+            "function": "scroll_#ProductInfo-id",
+            "button_label": "Lägg i Kundvagn",
+            "button_note": "60 dagars nöjdhetsgaranti",
+            "button_note_color": "#f0f0f0",
             "button_note_font_size_desktop": 12,
-            "button_note_font_size_mobile": 11,
+            "button_note_font_size_mobile": 13,
             "button_note_font_weight": "400",
-            "button_note_margin_top": 2,
+            "button_note_margin_top": 3,
             "enable_custom_btn_color": true,
             "custom_btn_color": "#0f0f0f",
             "enable_button_gradient": false,
             "button_gradient": "linear-gradient(180deg, rgba(255, 228, 49, 1), rgba(249, 32, 32, 1) 100%)",
             "button_padding_top_bottom": 18,
-            "button_padding_left_right": 17,
+            "button_padding_left_right": 27,
             "button_padding_top_bottom_desktop": 14,
             "button_padding_left_right_desktop": 24,
             "button_border_width": 1,
             "button_border_color": "#000000",
             "button_border_radius": 50,
             "button_text_color": "#ffffff",
-            "button_font_size_desktop": 15,
-            "button_font_size_mobile": 14,
+            "button_font_size_desktop": 18,
+            "button_font_size_mobile": 16,
             "button_font_weight": "600",
             "title_label": "",
             "desktop_show_title": true,
             "mobile_show_title": false,
             "title_color": "#000000",
-            "title_font_size_desktop": 16,
+            "title_font_size_desktop": 18,
             "title_font_size_mobile": 13,
-            "title_font_weight": "500",
+            "title_font_weight": "700",
             "desktop_show_price": false,
             "mobile_show_price": false,
             "desktop_show_sale_badge": true,
             "mobile_show_sale_badge": true,
             "desktop_show_price_in_button": true,
-            "mobile_show_price_in_button": true,
+            "mobile_show_price_in_button": false,
             "show_compare_price_in_button": false,
             "price_gap": 8,
             "price_item_gap": 6,
@@ -717,24 +626,21 @@
         }
       },
       "block_order": [
-        "rating_stars_6wh6EW",
         "trustwill_trustoo_star_rating_widget_CCjHME",
         "title",
         "benefit_pills_zbrRfw",
-        "price_dpLDPD",
         "product_text_block_fgTzXK",
         "product_icon_features_ynyeRz",
         "product_icon_features_3ynhWz",
-        "benefit_list_rwhCiA",
         "rapi_rapi_bundle_KmgXWT",
+        "pulsing_scarcity_KDW3YU",
         "buy_buttons",
         "product_flag_qn3MLq",
         "custom_liquid_kj8teT",
         "icon_text_card_TptYYk",
-        "custom_liquid_KtjAiH",
         "product_info_accordion_gBhAhe",
-        "product_upsell_Y4YWRX",
-        "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5"
+        "product_upsell_Y3aGak",
+        "sticky_atc_Gmezjc"
       ],
       "custom_css": [],
       "settings": {
@@ -1425,6 +1331,183 @@
         "top_flip_horizontal": false,
         "bottom_flip_vertical": true,
         "bottom_flip_horizontal": true
+      }
+    },
+    "cost_comparison_zrcw97": {
+      "type": "cost-comparison",
+      "blocks": {
+        "text_XQLQz8": {
+          "type": "text",
+          "settings": {
+            "text": "Pro Results Without the Pro Cost",
+            "text_color": "#3d1f1f",
+            "font_size_mobile": 28,
+            "font_size_desktop": 42,
+            "text_align_mobile": "left",
+            "text_align_desktop": "left",
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 8,
+            "margin_top_desktop": 0,
+            "margin_bottom_desktop": 12
+          }
+        },
+        "text_NyLicX": {
+          "type": "text",
+          "settings": {
+            "text": "You could spend each year:",
+            "text_color": "#3d1f1f",
+            "font_size_mobile": 16,
+            "font_size_desktop": 18,
+            "text_align_mobile": "left",
+            "text_align_desktop": "left",
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 4,
+            "margin_top_desktop": 0,
+            "margin_bottom_desktop": 6
+          }
+        },
+        "bullet_EkLaKt": {
+          "type": "bullet",
+          "settings": {
+            "text": "<strong>$3,000+</strong> on injectables",
+            "text_color": "#3d1f1f",
+            "font_size_mobile": 18,
+            "font_size_desktop": 20,
+            "bullet_color": "#c0392b",
+            "bullet_size": 10,
+            "bullet_animation": "pulse",
+            "animation_speed": 2,
+            "pulse_scale": 25,
+            "pulse_start_opacity": 60,
+            "pulse_end_opacity": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0,
+            "margin_top_desktop": 0,
+            "margin_bottom_desktop": 0
+          }
+        },
+        "bullet_JnGwhD": {
+          "type": "bullet",
+          "settings": {
+            "text": "<strong>$1,800+</strong> on repeat medi-spa visits",
+            "text_color": "#3d1f1f",
+            "font_size_mobile": 18,
+            "font_size_desktop": 20,
+            "bullet_color": "#c0392b",
+            "bullet_size": 10,
+            "bullet_animation": "pulse",
+            "animation_speed": 2,
+            "pulse_scale": 25,
+            "pulse_start_opacity": 60,
+            "pulse_end_opacity": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0,
+            "margin_top_desktop": 0,
+            "margin_bottom_desktop": 0
+          }
+        },
+        "bullet_eTd6UX": {
+          "type": "bullet",
+          "settings": {
+            "text": "<strong>$1,100+</strong> traditional skincare",
+            "text_color": "#3d1f1f",
+            "font_size_mobile": 18,
+            "font_size_desktop": 20,
+            "bullet_color": "#c0392b",
+            "bullet_size": 10,
+            "bullet_animation": "pulse",
+            "animation_speed": 2,
+            "pulse_scale": 25,
+            "pulse_start_opacity": 60,
+            "pulse_end_opacity": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 4,
+            "margin_top_desktop": 0,
+            "margin_bottom_desktop": 4
+          }
+        },
+        "divider_P9Kpcw": {
+          "type": "divider",
+          "settings": {
+            "width_type": "full_width",
+            "custom_width_mobile": 100,
+            "custom_width_desktop": 100,
+            "padding_top_mobile": 16,
+            "padding_bottom_mobile": 16,
+            "padding_top_desktop": 20,
+            "padding_bottom_desktop": 20
+          }
+        },
+        "text_qNNArp": {
+          "type": "text",
+          "settings": {
+            "text": "Or, you could get 2 Pro Face Masks for only",
+            "text_color": "#3d1f1f",
+            "font_size_mobile": 16,
+            "font_size_desktop": 18,
+            "text_align_mobile": "left",
+            "text_align_desktop": "left",
+            "margin_top_mobile": 4,
+            "margin_bottom_mobile": 4,
+            "margin_top_desktop": 4,
+            "margin_bottom_desktop": 6
+          }
+        },
+        "bullet_U4PpUG": {
+          "type": "bullet",
+          "settings": {
+            "text": "<strong>$399</strong>",
+            "text_color": "#3d1f1f",
+            "font_size_mobile": 36,
+            "font_size_desktop": 48,
+            "bullet_color": "#c0392b",
+            "bullet_size": 10,
+            "bullet_animation": "pulse",
+            "animation_speed": 2,
+            "pulse_scale": 25,
+            "pulse_start_opacity": 60,
+            "pulse_end_opacity": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_mobile": 0,
+            "margin_top_desktop": 0,
+            "margin_bottom_desktop": 0
+          }
+        }
+      },
+      "block_order": [
+        "text_XQLQz8",
+        "text_NyLicX",
+        "bullet_EkLaKt",
+        "bullet_JnGwhD",
+        "bullet_eTd6UX",
+        "divider_P9Kpcw",
+        "text_qNNArp",
+        "bullet_U4PpUG"
+      ],
+      "name": "Cost Comparison",
+      "settings": {
+        "section_id": "costs-comparing",
+        "media_type": "image",
+        "media_border_radius": 16,
+        "media_aspect_ratio": "1 / 1",
+        "video_controls": false,
+        "video_playsinline": true,
+        "video_preload": "metadata",
+        "media_position": "left",
+        "media_width": 50,
+        "column_gap_mobile": 24,
+        "column_gap_desktop": 48,
+        "vertical_align": "center",
+        "blocks_gap_mobile": 8,
+        "blocks_gap_desktop": 10,
+        "container_max_width": 1200,
+        "bg_color": "#fdf6f4",
+        "divider_color": "#c4b5b0",
+        "divider_thickness": 1,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 56,
+        "padding_bottom_desktop": 56
       }
     },
     "icon_text_card_section_wfMTFQ": {
@@ -2139,6 +2222,7 @@
     "customer_review_slider_bihw3D",
     "feature_cards_slider_AW8GYb",
     "section_with_divider_U3xpMr",
+    "cost_comparison_zrcw97",
     "icon_text_card_section_wfMTFQ",
     "rituel_timeline_nqcQ3U",
     "us_vs_them_6LNUhb",
