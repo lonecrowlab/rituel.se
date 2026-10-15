@@ -46,7 +46,7 @@
           "settings": {
             "goal_type": "subtotal",
             "progress_message": "Du är [amount_with_currency] från [next_goal]!",
-            "success_message": "Du har låst upp fri frakt!",
+            "success_message": "Nu bjuder vi på frakten!",
             "labels_mobile_text_size": 11,
             "labels_desktop_text_size": 12,
             "text_font_size": 14,
