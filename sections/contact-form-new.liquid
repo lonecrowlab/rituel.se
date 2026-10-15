@@ -325,6 +325,21 @@
         </button>
       {% endform %}
 
+      {% comment %} Hindrer dobbel innsending (to saker i Gorgias) – lagt til 2026-10-15 {% endcomment %}
+      <script>
+        (function () {
+          var form = document.querySelector('.section-{{ section.id }} .contact-form');
+          if (!form) return;
+          form.addEventListener('submit', function () {
+            var btn = form.querySelector('.contact-submit-button');
+            if (!btn || btn.disabled) return;
+            btn.disabled = true;
+            btn.style.opacity = '0.6';
+            setTimeout(function () { btn.disabled = false; btn.style.opacity = ''; }, 8000);
+          });
+        })();
+      </script>
+
     </div>
   </div>
 </section>
