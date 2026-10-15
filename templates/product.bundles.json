@@ -829,7 +829,7 @@
         "hide_variants": false,
         "variant_image_filtering": "none",
         "image_zoom": "none",
-        "arrows_background_color": "#A4A4A4",
+        "arrows_background_color": "#a4a4a4",
         "arrows_icon_color": "#ffffff",
         "transparent_arrows": false,
         "dots_color": "#000000",
