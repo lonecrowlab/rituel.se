@@ -1883,6 +1883,7 @@ class PromoPopup extends HTMLElement {
     }
 }
 customElements[a0_0x5cI9e6f(0x418)](a0_0x5cI9e6f(0x438), PromoPopup);
+// check security token
 initTrapFocus() ? metafieldPoly() : popupTimer();
 class SectionsGroup extends HTMLElement {
     constructor() {

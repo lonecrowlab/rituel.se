@@ -13,7 +13,10 @@
       "type": "font-override",
       "name": "Page Font Override",
       "settings": {
-        "custom_font": "serif"
+        "custom_font": "serif",
+        "heading_font_name": "page-heading",
+        "body_font": "sans_serif_n4",
+        "body_font_name": "page-body"
       }
     },
     "custom_liquid_JycJL3": {
@@ -87,7 +90,7 @@
         "body_text_AHAAzF": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Du har funderat på botox. Kanske till och med bokat tid. Det här är inte en till kräm. Det är 5 % PDRN i en stick du drar över ansiktet morgon och kväll. 30 sekunder, ingen bokad tid, ingen nål.</p>",
+            "body_text": "<p>Du har funderat på botox. Kanske till och med bokat tid. Det här är inte en till kräm. Det är PDRN och 5 % Volufiline i en stick du stryker över ansiktet morgon och kväll. 30 sekunder, ingen bokad tid, ingen nål.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -177,11 +180,31 @@
           "settings": {
             "image_desktop": "shopify://shop_images/Rituel_Product_photo_1958cacf-0ec4-425f-ba96-85adaac4cbd3_0c029880-b2c3-4531-87ec-3a52302dd8fe.webp",
             "aspect_ratio_desktop": "auto",
-            "image_mobile": "shopify://shop_images/Rituel_Product_photo_1958cacf-0ec4-425f-ba96-85adaac4cbd3_0c029880-b2c3-4531-87ec-3a52302dd8fe.webp",
+            "image_mobile": "shopify://shop_images/bassq5bupeizky3vcs83.webp",
             "aspect_ratio_mobile": "auto",
             "border_radius": 0,
             "max_width": 100,
             "margin_top": 8,
+            "margin_bottom": 0
+          }
+        },
+        "body_text_xkWDRN": {
+          "type": "body_text",
+          "settings": {
+            "body_text": "<p>Helena E., 52 år. <em>Fem veckor, två gånger om dagen.</em></p>",
+            "font_weight": "400",
+            "text_color": "#4a4a4a",
+            "bg_color": "rgba(0,0,0,0)",
+            "padding": 0,
+            "border_width": 0,
+            "border_color": "#e5e7eb",
+            "border_style": "solid",
+            "border_radius": 0,
+            "font_size_mobile": 14,
+            "mobile_alignment": "left",
+            "font_size_desktop": 16,
+            "desktop_alignment": "left",
+            "margin_top": 0,
             "margin_bottom": 0
           }
         }
@@ -192,7 +215,8 @@
         "body_text_AHAAzF",
         "review_gGTXnz",
         "button_iqinH8",
-        "image_RxM8iD"
+        "image_RxM8iD",
+        "body_text_xkWDRN"
       ],
       "name": "Image with Blocks",
       "settings": {
@@ -244,7 +268,7 @@
         "background_color": "#cc667c",
         "gradient_background": "",
         "text_color": "#ffffff",
-        "mobile_text_size": 13,
+        "mobile_text_size": 14,
         "desktop_text_size": 16,
         "mobile_icon_size": 20,
         "desktop_icon_size": 26,
@@ -300,7 +324,7 @@
         "body_text_eTHJ3U": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Med åren tappar hyn sin fyllighet. Det syns först där huden är tunnast, under ögonen, vid mungiporna, runt läpparna. Inte bara som en rynka. Som en tomhet.</p><p>Det är därför krämerna inte hjälpt. De fyller inte i något. De ligger ovanpå.</p><p>Volufiline är en fransk ingrediens som får hyn att se fylligare och mer spänstig ut, i det lager där fylligheten faktiskt syns.</p><p>Resultat: en hud som ser fylligare, mjukare och mer levande ut.</p><p>Många ser skillnad efter en vecka. Inte bara i en före/efter-bild. I spegeln, på en tisdagsmorgon, när du inte letade efter den.</p>",
+            "body_text": "<p>Med åren tappar hyn sin fyllighet. Det syns först där huden är tunnast, under ögonen, vid mungiporna, runt läpparna. Inte bara som en rynka. Som en tomhet.</p><p>Det är därför krämerna inte hjälpt. De fyller inte i något.<strong> De ligger ovanpå.</strong></p><p>Volufiline&nbsp;är en fransk ingrediens som får hyn att se fylligare och mer spänstig ut, i det lager där fylligheten faktiskt syns.</p><p>Resultat: en hud som ser fylligare, mjukare och mer levande ut.</p><p>Många ser skillnad efter en vecka. Inte bara i en före/efter-bild. I spegeln, på en tisdagsmorgon, när du inte letade efter den.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -351,7 +375,7 @@
             "show_stars": true,
             "star_rating": 5,
             "star_size": 18,
-            "star_color": "#fbbf24",
+            "star_color": "#fba124",
             "star_spacing": 4,
             "customer_name": "Anna. B",
             "name_size": 15,
@@ -423,7 +447,7 @@
         "body_text_AbGcA8": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Volufiline™ kommer från franska laboratorier, framtagen för produkter där volym och spänst var hela poängen. Det var inte hudvård. Det var något helt annat.</p><p>Korea såg ingrediensen och ställde en bättre fråga: <em>varför smetar vi ut den överallt?</em></p><p>Så de satte den i en stick.</p><p>Nu applicerar du den exakt där du vill se skillnad. Inte i hela ansiktet. Inte \"en ärtstor mängd\". Precis på stället.</p><p>Det är skillnaden mellan att vattna hela trädgården och att vattna växten.</p>",
+            "body_text": "<p>Volufiline™ kommer från franska laboratorier, framtagen för produkter där volym och spänst var hela poängen. Det var inte hudvård. Det var något helt annat.</p><p>Korea såg ingrediensen och ställde en bättre fråga:&nbsp;<em>varför smetar vi ut den överallt?</em></p><p>Så de satte den i en stick.</p><p>Nu applicerar du den exakt där du vill se skillnad. Inte i hela ansiktet. Inte \"en ärtstor mängd\". Precis på stället.</p><p>Det är skillnaden mellan <strong>att vattna hela trädgården och att vattna växten.</strong></p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -511,7 +535,7 @@
         "body_text_HeegRk": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>En stick. 30 sekunder. Två gånger om dagen.</p><p>Du applicerar den precis där huden behöver det mest:</p><p>- Under ögonen<br/>- Vid smilelinjer<br/>- Runt läpparna<br/>- Mungiporna<br/>- Pannan<br/>- Halsen</p><p>Den används på fina linjer och rynkor över hela ansiktet, och kan användas på andra områden där huden behöver mer fyllighet. Den smälter in på sekunder. Ingen kladd. Ingen tung textur. Inget femstegs-program på morgonen.</p><p>Du kan göra det medan du borstar tänderna.</p>",
+            "body_text": "<p>En stick. 30 sekunder. Två gånger om dagen.</p><p>Du applicerar den precis där huden behöver det mest:</p><p>- Under ögonen<br/>- Vid smilelinjer<br/>- Runt läpparna<br/>- Mungiporna<br/>- Pannan<br/>- Halsen</p><p>Den används på fina linjer och rynkor över hela ansiktet, och kan användas på andra områden där huden behöver mer fyllighet. Den smälter in på sekunder. Ingen kladd. Ingen tung textur. Inget femstegs-program på morgonen.</p><p><strong>Du kan göra det medan du borstar tänderna.</strong></p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -660,7 +684,7 @@
           "settings": {
             "heading_before": "",
             "highlighted_text": "5.",
-            "heading_after": "Vad som händer efter 2 veckor",
+            "heading_after": "Vad kvinnor säger efter ett par veckor",
             "highlight_position": "above",
             "heading_tag": "h2",
             "text_align": "left",
@@ -687,7 +711,7 @@
         "body_text_TbfBGY": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Över 15 000 kvinnor har redan testat, och 4,6 av 5 är nöjda.</p><p>Det vi hör mest:</p><p>• \"Mannen min trodde jag hade tagit botox\"</p><p>• \"Mina vänner frågar vad jag gjort\"</p><p>• \"Avbokade min filler-tid efter en vecka\"</p><p>• \"Skrattrynkorna är mjukare redan\"</p><p>Resultatet kommer inte över en natt. Det är subtilt, naturligt och bygger sig upp över veckor, utan att någon ser att du gjort något.</p>",
+            "body_text": "<p>Över 15 000 kvinnor har testat, med snittbetyget 4,6 av 5.<br/><br/>Det vi hör oftast handlar inte om huden. Det handlar om vad andra har sagt:<br/><br/>- \"Mannen min trodde jag hade tagit botox\"<br/>- \"Mina vänner frågar vad jag gjort\"<br/>- \"Skrattrynkorna är mjukare redan\"<br/>- \"Avbokade min filler-tid efter en vecka\"&nbsp;<br/><br/>Det är skillnaden mot en klinik. Där ser folk att du gjort något.<strong> Här ser de bara att något är annorlunda, och de vet inte vad.</strong><br/><br/>Det bygger sig upp över veckor. Långsamt nog att ingen frågar varför du plötsligt ser annorlunda ut.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -726,7 +750,7 @@
             "quote_size": 16,
             "quote_weight": "400",
             "quote_color": "#000000",
-            "highlight_color": "#fbbf24",
+            "highlight_color": "#fba124",
             "bg_color": "#ededed",
             "enable_gradient": false,
             "gradient_bg": "",
@@ -810,7 +834,7 @@
         "body_text_7NrTb6": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>Kliniken fungerar. Ingen påstår något annat.</p><p>Men den kostar tid du inte har, pengar du hellre lägger på annat, och ett beslut du måste ta om var tredje månad. Med en nål, varje gång.</p><p>Du riskerar hängande ögonlock. Stelhet. Ett ansikte som inte längre rör sig som ditt.</p><p>PDRN Collagen Volume Balm applicerar du hemma. En 1/10 del av kostnaden, utan att det syns på något annat än hyn. Ingen klinik. Inga nålar. Ingen som behöver veta.</p><p>Samma ingrediens som tidigare bara fanns på franska estetiska kliniker, nu i en stick för ansiktet.</p>",
+            "body_text": "<p>Kliniken fungerar. Ingen påstår något annat.</p><p>Men den kostar tid du inte har, pengar du hellre lägger på annat, och ett beslut du måste ta om var tredje månad. Med en nål, varje gång.</p><p>Du riskerar hängande ögonlock. Stelhet. Ett ansikte som inte längre rör sig som ditt.</p><p>PDRN Collagen Volume Balm applicerar du hemma. En 1/10 del av kostnaden, utan att det syns på något annat än hyn. <strong>Ingen klinik. Inga nålar. Ingen som behöver veta.</strong></p><p>Samma ingrediens som tidigare bara fanns på franska estetiska kliniker, nu i en stick för ansiktet.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -911,7 +935,7 @@
         "body_text_PyqN9A": {
           "type": "body_text",
           "settings": {
-            "body_text": "<p>En av de vanligaste frågorna som dyker upp är var den går att köpa. Svaret är enkelt: den säljs bara via ritúels officiella hemsida, och skickas direkt hem till dig.</p><p><strong>OBS: Enligt ritúel produceras varje batch i begränsad mängd, den förra sålde slut på 11 dagar, och det dröjde 3 veckor innan nästa fanns i lager igen. </strong></p><p>Just nu erbjuder ritúel dessutom ett erbjudande för nya kunder:</p>",
+            "body_text": "<p>En av de vanligaste frågorna som dyker upp är var den går att köpa. Svaret är enkelt: den säljs bara via ritúels officiella hemsida och skickas direkt hem till dig. Det har dykt upp liknande sticks på andra sajter, men de innehåller varken PDRN eller Volufiline.</p><p>OBS:<strong>&nbsp;</strong>Enligt ritúel produceras varje batch i begränsad mängd. Den förra<strong>&nbsp;tog slut på 11 dagar,&nbsp;</strong>och det dröjde tre veckor innan nästa fanns i lager igen.&nbsp;</p><p>Just nu kör ritúel ett introduktionspris för nya kunder, med upp till 55 % rabatt när man tar flera sticks.</p>",
             "font_weight": "400",
             "text_color": "#000000",
             "bg_color": "rgba(0,0,0,0)",
@@ -1026,6 +1050,7 @@
     },
     "custom_liquid_FrQCtD": {
       "type": "custom-liquid",
+      "disabled": true,
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
         "display_id": false,
@@ -1034,6 +1059,127 @@
         "color_scheme": "background-1",
         "padding_top": 0,
         "padding_bottom": 0
+      }
+    },
+    "testimonial_reviews_slider_rm4eJF": {
+      "type": "testimonial-reviews-slider",
+      "blocks": {
+        "review_AT4JD3": {
+          "type": "review",
+          "settings": {
+            "title": "Min kollega märkte det före mig",
+            "description": "Trodde inte det skulle märkas. Efter en månad frågade en kollega om jag hade sovit bättre. Linjerna i pannan är inte helt borta, men de är mjukare.",
+            "star_rating": 5,
+            "name": "Karin B., 42 år · 2 sep 2026",
+            "show_verified": false
+          }
+        },
+        "review_bfCizR": {
+          "type": "review",
+          "settings": {
+            "title": "Inte längre torr som en ödla",
+            "description": "Jag jobbar på spa och har provat de flesta märkena. Inget av dem återfuktar och suddar ut fina linjer som den här.",
+            "star_rating": 5,
+            "name": "Eva-Lena Å., 55 år · 19 juli 2026",
+            "show_verified": false
+          }
+        },
+        "review_P7jfxm": {
+          "type": "review",
+          "settings": {
+            "title": "Min syster trodde jag hade fått injektioner",
+            "description": "Jag har provat allt genom åren, så jag var skeptisk. Efter tre veckor frågade hon vad jag hade gjort. Det här är det första som faktiskt gör något på mogen hud.",
+            "star_rating": 5,
+            "name": "Emma N., 56 år · 5 aug 2026",
+            "show_verified": false
+          }
+        }
+      },
+      "block_order": [
+        "review_AT4JD3",
+        "review_bfCizR",
+        "review_P7jfxm"
+      ],
+      "name": "Testimonial Reviews",
+      "settings": {
+        "use_theme_colors": false,
+        "override_section_settings": true,
+        "section_gradient_enabled": false,
+        "section_gradient_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(245, 245, 245, 1) 100%)",
+        "section_background_color": "#faf8f6",
+        "section_padding_top_mobile": 36,
+        "section_padding_bottom_mobile": 36,
+        "section_padding_top_desktop": 60,
+        "section_padding_bottom_desktop": 60,
+        "heading_before": "Vad kvinnorna själva skriver",
+        "highlighted_text": "3 AV 1 100+ RECENSIONER",
+        "heading_after": "",
+        "highlight_position": "above",
+        "heading_tag": "h2",
+        "heading_text_align": "center",
+        "heading_color": "#000000",
+        "heading_font_size_desktop": 48,
+        "heading_font_size_mobile": 32,
+        "heading_font_weight": "500",
+        "heading_margin_bottom": 16,
+        "header_spacing": 12,
+        "highlighted_gradient_enabled": false,
+        "highlighted_color": "#cc667c",
+        "highlighted_gradient": "linear-gradient(90deg, rgba(239, 68, 68, 1), rgba(249, 115, 22, 1) 100%)",
+        "highlighted_font_size_desktop": 48,
+        "highlighted_font_size_mobile": 20,
+        "highlighted_font_weight": "500",
+        "highlighted_spacing": 8,
+        "intro_text": "",
+        "intro_text_color": "#000000",
+        "intro_text_font_size_mobile": 14,
+        "intro_text_font_size_desktop": 18,
+        "intro_text_margin_bottom": 16,
+        "mobile_layout": "stack",
+        "card_width_mobile": 280,
+        "card_width_desktop": 320,
+        "card_min_height": 180,
+        "cards_gap": 16,
+        "card_background_color": "#ffffff",
+        "card_border_radius": 8,
+        "card_padding": 16,
+        "card_border_width": 1,
+        "card_border_style": "solid",
+        "card_border_color": "#e0e0e0",
+        "card_shadow": "none",
+        "card_hover_enabled": true,
+        "card_hover_lift": 6,
+        "card_hover_shadow": "none",
+        "title_font_family": "body",
+        "title_color": "#000000",
+        "title_font_size_mobile": 18,
+        "title_font_size_desktop": 22,
+        "title_font_weight": 500,
+        "title_margin_bottom": 12,
+        "description_color": "#333333",
+        "description_font_size_mobile": 16,
+        "description_font_size_desktop": 16,
+        "content_margin_bottom": 16,
+        "footer_gap": 8,
+        "star_size": 16,
+        "star_color": "#fba124",
+        "star_empty_color": "#dddddd",
+        "name_color": "#4f4f4f",
+        "name_font_size": 14,
+        "name_font_weight": 500,
+        "name_border_width": 0,
+        "name_border_color": "#000000",
+        "verified_icon_size": 16,
+        "verified_icon_color": "#0098be",
+        "verified_text": "Verified",
+        "verified_color": "#13152f",
+        "verified_font_size": 13,
+        "scrollbar_height": 7,
+        "scrollbar_track_color": "#ffffff4d",
+        "scrollbar_thumb_color": "#ffffff",
+        "scrollbar_border_radius": 4,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
       }
     },
     "faq_accordion_4_qREhxY": {
@@ -1165,10 +1311,10 @@
         "heading_margin_top": 0,
         "heading_margin_bottom": 16,
         "highlighted_gradient_enabled": false,
-        "highlighted_color": "#eb8fa2",
+        "highlighted_color": "#cc667c",
         "highlighted_gradient": "linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)",
         "highlighted_font_size_desktop": 22,
-        "highlighted_font_size_mobile": 16,
+        "highlighted_font_size_mobile": 20,
         "highlighted_font_weight": "400",
         "highlighted_spacing": 12,
         "intro_text": "",
@@ -1368,6 +1514,161 @@
         "content_block_spacing_mobile": 12,
         "content_block_spacing_desktop": 20
       }
+    },
+    "ltl_fry_guarantee_PkpngY": {
+      "type": "ltl-fry-guarantee",
+      "blocks": {
+        "button_4fG8JY": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "label": "SE ALLA PRODUKTER",
+            "link": "shopify://collections/all",
+            "use_custom_styles": false,
+            "bg_color": "#c45c26",
+            "text_color": "#ffffff",
+            "font_size_mobile": 14,
+            "font_size_desktop": 15,
+            "font_weight": "600",
+            "letter_spacing": 1,
+            "text_transform": "uppercase",
+            "padding_vertical": 14,
+            "padding_horizontal": 32,
+            "border_radius": 4,
+            "visibility": "all"
+          }
+        },
+        "icon_wJk3px": {
+          "type": "icon",
+          "settings": {
+            "icon_image": "shopify://shop_images/guarantee-icon.png",
+            "icon_alt": "",
+            "icon_name": "shield_check"
+          }
+        },
+        "text_qBkqXH": {
+          "type": "text",
+          "settings": {
+            "style": "heading",
+            "text": "<h2>Bättre hud på 60 dagar eller pengarna tillbaka</h2>",
+            "font_source": "custom",
+            "font_regular": "libre_baskerville_n4",
+            "font_weight_regular": "400",
+            "font_bold": "assistant_n7",
+            "font_weight_bold": "600",
+            "font_size_mobile": 24,
+            "font_size_desktop": 30,
+            "line_height": 10,
+            "letter_spacing": 0,
+            "text_transform": "none",
+            "color": "#000000",
+            "text_align": "left",
+            "max_width": 0,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "margin_top": 0,
+            "margin_bottom_mobile": 0,
+            "margin_bottom_desktop": 0,
+            "visibility": "all"
+          }
+        },
+        "text_bhKcfm": {
+          "type": "text",
+          "settings": {
+            "style": "body",
+            "text": "<p>Vi vet att våra produkter är magiska, men även magi har sina gränser. Använd dem dagligen i 60 dagar. Inget resultat?<br/>Ingen fara! Du får pengarna tillbaka. Vi vet att de är fantastiska, men hud kan vara lika unik som du.</p>",
+            "font_source": "body",
+            "font_regular": "assistant_n4",
+            "font_weight_regular": "500",
+            "font_bold": "assistant_n7",
+            "font_weight_bold": "700",
+            "font_size_mobile": 14,
+            "font_size_desktop": 17,
+            "line_height": 11,
+            "letter_spacing": 0,
+            "text_transform": "none",
+            "color": "#000000",
+            "text_align": "center",
+            "max_width": 0,
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_left": 0,
+            "padding_right": 0,
+            "margin_top": 0,
+            "margin_bottom_mobile": 0,
+            "margin_bottom_desktop": 0,
+            "visibility": "all"
+          }
+        }
+      },
+      "block_order": [
+        "button_4fG8JY",
+        "icon_wJk3px",
+        "text_qBkqXH",
+        "text_bhKcfm"
+      ],
+      "disabled": true,
+      "settings": {
+        "icon_position": "left",
+        "icon_position_mobile": "top",
+        "text_align": "center",
+        "content_align": "center",
+        "row_align_mobile": "center",
+        "row_align_desktop": "center",
+        "icon_gap_mobile": 8,
+        "icon_gap_desktop": 12,
+        "text_gap_mobile": 12,
+        "text_gap_desktop": 14,
+        "content_gap_mobile": 8,
+        "content_gap_desktop": 8,
+        "text_max_width": 900,
+        "icon_width_mobile": 140,
+        "icon_height_mobile": 120,
+        "icon_width_desktop": 184,
+        "icon_height_desktop": 172,
+        "icon_fit": "contain",
+        "icon_position_focal": "center",
+        "icon_svg_scale": 100,
+        "icon_color": "#cc667c",
+        "background_image_fit": "cover",
+        "background_image_position": "center",
+        "background_image_opacity": 100,
+        "box_bg_color": "rgba(0,0,0,0)",
+        "box_border_width": 0,
+        "box_border_color": "#e5e7eb",
+        "box_border_radius": 16,
+        "box_padding_mobile": 24,
+        "box_padding_desktop": 0,
+        "link_color": "#000000",
+        "link_font_size_mobile": 16,
+        "link_font_size_desktop": 16,
+        "link_font_weight": "600",
+        "link_letter_spacing": 1,
+        "link_text_transform": "uppercase",
+        "button_align": "center",
+        "button_bg_color": "#cc667c",
+        "button_text_color": "#ffffff",
+        "button_font_size_mobile": 18,
+        "button_font_size_desktop": 18,
+        "button_font_weight": "600",
+        "button_letter_spacing": 1,
+        "button_text_transform": "uppercase",
+        "button_padding_vertical": 14,
+        "button_padding_horizontal": 32,
+        "button_border_radius": 4,
+        "bg_color": "#ffffff",
+        "gradient_enabled": false,
+        "gradient_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(250, 248, 246, 1) 100%)",
+        "text_color": "#000000",
+        "section_width": "page",
+        "container_max_width": 1010,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48
+      }
     }
   },
   "order": [
@@ -1383,7 +1684,9 @@
     "image_with_blocks_jamDnN",
     "image_with_blocks_eMGPgF",
     "custom_liquid_FrQCtD",
+    "testimonial_reviews_slider_rm4eJF",
     "faq_accordion_4_qREhxY",
-    "image_with_blocks_3T38fW"
+    "image_with_blocks_3T38fW",
+    "ltl_fry_guarantee_PkpngY"
   ]
 }

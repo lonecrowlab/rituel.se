@@ -19,7 +19,7 @@
             "star_color": "#b8576e",
             "bg_stars_style": "full",
             "bg_star_color": "#ececec",
-            "label": "<strong>4,6</strong> baserat på <strong>700+</strong> recensioner",
+            "label": "<strong>4,6</strong> baserat på <strong>1 100+</strong> recensioner",
             "size": 14,
             "text_color": "#000000",
             "margin_top": 15,
@@ -29,7 +29,7 @@
         "heading_3N4cxb": {
           "type": "heading",
           "settings": {
-            "heading": "Koreansk hudvård. Hemma i ditt badrum.",
+            "heading": "<p>Koreansk hudvård. Hemma i ditt badrum.</p>",
             "heading_accent": "",
             "highlight_position": "below",
             "use_theme_colors": false,
@@ -247,6 +247,7 @@
       "blocks": {
         "collection_ad_3er7UT": {
           "type": "collection_ad",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/gradient.png",
             "image_fit": "contain",
@@ -387,7 +388,7 @@
         "button_custom_icon": "",
         "button_icon_position": "after",
         "button_icon_size": 18,
-        "button_icon_gap": 8,
+        "button_icon_gap": 6,
         "button_icon_color": "#ffffff",
         "use_custom_product_rating": true,
         "show_product_rating_count": false,
@@ -404,10 +405,10 @@
         "badge_position": "top-left",
         "badge_offset_x": 4,
         "badge_offset_y": 4,
-        "custom_badge_padding_x": 6,
+        "custom_badge_padding_x": 10,
         "custom_badge_padding_y": 4,
         "custom_badge_border_radius": 6,
-        "custom_badge_font_size": 10,
+        "custom_badge_font_size": 12,
         "custom_badge_font_weight": "600",
         "custom_badge_icon_size": 14,
         "custom_badge_icon_gap": 4,
@@ -517,6 +518,7 @@
         "intro_text_font_size_mobile": 14,
         "intro_text_font_size_desktop": 18,
         "intro_text_margin_bottom": 16,
+        "mobile_layout": "slider",
         "card_width_mobile": 280,
         "card_width_desktop": 320,
         "card_min_height": 230,

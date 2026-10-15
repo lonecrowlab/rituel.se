@@ -141,7 +141,7 @@
             "highlight_text": "",
             "text_color": "#000000",
             "font_size_desktop": 16,
-            "font_size_mobile": 16,
+            "font_size_mobile": 17,
             "line_height_desktop": 1.6,
             "line_height_mobile": 1.5,
             "text_align": "left",
@@ -193,7 +193,7 @@
             "mobile_gap_vertical": 10,
             "icon_text_gap": 5,
             "margin_top": 5,
-            "margin_bottom": 10,
+            "margin_bottom": 15,
             "icon_1_image": "shopify://shop_images/608661d1-bb5f-4932-a46a-a686533c3f95-2_f063cdb5-4401-4adb-9d95-5ec30456d712.svg",
             "icon_1_name": "",
             "icon_1_svg": "",
@@ -294,46 +294,6 @@
             "icon_4_border_color": ""
           }
         },
-        "benefit_list_rwhCiA": {
-          "type": "benefit_list",
-          "disabled": true,
-          "settings": {
-            "item_1_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"currentColor\"><path fill-rule=\"evenodd\" d=\"M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z\" clip-rule=\"evenodd\"></path></svg>",
-            "item_1_text": "Djupåterfuktning",
-            "item_2_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"currentColor\"><path fill-rule=\"evenodd\" d=\"M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z\" clip-rule=\"evenodd\"></path></svg>",
-            "item_2_text": "Eliminerar rynkor",
-            "item_3_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewbox=\"0 0 24 24\" fill=\"currentColor\"><path fill-rule=\"evenodd\" d=\"M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z\" clip-rule=\"evenodd\"></path></svg>",
-            "item_3_text": "Fylligare & strålande hy",
-            "list_alignment": "flex-start",
-            "list_gap": 6,
-            "list_gap_mobile": 4,
-            "item_max_width": 100,
-            "item_background": "rgba(0,0,0,0)",
-            "item_gradient_enabled": false,
-            "item_gradient": "linear-gradient(135deg, rgba(243, 244, 246, 1), rgba(229, 231, 235, 1) 100%)",
-            "item_padding_vertical": 0,
-            "item_padding_horizontal": 0,
-            "item_padding_vertical_mobile": 0,
-            "item_padding_horizontal_mobile": 0,
-            "item_border_radius": 0,
-            "item_border_width": 0,
-            "item_border_style": "solid",
-            "item_border_color": "#e5e7eb",
-            "icon_size": 24,
-            "icon_size_mobile": 24,
-            "icon_color": "#000000",
-            "icon_text_gap": 12,
-            "icon_text_gap_mobile": 10,
-            "text_size": 15,
-            "text_size_mobile": 14,
-            "text_weight": "400",
-            "text_color": "#1f2937",
-            "text_line_height": 1.5,
-            "item_vertical_alignment": "center",
-            "margin_top": 16,
-            "margin_bottom": 16
-          }
-        },
         "text_with_side_icon_J8Vb7P": {
           "type": "text_with_side_icon",
           "disabled": true,
@@ -365,7 +325,7 @@
         "pulsing_scarcity_AjEjV3": {
           "type": "pulsing_scarcity",
           "settings": {
-            "stock_min": 6,
+            "stock_min": 5,
             "stock_max": 12,
             "reduction_minutes": 1,
             "text_prefix": "Endast",
@@ -391,8 +351,8 @@
             "enable_custom_color": true,
             "custom_color": "#000000",
             "button_text_color": "#ffffff",
-            "button_padding_top": 16,
-            "button_padding_bottom": 16,
+            "button_padding_top": 18,
+            "button_padding_bottom": 18,
             "button_padding_left": 20,
             "button_padding_right": 20,
             "button_border_radius": 50,
@@ -420,7 +380,7 @@
             "button_icon_size": 24,
             "button_icon_color": "#ffffff",
             "button_icon_gap": 8,
-            "margin_top": 12,
+            "margin_top": 15,
             "margin_bottom": 6
           }
         },
@@ -509,7 +469,7 @@
             "title_text_transform": "none",
             "title_margin_bottom": 2,
             "paragraph_color": "#ffffff",
-            "paragraph_font_size": 14,
+            "paragraph_font_size": 17,
             "paragraph_font_size_mobile": 15,
             "paragraph_font_weight": 400,
             "paragraph_line_height": 14,
@@ -651,10 +611,10 @@
             "answer_2": "<p><strong>PDRN (Salmon DNA)</strong><br/>Det koreanska premiumkliniker bygger sina behandlingar kring. Nu i badrummet istället för i receptionen.</p><p><strong>5 % Volufiline</strong><br/>Växtbaserat extrakt för fyllighet där hyn tappat sin form.</p><p><strong>Lågmolekylärt kollagen</strong><br/>Vanligt kollagen är för stort för att komma någonstans. Det här är mindre och går längre ner.</p><p><strong>Retinol</strong><br/>Den mest studerade ingrediensen som finns för slätare hy, i en halt som går att använda varje kväll.</p><p><strong>Hyaluronsyra</strong><br/>Torr hy gör linjer djupare än de faktiskt är. Det här är delen du märker först.</p><p><strong>Koffein</strong><br/>Piggare kring ögonen. Ofta det andra lägger märke till.</p>",
             "open_2": false,
             "question_3": "Frakt, retur & 60 dagars garanti",
-            "answer_3": "<p>Beställningar före kl. 22.00 på vardagar skickas samma dag. Leverans inom 5–7 arbetsdagar.<br/><br/>✓ Fri försäkrad frakt över 450 kr<br/>✓ Under 450 kr: 39 kr i fraktavgift</p><p><strong>60 dagars öppet köp</strong><br/>Inte nöjd? Returnera inom 60 dagar och få pengarna tillbaka. Inga frågor.</p>",
+            "answer_3": "<p><strong>Leverans</strong><br/>Vi skickar ditt paket inom 24 timmar. Just nu är trycket högt på grund av kampanjen, så själva transporten tar längre tid än vanligt. De flesta får sitt paket inom 7–9 arbetsdagar, som längst 12.<br/><br/>Spårningsnumret får du samma dag som vi skickar, så du ser var paketet är hela vägen.<br/><br/><strong>Frakt</strong><br/>✓ Fri försäkrad frakt över 450 kr<br/>✓ Under 450 kr: 39 kr<br/>Skulle något hända med paketet på vägen skickar vi ett nytt.<br/><br/><strong>60 dagars nöjdhetsgaranti</strong><br/>Dina 60 dagar börjar den dag du får paketet, inte den dag du beställer. Inte nöjd? Mejla oss inom 60 dagar så får du pengarna tillbaka. Öppnade sticks behöver du inte skicka tillbaka. Oöppnade vill vi gärna ha i retur. Vi frågar inte varför.</p>",
             "open_3": false,
             "question_4": "Vanliga frågor",
-            "answer_4": "<p><strong>När i rutinen använder jag den?</strong><br/>Sist. På morgonen efter rengöring, före solskydd. På kvällen som avslutning. Det är det enda du behöver lägga till.</p><p><strong>Hur applicerar jag den?</strong><br/>Vrid upp några millimeter och glid stickan uppåt över panna, kinder, käklinje och hals. Låt sjunka in några sekunder. Trettio sekunder, sen är du klar.</p><p><strong>Kan jag ha makeup ovanpå?</strong><br/>Ja. Låt den sjunka in en minut. Många säger att foundation lägger sig jämnare ovanpå.</p><p><strong>Hur ofta kan jag använda den?</strong><br/>Morgon och kväll, varje dag. Den är gjord för det.</p><p><strong>Passar den min hy?</strong><br/>Formulerad för att fungera även på känslig hy. Är din hy mycket reaktiv: testa på en liten yta först.</p><p><strong>Hur länge räcker en stick?</strong><br/>Ungefär fem veckor vid daglig användning. De flesta väljer 2 st eller 3 st för att slippa få slut innan önskat resultat.</p><p><strong>Vad är PDRN och Volufiline?</strong><br/>PDRN är DNA-fragment från lax, ingrediensen koreanska premiumkliniker bygger sina behandlingar kring. Volufiline är ett växtbaserat extrakt, här i 5 %, för fyllighet där hyn tappat sin form.</p><p><strong>Vad händer om den inte gör något för mig?</strong><br/>Du har 60 dagar. Är du inte nöjd får du pengarna tillbaka.<a href=\"/pages/contact\" title=\"Contact\"> <em>Kontakta oss här</em></a> och vi löser det.</p>",
+            "answer_4": "<p><strong>När i rutinen använder jag den?</strong><br/>Sist. På morgonen efter rengöring, före solskydd. På kvällen som avslutning. Det är det enda du behöver lägga till.</p><p><strong>Hur applicerar jag den?</strong><br/>Vrid upp några millimeter och glid stickan uppåt över panna, kinder, käklinje och hals. Låt sjunka in några sekunder. Trettio sekunder, sen är du klar.</p><p><strong>Kan jag ha makeup ovanpå?</strong><br/>Ja. Låt den sjunka in en minut. Många säger att foundation lägger sig jämnare ovanpå.</p><p><strong>Hur ofta kan jag använda den?</strong><br/>Morgon och kväll, varje dag. Den är gjord för det.</p><p><strong>Passar den min hy?</strong><br/>Formulerad för att fungera även på känslig hy. Är din hy mycket reaktiv: testa på en liten yta först.</p><p><strong>Hur länge räcker en stick?</strong><br/>Ungefär fem veckor vid daglig användning. De flesta väljer 2 st eller 3 st för att slippa få slut innan önskat resultat.</p><p><strong>Vad är PDRN och Volufiline?</strong><br/>PDRN är DNA-fragment från lax, ingrediensen koreanska premiumkliniker bygger sina behandlingar kring. Volufiline är ett växtbaserat extrakt, här i 5 %, för fyllighet där hyn tappat sin form.</p><p><strong>Vad händer om den inte gör något för mig?</strong><br/>Du har 60 dagar. Är du inte nöjd får du pengarna tillbaka.<a href=\"/pages/contact\" title=\"Contact\">&nbsp;<em>Kontakta oss här</em></a>&nbsp;och vi löser det.</p>",
             "open_4": false,
             "question_5": "",
             "answer_5": "",
@@ -771,10 +731,10 @@
             "button_label": "Lägg i Kundvagn",
             "button_note": "60 dagars nöjdhetsgaranti",
             "button_note_color": "#f0f0f0",
-            "button_note_font_size_desktop": 12,
-            "button_note_font_size_mobile": 12,
+            "button_note_font_size_desktop": 14,
+            "button_note_font_size_mobile": 13,
             "button_note_font_weight": "400",
-            "button_note_margin_top": 2,
+            "button_note_margin_top": 3,
             "enable_custom_btn_color": true,
             "custom_btn_color": "#0f0f0f",
             "enable_button_gradient": false,
@@ -782,7 +742,7 @@
             "button_padding_top_bottom": 18,
             "button_padding_left_right": 27,
             "button_padding_top_bottom_desktop": 14,
-            "button_padding_left_right_desktop": 24,
+            "button_padding_left_right_desktop": 48,
             "button_border_width": 1,
             "button_border_color": "#000000",
             "button_border_radius": 50,
@@ -823,7 +783,7 @@
             "star_color": "#ffcc00",
             "stars_label": "(xxxx Reviews)",
             "desktop_show_image": true,
-            "desktop_image_width": 80,
+            "desktop_image_width": 100,
             "desktop_full_button_width": false,
             "mobile_show_image": false,
             "mobile_image_width": 55,
@@ -840,7 +800,6 @@
         "product_text_block_fgTzXK",
         "product_icon_features_ynyeRz",
         "product_icon_features_3ynhWz",
-        "benefit_list_rwhCiA",
         "text_with_side_icon_J8Vb7P",
         "rapi_rapi_bundle_KmgXWT",
         "pulsing_scarcity_AjEjV3",
@@ -854,7 +813,9 @@
         "product_upsell_Y4YWRX",
         "e7a28cbe-03cb-4c9d-a2c4-0e3e76ffb3e5"
       ],
-      "custom_css": [],
+      "custom_css": [
+        ".scarcity-row {justify-content: flex-start;}"
+      ],
       "settings": {
         "display_id": false,
         "enable_sticky_info": true,
@@ -868,7 +829,7 @@
         "hide_variants": false,
         "variant_image_filtering": "none",
         "image_zoom": "none",
-        "arrows_background_color": "#6c6c6c",
+        "arrows_background_color": "#a4a4a4",
         "arrows_icon_color": "#ffffff",
         "transparent_arrows": false,
         "dots_color": "#000000",
@@ -1156,7 +1117,7 @@
           "settings": {
             "customer_image": "shopify://shop_images/sofia-4.webp",
             "customer_name": "Sofia. H",
-            "customer_age": "52",
+            "customer_age": "55",
             "rating": 5,
             "review_text": "<p>Har provat alla krämer som finns på marknaden. Trodde inte längre på underverk. Men efter 3 veckor med PDRN-balmen är skillnaden så tydlig att jag inte längre behöver foundation under ögonen.</p>",
             "product_reference": "",
@@ -1171,11 +1132,11 @@
         "review_aj63ka": {
           "type": "review",
           "settings": {
-            "customer_image": "shopify://shop_images/59.webp",
-            "customer_name": "Eva. B",
-            "customer_age": "68",
+            "customer_image": "shopify://shop_images/bassq5bupeizky3vcs83.webp",
+            "customer_name": "Helena. E",
+            "customer_age": "52",
             "rating": 5,
-            "review_text": "<p>Jag hade gett upp hoppet, apotekshyllan, dyra behandlingar, inget höll vad det lovade. Så skepsisen var på topp. Men två månader in kan jag inte förneka det längre: huden känns annorlunda.</p>",
+            "review_text": "<p>Jag började märka en skillnad redan efter ett par veckor. Huden kändes jämnare, fylligare och hade mer lyster. Men det var runt vecka 5 som jag verkligen såg den största skillnaden, särskilt i pannan, runt ögonen och längs käklinjen. Huden ser helt enkelt slätare och mer återfuktad ut.</p>",
             "product_reference": "",
             "product_title_override": "",
             "product_price_override": "",
@@ -1806,7 +1767,7 @@
         "title_text_transform": "none",
         "title_margin_bottom": 4,
         "paragraph_color": "#ffffff",
-        "paragraph_font_size": 14,
+        "paragraph_font_size": 17,
         "paragraph_font_size_mobile": 14,
         "paragraph_font_weight": 400,
         "paragraph_line_height": 1.5,
@@ -2433,164 +2394,6 @@
         "bottom_flip_horizontal": true
       }
     },
-    "image_with_blocks_c7kf33": {
-      "type": "image-with-blocks",
-      "blocks": {
-        "heading_Np6fHc": {
-          "type": "heading",
-          "settings": {
-            "heading_before": "Få PDRN Glow Guide gratis med din beställning idag",
-            "highlighted_text": "",
-            "heading_after": "",
-            "highlight_position": "inline_second",
-            "heading_tag": "h2",
-            "text_align": "center",
-            "heading_color": "#1f2937",
-            "heading_font_size_desktop": 40,
-            "heading_font_size_mobile": 24,
-            "heading_font_weight": "600",
-            "heading_line_height": 1.2,
-            "heading_margin_top": 0,
-            "heading_margin_bottom": 0,
-            "highlighted_gradient_enabled": false,
-            "highlighted_solid_color": "#ef4444",
-            "highlighted_gradient": "linear-gradient(90deg, rgba(237, 18, 45, 1), rgba(255, 107, 107, 1) 100%)",
-            "highlight_font_size_desktop": 48,
-            "highlight_font_size_mobile": 32,
-            "highlight_font_weight": "500",
-            "highlight_margin_top": 0,
-            "highlight_margin_bottom": 10,
-            "desktop_alignment": "left",
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
-        },
-        "image_h9mxYC": {
-          "type": "image",
-          "settings": {
-            "image_desktop": "shopify://shop_images/From-7.png",
-            "aspect_ratio_desktop": "auto",
-            "image_mobile": "shopify://shop_images/From-7.png",
-            "aspect_ratio_mobile": "auto",
-            "border_radius": 12,
-            "max_width": 100,
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
-        },
-        "body_text_i8drMB": {
-          "type": "body_text",
-          "settings": {
-            "body_text": "<p>Lär dig hemligheten bakom strålande hy med PDRN Collagen Volume Balm, Volufiline och kollagen.</p>",
-            "font_weight": "400",
-            "text_color": "#000000",
-            "bg_color": "rgba(0,0,0,0)",
-            "padding": 0,
-            "border_width": 0,
-            "border_color": "#e5e7eb",
-            "border_style": "solid",
-            "border_radius": 0,
-            "font_size_mobile": 14,
-            "mobile_alignment": "center",
-            "font_size_desktop": 16,
-            "desktop_alignment": "left",
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
-        },
-        "button_KMb8qi": {
-          "type": "button",
-          "settings": {
-            "button_text": "Beställ & få guiden gratis",
-            "button_link": "#MainContent",
-            "scroll_to_section": "",
-            "hide_on_desktop": false,
-            "hide_on_mobile": false,
-            "button_icon": "",
-            "button_icon_filled": false,
-            "button_custom_icon": "",
-            "icon_position": "right",
-            "button_icon_size": 20,
-            "button_icon_gap": 8,
-            "button_icon_color": "#ffffff",
-            "alignment_desktop": "left",
-            "alignment_mobile": "center",
-            "use_custom_styles": true,
-            "button_text_color": "#ffffff",
-            "button_bg_color": "#000000",
-            "use_gradient": false,
-            "button_gradient": "",
-            "button_text_color_hover": "#ffffff",
-            "button_bg_color_hover": "#333333",
-            "border_width": 0,
-            "border_color": "#000000",
-            "border_radius": 50,
-            "font_size_desktop": 16,
-            "font_size_mobile": 14,
-            "font_weight": "600",
-            "text_transform": "none",
-            "letter_spacing": 0,
-            "padding_vertical": 14,
-            "padding_horizontal": 32,
-            "full_width": false,
-            "full_width_mobile_only": true,
-            "use_custom_width": false,
-            "custom_width_desktop": 300,
-            "custom_width_mobile": 280,
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
-        },
-        "review_4jecCh": {
-          "type": "review",
-          "settings": {
-            "show_stars": true,
-            "star_rating": 5,
-            "star_size": 16,
-            "star_color": "#b8576e",
-            "star_spacing": 0,
-            "review_count": "<p><strong>4,6/5</strong> · Älskad av <strong>8631</strong> kvinnor</p>",
-            "font_size": 12,
-            "font_weight": "400",
-            "text_color": "#000000",
-            "bg_color": "rgba(0,0,0,0)",
-            "padding": 0,
-            "border_width": 0,
-            "border_color": "#e5e7eb",
-            "border_style": "solid",
-            "border_radius": 0,
-            "mobile_alignment": "center",
-            "desktop_alignment": "left",
-            "margin_top": 0,
-            "margin_bottom": 0
-          }
-        }
-      },
-      "block_order": [
-        "heading_Np6fHc",
-        "image_h9mxYC",
-        "body_text_i8drMB",
-        "button_KMb8qi",
-        "review_4jecCh"
-      ],
-      "disabled": true,
-      "name": "Image with Blocks",
-      "settings": {
-        "use_theme_colors": true,
-        "image_position": "left",
-        "image_width_desktop": 50,
-        "content_gap_desktop": 45,
-        "heading_position": "top-content",
-        "vertical_alignment": "center",
-        "background_color": "#ffffff",
-        "section_padding_top": 60,
-        "section_padding_bottom": 30,
-        "block_spacing_mobile": 20,
-        "block_spacing_desktop": 12,
-        "content_block_spacing_mobile": 12,
-        "content_block_spacing_desktop": 20
-      }
-    },
     "faq_accordion_4_BgYJpA": {
       "type": "faq-accordion-4",
       "blocks": {
@@ -2800,7 +2603,7 @@
             "button_icon_size": 20,
             "button_icon_gap": 8,
             "button_icon_color": "#ffffff",
-            "alignment_desktop": "left",
+            "alignment_desktop": "center",
             "alignment_mobile": "center",
             "use_custom_styles": true,
             "button_text_color": "#ffffff",
@@ -3007,6 +2810,161 @@
         "display_id": false,
         "include_margins": true
       }
+    },
+    "testimonial_reviews_slider_rVDjdM": {
+      "type": "testimonial-reviews-slider",
+      "blocks": {
+        "review_xrK83r": {
+          "type": "review",
+          "settings": {
+            "title": "Mental clarity like never before",
+            "description": "add your review here / add your review here / add your review here / add your review here /add your review here",
+            "star_rating": 5,
+            "name": "Davina K",
+            "show_verified": true
+          }
+        },
+        "review_AUcPb7": {
+          "type": "review",
+          "settings": {
+            "title": "No more bloating or discomfort",
+            "description": "add your review here / add your review here / add your review here / add your review here /add your review here",
+            "star_rating": 5,
+            "name": "Aliza",
+            "show_verified": true
+          }
+        },
+        "review_tn4UQF": {
+          "type": "review",
+          "settings": {
+            "title": "My mood is so much better",
+            "description": "add your review here / add your review here / add your review here / add your review here /add your review here",
+            "star_rating": 5,
+            "name": "Sarah M",
+            "show_verified": true
+          }
+        },
+        "review_Ej8cVh": {
+          "type": "review",
+          "settings": {
+            "title": "I've never felt this focused",
+            "description": "I used to get rashes before using these sheets, well not anymore, thank you so much!",
+            "star_rating": 5,
+            "name": "Mehul",
+            "show_verified": true
+          }
+        },
+        "review_7nKNp4": {
+          "type": "review",
+          "settings": {
+            "title": "Goodbye brain fog",
+            "description": "add your review here / add your review here / add your review here / add your review here /add your review here",
+            "star_rating": 5,
+            "name": "Noah D",
+            "show_verified": true
+          }
+        },
+        "review_ThzrHp": {
+          "type": "review",
+          "settings": {
+            "title": "Finally feeling like myself again",
+            "description": "add your review here / add your review here / add your review here / add your review here /add your review here",
+            "star_rating": 4.5,
+            "name": "Ada T",
+            "show_verified": true
+          }
+        }
+      },
+      "block_order": [
+        "review_xrK83r",
+        "review_AUcPb7",
+        "review_tn4UQF",
+        "review_Ej8cVh",
+        "review_7nKNp4",
+        "review_ThzrHp"
+      ],
+      "disabled": true,
+      "name": "Testimonial Reviews",
+      "settings": {
+        "use_theme_colors": true,
+        "override_section_settings": false,
+        "section_gradient_enabled": false,
+        "section_gradient_background": "linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(245, 245, 245, 1) 100%)",
+        "section_background_color": "#ffffff",
+        "section_padding_top_mobile": 36,
+        "section_padding_bottom_mobile": 36,
+        "section_padding_top_desktop": 60,
+        "section_padding_bottom_desktop": 60,
+        "heading_before": "add your",
+        "highlighted_text": "title here",
+        "heading_after": "",
+        "highlight_position": "inline_second",
+        "heading_tag": "h2",
+        "heading_text_align": "center",
+        "heading_color": "#000000",
+        "heading_font_size_desktop": 48,
+        "heading_font_size_mobile": 32,
+        "heading_font_weight": "500",
+        "heading_margin_bottom": 16,
+        "header_spacing": 12,
+        "highlighted_gradient_enabled": false,
+        "highlighted_color": "#000000",
+        "highlighted_gradient": "linear-gradient(90deg, rgba(239, 68, 68, 1), rgba(249, 115, 22, 1) 100%)",
+        "highlighted_font_size_desktop": 48,
+        "highlighted_font_size_mobile": 32,
+        "highlighted_font_weight": "500",
+        "highlighted_spacing": 12,
+        "intro_text": "Add your intro text here",
+        "intro_text_color": "#000000",
+        "intro_text_font_size_mobile": 14,
+        "intro_text_font_size_desktop": 18,
+        "intro_text_margin_bottom": 16,
+        "mobile_layout": "stack",
+        "card_width_mobile": 280,
+        "card_width_desktop": 320,
+        "card_min_height": 230,
+        "cards_gap": 16,
+        "card_background_color": "#ffffff",
+        "card_border_radius": 8,
+        "card_padding": 16,
+        "card_border_width": 2,
+        "card_border_style": "solid",
+        "card_border_color": "#e0e0e0",
+        "card_shadow": "none",
+        "card_hover_enabled": true,
+        "card_hover_lift": 6,
+        "card_hover_shadow": "none",
+        "title_font_family": "body",
+        "title_color": "#000000",
+        "title_font_size_mobile": 18,
+        "title_font_size_desktop": 22,
+        "title_font_weight": 400,
+        "title_margin_bottom": 12,
+        "description_color": "#333333",
+        "description_font_size_mobile": 14,
+        "description_font_size_desktop": 15,
+        "content_margin_bottom": 16,
+        "footer_gap": 8,
+        "star_size": 16,
+        "star_color": "#f7d131",
+        "star_empty_color": "#dddddd",
+        "name_color": "#13152f",
+        "name_font_size": 14,
+        "name_font_weight": 700,
+        "name_border_width": 1,
+        "name_border_color": "#000000",
+        "verified_icon_size": 16,
+        "verified_icon_color": "#0098be",
+        "verified_text": "Verified",
+        "verified_color": "#13152f",
+        "verified_font_size": 13,
+        "scrollbar_height": 8,
+        "scrollbar_track_color": "#ffffff4d",
+        "scrollbar_thumb_color": "#ffffff",
+        "scrollbar_border_radius": 4,
+        "hide_on_mobile": false,
+        "hide_on_desktop": false
+      }
     }
   },
   "order": [
@@ -3021,9 +2979,9 @@
     "rituel_timeline_kr7rQF",
     "us_vs_them_qUTiED",
     "section_with_divider_rC7tQg",
-    "image_with_blocks_c7kf33",
     "faq_accordion_4_BgYJpA",
     "announcement_bar_VBw4re",
-    "1778790296e6112ddd"
+    "1778790296e6112ddd",
+    "testimonial_reviews_slider_rVDjdM"
   ]
 }

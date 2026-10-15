@@ -15,7 +15,12 @@
         "rating_stars_pTTC7n": {
           "type": "rating_stars",
           "settings": {
+            "stars_rating_source": "metafield",
             "rating": 4.4,
+            "show_rating_text": true,
+            "rating_text": "[rating.ave]/5 · [rating.count] happy customers!",
+            "show_popup_chevron": true,
+            "chevron_color": "#343f20",
             "text_color": "#000000",
             "text_font_size": 12,
             "text_font_weight": "400",
@@ -501,6 +506,13 @@
             "margin_bottom": 8
           }
         },
+        "custom_liquid_kj8teT": {
+          "type": "custom_liquid",
+          "name": "Payment Methods",
+          "settings": {
+            "custom_liquid": "<div class=\"payment-icons\" style=\"margin-left:auto;margin-right:auto;text-align:center;\">\n  {{ 'klarna' | payment_type_svg_tag }}\n  {{ 'swish' | payment_type_svg_tag }}\n  {{ 'apple_pay' | payment_type_svg_tag }}\n  {{ 'visa' | payment_type_svg_tag }}\n  {{ 'master' | payment_type_svg_tag }}\n  {{ 'american_express' | payment_type_svg_tag }}\n  {{ 'shopify_pay' | payment_type_svg_tag }}\n</div>"
+          }
+        },
         "divider_tYPyYw": {
           "type": "divider",
           "settings": {
@@ -641,12 +653,20 @@
             "backdrop_blur": 14,
             "function": "add_to_cart",
             "button_label": "Add to cart",
+            "button_note": "",
+            "button_note_color": "",
+            "button_note_font_size_desktop": 12,
+            "button_note_font_size_mobile": 11,
+            "button_note_font_weight": "400",
+            "button_note_margin_top": 2,
             "enable_custom_btn_color": true,
             "custom_btn_color": "#0f0f0f",
             "enable_button_gradient": false,
             "button_gradient": "linear-gradient(180deg, rgba(255, 228, 49, 1), rgba(249, 32, 32, 1) 100%)",
             "button_padding_top_bottom": 3,
             "button_padding_left_right": 17,
+            "button_padding_top_bottom_desktop": 14,
+            "button_padding_left_right_desktop": 24,
             "button_border_width": 1,
             "button_border_color": "#000000",
             "button_border_radius": 4,
@@ -654,6 +674,7 @@
             "button_font_size_desktop": 15,
             "button_font_size_mobile": 13,
             "button_font_weight": "600",
+            "title_label": "",
             "desktop_show_title": true,
             "mobile_show_title": true,
             "title_color": "#000000",
@@ -691,13 +712,6 @@
             "mobile_show_image": true,
             "mobile_image_width": 60,
             "mobile_full_button_width": false
-          }
-        },
-        "custom_liquid_kj8teT": {
-          "type": "custom_liquid",
-          "name": "Payment Methods",
-          "settings": {
-            "custom_liquid": "<div class=\"payment-icons\" style=\"margin-left:auto;margin-right:auto;text-align:center;\">\n  {{ 'klarna' | payment_type_svg_tag }}\n  {{ 'swish' | payment_type_svg_tag }}\n  {{ 'apple_pay' | payment_type_svg_tag }}\n  {{ 'visa' | payment_type_svg_tag }}\n  {{ 'master' | payment_type_svg_tag }}\n  {{ 'american_express' | payment_type_svg_tag }}\n  {{ 'shopify_pay' | payment_type_svg_tag }}\n</div>"
           }
         }
       },
@@ -1152,8 +1166,15 @@
         "layout": "image-left",
         "layout_gap": 40,
         "show_image": true,
+        "media_type": "image",
+        "mobile_media_type": "image",
         "image_width": 45,
+        "media_height_desktop": 496,
+        "media_height_mobile": 320,
         "image_border_radius": 4,
+        "controls": false,
+        "playsinline": true,
+        "preload": "metadata",
         "hide_image_on_mobile": false,
         "accordion_gap": 14,
         "accordion_border_width": 1,
@@ -3095,6 +3116,7 @@
         "intro_text_font_size_mobile": 14,
         "intro_text_font_size_desktop": 18,
         "intro_text_margin_bottom": 16,
+        "mobile_layout": "slider",
         "card_width_mobile": 280,
         "card_width_desktop": 320,
         "card_min_height": 230,

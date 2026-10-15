@@ -2,6 +2,7 @@
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}">
   <head>
+    <meta name="applovin-domain-verification" content="469be720-fda0-4272-a3eb-3af69f5d0ab6">
     <meta name="facebook-domain-verification" content="tcz6tnhmt7arotavb5x8ybywdqihul" />
     <meta name="facebook-domain-verification" content="cs5loioiarzfzy4cbebnbcrm7cjnvt" />
     <meta charset="utf-8">
@@ -173,7 +174,7 @@
           --font-body-weight-bold: {{ settings.custom_body_font_weight | plus: 300 | at_most: 1000 }};
         }
       {% endif %}
-      {% if settings.animations_type == blank or settings.animations_type.size < 196 %}main{visibility:hidden !important;}{% endif %}
+    {% if settings.animations_type == blank or settings.animations_type.size < 196 %}main{visibility:hidden !important;}{% endif %}
       {% if settings.custom_header_font_link == blank %}
         {{ settings.type_header_font | font_face: font_display: 'swap' }}
         :root {
