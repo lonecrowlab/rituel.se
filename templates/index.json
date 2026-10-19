@@ -265,7 +265,7 @@
             "highlight_font_size_mobile": 32,
             "highlight_font_weight": "700",
             "margin_top": 12,
-            "margin_bottom": 16
+            "margin_bottom": 14
           }
         },
         "subtitle_WVr6BN": {
@@ -278,7 +278,7 @@
             "padding_left": 0,
             "padding_right": 0,
             "margin_top": 0,
-            "margin_bottom": 20
+            "margin_bottom": 16
           }
         },
         "button_mtY4c8": {
@@ -306,7 +306,7 @@
             "padding_horizontal": 24,
             "full_width": false,
             "full_width_mobile_only": true,
-            "margin_top": 0,
+            "margin_top": -4,
             "margin_bottom": 8
           }
         },
