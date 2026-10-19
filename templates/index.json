@@ -1122,7 +1122,7 @@
         "product_border_radius": 4,
         "product_border_width": 1,
         "product_border_style": "solid",
-        "product_border_color": "#00587f",
+        "product_border_color": "#C0C0C0",
         "product_padding": 0,
         "product_image_border_radius": 4,
         "product_title_color": "#0f172a",
