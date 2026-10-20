@@ -58,53 +58,152 @@
 
       {% comment %} Video Slider {% endcomment %}
       {% if section.blocks.size > 0 %}
+        {% capture poster_sizes %}(min-width: 1024px) {{ section.settings.slide_width_desktop }}vw, (min-width: 750px) {{ section.settings.slide_width_tablet }}vw, {{ section.settings.slide_width_mobile }}vw{% endcapture %}
         <div class="tvs-slider" data-slider-container>
           <div class="tvs-slider-viewport" data-slider-viewport>
             <div class="tvs-slider-track" data-slider-track>
+              {% assign tvs_video_index = 0 %}
               {% for block in section.blocks %}
                 {% if block.type == 'video' %}
+                  {% assign tvs_video_index = tvs_video_index | plus: 1 %}
+                  {% liquid
+                    assign tvs_src = ''
+                    assign tvs_type = 'video/mp4'
+                    assign tvs_score = 1000000
+                    assign tvs_src_lq = ''
+                    assign tvs_type_lq = 'video/mp4'
+                    assign tvs_score_lq = 1000000
+                    assign tvs_fallback_src = ''
+                    assign tvs_fallback_type = 'video/mp4'
+                    assign tvs_poster = block.settings.poster
+                    assign tvs_alt = ''
+                    assign tvs_target = 540
+                    assign tvs_target_lq = 360
+
+                    if tvs_poster == blank and block.settings.video != blank
+                      assign tvs_poster = block.settings.video.preview_image
+                    endif
+
+                    if block.settings.video != blank and block.settings.video.alt != blank
+                      assign tvs_alt = block.settings.video.alt
+                    endif
+
+                    if block.settings.video != blank
+                      for source in block.settings.video.sources
+                        if source.format == 'mp4'
+                          if tvs_fallback_src == blank
+                            assign tvs_fallback_src = source.url
+                            if source.mime_type != blank
+                              assign tvs_fallback_type = source.mime_type
+                            endif
+                          endif
+                          if source.width > 0 and source.height > 0
+                            assign short_side = source.height
+                            if source.width < source.height
+                              assign short_side = source.width
+                            endif
+
+                            if short_side <= tvs_target
+                              assign score = tvs_target | minus: short_side
+                            else
+                              assign score = 2000 | plus: short_side
+                            endif
+                            if score < tvs_score
+                              assign tvs_score = score
+                              assign tvs_src = source.url
+                              if source.mime_type != blank
+                                assign tvs_type = source.mime_type
+                              endif
+                            endif
+
+                            if short_side <= tvs_target_lq
+                              assign score_lq = tvs_target_lq | minus: short_side
+                            else
+                              assign score_lq = 2000 | plus: short_side
+                            endif
+                            if score_lq < tvs_score_lq
+                              assign tvs_score_lq = score_lq
+                              assign tvs_src_lq = source.url
+                              if source.mime_type != blank
+                                assign tvs_type_lq = source.mime_type
+                              endif
+                            endif
+                          endif
+                        endif
+                      endfor
+                      if tvs_src == blank
+                        assign tvs_src = tvs_fallback_src
+                        assign tvs_type = tvs_fallback_type
+                      endif
+                      if tvs_src_lq == blank
+                        assign tvs_src_lq = tvs_src
+                        assign tvs_type_lq = tvs_type
+                      endif
+                    endif
+                  %}
                   <div class="tvs-slide" data-slider-slide {{ block.shopify_attributes }}>
                     <div class="tvs-video-card tvs-aspect-{{ section.settings.video_aspect_ratio }}">
-                      <div class="tvs-video-wrapper">
+                      <div class="tvs-video-wrapper{% if tvs_poster != blank %} tvs-has-poster{% endif %}{% if block.settings.video != blank and tvs_src == blank %} tvs-unavailable{% endif %}" data-video-card>
+                        <div class="tvs-video-skeleton" aria-hidden="true"></div>
                         {% if block.settings.video != blank %}
-                          <video
-                            class="tvs-video-element"
-                            playsinline
-                            {% if section.settings.video_loop %}loop{% endif %}
-                            {% if section.settings.video_muted %}muted{% endif %}
-                            {% if section.settings.video_controls %}controls{% endif %}
-                            preload="none"
-                            data-video
-                            data-autoplay="{{ section.settings.video_autoplay }}"
-                            {% for source in block.settings.video.sources %}
-                              data-src="{{ source.url }}"
-                              data-type="{{ source.mime_type }}"
-                            {% endfor %}
-                            >
-                          </video>
-                          <div class="tvs-video-loader">
-                            <div class="tvs-loader-spinner"></div>
+                          {% if tvs_poster != blank %}
+                            {{ tvs_poster | image_url: width: 720 | image_tag:
+                              class: 'tvs-video-poster',
+                              loading: 'lazy',
+                              fetchpriority: 'low',
+                              decoding: 'async',
+                              widths: '180,240,360,540,720',
+                              sizes: poster_sizes,
+                              alt: tvs_alt
+                            }}
+                          {% endif %}
+                          <div class="tvs-video-fallback" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                              <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                              <path d="M10 9.5v5l4.5-2.5L10 9.5Z" fill="currentColor"/>
+                            </svg>
+                            <span class="tvs-video-fallback-label">Video unavailable</span>
                           </div>
+                          {% if tvs_src != blank %}
+                            <video
+                              class="tvs-video-element"
+                              playsinline
+                              {% if section.settings.video_loop %}loop{% endif %}
+                              {% if section.settings.video_muted %}muted{% endif %}
+                              {% if section.settings.video_controls %}controls{% endif %}
+                              preload="none"
+                              data-video
+                              data-index="{{ tvs_video_index }}"
+                              data-autoplay="{{ section.settings.video_autoplay }}"
+                              data-src="{{ tvs_src }}"
+                              data-type="{{ tvs_type }}"
+                              data-src-lq="{{ tvs_src_lq }}"
+                              data-type-lq="{{ tvs_type_lq }}"
+                            ></video>
+                            <div class="tvs-video-loader" aria-hidden="true">
+                              <div class="tvs-loader-spinner"></div>
+                            </div>
+                          {% endif %}
                           {% if section.settings.show_play_pause_button %}
-                            <button class="tvs-play-pause-btn tvs-btn-{{ section.settings.play_pause_position }}" data-play-pause>
-                              <svg class="tvs-play-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <button type="button" class="tvs-play-pause-btn tvs-btn-{{ section.settings.play_pause_position }}" data-play-pause {% if tvs_src == blank %}disabled{% endif %} aria-label="Play or pause video">
+                              <svg class="tvs-play-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
                               </svg>
-                              <svg class="tvs-pause-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <svg class="tvs-pause-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M6 4H10V20H6V4ZM14 4H18V20H14V4Z" fill="currentColor"/>
                               </svg>
                             </button>
                           {% endif %}
                         {% else %}
                           <div class="tvs-video-placeholder">
-                            <p>{{ 'Upload a video' }}</p>
+                            <p>Upload a video</p>
                           </div>
                           {% if section.settings.show_play_pause_button %}
-                            <button class="tvs-play-pause-btn tvs-btn-{{ section.settings.play_pause_position }}" data-play-pause disabled>
-                              <svg class="tvs-play-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <button type="button" class="tvs-play-pause-btn tvs-btn-{{ section.settings.play_pause_position }}" data-play-pause disabled aria-label="Play or pause video">
+                              <svg class="tvs-play-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
                               </svg>
-                              <svg class="tvs-pause-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <svg class="tvs-pause-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M6 4H10V20H6V4ZM14 4H18V20H14V4Z" fill="currentColor"/>
                               </svg>
                             </button>
@@ -368,10 +467,74 @@
     background: {{ section.settings.card_background }};
   }
 
+  .section-{{ section.id }} .tvs-video-skeleton {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      linear-gradient(110deg, rgba(15, 23, 42, 0.04) 25%, rgba(15, 23, 42, 0.09) 37%, rgba(15, 23, 42, 0.04) 63%);
+    background-size: 200% 100%;
+    animation: tvs-shimmer 1.2s ease-in-out infinite;
+  }
+
+  .section-{{ section.id }} .tvs-video-wrapper.tvs-poster-ready .tvs-video-skeleton,
+  .section-{{ section.id }} .tvs-video-wrapper.tvs-unavailable .tvs-video-skeleton,
+  .section-{{ section.id }} .tvs-video-wrapper.tvs-ready .tvs-video-skeleton {
+    animation: none;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .section-{{ section.id }} .tvs-video-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    transition: opacity 0.25s ease;
+  }
+
+  .section-{{ section.id }} .tvs-video-fallback {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.06);
+    color: rgba(15, 23, 42, 0.45);
+    text-align: center;
+    padding: 12px;
+  }
+
+  .section-{{ section.id }} .tvs-video-fallback svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .section-{{ section.id }} .tvs-video-fallback-label {
+    font-size: 12px;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+  }
+
+  .section-{{ section.id }} .tvs-unavailable:not(.tvs-has-poster) .tvs-video-fallback,
+  .section-{{ section.id }} .tvs-unavailable.tvs-poster-failed .tvs-video-fallback {
+    display: flex;
+  }
+
+  .section-{{ section.id }} .tvs-unavailable.tvs-has-poster:not(.tvs-poster-failed) .tvs-video-poster {
+    opacity: 1;
+  }
+
   .section-{{ section.id }} .tvs-video-element {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 2;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -391,24 +554,40 @@
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background: {{ section.settings.card_background }};
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 10px;
+    background: transparent;
+    pointer-events: none;
+    opacity: 0;
     transition: opacity 0.3s ease;
-    z-index: 1;
+    z-index: 3;
   }
 
-  .section-{{ section.id }} .tvs-video-loader.tvs-hide {
+  .section-{{ section.id }} .tvs-video-loader.tvs-loader-visible {
+    opacity: 1;
+  }
+
+  .section-{{ section.id }} .tvs-video-wrapper:not(.tvs-has-poster) .tvs-video-loader {
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .section-{{ section.id }} .tvs-video-loader.tvs-hide,
+  .section-{{ section.id }} .tvs-unavailable .tvs-video-loader {
     opacity: 0;
     pointer-events: none;
   }
 
   .section-{{ section.id }} .tvs-loader-spinner {
-    width: 28px;
-    height: 28px;
-    border: 3px solid rgba(0,0,0,0.1);
-    border-top-color: rgba(0,0,0,0.4);
+    width: 22px;
+    height: 22px;
+    border: 2px solid rgba(255,255,255,0.55);
+    border-top-color: rgba(15, 23, 42, 0.7);
     border-radius: 50%;
+    background: rgba(255,255,255,0.78);
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.12);
     animation: tvs-spin 0.7s linear infinite;
   }
 
@@ -416,9 +595,14 @@
     to { transform: rotate(360deg); }
   }
 
+  @keyframes tvs-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
   .section-{{ section.id }} .tvs-play-pause-btn {
     position: absolute;
-    z-index: 0;
+    z-index: 4;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -530,222 +714,455 @@
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const sliders = document.querySelectorAll('.tiktok-video-slider [data-slider-viewport]');
-    
-    sliders.forEach(viewport => {
-      if (viewport.dataset.initialized) return;
-      viewport.dataset.initialized = 'true';
+  (function() {
+    var script = document.currentScript;
+    var section = script ? script.closest('.tiktok-video-slider') : null;
+    if (!section) return;
 
-      const track = viewport.querySelector('[data-slider-track]');
-      if (!track) return;
+    function init() {
+      if (section.dataset.tvsInit === 'true') return;
+      section.dataset.tvsInit = 'true';
 
-      let isDragging = false;
-      let startPos = 0;
-      let currentTranslate = 0;
-      let prevTranslate = 0;
-      let animationID = 0;
-      let currentIndex = 0;
+      var viewport = section.querySelector('[data-slider-viewport]');
+      if (viewport && viewport.dataset.initialized !== 'true') {
+        viewport.dataset.initialized = 'true';
+        var track = viewport.querySelector('[data-slider-track]');
+        if (track) {
+          var isDragging = false;
+          var startPos = 0;
+          var currentTranslate = 0;
+          var prevTranslate = 0;
+          var animationID = 0;
+          var currentIndex = 0;
 
-      // Mouse events
-      viewport.addEventListener('mousedown', dragStart);
-      viewport.addEventListener('mouseup', dragEnd);
-      viewport.addEventListener('mouseleave', dragEnd);
-      viewport.addEventListener('mousemove', drag);
+          viewport.addEventListener('mousedown', dragStart);
+          viewport.addEventListener('mouseup', dragEnd);
+          viewport.addEventListener('mouseleave', dragEnd);
+          viewport.addEventListener('mousemove', drag);
+          viewport.addEventListener('touchstart', dragStart);
+          viewport.addEventListener('touchend', dragEnd);
+          viewport.addEventListener('touchmove', drag);
+          viewport.addEventListener('contextmenu', function(e) {
+            if (isDragging) e.preventDefault();
+          });
 
-      // Touch events
-      viewport.addEventListener('touchstart', dragStart);
-      viewport.addEventListener('touchend', dragEnd);
-      viewport.addEventListener('touchmove', drag);
-
-      // Prevent context menu on long press
-      viewport.addEventListener('contextmenu', (e) => {
-        if (isDragging) e.preventDefault();
-      });
-
-      function getPositionX(event) {
-        return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-      }
-
-      function dragStart(event) {
-        isDragging = true;
-        startPos = getPositionX(event);
-        animationID = requestAnimationFrame(animation);
-        viewport.style.cursor = 'grabbing';
-        track.style.transition = 'none';
-      }
-
-      function drag(event) {
-        if (!isDragging) return;
-        
-        const currentPosition = getPositionX(event);
-        currentTranslate = prevTranslate + currentPosition - startPos;
-      }
-
-      function dragEnd() {
-        isDragging = false;
-        cancelAnimationFrame(animationID);
-        viewport.style.cursor = 'grab';
-        track.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-
-        const movedBy = currentTranslate - prevTranslate;
-
-        // Snap to nearest slide if moved enough
-        if (movedBy < -50) {
-          currentIndex = Math.min(currentIndex + 1, track.children.length - 1);
-        }
-
-        if (movedBy > 50) {
-          currentIndex = Math.max(currentIndex - 1, 0);
-        }
-
-        setPositionByIndex();
-      }
-
-      function animation() {
-        setSliderPosition();
-        if (isDragging) requestAnimationFrame(animation);
-      }
-
-      function setSliderPosition() {
-        track.style.transform = `translateX(${currentTranslate}px)`;
-      }
-
-      function setPositionByIndex() {
-        const slideWidth = track.children[0].offsetWidth;
-        const gap = parseInt(getComputedStyle(track).gap) || 0;
-        currentTranslate = -currentIndex * (slideWidth + gap);
-        prevTranslate = currentTranslate;
-        setSliderPosition();
-      }
-
-      // Set initial cursor
-      viewport.style.cursor = 'grab';
-    });
-
-    // Lazy load videos with IntersectionObserver
-    const lazyVideos = document.querySelectorAll('.tiktok-video-slider [data-video]');
-
-    function loadVideo(video) {
-      if (video.dataset.loaded) return;
-      video.dataset.loaded = 'true';
-
-      var src = video.dataset.src;
-      var type = video.dataset.type;
-      if (!src) return;
-
-      var source = document.createElement('source');
-      source.src = src;
-      source.type = type;
-      video.appendChild(source);
-      video.load();
-
-      var loader = video.closest('.tvs-video-wrapper').querySelector('.tvs-video-loader');
-
-      function onReady() {
-        video.classList.add('tvs-loaded');
-        if (loader) loader.classList.add('tvs-hide');
-        if (video.dataset.autoplay === 'true') {
-          video.play().catch(function() {});
-        }
-        video.removeEventListener('canplay', onReady);
-      }
-
-      video.addEventListener('canplay', onReady);
-
-      // Fallback if canplay already fired
-      if (video.readyState >= 3) {
-        onReady();
-      }
-    }
-
-    if ('IntersectionObserver' in window) {
-      var videoObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            loadVideo(entry.target);
-            videoObserver.unobserve(entry.target);
+          function getPositionX(event) {
+            return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
           }
-        });
-      }, { rootMargin: '200px' });
 
-      lazyVideos.forEach(function(video) {
-        videoObserver.observe(video);
+          function dragStart(event) {
+            isDragging = true;
+            startPos = getPositionX(event);
+            animationID = requestAnimationFrame(animation);
+            viewport.style.cursor = 'grabbing';
+            track.style.transition = 'none';
+          }
+
+          function drag(event) {
+            if (!isDragging) return;
+            var currentPosition = getPositionX(event);
+            currentTranslate = prevTranslate + currentPosition - startPos;
+          }
+
+          function dragEnd() {
+            isDragging = false;
+            cancelAnimationFrame(animationID);
+            viewport.style.cursor = 'grab';
+            track.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+            var movedBy = currentTranslate - prevTranslate;
+            if (movedBy < -50) {
+              currentIndex = Math.min(currentIndex + 1, track.children.length - 1);
+            }
+            if (movedBy > 50) {
+              currentIndex = Math.max(currentIndex - 1, 0);
+            }
+            setPositionByIndex();
+          }
+
+          function animation() {
+            setSliderPosition();
+            if (isDragging) requestAnimationFrame(animation);
+          }
+
+          function setSliderPosition() {
+            track.style.transform = 'translateX(' + currentTranslate + 'px)';
+          }
+
+          function setPositionByIndex() {
+            var slideWidth = track.children[0].offsetWidth;
+            var gap = parseInt(getComputedStyle(track).gap, 10) || 0;
+            currentTranslate = -currentIndex * (slideWidth + gap);
+            prevTranslate = currentTranslate;
+            setSliderPosition();
+          }
+
+          viewport.style.cursor = 'grab';
+        }
+      }
+
+      var videos = section.querySelectorAll('[data-video]');
+      var queue = [];
+      var activeLoads = 0;
+      var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      var saveData = !!(connection && (connection.saveData || connection.effectiveType === '2g' || connection.effectiveType === 'slow-2g'));
+      var narrow = window.matchMedia('(max-width: 749px)').matches;
+      var useLowRes = saveData || narrow;
+      var maxConcurrent = saveData ? 1 : 2;
+      var sectionNear = false;
+      var videosArmed = false;
+      var pageSettled = document.readyState === 'complete';
+      var wasInViewAtInit = section.getBoundingClientRect().top < window.innerHeight && section.getBoundingClientRect().bottom > 0;
+
+      section.querySelectorAll('.tvs-video-poster').forEach(function(img) {
+        var wrapper = img.closest('.tvs-video-wrapper');
+        function markPosterReady() {
+          if (wrapper) wrapper.classList.add('tvs-poster-ready');
+        }
+        function dropPoster() {
+          if (wrapper) wrapper.classList.add('tvs-poster-failed');
+          img.remove();
+        }
+        if (img.complete) {
+          if (img.naturalWidth === 0) dropPoster();
+          else markPosterReady();
+        }
+        img.addEventListener('load', markPosterReady);
+        img.addEventListener('error', dropPoster);
       });
-    } else {
-      // Fallback: load all immediately
-      lazyVideos.forEach(loadVideo);
+
+      function whenIdle(fn, timeout) {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(fn, { timeout: timeout || 800 });
+        } else {
+          setTimeout(fn, 80);
+        }
+      }
+
+      function boostPosters() {
+        section.querySelectorAll('.tvs-video-poster').forEach(function(img, index) {
+          if (index > 3) return;
+          try {
+            img.loading = 'eager';
+            img.fetchPriority = index < 2 ? 'high' : 'low';
+          } catch (e) {}
+        });
+      }
+
+      function hideLoader(wrapper) {
+        var loader = wrapper && wrapper.querySelector('.tvs-video-loader');
+        if (!loader) return;
+        clearTimeout(Number(loader.dataset.delayTimer || 0));
+        loader.classList.remove('tvs-loader-visible');
+        loader.classList.add('tvs-hide');
+      }
+
+      function showLoaderSoon(wrapper) {
+        var loader = wrapper && wrapper.querySelector('.tvs-video-loader');
+        if (!loader) return;
+        loader.classList.remove('tvs-hide');
+        clearTimeout(Number(loader.dataset.delayTimer || 0));
+        loader.dataset.delayTimer = String(setTimeout(function() {
+          if (!loader.classList.contains('tvs-hide')) loader.classList.add('tvs-loader-visible');
+        }, 350));
+      }
+
+      function armVideos() {
+        if (videosArmed) return;
+        if (wasInViewAtInit && !pageSettled) return;
+        videosArmed = true;
+        boostPosters();
+        pump();
+      }
+
+      function markPageSettled() {
+        pageSettled = true;
+        if (sectionNear || !wasInViewAtInit) whenIdle(armVideos, 400);
+      }
+
+      function sortQueue() {
+        queue.sort(function(a, b) {
+          var diff = parseFloat(b.dataset.ratio || '0') - parseFloat(a.dataset.ratio || '0');
+          if (diff) return diff;
+          return parseInt(a.dataset.index || '0', 10) - parseInt(b.dataset.index || '0', 10);
+        });
+      }
+
+      function enqueue(video) {
+        if (!video || video.dataset.loaded === 'true' || video.dataset.loading === 'true' || video.dataset.failed === 'true') return;
+        if (queue.indexOf(video) === -1) queue.push(video);
+        sortQueue();
+      }
+
+      function markUnavailable(video) {
+        video.dataset.failed = 'true';
+        video.dataset.loading = '';
+        video.classList.remove('tvs-loaded');
+        var wrapper = video.closest('.tvs-video-wrapper');
+        if (!wrapper) return;
+        wrapper.classList.add('tvs-unavailable');
+        wrapper.classList.remove('tvs-ready');
+        hideLoader(wrapper);
+      }
+
+      function settleLoad() {
+        activeLoads = Math.max(0, activeLoads - 1);
+        pump();
+      }
+
+      function pickSource(video) {
+        var lqSrc = video.getAttribute('data-src-lq');
+        var lqType = video.getAttribute('data-type-lq');
+        if (useLowRes && lqSrc) {
+          return { src: lqSrc, type: lqType || 'video/mp4' };
+        }
+        return {
+          src: video.getAttribute('data-src'),
+          type: video.getAttribute('data-type') || 'video/mp4'
+        };
+      }
+
+      function startVideo(video) {
+        if (video.dataset.loading === 'true' || video.dataset.loaded === 'true' || video.dataset.failed === 'true') return;
+        var picked = pickSource(video);
+        if (!picked.src) {
+          markUnavailable(video);
+          return;
+        }
+
+        var generation = String(Date.now()) + '-' + String(activeLoads + 1);
+        video.dataset.generation = generation;
+        video.dataset.loading = 'true';
+        activeLoads += 1;
+        try {
+          video.fetchPriority = 'low';
+        } catch (e) {}
+
+        var wrapper = video.closest('.tvs-video-wrapper');
+        showLoaderSoon(wrapper);
+
+        video.querySelectorAll('source').forEach(function(node) { node.remove(); });
+        var source = document.createElement('source');
+        source.src = picked.src;
+        source.type = picked.type;
+        video.appendChild(source);
+        video.preload = 'auto';
+
+        var settled = false;
+        function isCurrent() {
+          return video.dataset.generation === generation;
+        }
+
+        function finish() {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          settleLoad();
+        }
+
+        function onReady() {
+          if (!isCurrent()) {
+            finish();
+            return;
+          }
+          if (video.dataset.loaded === 'true') {
+            finish();
+            return;
+          }
+          video.dataset.loaded = 'true';
+          video.dataset.loading = '';
+          video.classList.add('tvs-loaded');
+          if (wrapper) {
+            wrapper.classList.add('tvs-ready');
+            wrapper.classList.remove('tvs-unavailable');
+            hideLoader(wrapper);
+          }
+          if (sectionNear && video.dataset.autoplay === 'true' && video.dataset.wanted === '1') {
+            var playAttempt = video.play();
+            if (playAttempt && playAttempt.catch) playAttempt.catch(function() {});
+          }
+          finish();
+        }
+
+        function onFail() {
+          if (!isCurrent()) {
+            finish();
+            return;
+          }
+          if (video.dataset.loaded === 'true') {
+            finish();
+            return;
+          }
+          markUnavailable(video);
+          finish();
+        }
+
+        video.addEventListener('loadeddata', onReady, { once: true });
+        video.addEventListener('canplay', onReady, { once: true });
+        video.addEventListener('error', onFail, { once: true });
+        var timer = setTimeout(onFail, 10000);
+        video.load();
+
+        if (video.readyState >= 2) onReady();
+      }
+
+      function pump() {
+        if (!videosArmed || !sectionNear) return;
+        sortQueue();
+        while (activeLoads < maxConcurrent && queue.length) {
+          var video = queue.shift();
+          if (video.dataset.wanted !== '1') continue;
+          if (video.dataset.loaded === 'true' || video.dataset.loading === 'true' || video.dataset.failed === 'true') continue;
+          startVideo(video);
+        }
+      }
+
+      function requestVideo(video) {
+        if (video.dataset.loading === 'true' && video.dataset.failed !== 'true') return;
+        videosArmed = true;
+        sectionNear = true;
+        pageSettled = true;
+        video.dataset.wanted = '1';
+        video.dataset.ratio = '1';
+        if (video.dataset.loaded === 'true' && video.dataset.failed !== 'true') {
+          var playAttempt = video.play();
+          if (playAttempt && playAttempt.catch) playAttempt.catch(function() {});
+          return;
+        }
+        video.dataset.generation = 'retry';
+        video.dataset.failed = '';
+        video.dataset.loaded = '';
+        video.dataset.loading = '';
+        video.classList.remove('tvs-loaded');
+        video.querySelectorAll('source').forEach(function(node) { node.remove(); });
+        var wrapper = video.closest('.tvs-video-wrapper');
+        if (wrapper) {
+          wrapper.classList.remove('tvs-unavailable', 'tvs-ready');
+          showLoaderSoon(wrapper);
+        }
+        enqueue(video);
+        pump();
+      }
+
+      if ('IntersectionObserver' in window) {
+        var slideRoot = viewport || null;
+        var slideObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            var video = entry.target;
+            if (entry.isIntersecting) {
+              video.dataset.wanted = '1';
+              video.dataset.ratio = String(entry.intersectionRatio || 0);
+              enqueue(video);
+              if (video.dataset.loaded === 'true' && video.dataset.autoplay === 'true' && video.dataset.failed !== 'true' && video.paused) {
+                var playAttempt = video.play();
+                if (playAttempt && playAttempt.catch) playAttempt.catch(function() {});
+              }
+            } else {
+              video.dataset.wanted = '0';
+              video.dataset.ratio = '0';
+              if (video.dataset.loaded === 'true' && !video.paused) video.pause();
+            }
+          });
+          pump();
+        }, {
+          root: slideRoot,
+          rootMargin: saveData ? '0px' : '0px 40% 0px 0px',
+          threshold: [0, 0.25, 0.6, 1]
+        });
+
+        videos.forEach(function(video) {
+          slideObserver.observe(video);
+        });
+
+        var sectionObserver = new IntersectionObserver(function(entries) {
+          sectionNear = entries[0].isIntersecting;
+          if (sectionNear) {
+            boostPosters();
+            if (!wasInViewAtInit || pageSettled) armVideos();
+          } else {
+            pump();
+          }
+        }, { root: null, rootMargin: saveData ? '120px 0px' : '500px 0px', threshold: 0 });
+        sectionObserver.observe(section);
+      } else {
+        sectionNear = true;
+        videos.forEach(function(video, index) {
+          if (index > 1) return;
+          video.dataset.wanted = '1';
+          video.dataset.ratio = '1';
+          enqueue(video);
+        });
+      }
+
+      if (pageSettled) {
+        whenIdle(markPageSettled, 400);
+      } else {
+        window.addEventListener('load', markPageSettled);
+        setTimeout(markPageSettled, 2500);
+      }
+
+      section.querySelectorAll('.tvs-video-wrapper').forEach(function(wrapper) {
+        var video = wrapper.querySelector('[data-video]');
+        var playPauseBtn = wrapper.querySelector('[data-play-pause]');
+        if (!video || !playPauseBtn || playPauseBtn.disabled) return;
+
+        var hideTimeout;
+
+        function showButton() {
+          playPauseBtn.classList.remove('tvs-hidden');
+          clearTimeout(hideTimeout);
+          hideTimeout = setTimeout(function() {
+            playPauseBtn.classList.add('tvs-hidden');
+          }, 2000);
+        }
+
+        function togglePlayPause() {
+          if (video.dataset.loaded !== 'true' || video.dataset.failed === 'true') {
+            requestVideo(video);
+            showButton();
+            return;
+          }
+          if (video.paused) {
+            var playAttempt = video.play();
+            if (playAttempt && playAttempt.catch) playAttempt.catch(function() {});
+            playPauseBtn.classList.add('tvs-playing');
+          } else {
+            video.pause();
+            playPauseBtn.classList.remove('tvs-playing');
+          }
+          showButton();
+        }
+
+        playPauseBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          togglePlayPause();
+        });
+
+        video.addEventListener('click', togglePlayPause);
+        wrapper.addEventListener('mouseenter', showButton);
+        wrapper.addEventListener('mousemove', showButton);
+        wrapper.addEventListener('touchstart', showButton);
+        video.addEventListener('play', function() {
+          playPauseBtn.classList.add('tvs-playing');
+        });
+        video.addEventListener('pause', function() {
+          playPauseBtn.classList.remove('tvs-playing');
+        });
+      });
+
+      videos.forEach(function(video) {
+        video.addEventListener('click', function() {
+          if (video.dataset.failed === 'true') requestVideo(video);
+        });
+      });
     }
 
-    // Play/Pause button functionality
-    const videoWrappers = document.querySelectorAll('.tiktok-video-slider .tvs-video-wrapper');
-
-    videoWrappers.forEach(wrapper => {
-      const video = wrapper.querySelector('[data-video]');
-      const playPauseBtn = wrapper.querySelector('[data-play-pause]');
-
-      if (!video || !playPauseBtn) return;
-
-      let hideTimeout;
-
-      function showButton() {
-        playPauseBtn.classList.remove('tvs-hidden');
-        clearTimeout(hideTimeout);
-
-        hideTimeout = setTimeout(() => {
-          playPauseBtn.classList.add('tvs-hidden');
-        }, 2000);
-      }
-
-      function togglePlayPause() {
-        if (video.paused) {
-          video.play();
-          playPauseBtn.classList.add('tvs-playing');
-        } else {
-          video.pause();
-          playPauseBtn.classList.remove('tvs-playing');
-        }
-        showButton();
-      }
-
-      // Button click
-      playPauseBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        togglePlayPause();
-      });
-
-      // Video click
-      video.addEventListener('click', () => {
-        togglePlayPause();
-      });
-
-      // Show button on hover/interaction
-      wrapper.addEventListener('mouseenter', showButton);
-      wrapper.addEventListener('mousemove', showButton);
-      wrapper.addEventListener('touchstart', showButton);
-
-      // Update button state when video plays/pauses
-      video.addEventListener('play', () => {
-        playPauseBtn.classList.add('tvs-playing');
-      });
-
-      video.addEventListener('pause', () => {
-        playPauseBtn.classList.remove('tvs-playing');
-      });
-
-      // Initial state
-      if (!video.paused) {
-        playPauseBtn.classList.add('tvs-playing');
-      }
-
-      // Hide button initially after 2 seconds if video is playing
-      if (!video.paused) {
-        hideTimeout = setTimeout(() => {
-          playPauseBtn.classList.add('tvs-hidden');
-        }, 2000);
-      }
-    });
-  });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
 </script>
 
 {% schema %}
@@ -885,7 +1302,8 @@
  {"type":"range","id":"slide_width_mobile","min": 10,"max": 100,"step": 5,"unit":"%","label":"Slide Width (Mobile)","default": 50,"info":"Width of each video slide on mobile (< 750px)"}
  ],"blocks": [
  {"type":"video","name":"Video","settings": [
- {"type":"video","id":"video","label":"Video Upload"}
+ {"type":"video","id":"video","label":"Video Upload"},
+ {"type":"image_picker","id":"poster","label":"Placeholder image","info":"Shown immediately, and kept on screen if the video cannot play. Leave blank to use the video preview frame."}
  ]
  },
  {"type":"custom_html","name":"Custom HTML","settings": [
