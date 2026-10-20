@@ -905,7 +905,7 @@
         "product_border_radius": 4,
         "product_border_width": 1,
         "product_border_style": "solid",
-        "product_border_color": "#CDCDCD",
+        "product_border_color": "#cdcdcd",
         "product_padding": 0,
         "product_image_border_radius": 4,
         "product_title_color": "#0f172a",
@@ -1884,25 +1884,29 @@
         "video_3CWjge": {
           "type": "video",
           "settings": {
-            "video": "shopify://files/videos/Rituel ads-2.mp4"
+            "video": "shopify://files/videos/Rituel ads-2.mp4",
+            "poster": "shopify://shop_images/video1.webp"
           }
         },
         "video_qVV9pf": {
           "type": "video",
           "settings": {
-            "video": "shopify://files/videos/HOME PAGE VIDS_3-2.mp4"
+            "video": "shopify://files/videos/HOME PAGE VIDS_3-2.mp4",
+            "poster": "shopify://shop_images/video2.webp"
           }
         },
         "video_wedX3h": {
           "type": "video",
           "settings": {
-            "video": "shopify://files/videos/HOME PAGE VIDS_2-2.mp4"
+            "video": "shopify://files/videos/HOME PAGE VIDS_2-2.mp4",
+            "poster": "shopify://shop_images/video3.webp"
           }
         },
         "video_PcNEkW": {
           "type": "video",
           "settings": {
-            "video": "shopify://files/videos/HOME PAGE VIDS-2.mp4"
+            "video": "shopify://files/videos/HOME PAGE VIDS-2.mp4",
+            "poster": "shopify://shop_images/video4.webp"
           }
         }
       },
