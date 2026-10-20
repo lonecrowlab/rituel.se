@@ -715,139 +715,102 @@
 
 <script>
   (function() {
-    var script = document.currentScript;
-    var section = script ? script.closest('.tiktok-video-slider') : null;
+    // Shopify often relocates section scripts, so never rely on currentScript.closest().
+    var section = document.querySelector('.tiktok-video-slider.section-{{ section.id }}');
     if (!section) return;
+
+    function initSlider(viewport) {
+      if (!viewport || viewport.dataset.initialized === 'true') return;
+      viewport.dataset.initialized = 'true';
+      var track = viewport.querySelector('[data-slider-track]');
+      if (!track) return;
+
+      var isDragging = false;
+      var startPos = 0;
+      var currentTranslate = 0;
+      var prevTranslate = 0;
+      var animationID = 0;
+      var currentIndex = 0;
+
+      viewport.addEventListener('mousedown', dragStart);
+      viewport.addEventListener('mouseup', dragEnd);
+      viewport.addEventListener('mouseleave', dragEnd);
+      viewport.addEventListener('mousemove', drag);
+      viewport.addEventListener('touchstart', dragStart, { passive: true });
+      viewport.addEventListener('touchend', dragEnd);
+      viewport.addEventListener('touchmove', drag, { passive: true });
+      viewport.addEventListener('contextmenu', function(e) {
+        if (isDragging) e.preventDefault();
+      });
+
+      function getPositionX(event) {
+        return event.type.indexOf('mouse') !== -1 ? event.pageX : event.touches[0].clientX;
+      }
+
+      function dragStart(event) {
+        isDragging = true;
+        startPos = getPositionX(event);
+        animationID = requestAnimationFrame(animation);
+        viewport.style.cursor = 'grabbing';
+        track.style.transition = 'none';
+      }
+
+      function drag(event) {
+        if (!isDragging) return;
+        currentTranslate = prevTranslate + getPositionX(event) - startPos;
+      }
+
+      function dragEnd() {
+        isDragging = false;
+        cancelAnimationFrame(animationID);
+        viewport.style.cursor = 'grab';
+        track.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        var movedBy = currentTranslate - prevTranslate;
+        if (movedBy < -50) currentIndex = Math.min(currentIndex + 1, track.children.length - 1);
+        if (movedBy > 50) currentIndex = Math.max(currentIndex - 1, 0);
+        var slideWidth = track.children[0].offsetWidth;
+        var gap = parseInt(getComputedStyle(track).gap, 10) || 0;
+        currentTranslate = -currentIndex * (slideWidth + gap);
+        prevTranslate = currentTranslate;
+        track.style.transform = 'translateX(' + currentTranslate + 'px)';
+      }
+
+      function animation() {
+        track.style.transform = 'translateX(' + currentTranslate + 'px)';
+        if (isDragging) requestAnimationFrame(animation);
+      }
+
+      viewport.style.cursor = 'grab';
+    }
 
     function init() {
       if (section.dataset.tvsInit === 'true') return;
       section.dataset.tvsInit = 'true';
 
       var viewport = section.querySelector('[data-slider-viewport]');
-      if (viewport && viewport.dataset.initialized !== 'true') {
-        viewport.dataset.initialized = 'true';
-        var track = viewport.querySelector('[data-slider-track]');
-        if (track) {
-          var isDragging = false;
-          var startPos = 0;
-          var currentTranslate = 0;
-          var prevTranslate = 0;
-          var animationID = 0;
-          var currentIndex = 0;
+      initSlider(viewport);
 
-          viewport.addEventListener('mousedown', dragStart);
-          viewport.addEventListener('mouseup', dragEnd);
-          viewport.addEventListener('mouseleave', dragEnd);
-          viewport.addEventListener('mousemove', drag);
-          viewport.addEventListener('touchstart', dragStart);
-          viewport.addEventListener('touchend', dragEnd);
-          viewport.addEventListener('touchmove', drag);
-          viewport.addEventListener('contextmenu', function(e) {
-            if (isDragging) e.preventDefault();
-          });
-
-          function getPositionX(event) {
-            return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-          }
-
-          function dragStart(event) {
-            isDragging = true;
-            startPos = getPositionX(event);
-            animationID = requestAnimationFrame(animation);
-            viewport.style.cursor = 'grabbing';
-            track.style.transition = 'none';
-          }
-
-          function drag(event) {
-            if (!isDragging) return;
-            var currentPosition = getPositionX(event);
-            currentTranslate = prevTranslate + currentPosition - startPos;
-          }
-
-          function dragEnd() {
-            isDragging = false;
-            cancelAnimationFrame(animationID);
-            viewport.style.cursor = 'grab';
-            track.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-
-            var movedBy = currentTranslate - prevTranslate;
-            if (movedBy < -50) {
-              currentIndex = Math.min(currentIndex + 1, track.children.length - 1);
-            }
-            if (movedBy > 50) {
-              currentIndex = Math.max(currentIndex - 1, 0);
-            }
-            setPositionByIndex();
-          }
-
-          function animation() {
-            setSliderPosition();
-            if (isDragging) requestAnimationFrame(animation);
-          }
-
-          function setSliderPosition() {
-            track.style.transform = 'translateX(' + currentTranslate + 'px)';
-          }
-
-          function setPositionByIndex() {
-            var slideWidth = track.children[0].offsetWidth;
-            var gap = parseInt(getComputedStyle(track).gap, 10) || 0;
-            currentTranslate = -currentIndex * (slideWidth + gap);
-            prevTranslate = currentTranslate;
-            setSliderPosition();
-          }
-
-          viewport.style.cursor = 'grab';
-        }
-      }
-
-      var videos = section.querySelectorAll('[data-video]');
-      var queue = [];
-      var activeLoads = 0;
       var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
       var saveData = !!(connection && (connection.saveData || connection.effectiveType === '2g' || connection.effectiveType === 'slow-2g'));
-      var narrow = window.matchMedia('(max-width: 749px)').matches;
-      var useLowRes = saveData || narrow;
-      var maxConcurrent = saveData ? 1 : 2;
-      var sectionNear = false;
-      var videosArmed = false;
-      var pageSettled = document.readyState === 'complete';
-      var wasInViewAtInit = section.getBoundingClientRect().top < window.innerHeight && section.getBoundingClientRect().bottom > 0;
+      var useLowRes = saveData || window.matchMedia('(max-width: 749px)').matches;
+      var videos = section.querySelectorAll('[data-video]');
 
       section.querySelectorAll('.tvs-video-poster').forEach(function(img) {
         var wrapper = img.closest('.tvs-video-wrapper');
-        function markPosterReady() {
+        function ready() {
           if (wrapper) wrapper.classList.add('tvs-poster-ready');
         }
-        function dropPoster() {
+        function fail() {
           if (wrapper) wrapper.classList.add('tvs-poster-failed');
           img.remove();
         }
         if (img.complete) {
-          if (img.naturalWidth === 0) dropPoster();
-          else markPosterReady();
+          if (img.naturalWidth === 0) fail();
+          else ready();
         }
-        img.addEventListener('load', markPosterReady);
-        img.addEventListener('error', dropPoster);
+        img.addEventListener('load', ready);
+        img.addEventListener('error', fail);
       });
-
-      function whenIdle(fn, timeout) {
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(fn, { timeout: timeout || 800 });
-        } else {
-          setTimeout(fn, 80);
-        }
-      }
-
-      function boostPosters() {
-        section.querySelectorAll('.tvs-video-poster').forEach(function(img, index) {
-          if (index > 3) return;
-          try {
-            img.loading = 'eager';
-            img.fetchPriority = index < 2 ? 'high' : 'low';
-          } catch (e) {}
-        });
-      }
 
       function hideLoader(wrapper) {
         var loader = wrapper && wrapper.querySelector('.tvs-video-loader');
@@ -857,51 +820,14 @@
         loader.classList.add('tvs-hide');
       }
 
-      function showLoaderSoon(wrapper) {
+      function showLoader(wrapper) {
         var loader = wrapper && wrapper.querySelector('.tvs-video-loader');
         if (!loader) return;
         loader.classList.remove('tvs-hide');
         clearTimeout(Number(loader.dataset.delayTimer || 0));
         loader.dataset.delayTimer = String(setTimeout(function() {
           if (!loader.classList.contains('tvs-hide')) loader.classList.add('tvs-loader-visible');
-        }, 350));
-      }
-
-      function tryPlay(video) {
-        if (!video || video.dataset.autoplay !== 'true' || video.dataset.wanted !== '1') return;
-        if (video.dataset.failed === 'true' || video.dataset.loaded !== 'true') return;
-        video.muted = true;
-        var playAttempt = video.play();
-        if (playAttempt && playAttempt.catch) playAttempt.catch(function() {});
-      }
-
-      function armVideos() {
-        if (wasInViewAtInit && !pageSettled) return;
-        if (!videosArmed) {
-          videosArmed = true;
-          boostPosters();
-        }
-        pump();
-      }
-
-      function markPageSettled() {
-        if (pageSettled && videosArmed) return;
-        pageSettled = true;
-        if (sectionNear) whenIdle(armVideos, 200);
-      }
-
-      function sortQueue() {
-        queue.sort(function(a, b) {
-          var diff = parseFloat(b.dataset.ratio || '0') - parseFloat(a.dataset.ratio || '0');
-          if (diff) return diff;
-          return parseInt(a.dataset.index || '0', 10) - parseInt(b.dataset.index || '0', 10);
-        });
-      }
-
-      function enqueue(video) {
-        if (!video || video.dataset.loaded === 'true' || video.dataset.loading === 'true' || video.dataset.failed === 'true') return;
-        if (queue.indexOf(video) === -1) queue.push(video);
-        sortQueue();
+        }, 300));
       }
 
       function markUnavailable(video) {
@@ -915,55 +841,36 @@
         hideLoader(wrapper);
       }
 
-      function settleLoad() {
-        activeLoads = Math.max(0, activeLoads - 1);
-        pump();
-      }
+      function loadVideo(video) {
+        if (!video || video.dataset.loaded === 'true' || video.dataset.loading === 'true') return;
 
-      function pickSource(video) {
-        var lqSrc = video.getAttribute('data-src-lq');
-        if (useLowRes && lqSrc) return lqSrc;
-        return video.getAttribute('data-src');
-      }
-
-      function startVideo(video) {
-        if (video.dataset.loading === 'true' || video.dataset.loaded === 'true' || video.dataset.failed === 'true') return;
-        var src = pickSource(video);
+        var src = useLowRes && video.getAttribute('data-src-lq')
+          ? video.getAttribute('data-src-lq')
+          : video.getAttribute('data-src');
         if (!src) {
           markUnavailable(video);
           return;
         }
 
-        var generation = String(Date.now()) + '-' + String(activeLoads + 1);
-        video.dataset.generation = generation;
         video.dataset.loading = 'true';
-        activeLoads += 1;
-
         var wrapper = video.closest('.tvs-video-wrapper');
-        showLoaderSoon(wrapper);
+        showLoader(wrapper);
 
         video.muted = true;
         video.setAttribute('muted', '');
         video.setAttribute('playsinline', '');
-        video.querySelectorAll('source').forEach(function(node) { node.remove(); });
-        video.removeAttribute('src');
-        video.src = src;
         video.preload = 'auto';
+        video.src = src;
 
         var settled = false;
-        function isCurrent() {
-          return video.dataset.generation === generation;
-        }
-
         function finish() {
           if (settled) return;
           settled = true;
           clearTimeout(timer);
-          settleLoad();
         }
 
         function onReady() {
-          if (!isCurrent() || video.dataset.loaded === 'true') {
+          if (video.dataset.loaded === 'true') {
             finish();
             return;
           }
@@ -975,12 +882,15 @@
             wrapper.classList.remove('tvs-unavailable');
             hideLoader(wrapper);
           }
-          tryPlay(video);
+          if (video.dataset.autoplay === 'true') {
+            var playAttempt = video.play();
+            if (playAttempt && playAttempt.catch) playAttempt.catch(function() {});
+          }
           finish();
         }
 
         function onFail() {
-          if (!isCurrent() || video.dataset.loaded === 'true') {
+          if (video.dataset.loaded === 'true') {
             finish();
             return;
           }
@@ -993,115 +903,32 @@
         video.addEventListener('error', onFail, { once: true });
         var timer = setTimeout(onFail, 15000);
         video.load();
-
         if (video.readyState >= 2) onReady();
       }
 
-      function pump() {
-        if (!videosArmed || !sectionNear) return;
-        sortQueue();
-        while (activeLoads < maxConcurrent && queue.length) {
-          var video = queue.shift();
-          if (!video || video.dataset.wanted !== '1') continue;
-          if (video.dataset.loaded === 'true' || video.dataset.loading === 'true' || video.dataset.failed === 'true') continue;
-          startVideo(video);
-        }
-      }
-
-      function requestVideo(video) {
-        if (video.dataset.loading === 'true' && video.dataset.failed !== 'true') return;
-        videosArmed = true;
-        sectionNear = true;
-        pageSettled = true;
-        video.dataset.wanted = '1';
-        video.dataset.ratio = '1';
-        if (video.dataset.loaded === 'true' && video.dataset.failed !== 'true') {
-          tryPlay(video);
-          return;
-        }
-        video.dataset.generation = 'retry';
-        video.dataset.failed = '';
-        video.dataset.loaded = '';
-        video.dataset.loading = '';
-        video.classList.remove('tvs-loaded');
-        video.removeAttribute('src');
-        video.querySelectorAll('source').forEach(function(node) { node.remove(); });
-        var wrapper = video.closest('.tvs-video-wrapper');
-        if (wrapper) {
-          wrapper.classList.remove('tvs-unavailable', 'tvs-ready');
-          showLoaderSoon(wrapper);
-        }
-        enqueue(video);
-        pump();
-      }
-
-      function syncVisibleVideos() {
-        if (!viewport) return;
-        var rootRect = viewport.getBoundingClientRect();
-        videos.forEach(function(video) {
-          var rect = video.getBoundingClientRect();
-          var visible = rect.right > rootRect.left - 40 && rect.left < rootRect.right + (saveData ? 40 : rootRect.width * 0.4);
-          if (visible) {
-            video.dataset.wanted = '1';
-            video.dataset.ratio = String(Math.max(0.1, Math.min(1, (Math.min(rect.right, rootRect.right) - Math.max(rect.left, rootRect.left)) / Math.max(rect.width, 1))));
-            enqueue(video);
-            tryPlay(video);
-          } else {
-            video.dataset.wanted = '0';
-            video.dataset.ratio = '0';
-            if (video.dataset.loaded === 'true' && !video.paused) video.pause();
-          }
-        });
-        pump();
-      }
-
       if ('IntersectionObserver' in window) {
-        var sectionObserver = new IntersectionObserver(function(entries) {
-          sectionNear = entries.some(function(entry) { return entry.isIntersecting; });
-          if (sectionNear) {
-            boostPosters();
-            armVideos();
-            syncVisibleVideos();
-          } else {
-            videos.forEach(function(video) {
-              if (video.dataset.loaded === 'true' && !video.paused) video.pause();
-            });
-          }
-        }, { root: null, rootMargin: saveData ? '160px 0px' : '480px 0px', threshold: 0 });
-        sectionObserver.observe(section);
+        var slideObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            var video = entry.target.querySelector('[data-video]');
+            if (!video) return;
+            if (entry.isIntersecting) {
+              loadVideo(video);
+              if (video.dataset.loaded === 'true' && video.dataset.autoplay === 'true' && video.paused) {
+                video.muted = true;
+                var playAttempt = video.play();
+                if (playAttempt && playAttempt.catch) playAttempt.catch(function() {});
+              }
+            } else if (video.dataset.loaded === 'true' && !video.paused) {
+              video.pause();
+            }
+          });
+        }, { root: null, rootMargin: saveData ? '120px 0px' : '280px 0px', threshold: 0.1 });
 
-        if (viewport) {
-          var slideObserver = new IntersectionObserver(function() {
-            syncVisibleVideos();
-          }, {
-            root: viewport,
-            rootMargin: saveData ? '0px' : '0px 40% 0px 0px',
-            threshold: [0, 0.15, 0.5, 1]
-          });
-          section.querySelectorAll('[data-slider-slide]').forEach(function(slide) {
-            slideObserver.observe(slide);
-          });
-          viewport.addEventListener('scroll', function() {
-            syncVisibleVideos();
-          }, { passive: true });
-        }
-      } else {
-        sectionNear = true;
-        videosArmed = true;
-        videos.forEach(function(video, index) {
-          if (index > 1) return;
-          video.dataset.wanted = '1';
-          video.dataset.ratio = '1';
-          enqueue(video);
+        section.querySelectorAll('[data-slider-slide]').forEach(function(slide) {
+          slideObserver.observe(slide);
         });
-        pump();
-      }
-
-      if (pageSettled) {
-        whenIdle(markPageSettled, 200);
       } else {
-        window.addEventListener('load', markPageSettled);
-        setTimeout(markPageSettled, 1800);
+        videos.forEach(loadVideo);
       }
 
       section.querySelectorAll('.tvs-video-wrapper').forEach(function(wrapper) {
@@ -1110,7 +937,6 @@
         if (!video || !playPauseBtn || playPauseBtn.disabled) return;
 
         var hideTimeout;
-
         function showButton() {
           playPauseBtn.classList.remove('tvs-hidden');
           clearTimeout(hideTimeout);
@@ -1120,12 +946,13 @@
         }
 
         function togglePlayPause() {
-          if (video.dataset.loaded !== 'true' || video.dataset.failed === 'true') {
-            requestVideo(video);
+          if (video.dataset.loaded !== 'true') {
+            loadVideo(video);
             showButton();
             return;
           }
           if (video.paused) {
+            video.muted = true;
             var playAttempt = video.play();
             if (playAttempt && playAttempt.catch) playAttempt.catch(function() {});
             playPauseBtn.classList.add('tvs-playing');
@@ -1140,23 +967,12 @@
           e.stopPropagation();
           togglePlayPause();
         });
-
         video.addEventListener('click', togglePlayPause);
         wrapper.addEventListener('mouseenter', showButton);
         wrapper.addEventListener('mousemove', showButton);
-        wrapper.addEventListener('touchstart', showButton);
-        video.addEventListener('play', function() {
-          playPauseBtn.classList.add('tvs-playing');
-        });
-        video.addEventListener('pause', function() {
-          playPauseBtn.classList.remove('tvs-playing');
-        });
-      });
-
-      videos.forEach(function(video) {
-        video.addEventListener('click', function() {
-          if (video.dataset.failed === 'true') requestVideo(video);
-        });
+        wrapper.addEventListener('touchstart', showButton, { passive: true });
+        video.addEventListener('play', function() { playPauseBtn.classList.add('tvs-playing'); });
+        video.addEventListener('pause', function() { playPauseBtn.classList.remove('tvs-playing'); });
       });
     }
 
@@ -1165,6 +981,17 @@
     } else {
       init();
     }
+
+    document.addEventListener('shopify:section:load', function(event) {
+      if (!event.target || !event.target.querySelector) return;
+      if (event.target.querySelector('.section-{{ section.id }}') || event.target.classList.contains('section-{{ section.id }}')) {
+        section = document.querySelector('.tiktok-video-slider.section-{{ section.id }}');
+        if (section) {
+          section.dataset.tvsInit = '';
+          init();
+        }
+      }
+    });
   })();
 </script>
 
