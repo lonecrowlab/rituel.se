@@ -332,7 +332,7 @@
         "localization_label_color": "#b0b0b0",
         "footer_heading_size": 18,
         "footer_text_size": 14,
-        "copyright_text_size": 8,
+        "copyright_text_size": 12,
         "localization_label_size": 14,
         "margin_top": 0
       }
