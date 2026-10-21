@@ -90,6 +90,7 @@
     "subscription_product_1": "adv-hair-supplement",
     "subscription_product_1_id": "692545978698",
     "subscription_product_1_discount": 40,
+    "badge_text": "Spara [percentage]%",
     "badge_text_color": "#d48c00",
     "badge_bg_color": "#ffedc9",
     "enable_badge_gradient": false,
