@@ -30,7 +30,7 @@
             "custom_title": "{{ product.title }}",
             "title_color": "#432700",
             "title_gradient": "linear-gradient(46deg, rgba(0, 0, 0, 1) 98%, rgba(135, 110, 155, 1) 100%)",
-            "title_font_size_mobile": 24,
+            "title_font_size_mobile": 26,
             "title_font_size_desktop": 30,
             "title_font_weight": 600,
             "title_alignment": "left",
