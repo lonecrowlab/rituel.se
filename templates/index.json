@@ -1459,7 +1459,7 @@
         "image_background": "#f8f8f8",
         "show_title": true,
         "title_color": "#000000",
-        "title_font_size": 16,
+        "title_font_size": 17,
         "title_font_weight": "600",
         "title_margin_bottom": 2,
         "use_custom_product_rating": true,
