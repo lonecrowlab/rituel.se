@@ -485,7 +485,7 @@
         }
       },
       "payment": {
-        "card_security_notice": "Alle transaksjoner er sikre og krypterte."
+        "card_security_notice": "Alla transaktioner är säkra och krypterade."
       },
       "contact": {
         "optional_phone_label": "Mobilnummer (valfritt) få leveransbesked via sms",
