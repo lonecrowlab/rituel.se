@@ -27,7 +27,7 @@
         "title": {
           "type": "title",
           "settings": {
-            "custom_title": "Den Kompletta Ritualen",
+            "custom_title": "{{ product.title }}",
             "title_color": "#432700",
             "title_gradient": "linear-gradient(46deg, rgba(0, 0, 0, 1) 98%, rgba(135, 110, 155, 1) 100%)",
             "title_font_size_mobile": 24,
