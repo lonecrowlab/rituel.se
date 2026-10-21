@@ -395,7 +395,7 @@
         "button_icon_size": 18,
         "button_icon_gap": 8,
         "button_icon_color": "#ffffff",
-        "show_view_all": true,
+        "show_view_all": false,
         "view_all_text": "Visa alla produkter",
         "use_theme_view_all_colors": false,
         "view_all_margin_top": 8,
@@ -451,6 +451,7 @@
         "collection_ad_3er7UT",
         "collection_m6cWMK"
       ],
+      "disabled": true,
       "name": "Collection Grid Page",
       "settings": {
         "enable_side_filters": false,
