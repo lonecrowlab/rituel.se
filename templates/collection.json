@@ -247,9 +247,8 @@
       "blocks": {
         "collection_ad_3er7UT": {
           "type": "collection_ad",
-          "disabled": true,
           "settings": {
-            "image": "shopify://shop_images/gradient.png",
+            "image": "shopify://shop_images/SVENSK.webp",
             "image_fit": "contain",
             "image_position": "center",
             "background_type": "gradient",
