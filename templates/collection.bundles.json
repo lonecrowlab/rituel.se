@@ -249,7 +249,7 @@
         "collection_ad_qXEHmn": {
           "type": "collection_ad",
           "settings": {
-            "image": "shopify://shop_images/SVENSK.webp",
+            "image": "shopify://shop_images/SVENSK-2.webp",
             "link": "",
             "display_type": "fixed",
             "fix_display": 4,
@@ -262,7 +262,6 @@
       "block_order": [
         "collection_ad_qXEHmn"
       ],
-      "disabled": true,
       "name": "Collection Grid (Simple)",
       "settings": {
         "collection": "bundles",
@@ -273,12 +272,12 @@
         "grid_columns_tablet": 3,
         "grid_columns_desktop": 4,
         "section_background": "#ffffff",
-        "section_padding_top_mobile": 40,
+        "section_padding_top_mobile": 0,
         "section_padding_bottom_mobile": 24,
         "section_padding_top_desktop": 60,
         "section_padding_bottom_desktop": 60,
-        "show_heading": true,
-        "heading_before": "Köp fler & Spara",
+        "show_heading": false,
+        "heading_before": "",
         "heading_after": "",
         "highlighted_text": "",
         "highlight_position": "inline_second",
