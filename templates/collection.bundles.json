@@ -101,9 +101,9 @@
       "settings": {
         "use_theme_colors": false,
         "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
+        "mobile_content_alignment": "center",
         "hero_image": "shopify://shop_images/4_768a0188-ecb2-40be-9fb9-834cff638626.png",
-        "hero_image_mobile": "shopify://shop_images/Infographics_2.0-2.webp",
+        "hero_image_mobile": "shopify://shop_images/Infographics_2.0-3.webp",
         "image_position": "right",
         "fit_image_to_height": true,
         "overlay_content_desktop": false,
