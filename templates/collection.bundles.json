@@ -493,7 +493,7 @@
         "image_fit": "contain",
         "image_aspect_ratio": "1_1",
         "card_radius": 20,
-        "remove_card_styling": false,
+        "remove_card_styling": true,
         "title_color": "#000000",
         "price_size": 12,
         "price_color": "#000000",
