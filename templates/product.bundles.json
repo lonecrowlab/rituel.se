@@ -412,7 +412,7 @@
             "text_2_weight": "400",
             "text_2_color": "#000000",
             "item_2_bg_color": "rgba(0,0,0,0)",
-            "item_padding_vertical": 0,
+            "item_padding_vertical": 4,
             "item_padding_horizontal": 0,
             "item_border_radius": 50,
             "show_separator": true,
