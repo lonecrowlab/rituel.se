@@ -433,8 +433,8 @@
         "icon_text_card_TptYYk": {
           "type": "icon_text_card",
           "settings": {
-            "title": "60 Dagars Nöjdhetsgaranti",
-            "paragraph": "Testa i två månader. Ser du ingen skillnad får du pengarna tillbaka.",
+            "title": "60 dagars nöjdhetsgaranti",
+            "paragraph": "Testa utan risk. Ser du ingen skillnad får du pengarna tillbaka.",
             "icon_type": "svg",
             "google_icon": "info",
             "icon_style": "outlined",
@@ -449,7 +449,7 @@
             "card_max_width": 600,
             "card_padding_vertical": 10,
             "card_padding_horizontal": 10,
-            "mobile_card_padding_vertical": 5,
+            "mobile_card_padding_vertical": 8,
             "mobile_card_padding_horizontal": 15,
             "card_border_radius": 12,
             "card_border_width": 0,
