@@ -484,7 +484,10 @@
       },
       "payment": {
         "title": "Secure Checkout",
-        "card_security_notice": "All transactions are secure and encrypted. Your order includes free returns and 24/7 access to our award-winning customer service"
+        "card_security_notice": "All transactions are secure and encrypted. Your order includes free returns and 24/7 access to our award-winning customer service",
+        "shop_pay_hsa": {
+          "pay_button_label": "Continue to health screening"
+        }
       },
       "delivery_options": {
         "shipping_address": "Shipping Address"
