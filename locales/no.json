@@ -777,7 +777,11 @@
         "split_quantity_per_delivery_line_not_allowed": "Minst én handelsvarelinje refereres til av flere leveranselinjer.",
         "split_cart_tax_engine_not_supported": "Alle varer må bruke den samme leveringsmetoden for skatteberegningsmotoren som brukes på butikkens lokasjon.",
         "split_cart_not_allowed": "Ugyldig økt eller funksjonen er ikke aktivert for den angitte butikken.",
-        "gift_card_not_found": "Dette gavekortet ble ikke funnet"
+        "gift_card_not_found": "Dette gavekortet ble ikke funnet",
+        "delivery_address_code_too_long": "Adresskoden er for lang (maks. %{count} tegn)",
+        "delivery_address_code_contains_emojis": "Adressekoden må ikke inneholde emojier.",
+        "delivery_address_code_contains_html_tags": "Adressekoden kan ikke inneholde HTML-tagger.",
+        "delivery_address_code_contains_mathematical_symbols": "Adresskoden får inte innehålla matematiska symboler"
       },
       "failed_payment": {
         "page_title": "Betalingen kunne ikke gjennomføres",
@@ -1264,6 +1268,39 @@
         "no_pickup_locations_found": "Ingen hentesteder ble funnet",
         "geolocation": {
           "permission_not_allowed": "Tillat deling av plassering, eller søk i stedet."
+        },
+        "stock_details": {
+          "out_of_stock": "Utsolgt på dette stedet",
+          "ship_separately": {
+            "one": "Sendes separat",
+            "other": "Sendes separat"
+          },
+          "remove_items": {
+            "one": "Blir fjernet fra bestillingen",
+            "other": "Blir fjernet fra bestillingen"
+          }
+        },
+        "unavailable_item_count": {
+          "one": "%{count} artiklar er ikke tilgjengelige",
+          "other": "%{count} artikler er ikke tilgjengelige"
+        },
+        "ship_separately_notice": {
+          "one": "%{count} varer sendes separat",
+          "other": "%{count} artikler sendes separat"
+        },
+        "stock_details_modal": {
+          "unavailable_title": "Ikke tilgjengelig for henting",
+          "location": "På %{location}",
+          "ship_separately": "Lever separat",
+          "choose_different_location": "Velg et annet sted",
+          "can_ship_description": {
+            "one": "Denne varen er utsolgt på det valgte hentestedet ditt.",
+            "other": "Disse varene er utsolgt på det valgte hentestedet ditt."
+          },
+          "cannot_ship_description": {
+            "one": "Denne artikkelen er utsolgt på det valgte hentestedet ditt og kan ikke leveres.",
+            "other": "Disse varene er utsolgt på hentestedet du har valgt og kan ikke leveres."
+          }
         }
       },
       "marketing": {
@@ -2317,7 +2354,18 @@
         "purchase_options_subscription_agreement_label_wallets": "Handlevognen din inneholder et abonnement som fornyes automatisk. Ved å bruke hurtigkassen %{consent_text} %{cancellation_instructions}",
         "paynow_label": "Betal nå",
         "paypay_label": "PayPay",
-        "scalapay_label": "Scalapay"
+        "scalapay_label": "Scalapay",
+        "shop_pay_hsa": {
+          "label": "Jeg vil bruke HSA/FSA-midler til dette kjøpet",
+          "description": "Betal direkte med fordelskortet ditt, eller bruk et privat kort og be om refusjon for det berettigede beløpet.",
+          "pay_button_label": "Fortsett til helseundersøkelse",
+          "eligibility_disclaimer_html": "Truemed fastsetter kvalifikasjonen for HSA/FSA. %{terms_link}",
+          "truemed": "Truemed",
+          "view_terms": "Vis vilkår",
+          "login_message": "Logg inn på Shop for å bruke HSA/FSA-midlene dine",
+          "eligible_product": "Kvalifisert for HSA/FSA",
+          "mixed_cart_description": "Handlekurven kan bare inneholde produkter som kvalifiserer for HSA/FSA."
+        }
       },
       "payment_errors": {
         "generic_error": "Det oppstod en feil under behandlingen av betalingen. Prøv igjen eller bruk en annen betalingsmetode.",
@@ -2390,7 +2438,24 @@
         "local_payment_method_unavailable": "%{payment_method} er ikke tilgjengelig",
         "duplicate_autopay_card": "Dette kortet er knyttet til kommende avbetalinger. Betal på en annen måte eller {{update_payment_details_link}}",
         "duplicate_autopay_card_link": "Oppdater betalingsopplysninger",
-        "duplicate_autopay_card_without_link": "Dette kortet er knyttet til kommende avbetalinger. Betal på en annen måte."
+        "duplicate_autopay_card_without_link": "Dette kortet er knyttet til kommende avbetalinger. Betal på en annen måte.",
+        "installments": {
+          "retry_same_instrument": {
+            "heading": "Kontroller kortopplysningene",
+            "body": "Oppdater kortopplysningene eller velg et annet kort"
+          },
+          "retry_different_instrument": {
+            "heading": "Kortet ble avvist",
+            "body": "Prøv igjen eller velg et annet kort"
+          },
+          "restart_payment_method": {
+            "heading": "Økten har utløpt.",
+            "body": "Velg en betalingsplan for å begynne på nytt"
+          }
+        },
+        "invalid_customer_account": "Vi kunne ikke belaste kontoen din. Du kan prøve igjen når du har løst problemet med kontoen, eller bruke en annen betalingsmåte.",
+        "code_expired": "Betalingskoden din har utløpt eller allerede blitt brukt. Hent en ny kode i bankappen din, og prøv igjen.",
+        "code_invalid": "Betalingskoden din er ugyldig. Kontroller koden og prøv igjen, eller hent en ny kode i bankappen din."
       },
       "payment_challenge_modal": {
         "instructions": "Fullfør kjøpet med din {{paymentMethod}}-kode",
@@ -2889,6 +2954,11 @@
         "split_shipping_shipment_count_notice_one_time_purchase": {
           "one": "Bestillingen din kommer i %{count} leveranser",
           "other": "Bestillingen din kommer i %{count} leveranser"
+        },
+        "includes_recurring_items": "Inneholder tilbakevendende artikler",
+        "split_shipping_arrives_in_shipments": {
+          "one": "Ankommer i %{count} leveranse",
+          "other": "Ankommer i %{count} leveranser"
         }
       },
       "session_errors": {
@@ -3018,7 +3088,8 @@
         "price_and_quantity_update": {
           "title": "Oppdatering av pris og mengde",
           "description": "Prisene og tilgjengelige mengder for disse artiklene har endret seg og oppdateres i handlekurven din."
-        }
+        },
+        "unavailable_at_pickup_location_label": "Denne artikkelen er ikke tilgjengelig for henting på det valgte stedet."
       },
       "shop_policies": {
         "refund_policy": "Refusjonspolicy",
@@ -3557,7 +3628,16 @@
           "other": "Du har ikke blitt belastet for disse"
         },
         "view_business_customer_account": "Vis konto",
-        "verify_shop_account_title": "Bekreft din Shop-konto"
+        "verify_shop_account_title": "Bekreft din Shop-konto",
+        "pickup_address_title": "Henting på",
+        "pickup_map_marker": {
+          "callout": "Henting på {{location}}",
+          "directions_link_accessibility_label": "Hent på {{location}}, få veibeskrivelse"
+        },
+        "hsa_qualification": {
+          "review_pending": "Vi gjennomgår helseskjemaet ditt. Betalingen belastes så snart erklæringen om medisinsk behov er utstedt. Du får snart en bekreftelse på e-post.",
+          "review_pending_pickup": "Vi gjennomgår helseundersøkelsen din. Betalingen din trekkes så snart erklæringen om medisinsk behov er utstedt."
+        }
       },
       "tips": {
         "title": "Legg til tips",
@@ -3752,6 +3832,12 @@
           "duty": "Tull",
           "fee": "Avgift",
           "total": "Totalt"
+        },
+        "validation_errors": {
+          "invalid_gid": "er ikke en gyldig %{type}-GID (mottok: %{value})",
+          "missing_destination_country": "address_country for distribusjonsmetodens destinasjon mangler",
+          "invalid_destination_country": "Forventet at %{country_code} skulle være en av: %{valid_country_codes}",
+          "unsupported_quantity_unit": "Kun mengder som måles i stykk (C62) med skala 0 støttes. Bruk den enheten eller utelat denne verdien."
         }
       },
       "shop_wallet": {
@@ -3809,6 +3895,12 @@
         "ineligible": "Denne bestillingen kvalifiserer ikke for HSA/FSA.",
         "processing_error": "Det oppstod et problem under behandlingen av HSA/FSA-forespørselen din. Prøv igjen eller betal uten HSA/FSA.",
         "unsupported_checkout": "HSA/FSA er ikke tilgjengelig for denne bestillingen."
+      },
+      "tax": {
+        "attribution": {
+          "orders_sold_by_shop_marketplace": "Ordrer som selges via markedsplassen Shop",
+          "orders_sold_by_shop_name": "Ordrer som selges av %{shop_name}"
+        }
       }
     },
     "attributes": {
