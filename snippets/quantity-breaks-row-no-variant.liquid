@@ -12,6 +12,7 @@
 {% endcomment %}
 
 {%- liquid
+  assign section_id = section_id | default: section.id
   assign qb_default_selected = block.settings.qb_default_selected | default: '1' | plus: 0
 
   comment
@@ -1159,14 +1160,15 @@
     if (!finalPrice || finalPrice <= 0) return;
 
     const formattedPrice = formatMoney(finalPrice);
-    const mainAtcPrice = document.getElementById('main-atc-price-{{ section.id }}');
+    const mainAtcPrice = document.querySelector('#ProductSubmitButton-{{ section_id }} .main-atc-price')
+      || document.getElementById('main-atc-price-{{ section_id }}');
     if (mainAtcPrice) {
       mainAtcPrice.textContent = formattedPrice;
       mainAtcPrice.classList.remove('hidden');
       mainAtcPrice.style.display = '';
       mainAtcPrice.style.visibility = 'visible';
     }
-    const stickyAtcPrice = document.getElementById('sticky-atc-price-{{ section.id }}');
+    const stickyAtcPrice = document.getElementById('sticky-atc-price-{{ section_id }}');
     if (stickyAtcPrice) stickyAtcPrice.textContent = formattedPrice;
 
     const eventDetail = {

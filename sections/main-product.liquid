@@ -975,7 +975,7 @@
             {% when 'text_with_side_icon' %}
               {% render 'text-with-side-icon', block: block %}
             {% when 'qb_row_no_variant' %}
-              {% render 'quantity-breaks-row-no-variant', product: product, block: block, product_form_id: product_form_id %}
+              {% render 'quantity-breaks-row-no-variant', product: product, block: block, product_form_id: product_form_id, section_id: section.id %}
             {% when 'product_flag' %}
               {% render 'product-flag', block: block %}
             {% when 'delivery_date' %}

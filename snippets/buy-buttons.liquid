@@ -484,8 +484,41 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.subscription-widget__plans-json')?.textContent || '[]'
   );
 
+  const SECTION_ID = {{ section_id | json }};
+  const PRODUCT_FORM_ID = {{ product_form_id | json }};
+
   // ---- Helpers ----
   const shopMoneyFormat = {{ shop.money_format | json }};
+
+  function getMainAtcPriceEl() {
+    const btn = document.getElementById('ProductSubmitButton-' + SECTION_ID);
+    return btn?.querySelector('.main-atc-price')
+      || document.getElementById('main-atc-price-' + SECTION_ID);
+  }
+
+  /** Active QB row — Liquid sets data-final-price per market (authoritative). */
+  function readActiveQBFromDOM() {
+    const btn = document.getElementById('ProductSubmitButton-' + SECTION_ID);
+    const scope = btn?.closest('.shopify-section') || document;
+    const active = scope.querySelector('.qb-wrapper .qb-option.qb-active');
+    if (!active) return null;
+    const total = parseInt(active.dataset.finalPrice, 10);
+    if (!total || total <= 0) return null;
+    return {
+      total,
+      compare: parseInt(active.dataset.finalCompare, 10) || 0,
+      qty: parseInt(active.dataset.qty, 10) || 1
+    };
+  }
+
+  function syncQBStateFromDOM() {
+    const qb = readActiveQBFromDOM();
+    if (!qb) return false;
+    currentState.qbQuantity = qb.qty;
+    currentState.qbFixedTotalPrice = qb.total;
+    currentState.qbFixedComparePrice = qb.compare > 0 ? qb.compare : 0;
+    return true;
+  }
 
   function formatMoney(cents) {
     // Round to nearest whole currency unit (401 kr, not 400,68 kr)
@@ -533,6 +566,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ---- Price Calculation ----
   function calculatePrice() {
+    syncQBStateFromDOM();
+
     // QB fixed total from Liquid/data-final-price (market-correct bundle totals)
     if (currentState.qbFixedTotalPrice > 0) {
       const totalPrice = currentState.qbFixedTotalPrice;
@@ -640,10 +675,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // 3. ATC button price
-    const mainAtcPrice = document.getElementById('main-atc-price-{{ section.id }}');
+    const mainAtcPrice = getMainAtcPriceEl();
     if (mainAtcPrice) mainAtcPrice.textContent = currentState.subscriptionActive ? formattedFinal : formattedOneTime;
 
-    const stickyAtcPrice = document.getElementById('sticky-atc-price-{{ section.id }}');
+    const stickyAtcPrice = document.getElementById('sticky-atc-price-' + SECTION_ID);
     if (stickyAtcPrice) stickyAtcPrice.textContent = currentState.subscriptionActive ? formattedFinal : formattedOneTime;
 
     // 4. ATC compare price
@@ -765,8 +800,7 @@ document.addEventListener('DOMContentLoaded', function() {
       currentState.qbFixedTotalPrice = fixedTotal;
       currentState.qbFixedComparePrice = fixedCompare > 0 ? fixedCompare : 0;
     } else {
-      currentState.qbFixedTotalPrice = 0;
-      currentState.qbFixedComparePrice = 0;
+      syncQBStateFromDOM();
     }
 
     // QB selection clears bundle mode
@@ -808,6 +842,15 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   document.addEventListener('variant-change', handleVariantEvent);
   document.addEventListener('variant:change', handleVariantEvent);
+
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.qb-option')) {
+      requestAnimationFrame(function() {
+        syncQBStateFromDOM();
+        updateAllPrices();
+      });
+    }
+  }, true);
 
   // Variant change via MutationObserver (deferred until form exists)
   function setupVariantObserver() {
@@ -859,16 +902,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Watch price container for innerHTML replacements from theme's renderProductInfo
     // (async section re-render overwrites PriceManager prices with raw server HTML)
-    var priceContainer = document.getElementById('price-{{ section.id }}');
+    var priceContainer = document.getElementById('price-' + SECTION_ID);
     if (priceContainer) {
       var priceObserver = new MutationObserver(function() {
-        // Only re-apply if QB or subscription is active (otherwise server prices are correct)
-        if (currentState.qbDiscount > 0 || currentState.qbQuantity > 1 || currentState.qbFixedTotalPrice > 0 || currentState.subscriptionActive || currentState.bundleActive) {
-          // Defer to ensure renderProductInfo has finished all its DOM updates
+        if (readActiveQBFromDOM() || currentState.subscriptionActive || currentState.bundleActive) {
           requestAnimationFrame(function() { updateAllPrices(); });
         }
       });
       priceObserver.observe(priceContainer, { childList: true, subtree: true });
+    }
+
+    var atcPriceEl = getMainAtcPriceEl();
+    if (atcPriceEl) {
+      var atcPriceTimer;
+      new MutationObserver(function() {
+        clearTimeout(atcPriceTimer);
+        atcPriceTimer = setTimeout(function() {
+          var qb = readActiveQBFromDOM();
+          if (!qb) return;
+          var expected = formatMoney(qb.total);
+          if (atcPriceEl.textContent.trim() !== expected.trim()) {
+            syncQBStateFromDOM();
+            updateAllPrices();
+          }
+        }, 30);
+      }).observe(atcPriceEl, { characterData: true, childList: true, subtree: true });
     }
   }
   requestAnimationFrame(deferredInit);
@@ -996,7 +1054,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       <span class="main-atc-compare-price">{{ rounded_compare_price | money_without_trailing_zeros }}</span>
                     {% endif %}
                     {% assign rounded_atc_price = product.selected_or_first_available_variant.price | plus: 50 | divided_by: 100 | times: 100 %}
-                    <span id="main-atc-price-{{ section.id }}" class='main-atc-price'>{{ rounded_atc_price | money_without_trailing_zeros }}</span>
+                    <span id="main-atc-price-{{ section_id }}" class='main-atc-price'>{{ rounded_atc_price | money_without_trailing_zeros }}</span>
                   </span>
                 {% endif %}
               </span>
