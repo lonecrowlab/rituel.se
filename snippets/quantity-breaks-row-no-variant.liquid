@@ -1148,19 +1148,38 @@
     return value;
   }
   
-  // ===== PRICE UPDATE FUNCTION - DISABLED =====
-  // Price updates removed - buy button now handles all price calculations
   function updateAllPrices(finalPrice, comparePrice) {
+    if (!finalPrice || finalPrice <= 0) {
+      const activeOption = wrapper.querySelector('.qb-option.qb-active');
+      if (activeOption) {
+        finalPrice = parseInt(activeOption.dataset.finalPrice, 10) || 0;
+        comparePrice = parseInt(activeOption.dataset.finalCompare, 10) || 0;
+      }
+    }
+    if (!finalPrice || finalPrice <= 0) return;
+
+    const formattedPrice = formatMoney(finalPrice);
+    const mainAtcPrice = document.getElementById('main-atc-price-{{ section.id }}');
+    if (mainAtcPrice) {
+      mainAtcPrice.textContent = formattedPrice;
+      mainAtcPrice.classList.remove('hidden');
+      mainAtcPrice.style.display = '';
+      mainAtcPrice.style.visibility = 'visible';
+    }
+    const stickyAtcPrice = document.getElementById('sticky-atc-price-{{ section.id }}');
+    if (stickyAtcPrice) stickyAtcPrice.textContent = formattedPrice;
+
     const eventDetail = {
       quantity: selectedQty || 1,
       qbDiscount: getDiscountForQuantity(selectedQty || 1),
       basePrice: finalPrice,
-      baseComparePrice: comparePrice
+      baseComparePrice: comparePrice,
+      finalPrice: finalPrice,
+      comparePrice: comparePrice
     };
 
     console.log('💰 QB: Firing qb:state-changed event', eventDetail);
 
-    // Fire event for buy button to listen
     document.dispatchEvent(new CustomEvent('qb:state-changed', {
       detail: eventDetail,
       bubbles: true
@@ -1899,20 +1918,34 @@
       }
     }
 
-    // Apply discount
-    const discountedPrice = totalPrice - (totalPrice * discount / 100);
-    const discountAmount = totalPrice - discountedPrice;
+    const finalPriceFromData = parseInt(activeOption.dataset.finalPrice, 10) || 0;
+    const finalCompareFromData = parseInt(activeOption.dataset.finalCompare, 10) || 0;
+
+    let discountedPrice;
+    let displayCompare = totalComparePrice;
+
+    if (discount === -1 && finalPriceFromData > 0) {
+      discountedPrice = finalPriceFromData;
+      if (finalCompareFromData > 0) displayCompare = finalCompareFromData;
+    } else if (totalPrice <= 0 && finalPriceFromData > 0) {
+      discountedPrice = finalPriceFromData;
+      if (finalCompareFromData > 0) displayCompare = finalCompareFromData;
+    } else {
+      discountedPrice = totalPrice - (totalPrice * discount / 100);
+    }
+
+    const discountAmount = totalPrice > 0 ? totalPrice - discountedPrice : 0;
 
     console.log('💰 QB: Price calculation with discount', {
       originalPrice: totalPrice,
       discountPercent: discount + '%',
       discountAmount: formatMoney(discountAmount),
       finalPrice: formatMoney(discountedPrice),
-      comparePrice: formatMoney(totalComparePrice),
-      savings: formatMoney(totalComparePrice - discountedPrice)
+      comparePrice: formatMoney(displayCompare),
+      savings: formatMoney(displayCompare - discountedPrice)
     });
 
-    updateAllPrices(discountedPrice, totalComparePrice);
+    updateAllPrices(discountedPrice, displayCompare);
   }
   
   function getDiscountForQuantity(qty) {

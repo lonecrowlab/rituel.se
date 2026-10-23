@@ -458,7 +458,9 @@ document.addEventListener('DOMContentLoaded', function() {
     sellingPlanId: '',
     bundleActive: false,
     bundlePrice: 0,
-    bundleComparePrice: 0
+    bundleComparePrice: 0,
+    qbFixedTotalPrice: 0,
+    qbFixedComparePrice: 0
   };
 
   // ---- Data ----
@@ -531,6 +533,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ---- Price Calculation ----
   function calculatePrice() {
+    // QB fixed total from Liquid/data-final-price (market-correct bundle totals)
+    if (currentState.qbFixedTotalPrice > 0) {
+      const totalPrice = currentState.qbFixedTotalPrice;
+      const totalComparePrice = currentState.qbFixedComparePrice > 0 ? currentState.qbFixedComparePrice : 0;
+      let finalPrice = totalPrice;
+      if (currentState.subscriptionActive && currentState.sellingPlanId) {
+        finalPrice = getDiscountedPrice(totalPrice, currentState.sellingPlanId);
+      } else if (currentState.subscriptionActive && currentState.subscriptionDiscount > 0) {
+        finalPrice = Math.round(totalPrice * (100 - currentState.subscriptionDiscount) / 100);
+      }
+      return {
+        finalPrice,
+        totalPrice,
+        totalComparePrice,
+        comparePrice: totalComparePrice > finalPrice ? totalComparePrice : (totalPrice > finalPrice ? totalPrice : 0),
+      };
+    }
+
     // Bundle mode: use bundle prices directly
     if (currentState.bundleActive && currentState.bundlePrice > 0) {
       const qty = currentState.qbQuantity;
@@ -724,13 +744,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
       currentState.qbQuantity = quantity;
       currentState.qbDiscount = discount;
+
+      const fixedTotal = parseInt(qbActive.dataset.finalPrice, 10);
+      const fixedCompare = parseInt(qbActive.dataset.finalCompare, 10);
+      if (fixedTotal > 0) {
+        currentState.qbFixedTotalPrice = fixedTotal;
+        currentState.qbFixedComparePrice = fixedCompare > 0 ? fixedCompare : 0;
+      }
     }
   }
 
   // ---- Event Listeners ----
   document.addEventListener('qb:state-changed', function(e) {
-    if (e.detail.quantity) currentState.qbQuantity = e.detail.quantity;
+    if (e.detail.quantity !== undefined) currentState.qbQuantity = e.detail.quantity;
     if (e.detail.qbDiscount !== undefined) currentState.qbDiscount = e.detail.qbDiscount;
+
+    const fixedTotal = e.detail.basePrice ?? e.detail.finalPrice;
+    const fixedCompare = e.detail.baseComparePrice ?? e.detail.comparePrice;
+    if (fixedTotal !== undefined && fixedTotal > 0) {
+      currentState.qbFixedTotalPrice = fixedTotal;
+      currentState.qbFixedComparePrice = fixedCompare > 0 ? fixedCompare : 0;
+    } else {
+      currentState.qbFixedTotalPrice = 0;
+      currentState.qbFixedComparePrice = 0;
+    }
+
     // QB selection clears bundle mode
     currentState.bundleActive = false;
     currentState.bundlePrice = 0;
@@ -825,7 +863,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (priceContainer) {
       var priceObserver = new MutationObserver(function() {
         // Only re-apply if QB or subscription is active (otherwise server prices are correct)
-        if (currentState.qbDiscount > 0 || currentState.subscriptionActive || currentState.bundleActive) {
+        if (currentState.qbDiscount > 0 || currentState.qbQuantity > 1 || currentState.qbFixedTotalPrice > 0 || currentState.subscriptionActive || currentState.bundleActive) {
           // Defer to ensure renderProductInfo has finished all its DOM updates
           requestAnimationFrame(function() { updateAllPrices(); });
         }
