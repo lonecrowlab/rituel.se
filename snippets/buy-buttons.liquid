@@ -59,6 +59,7 @@
   #ProductSubmitButton-{{ section_id }}.loading .main-atc__label,
   #ProductSubmitButton-{{ section_id }}.loading .atc-button__icon-svg,
   #ProductSubmitButton-{{ section_id }}.loading .material-icon,
+  #ProductSubmitButton-{{ section_id }}.loading .material-icon-svg,
   #ProductSubmitButton-{{ section_id }}.loading .loading-overlay__spinner {
     opacity: 0;
   }
@@ -68,7 +69,8 @@
     100% { transform: rotate(360deg); }
   }
 
-  #ProductSubmitButton-{{ section_id }} .material-icon {
+  #ProductSubmitButton-{{ section_id }} .material-icon,
+  #ProductSubmitButton-{{ section_id }} .material-icon-svg {
     font-size: var(--atc-icon-size, 20px) !important;
     color: var(--atc-icon-color, #ffffff) !important;
     width: var(--atc-icon-size, 20px) !important;
@@ -81,6 +83,10 @@
     line-height: 1 !important;
     vertical-align: middle !important;
     margin: 0 !important;
+  }
+
+  #ProductSubmitButton-{{ section_id }} .material-icon-svg svg {
+    fill: var(--atc-icon-color, #ffffff) !important;
   }
 
   #ProductSubmitButton-{{ section_id }} .atc-button__icon-svg {
@@ -452,7 +458,12 @@ document.addEventListener('DOMContentLoaded', function() {
     sellingPlanId: '',
     bundleActive: false,
     bundlePrice: 0,
-    bundleComparePrice: 0
+    bundleComparePrice: 0,
+    qbFixedTotalPrice: 0,
+    qbFixedComparePrice: 0,
+    rapiActive: false,
+    rapiAtcFormatted: '',
+    rapiCompareFormatted: ''
   };
 
   // ---- Data ----
@@ -476,8 +487,136 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('.subscription-widget__plans-json')?.textContent || '[]'
   );
 
+  const SECTION_ID = {{ section_id | json }};
+  const PRODUCT_FORM_ID = {{ product_form_id | json }};
+
   // ---- Helpers ----
   const shopMoneyFormat = {{ shop.money_format | json }};
+
+  function getMainAtcPriceEl() {
+    const btn = document.getElementById('ProductSubmitButton-' + SECTION_ID);
+    return btn?.querySelector('.main-atc-price')
+      || document.getElementById('main-atc-price-' + SECTION_ID);
+  }
+
+  /** Active QB row — Liquid sets data-final-price per market (authoritative). */
+  function readActiveQBFromDOM() {
+    const btn = document.getElementById('ProductSubmitButton-' + SECTION_ID);
+    const scope = btn?.closest('.shopify-section') || document;
+    const active = scope.querySelector('.qb-wrapper .qb-option.qb-active');
+    if (!active) return null;
+    const total = parseInt(active.dataset.finalPrice, 10);
+    if (!total || total <= 0) return null;
+    return {
+      total,
+      compare: parseInt(active.dataset.finalCompare, 10) || 0,
+      qty: parseInt(active.dataset.qty, 10) || 1
+    };
+  }
+
+  function syncQBStateFromDOM() {
+    if (currentState.rapiActive) return false;
+    const qb = readActiveQBFromDOM();
+    if (!qb) return false;
+    currentState.qbQuantity = qb.qty;
+    currentState.qbFixedTotalPrice = qb.total;
+    currentState.qbFixedComparePrice = qb.compare > 0 ? qb.compare : 0;
+    return true;
+  }
+
+  /** Rapi Bundles app — market-aware pricing via rapiBundleOfferPricing */
+  function getRapiDisplayPrice(detail) {
+    if (!detail || detail.selectedTab === -1 || !detail.oneTime) return null;
+    if (currentState.subscriptionActive && currentState.sellingPlanId && detail.plans) {
+      const plan = detail.plans[String(currentState.sellingPlanId)];
+      if (plan?.formatted) return plan.formatted;
+    }
+    return detail.oneTime.formatted || null;
+  }
+
+  function applyRapiPricing(detail) {
+    const formatted = getRapiDisplayPrice(detail);
+    if (!formatted) {
+      currentState.rapiActive = false;
+      currentState.rapiAtcFormatted = '';
+      currentState.rapiCompareFormatted = '';
+      updateAllPrices();
+      return;
+    }
+    currentState.rapiActive = true;
+    currentState.qbDiscount = 0;
+    currentState.qbQuantity = detail.quantity || 1;
+    currentState.rapiAtcFormatted = formatted;
+    currentState.rapiCompareFormatted = detail.compareAt?.formatted || '';
+    if (detail.oneTime.amount != null) {
+      const raw = Number(detail.oneTime.amount);
+      // Rapi amounts are major currency units (e.g. 389 kr), theme uses cents
+      currentState.qbFixedTotalPrice = raw >= 10000 ? Math.round(raw) : Math.round(raw * 100);
+    }
+    updateAllPrices();
+  }
+
+  /**
+   * Rapi always sets window.rapi_offerPrice (major units, e.g. 549) and fires
+   * offerPriceChanged. __rapiBundleOfferPricing only exists when the subscriptions embed is present.
+   */
+  function applyRapiOfferPrice(price, selectedTab) {
+    const tab = selectedTab == null ? window.rapi_selectedOffer : selectedTab;
+    if (tab === -1 || tab == null) {
+      currentState.rapiActive = false;
+      currentState.rapiAtcFormatted = '';
+      currentState.rapiCompareFormatted = '';
+      currentState.qbFixedTotalPrice = 0;
+      updateAllPrices();
+      return;
+    }
+    const amount = Number(price);
+    if (!Number.isFinite(amount) || amount <= 0) return;
+    const cents = Math.round(amount * 100);
+    currentState.rapiActive = true;
+    currentState.qbDiscount = 0;
+    currentState.qbFixedTotalPrice = cents;
+    currentState.qbFixedComparePrice = 0;
+    currentState.rapiAtcFormatted = formatMoney(cents);
+    currentState.rapiCompareFormatted = '';
+    updateAllPrices();
+  }
+
+  function hasRapiBundleBlock() {
+    return !!document.querySelector('[data-rapi-id="rapi_section_block"]');
+  }
+
+  function rapiSelectionReady() {
+    if (window.__rapiBundleOfferPricing && window.__rapiBundleOfferPricing.oneTime) return true;
+    return window.rapi_offerPrice != null
+      && window.rapi_selectedOffer != null
+      && window.rapi_selectedOffer !== -1;
+  }
+
+  /** Rappi-front.js loads async at page bottom — poll until pricing is available */
+  function startRapiPricingWatch() {
+    if (!hasRapiBundleBlock()) return;
+    var attempts = 0;
+    var timer = setInterval(function() {
+      attempts++;
+      if (rapiSelectionReady()) {
+        refreshPrices();
+        clearInterval(timer);
+      } else if (attempts >= 120) {
+        clearInterval(timer);
+      }
+    }, 100);
+  }
+
+  function refreshPrices() {
+    if (window.__rapiBundleOfferPricing && window.__rapiBundleOfferPricing.oneTime) {
+      applyRapiPricing(window.__rapiBundleOfferPricing);
+    } else if (window.rapi_offerPrice != null && window.rapi_selectedOffer !== -1 && window.rapi_selectedOffer != null) {
+      applyRapiOfferPrice(window.rapi_offerPrice, window.rapi_selectedOffer);
+    } else {
+      updateAllPrices();
+    }
+  }
 
   function formatMoney(cents) {
     // Round to nearest whole currency unit (401 kr, not 400,68 kr)
@@ -525,6 +664,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ---- Price Calculation ----
   function calculatePrice() {
+    if (!currentState.rapiActive) syncQBStateFromDOM();
+
+    // QB fixed total from Liquid/data-final-price (market-correct bundle totals)
+    if (currentState.qbFixedTotalPrice > 0) {
+      const totalPrice = currentState.qbFixedTotalPrice;
+      const totalComparePrice = currentState.qbFixedComparePrice > 0 ? currentState.qbFixedComparePrice : 0;
+      let finalPrice = totalPrice;
+      if (currentState.subscriptionActive && currentState.sellingPlanId) {
+        finalPrice = getDiscountedPrice(totalPrice, currentState.sellingPlanId);
+      } else if (currentState.subscriptionActive && currentState.subscriptionDiscount > 0) {
+        finalPrice = Math.round(totalPrice * (100 - currentState.subscriptionDiscount) / 100);
+      }
+      return {
+        finalPrice,
+        totalPrice,
+        totalComparePrice,
+        comparePrice: totalComparePrice > finalPrice ? totalComparePrice : (totalPrice > finalPrice ? totalPrice : 0),
+      };
+    }
+
     // Bundle mode: use bundle prices directly
     if (currentState.bundleActive && currentState.bundlePrice > 0) {
       const qty = currentState.qbQuantity;
@@ -613,16 +772,22 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.price__compare-price').forEach(el => { el.style.display = 'none'; });
     }
 
-    // 3. ATC button price
-    const mainAtcPrice = document.getElementById('main-atc-price-{{ section.id }}');
-    if (mainAtcPrice) mainAtcPrice.textContent = currentState.subscriptionActive ? formattedFinal : formattedOneTime;
+    // 3. ATC button price (Rapi Bundles uses pre-formatted market prices)
+    const atcDisplay = currentState.rapiActive && currentState.rapiAtcFormatted
+      ? currentState.rapiAtcFormatted
+      : (currentState.subscriptionActive ? formattedFinal : formattedOneTime);
+    const mainAtcPrice = getMainAtcPriceEl();
+    if (mainAtcPrice) mainAtcPrice.textContent = atcDisplay;
 
-    const stickyAtcPrice = document.getElementById('sticky-atc-price-{{ section.id }}');
-    if (stickyAtcPrice) stickyAtcPrice.textContent = currentState.subscriptionActive ? formattedFinal : formattedOneTime;
+    const stickyAtcPrice = document.getElementById('sticky-atc-price-' + SECTION_ID);
+    if (stickyAtcPrice) stickyAtcPrice.textContent = atcDisplay;
 
     // 4. ATC compare price
     document.querySelectorAll('.main-atc-compare-price').forEach(el => {
-      if (formattedCompare && prices.comparePrice > prices.finalPrice) {
+      if (currentState.rapiActive && currentState.rapiCompareFormatted) {
+        el.textContent = currentState.rapiCompareFormatted;
+        el.style.display = '';
+      } else if (formattedCompare && prices.comparePrice > prices.finalPrice) {
         el.textContent = formattedCompare;
         el.style.display = '';
       } else {
@@ -718,13 +883,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
       currentState.qbQuantity = quantity;
       currentState.qbDiscount = discount;
+
+      const fixedTotal = parseInt(qbActive.dataset.finalPrice, 10);
+      const fixedCompare = parseInt(qbActive.dataset.finalCompare, 10);
+      if (fixedTotal > 0) {
+        currentState.qbFixedTotalPrice = fixedTotal;
+        currentState.qbFixedComparePrice = fixedCompare > 0 ? fixedCompare : 0;
+      }
     }
   }
 
   // ---- Event Listeners ----
   document.addEventListener('qb:state-changed', function(e) {
-    if (e.detail.quantity) currentState.qbQuantity = e.detail.quantity;
+    if (e.detail.quantity !== undefined) currentState.qbQuantity = e.detail.quantity;
     if (e.detail.qbDiscount !== undefined) currentState.qbDiscount = e.detail.qbDiscount;
+
+    const fixedTotal = e.detail.basePrice ?? e.detail.finalPrice;
+    const fixedCompare = e.detail.baseComparePrice ?? e.detail.comparePrice;
+    if (fixedTotal !== undefined && fixedTotal > 0) {
+      currentState.qbFixedTotalPrice = fixedTotal;
+      currentState.qbFixedComparePrice = fixedCompare > 0 ? fixedCompare : 0;
+    } else {
+      syncQBStateFromDOM();
+    }
+
     // QB selection clears bundle mode
     currentState.bundleActive = false;
     currentState.bundlePrice = 0;
@@ -746,7 +928,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.detail.subscriptionActive !== undefined) currentState.subscriptionActive = e.detail.subscriptionActive;
     if (e.detail.subscriptionDiscount !== undefined) currentState.subscriptionDiscount = e.detail.subscriptionDiscount;
     if (e.detail.sellingPlanId !== undefined) currentState.sellingPlanId = e.detail.sellingPlanId;
-    updateAllPrices();
+    refreshPrices();
   });
 
   // Variant change via custom events (works immediately)
@@ -764,6 +946,35 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   document.addEventListener('variant-change', handleVariantEvent);
   document.addEventListener('variant:change', handleVariantEvent);
+
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.qb-option')) {
+      requestAnimationFrame(function() {
+        syncQBStateFromDOM();
+        updateAllPrices();
+      });
+    }
+    if (e.target.closest('[data-rapi-id], [class*="rapi-bundle"]')) {
+      setTimeout(refreshPrices, 50);
+      setTimeout(refreshPrices, 250);
+    }
+  }, true);
+
+  window.addEventListener('rapiBundleOfferPricing', function(e) {
+    applyRapiPricing(e.detail);
+  });
+
+  window.addEventListener('offerPriceChanged', function(e) {
+    if (window.__rapiBundleOfferPricing && window.__rapiBundleOfferPricing.oneTime) {
+      applyRapiPricing(window.__rapiBundleOfferPricing);
+      return;
+    }
+    applyRapiOfferPrice(e.detail && e.detail.price, e.detail && e.detail.selectedTab);
+  });
+
+  window.addEventListener('rapiSubsSelectionChanged', function() {
+    refreshPrices();
+  });
 
   // Variant change via MutationObserver (deferred until form exists)
   function setupVariantObserver() {
@@ -811,20 +1022,40 @@ document.addEventListener('DOMContentLoaded', function() {
     initVariant();
     initSubscription();
     initQB();
-    updateAllPrices();
+    refreshPrices();
+    startRapiPricingWatch();
 
     // Watch price container for innerHTML replacements from theme's renderProductInfo
     // (async section re-render overwrites PriceManager prices with raw server HTML)
-    var priceContainer = document.getElementById('price-{{ section.id }}');
+    var priceContainer = document.getElementById('price-' + SECTION_ID);
     if (priceContainer) {
       var priceObserver = new MutationObserver(function() {
-        // Only re-apply if QB or subscription is active (otherwise server prices are correct)
-        if (currentState.qbDiscount > 0 || currentState.subscriptionActive || currentState.bundleActive) {
-          // Defer to ensure renderProductInfo has finished all its DOM updates
-          requestAnimationFrame(function() { updateAllPrices(); });
+        if (currentState.rapiActive || readActiveQBFromDOM() || currentState.subscriptionActive || currentState.bundleActive) {
+          requestAnimationFrame(refreshPrices);
         }
       });
       priceObserver.observe(priceContainer, { childList: true, subtree: true });
+    }
+
+    var atcPriceEl = getMainAtcPriceEl();
+    if (atcPriceEl) {
+      var atcPriceTimer;
+      new MutationObserver(function() {
+        clearTimeout(atcPriceTimer);
+        atcPriceTimer = setTimeout(function() {
+          if (rapiSelectionReady()) {
+            refreshPrices();
+            return;
+          }
+          var qb = readActiveQBFromDOM();
+          if (!qb) return;
+          var expected = formatMoney(qb.total);
+          if (atcPriceEl.textContent.trim() !== expected.trim()) {
+            syncQBStateFromDOM();
+            updateAllPrices();
+          }
+        }, 30);
+      }).observe(atcPriceEl, { characterData: true, childList: true, subtree: true });
     }
   }
   requestAnimationFrame(deferredInit);
@@ -834,7 +1065,7 @@ document.addEventListener('DOMContentLoaded', function() {
     ensureVariant: ensureVariant,
     getState: () => ({...currentState}),
     formatMoney: formatMoney,
-    refresh: updateAllPrices
+    refresh: refreshPrices
   };
 
 })();
@@ -952,7 +1183,7 @@ document.addEventListener('DOMContentLoaded', function() {
                       <span class="main-atc-compare-price">{{ rounded_compare_price | money_without_trailing_zeros }}</span>
                     {% endif %}
                     {% assign rounded_atc_price = product.selected_or_first_available_variant.price | plus: 50 | divided_by: 100 | times: 100 %}
-                    <span id="main-atc-price-{{ section.id }}" class='main-atc-price'>{{ rounded_atc_price | money_without_trailing_zeros }}</span>
+                    <span id="main-atc-price-{{ section_id }}" class='main-atc-price'>{{ rounded_atc_price | money_without_trailing_zeros }}</span>
                   </span>
                 {% endif %}
               </span>
