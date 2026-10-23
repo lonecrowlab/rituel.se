@@ -9,7 +9,7 @@
  */
 {
   "current": {
-    "disable_inspect": false,
+    "disable_inspect": true,
     "country_list_function": "block",
     "country_list": "",
     "logo": "shopify://shop_images/2.png",
