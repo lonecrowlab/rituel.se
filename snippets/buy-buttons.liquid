@@ -556,8 +556,41 @@ document.addEventListener('DOMContentLoaded', function() {
     updateAllPrices();
   }
 
+  /**
+   * Rapi always sets window.rapi_offerPrice (major units, e.g. 549) and fires
+   * offerPriceChanged. __rapiBundleOfferPricing only exists when the subscriptions embed is present.
+   */
+  function applyRapiOfferPrice(price, selectedTab) {
+    const tab = selectedTab == null ? window.rapi_selectedOffer : selectedTab;
+    if (tab === -1 || tab == null) {
+      currentState.rapiActive = false;
+      currentState.rapiAtcFormatted = '';
+      currentState.rapiCompareFormatted = '';
+      currentState.qbFixedTotalPrice = 0;
+      updateAllPrices();
+      return;
+    }
+    const amount = Number(price);
+    if (!Number.isFinite(amount) || amount <= 0) return;
+    const cents = Math.round(amount * 100);
+    currentState.rapiActive = true;
+    currentState.qbDiscount = 0;
+    currentState.qbFixedTotalPrice = cents;
+    currentState.qbFixedComparePrice = 0;
+    currentState.rapiAtcFormatted = formatMoney(cents);
+    currentState.rapiCompareFormatted = '';
+    updateAllPrices();
+  }
+
   function hasRapiBundleBlock() {
     return !!document.querySelector('[data-rapi-id="rapi_section_block"]');
+  }
+
+  function rapiSelectionReady() {
+    if (window.__rapiBundleOfferPricing && window.__rapiBundleOfferPricing.oneTime) return true;
+    return window.rapi_offerPrice != null
+      && window.rapi_selectedOffer != null
+      && window.rapi_selectedOffer !== -1;
   }
 
   /** Rappi-front.js loads async at page bottom — poll until pricing is available */
@@ -566,8 +599,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var attempts = 0;
     var timer = setInterval(function() {
       attempts++;
-      if (window.__rapiBundleOfferPricing) {
-        applyRapiPricing(window.__rapiBundleOfferPricing);
+      if (rapiSelectionReady()) {
+        refreshPrices();
         clearInterval(timer);
       } else if (attempts >= 120) {
         clearInterval(timer);
@@ -576,8 +609,10 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function refreshPrices() {
-    if (window.__rapiBundleOfferPricing) {
+    if (window.__rapiBundleOfferPricing && window.__rapiBundleOfferPricing.oneTime) {
       applyRapiPricing(window.__rapiBundleOfferPricing);
+    } else if (window.rapi_offerPrice != null && window.rapi_selectedOffer !== -1 && window.rapi_selectedOffer != null) {
+      applyRapiOfferPrice(window.rapi_offerPrice, window.rapi_selectedOffer);
     } else {
       updateAllPrices();
     }
@@ -919,12 +954,9 @@ document.addEventListener('DOMContentLoaded', function() {
         updateAllPrices();
       });
     }
-    if (e.target.closest('[class*="rapi-bundles"]')) {
-      requestAnimationFrame(function() {
-        if (window.__rapiBundleOfferPricing) {
-          applyRapiPricing(window.__rapiBundleOfferPricing);
-        }
-      });
+    if (e.target.closest('[data-rapi-id], [class*="rapi-bundle"]')) {
+      setTimeout(refreshPrices, 50);
+      setTimeout(refreshPrices, 250);
     }
   }, true);
 
@@ -932,10 +964,16 @@ document.addEventListener('DOMContentLoaded', function() {
     applyRapiPricing(e.detail);
   });
 
-  window.addEventListener('rapiSubsSelectionChanged', function() {
-    if (window.__rapiBundleOfferPricing) {
+  window.addEventListener('offerPriceChanged', function(e) {
+    if (window.__rapiBundleOfferPricing && window.__rapiBundleOfferPricing.oneTime) {
       applyRapiPricing(window.__rapiBundleOfferPricing);
+      return;
     }
+    applyRapiOfferPrice(e.detail && e.detail.price, e.detail && e.detail.selectedTab);
+  });
+
+  window.addEventListener('rapiSubsSelectionChanged', function() {
+    refreshPrices();
   });
 
   // Variant change via MutationObserver (deferred until form exists)
@@ -993,13 +1031,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (priceContainer) {
       var priceObserver = new MutationObserver(function() {
         if (currentState.rapiActive || readActiveQBFromDOM() || currentState.subscriptionActive || currentState.bundleActive) {
-          requestAnimationFrame(function() {
-            if (window.__rapiBundleOfferPricing) {
-              applyRapiPricing(window.__rapiBundleOfferPricing);
-            } else {
-              updateAllPrices();
-            }
-          });
+          requestAnimationFrame(refreshPrices);
         }
       });
       priceObserver.observe(priceContainer, { childList: true, subtree: true });
@@ -1011,8 +1043,8 @@ document.addEventListener('DOMContentLoaded', function() {
       new MutationObserver(function() {
         clearTimeout(atcPriceTimer);
         atcPriceTimer = setTimeout(function() {
-          if (window.__rapiBundleOfferPricing) {
-            applyRapiPricing(window.__rapiBundleOfferPricing);
+          if (rapiSelectionReady()) {
+            refreshPrices();
             return;
           }
           var qb = readActiveQBFromDOM();
