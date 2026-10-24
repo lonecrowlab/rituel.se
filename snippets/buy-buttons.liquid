@@ -492,6 +492,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ---- Helpers ----
   const shopMoneyFormat = {{ shop.money_format | json }};
+  const activeCurrency = {{ cart.currency.iso_code | json }};
+  const countryCode = {{ localization.country.iso_code | json }};
 
   function getMainAtcPriceEl() {
     const btn = document.getElementById('ProductSubmitButton-' + SECTION_ID);
@@ -621,8 +623,21 @@ document.addEventListener('DOMContentLoaded', function() {
   function formatMoney(cents) {
     // Round to nearest whole currency unit (401 kr, not 400,68 kr)
     const roundedCents = Math.round(Number(cents) / 100) * 100;
+    const whole = Math.round(roundedCents / 100);
+    const nordic = activeCurrency === 'NOK' || activeCurrency === 'SEK' || activeCurrency === 'DKK'
+      || countryCode === 'NO' || countryCode === 'SE' || countryCode === 'DK';
+
+    // Norway (and the other kr markets) must show "kr", never the shop code SEK.
+    // shop.currency is always SEK, so Intl currency formatting prints "SEK" on the Norway market.
+    if (nordic) {
+      const useDotThousands = /amount_with_comma_separator|amount_no_decimals_with_comma_separator/.test(shopMoneyFormat);
+      const grouped = String(whole).replace(/\B(?=(\d{3})+(?!\d))/g, useDotThousands ? '.' : ' ');
+      return grouped + ' kr';
+    }
+
     const noDecimalsFormat = shopMoneyFormat
       .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g, '{{amount_no_decimals_with_comma_separator}}')
+      .replace(/\{\{\s*amount_with_space_separator\s*\}\}/g, '{{amount_no_decimals_with_space_separator}}')
       .replace(/\{\{\s*amount\s*\}\}/g, '{{amount_no_decimals}}');
 
     let formatted;
@@ -631,12 +646,12 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
       formatted = new Intl.NumberFormat('{{ shop.locale }}', {
         style: 'currency',
-        currency: '{{ shop.currency }}',
+        currency: activeCurrency || '{{ shop.currency }}',
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
-      }).format(roundedCents / 100);
+      }).format(whole);
     }
-    return formatted;
+    return String(formatted).replace(/\b(SEK|NOK|DKK)\b/g, 'kr').replace(/kr\s+kr/g, 'kr');
   }
 
   function getDiscountedPrice(basePrice, sellingPlanId) {
