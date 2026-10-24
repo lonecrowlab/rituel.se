@@ -489,7 +489,13 @@
       },
       "contact": {
         "optional_phone_label": "Mobilnummer (valfritt) få leveransbesked via sms",
-        "phone_tooltip": "Få ett sms när ditt paket är på väg och när det har levererats. Ingen reklam."
+        "phone_tooltip": "Få ett sms när ditt paket är på väg och när det har levererats. Ingen reklam.",
+        "address2_label": "Ange husnummer, lägenhet, svit",
+        "optional_address2_label": "Ange husnummer, lägenhet, svit"
+      },
+      "field_errors": {
+        "address_address2_blank": "Ange husnummer, lägenhet, svit",
+        "address_line2_blank": "Ange husnummer, lägenhet, svit"
       }
     }
   }
