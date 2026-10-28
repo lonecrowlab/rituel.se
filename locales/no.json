@@ -421,7 +421,7 @@
         "new_address_label": "Bruk en ny adresse",
         "optional_first_name_label": "Fornavn (valgfritt)",
         "optional_company_label": "Bedrift (valgfritt)",
-        "optional_address2_label": "Leilighet, suite osv. (valgfritt)",
+        "optional_address2_label": "Oppgi husnummer, leilighet osv.",
         "province_label": "Lenke",
         "province_placeholder": "Lenke",
         "state_label": "By",
