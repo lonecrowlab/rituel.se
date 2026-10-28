@@ -301,7 +301,7 @@
         "load_model": "Laster 3D-modellen {{ index }} i gallerivisning",
         "load_video": "Spill av videoen {{ index }} i gallerivisning",
         "image_available": "Bild {{ index }} er nå tilgjengelig i gallerivisning",
-        "see_it_in_action": "Se den i aksjon",
+        "see_it_in_action": "Se den i bruk",
         "see_before_after": "Se våre kunderesultater"
       },
       "view_full_details": "Vis alle oppgaver",
@@ -347,7 +347,7 @@
     "checkout": {
       "alternative_payment_method_banner": {
         "express_checkout": "Betal på 30 sekunder. Ingen adresse å fylle ut.",
-        "or": "Mindre enn 0,5 % bruker vår fornøydgaranti",
+        "or": "Norsk kundeservice svarer innen 24 timer",
         "show_more_options": "Vis flere alternativer",
         "hide_more_options": "Skjul flere alternativer",
         "or_pay_another_way": "Eller betal på en annen måte",
