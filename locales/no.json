@@ -346,7 +346,7 @@
   "shopify": {
     "checkout": {
       "alternative_payment_method_banner": {
-        "express_checkout": "Ekspresskasse",
+        "express_checkout": "Betal på 30 sekunder. Ingen adresse å fylle ut.",
         "or": "Mindre enn 0,5 % bruker vår fornøydgaranti",
         "show_more_options": "Vis flere alternativer",
         "hide_more_options": "Skjul flere alternativer",
