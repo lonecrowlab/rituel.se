@@ -433,7 +433,7 @@
         "state_and_territory_label": "Stat/territorium",
         "state_and_territory_placeholder": "Stat/territorium",
         "phone_label": "Telefon",
-        "optional_phone_label": "Telefon (valgfritt)",
+        "optional_phone_label": "Telefon (valgfritt) få leveringsvarsel på sms",
         "phone_placeholder": "Telefon",
         "phone_tooltip": "Hvis vi trenger å kontakte deg angående bestillingen din",
         "zip_code_label": "Postnummer",
