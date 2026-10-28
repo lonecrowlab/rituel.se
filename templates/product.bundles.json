@@ -322,8 +322,15 @@
             "product": "pdrn-collagen-volume-balm"
           }
         },
+        "custom_liquid_FBKQNM": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{%- comment -%}\n  STOCK PROGRESS BAR — truthful, driven by real inventory.\n\n  Setup:\n  1. Create a product metafield:\n       Namespace & key:  custom.batch_size\n       Type:             Integer\n       Value:            the starting quantity of this batch, e.g. 1500\n  2. Make sure inventory tracking is ON for the product's variants.\n  3. Include where you want it:\n       {% render 'stock-bar', product: product %}\n\n  It hides itself when batch_size is missing, when inventory is not tracked,\n  or when fewer than `min_percent` are sold, so it only appears when it is\n  actually saying something.\n{%- endcomment -%}\n\n{%- liquid\n  assign min_percent = 55\n  assign batch = product.metafields.custom.batch_size.value | plus: 0\n\n  assign left = 0\n  assign tracked = false\n  for v in product.variants\n    if v.inventory_management != blank\n      assign tracked = true\n      if v.inventory_quantity > 0\n        assign left = left | plus: v.inventory_quantity\n      endif\n    endif\n  endfor\n\n  assign show = false\n  assign percent = 0\n  if batch > 0 and tracked\n    assign sold = batch | minus: left\n    if sold > 0\n      assign percent = sold | times: 100 | divided_by: batch\n      if percent > 99\n        assign percent = 99\n      endif\n      if percent >= min_percent\n        assign show = true\n      endif\n    endif\n  endif\n-%}\n\n{%- if show -%}\n<div class=\"rt-stock\" role=\"group\" aria-label=\"Lagerstatus\">\n  <p class=\"rt-stock__title\">Snart slut i lager</p>\n  <p class=\"rt-stock__sub\">Begränsat antal kvar av den här satsen.</p>\n\n  <div class=\"rt-stock__track\" role=\"progressbar\"\n       aria-valuenow=\"{{ percent }}\" aria-valuemin=\"0\" aria-valuemax=\"100\"\n       aria-label=\"{{ percent }} procent sålt\">\n    <span class=\"rt-stock__fill\" style=\"width: {{ percent }}%;\"></span>\n  </div>\n\n  <p class=\"rt-stock__label\">{{ percent }} % sålt</p>\n</div>\n\n<style>\n  .rt-stock {\n    --rt-fill: #A8426F;\n    --rt-track: #F1E7EB;\n    --rt-ink: #1A1614;\n    --rt-muted: #6B625B;\n    margin: 20px 0;\n    font-family: inherit;\n  }\n\n  .rt-stock__title {\n    margin: 0 0 2px;\n    font-size: 15px;\n    font-weight: 700;\n    line-height: 1.3;\n    color: var(--rt-ink);\n  }\n\n  .rt-stock__sub {\n    margin: 0 0 10px;\n    font-size: 14px;\n    line-height: 1.45;\n    color: var(--rt-muted);\n  }\n\n  .rt-stock__track {\n    position: relative;\n    height: 8px;\n    border-radius: 99px;\n    background: var(--rt-track);\n    overflow: hidden;\n  }\n\n  .rt-stock__fill {\n    display: block;\n    height: 100%;\n    border-radius: 99px;\n    background: var(--rt-fill);\n    transform-origin: left center;\n    animation: rt-stock-grow 900ms cubic-bezier(.2,.7,.3,1) both;\n  }\n\n  @keyframes rt-stock-grow {\n    from { transform: scaleX(0); }\n    to   { transform: scaleX(1); }\n  }\n\n  @media (prefers-reduced-motion: reduce) {\n    .rt-stock__fill { animation: none; }\n  }\n\n  .rt-stock__label {\n    margin: 8px 0 0;\n    font-size: 14px;\n    font-weight: 600;\n    line-height: 1.3;\n    color: var(--rt-fill);\n  }\n</style>\n{%- endif -%}"
+          }
+        },
         "pulsing_scarcity_AjEjV3": {
           "type": "pulsing_scarcity",
+          "disabled": true,
           "settings": {
             "stock_min": 5,
             "stock_max": 12,
@@ -802,6 +809,7 @@
         "product_icon_features_3ynhWz",
         "text_with_side_icon_J8Vb7P",
         "rapi_rapi_bundle_KmgXWT",
+        "custom_liquid_FBKQNM",
         "pulsing_scarcity_AjEjV3",
         "buy_buttons",
         "product_flag_qn3MLq",
