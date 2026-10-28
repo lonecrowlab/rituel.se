@@ -1870,7 +1870,7 @@
         "card_number_label": "Kortnummer",
         "card_number_placeholder": "Kortnummer",
         "card_pay_with": "Betal med:",
-        "card_security_notice": "Alle transaksjoner er sikre og krypterte.",
+        "card_security_notice": "Vil du betale med Vipps? Velg Klarna lenger ned. Vipps finnes som alternativ der.",
         "card_expiry_label": "Utløpsdato (MM/ÅÅ)",
         "card_expiry_placeholder": "Utløpsdato (MM/ÅÅ)",
         "card_verification_value_label": "Sikkerhetskode",
