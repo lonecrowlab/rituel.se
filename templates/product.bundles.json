@@ -427,7 +427,7 @@
           "type": "custom_liquid",
           "name": "Payment Methods",
           "settings": {
-            "custom_liquid": "<div class=\"payment-icons\" style=\"margin-left:auto;margin-right:auto;text-align:center;\">\n  {{ 'klarna' | payment_type_svg_tag }}\n  {{ 'swish' | payment_type_svg_tag }}\n  {{ 'apple_pay' | payment_type_svg_tag }}\n  {{ 'visa' | payment_type_svg_tag }}\n  {{ 'master' | payment_type_svg_tag }}\n  {{ 'american_express' | payment_type_svg_tag }}\n  {{ 'shopify_pay' | payment_type_svg_tag }}\n</div>"
+            "custom_liquid": "<div class=\"payment-icons\">\n  {{ 'klarna' | payment_type_svg_tag }}\n  {{ 'swish' | payment_type_svg_tag }}\n  {{ 'apple_pay' | payment_type_svg_tag }}\n  {{ 'visa' | payment_type_svg_tag }}\n  {{ 'master' | payment_type_svg_tag }}\n  {{ 'american_express' | payment_type_svg_tag }}\n  {{ 'shopify_pay' | payment_type_svg_tag }}\n</div>\n\n<style>\n  .payment-icons {\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n    align-items: center;\n    gap: 8px;\n    margin: 14px auto;\n  }\n  .payment-icons svg {\n    height: 23px !important;\n    width: 39px !important;\n    display: block;\n  }\n</style>"
           }
         },
         "icon_text_card_TptYYk": {
