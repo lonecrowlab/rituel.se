@@ -276,7 +276,7 @@
         "from_price_html": "Fra {{ price }}",
         "regular_price": "Ordinær pris",
         "sale_price": "Salgspris",
-        "unit_price": "Unitpris"
+        "unit_price": "Enhetspris"
       },
       "share": "Del denne produktet",
       "sold_out": "Utsolgt",
@@ -304,7 +304,7 @@
         "see_it_in_action": "Se den i bruk",
         "see_before_after": "Se før & etter"
       },
-      "view_full_details": "Vis alle oppgaver",
+      "view_full_details": "Vis alle detaljer",
       "include_taxes": "Skatt er inkludert.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Frakt</a> beregnes i kassen.",
       "choose_options": "Velg alternativ",
