@@ -2716,7 +2716,7 @@
         }
       },
       "shipping": {
-        "free_rate_label": "Free",
+        "free_rate_label": "Gratis",
         "cheapest_rate_label": "Billigste",
         "estimated_delivery_date": {
           "one": "%{count} arbeidsdag",
