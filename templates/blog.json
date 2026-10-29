@@ -27,9 +27,9 @@
         "use_theme_colors": true,
         "padding_top_desktop": 68,
         "padding_bottom_desktop": 52,
-        "heading_before": "Join Our",
-        "highlighted_text": "Newsletter",
-        "subheading": "Join our email list for exclusive offers and the latest news."
+        "heading_before": "Prenumerera på",
+        "highlighted_text": "nyhetsbrevet",
+        "subheading": "Få exklusiva erbjudanden och de senaste nyheterna direkt i din mejl."
       }
     }
   },
