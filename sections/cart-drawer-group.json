@@ -437,7 +437,7 @@
           "type": "payment_badges",
           "settings": {
             "enabled_payment_types": "apple_pay, master, american_express, swish, klarna, visa, shopify_pay",
-            "badge_height": 20,
+            "badge_height": 24,
             "badge_gap": 2,
             "margin_top": 0,
             "margin_bottom": 6
