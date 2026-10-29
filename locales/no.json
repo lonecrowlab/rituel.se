@@ -1142,7 +1142,8 @@
         "qr_code": "QR-kode",
         "loading": "Laster ...",
         "remove_chip": "Remove item",
-        "finalize_order_accessibility_label": "Fullfør bestillingen"
+        "finalize_order_accessibility_label": "Fullfør bestillingen",
+        "display_name": "{{firstName}} {{lastName}}"
       },
       "local_pickup": {
         "cancel": "Avbryt",
