@@ -1719,7 +1719,7 @@
         "remove_discount_label": "Fjern rabatt",
         "shipping_information_does_not_meet_discount_requirements_notice": "<strong style=\"text-transform:uppercase\">%{code}</strong> rabattkoden er ikke tilgjengelig for leveringsadressen din",
         "subtotal_label": "Delsum",
-        "shipping_label": "Shipping",
+        "shipping_label": "Frakt",
         "tip_label": "Tips",
         "shipping_default_value": "Beregnes ved neste steg",
         "shipping_pending_message": "Ikke tilgjengelig ennå",
