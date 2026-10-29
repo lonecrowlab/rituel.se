@@ -3039,7 +3039,7 @@
         "reduced_label": "Pris redusert",
         "reduced_with_quantity_label": "Kun %{quantity_available} igjen.",
         "remove_from_cart_button_label": "Fjern fra handlekurven",
-        "remove": "Remove",
+        "remove": "Fjern",
         "quantity_update": {
           "page_title": "Oppdatering av kvantitet",
           "title": "Oppdatering av kvantitet",
