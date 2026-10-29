@@ -15,13 +15,7 @@
   "sections": {
     "cart-drawer": {
       "settings": {},
-      "blocks": {
-        "payment_badges_LwJbRV": {
-          "settings": {
-            "enabled_payment_types": "visa, master, american_express, mobilepay, apple_pay, klarna, shopify_pay"
-          }
-        }
-      }
+      "blocks": {}
     }
   }
 }
