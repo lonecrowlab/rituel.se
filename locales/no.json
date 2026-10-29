@@ -528,7 +528,7 @@
         "unavailable_label": "Ikke tilgjengelig"
       },
       "delivery_options": {
-        "ship": "Shipping",
+        "ship": "Frakt",
         "pick_up": "Hent",
         "pick_up_in_two_hours": "Vanligvis klart innen 2 timer",
         "pick_up_in_four_hours": "Vanligvis klar innen 4 timer",
@@ -540,7 +540,7 @@
         "pick_up_in_five_or_more_days": "Vanligvis klart innen 5 dager eller mer",
         "pick_up_in_zero_to_two_hours": "Klar for henting om 2 timer",
         "pick_up_in_two_to_four_hours": "Klar for henting om 4 timer",
-        "free_total_label": "Free",
+        "free_total_label": "Gratis",
         "shipping_address": "Leveringsadresse",
         "pick_up_locations": "Hentested",
         "pickup_point_method_definition": "Lever til hentested",
