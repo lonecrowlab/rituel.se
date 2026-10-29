@@ -1750,7 +1750,7 @@
         "recurring_payments": "Gjentakende betalinger",
         "recurring_total_multiple_label": "Denne bestillingen har et tilbakevendende gebyr for flere artikler.",
         "updated_shipping_method": "Oppdatert leveringsmetode: %{shipping_method}",
-        "total_savings": "Totale besparelser",
+        "total_savings": "Du sparer",
         "return_restocking_fee_label": "Påfyllingsavgift",
         "return_shipping_fee_label": "Returfrakt",
         "shipping_discount_title": "Leveringsrabatt",
