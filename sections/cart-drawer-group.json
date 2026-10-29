@@ -433,14 +433,14 @@
             "margin_bottom": 6
           }
         },
-        "payment_badges_LwJbRV": {
+        "payment_badges_jhdqGR": {
           "type": "payment_badges",
           "settings": {
-            "enabled_payment_types": "visa, master, american_express, swish, apple_pay, klarna, shopify_pay",
-            "badge_height": 24,
+            "enabled_payment_types": "apple_pay, master, american_express, swish, klarna, visa, shopify_pay",
+            "badge_height": 20,
             "badge_gap": 2,
             "margin_top": 0,
-            "margin_bottom": 13
+            "margin_bottom": 6
           }
         }
       },
@@ -453,7 +453,7 @@
         "subtotals_nfrbq8",
         "0935e47c-9604-4faa-b47a-d61ca49c0c16",
         "guarantee_badge_Nb4tMY",
-        "payment_badges_LwJbRV"
+        "payment_badges_jhdqGR"
       ],
       "settings": {
         "test_mode": false,

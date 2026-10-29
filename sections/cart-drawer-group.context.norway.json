@@ -16,9 +16,9 @@
     "cart-drawer": {
       "settings": {},
       "blocks": {
-        "payment_badges_LwJbRV": {
+        "payment_badges_jhdqGR": {
           "settings": {
-            "enabled_payment_types": "visa, master, american_express, vipps, apple_pay, klarna, shopify_pay"
+            "enabled_payment_types": "apple_pay, master, american_express, vipps, klarna, visa, shopify_pay"
           }
         }
       }
