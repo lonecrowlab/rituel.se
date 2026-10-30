@@ -9,79 +9,6 @@
  */
 {
   "sections": {
-    "announcement_bar_HtixYK": {
-      "type": "announcement-bar",
-      "blocks": {
-        "announcement_jdfTMX": {
-          "type": "announcement",
-          "settings": {
-            "text": "<strong>60 dagars</strong> nöjdhetsgaranti",
-            "text_alignment": "center",
-            "icon_type": "google",
-            "icon": "",
-            "filled_icon": false,
-            "icon_svg": "",
-            "desktop_layout": "horizontal",
-            "mobile_layout": "horizontal",
-            "hidden_products": "",
-            "enable_specific_display": false,
-            "displayed_products": ""
-          }
-        },
-        "announcement_N8Dxam": {
-          "type": "announcement",
-          "settings": {
-            "text": "<strong>Fri</strong> <strong>frakt</strong> över 450 kr",
-            "text_alignment": "center",
-            "icon_type": "image",
-            "icon": "storefront",
-            "filled_icon": false,
-            "icon_svg": "",
-            "desktop_layout": "horizontal",
-            "mobile_layout": "horizontal",
-            "hidden_products": "",
-            "enable_specific_display": false,
-            "displayed_products": ""
-          }
-        }
-      },
-      "block_order": [
-        "announcement_jdfTMX",
-        "announcement_N8Dxam"
-      ],
-      "disabled": true,
-      "custom_css": [],
-      "name": "t:sections.announcement-bar.name",
-      "settings": {
-        "columns_desktop": 2,
-        "columns_mobile": 1,
-        "desktop_spacing": 28,
-        "mobile_spacing": 8,
-        "show_separator": false,
-        "background_color": "#b8576e",
-        "gradient_background": "",
-        "text_color": "#ffffff",
-        "mobile_text_size": 15,
-        "desktop_text_size": 14,
-        "mobile_icon_size": 15,
-        "desktop_icon_size": 21,
-        "icon_color": "#ffffff",
-        "enable_infinite_scroll": false,
-        "scroll_speed": 40,
-        "infinite_scroll_spacing_desktop": 40,
-        "infinite_scroll_spacing_mobile": 24,
-        "slider_mobile": true,
-        "slider_desktop": false,
-        "type": "slide",
-        "autoplay": false,
-        "autoplay_speed": 4.5,
-        "hidden_products": "munn-rynker",
-        "enable_specific_display": false,
-        "displayed_products": "",
-        "padding_top": 12,
-        "padding_bottom": 12
-      }
-    },
     "announcement_bar_9kbFt4": {
       "type": "announcement-bar",
       "blocks": {
@@ -3112,7 +3039,6 @@
     }
   },
   "order": [
-    "announcement_bar_HtixYK",
     "announcement_bar_9kbFt4",
     "main",
     "before_after_slider_v2_zcFKNc",
