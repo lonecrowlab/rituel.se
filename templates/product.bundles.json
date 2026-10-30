@@ -9,6 +9,62 @@
  */
 {
   "sections": {
+    "announcement_bar_9kbFt4": {
+      "type": "announcement-bar",
+      "blocks": {
+        "announcement_kfnVCK": {
+          "type": "announcement",
+          "settings": {
+            "text": "<strong>BLACK FRIDAY: KÖP 2, FÅ 1 GRATIS</strong>",
+            "text_alignment": "center",
+            "icon_type": "google",
+            "icon": "",
+            "filled_icon": false,
+            "icon_svg": "",
+            "desktop_layout": "horizontal",
+            "mobile_layout": "horizontal",
+            "hidden_products": "",
+            "enable_specific_display": false,
+            "displayed_products": ""
+          }
+        }
+      },
+      "block_order": [
+        "announcement_kfnVCK"
+      ],
+      "disabled": true,
+      "custom_css": [],
+      "name": "t:sections.announcement-bar.name",
+      "settings": {
+        "columns_desktop": 0,
+        "columns_mobile": 1,
+        "desktop_spacing": 28,
+        "mobile_spacing": 8,
+        "show_separator": false,
+        "background_color": "#000000",
+        "gradient_background": "",
+        "text_color": "#ffffff",
+        "mobile_text_size": 14,
+        "desktop_text_size": 15,
+        "mobile_icon_size": 15,
+        "desktop_icon_size": 21,
+        "icon_color": "#ffffff",
+        "enable_infinite_scroll": false,
+        "scroll_speed": 20,
+        "infinite_scroll_spacing_desktop": 40,
+        "infinite_scroll_spacing_mobile": 20,
+        "slider_mobile": true,
+        "slider_desktop": false,
+        "type": "loop",
+        "autoplay": false,
+        "autoplay_speed": 4.5,
+        "hidden_products": "munn-rynker",
+        "enable_specific_display": false,
+        "displayed_products": "",
+        "padding_top": 10,
+        "padding_bottom": 10
+      }
+    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -137,10 +193,10 @@
         "product_text_block_fgTzXK": {
           "type": "product_text_block",
           "settings": {
-            "text": "<p>Fylligare hy hemma, utan nålarna.</p>",
+            "text": "<p>Fylligare hy hemma, utan nålar.</p>",
             "highlight_text": "",
             "text_color": "#000000",
-            "font_size_desktop": 16,
+            "font_size_desktop": 18,
             "font_size_mobile": 17,
             "line_height_desktop": 1.6,
             "line_height_mobile": 1.5,
@@ -193,7 +249,7 @@
             "mobile_gap_vertical": 10,
             "icon_text_gap": 5,
             "margin_top": 5,
-            "margin_bottom": 15,
+            "margin_bottom": 25,
             "icon_1_image": "shopify://shop_images/608661d1-bb5f-4932-a46a-a686533c3f95-2_f063cdb5-4401-4adb-9d95-5ec30456d712.svg",
             "icon_1_name": "",
             "icon_1_svg": "",
@@ -316,6 +372,12 @@
             "padding_horizontal": 8
           }
         },
+        "custom_liquid_Rk9ryG": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<div class=\"rt-stock\" style=\"--sold: 89%\">\n  <div class=\"rt-stock__row\">\n    <span class=\"rt-stock__text\">Bara 210 kvar. Vi sålde 1 358 förra veckan.</span>\n    <span class=\"rt-stock__pct\">89 %</span>\n  </div>\n  <div class=\"rt-stock__track\"><span class=\"rt-stock__fill\"></span></div>\n</div>\n\n<style>\n  .rt-stock {\n    margin: 5px 0 15px;\n    padding: 0;\n    border: none;\n    background: none;\n    font-family: inherit;\n  }\n  .rt-stock__row {\n    display: flex;\n    align-items: baseline;\n    justify-content: space-between;\n    gap: 10px;\n    margin-bottom: 7px;\n  }\n  .rt-stock__text {\n    font-size: 14px;\n    font-weight: 600;\n    line-height: 1.3;\n    color: #1A1614;\n  }\n  .rt-stock__pct {\n    font-size: 14px;\n    font-weight: 600;\n    color: #B33A72;\n    white-space: nowrap;\n  }\n  .rt-stock__track {\n    height: 6px;\n    border-radius: 99px;\n    background: #F5E5EE;\n    overflow: hidden;\n  }\n  .rt-stock__fill {\n    display: block;\n    height: 100%;\n    width: var(--sold, 0%);\n    border-radius: 99px;\n    background: #B33A72;\n  }\n</style>"
+          }
+        },
         "rapi_rapi_bundle_KmgXWT": {
           "type": "shopify://apps/rapid-bundle/blocks/rapi-bundle/99617c17-a32b-4e70-a883-7a155610d032",
           "settings": {
@@ -324,6 +386,7 @@
         },
         "pulsing_scarcity_AjEjV3": {
           "type": "pulsing_scarcity",
+          "disabled": true,
           "settings": {
             "stock_min": 8,
             "stock_max": 12,
@@ -434,7 +497,7 @@
           "type": "icon_text_card",
           "settings": {
             "title": "60 dagars nöjdhetsgaranti",
-            "paragraph": "Testa utan risk. Ser du ingen skillnad får du pengarna tillbaka.",
+            "paragraph": "Testa utan risk. Ser du ingen skillnad, får du pengarna tillbaka.",
             "icon_type": "svg",
             "google_icon": "info",
             "icon_style": "outlined",
@@ -611,7 +674,7 @@
             "question_2": "Ingredienser",
             "answer_2": "<p><strong>PDRN (Salmon DNA)</strong><br/>Det koreanska premiumkliniker bygger sina behandlingar kring. Nu i badrummet istället för i receptionen.</p><p><strong>5 % Volufiline</strong><br/>Växtbaserat extrakt för fyllighet där hyn tappat sin form.</p><p><strong>Lågmolekylärt kollagen</strong><br/>Vanligt kollagen är för stort för att komma någonstans. Det här är mindre och går längre ner.</p><p><strong>Retinol</strong><br/>Den mest studerade ingrediensen som finns för slätare hy, i en halt som går att använda varje kväll.</p><p><strong>Hyaluronsyra</strong><br/>Torr hy gör linjer djupare än de faktiskt är. Det här är delen du märker först.</p><p><strong>Koffein</strong><br/>Piggare kring ögonen. Ofta det andra lägger märke till.</p>",
             "open_2": false,
-            "question_3": "Frakt, retur & 60 dagars garanti",
+            "question_3": "Frakt och retur",
             "answer_3": "<p><strong>Leverans</strong><br/>Vi skickar ditt paket inom 24 timmar. Just nu är trycket högt på grund av kampanjen, så själva transporten tar längre tid än vanligt. De flesta får sitt paket inom 7–9 arbetsdagar, som längst 12.<br/><br/>Spårningsnumret får du samma dag som vi skickar, så du ser var paketet är hela vägen.<br/><br/><strong>Frakt</strong><br/>✓ Fri frakt över 450 kr<br/>✓ Under 450 kr: 39 kr<br/>Skulle något hända med paketet på vägen skickar vi ett nytt.<br/><br/><strong>60 dagars nöjdhetsgaranti</strong><br/>Dina 60 dagar börjar den dag du får paketet, inte den dag du beställer. Inte nöjd? Mejla oss inom 60 dagar så får du pengarna tillbaka. Påbörjade stick behöver du inte skicka tillbaka. Oöppnade vill vi gärna ha i retur. Stick som är helt slut ersätter vi inte.</p>",
             "open_3": false,
             "question_4": "Vanliga frågor",
@@ -802,6 +865,7 @@
         "product_icon_features_ynyeRz",
         "product_icon_features_3ynhWz",
         "text_with_side_icon_J8Vb7P",
+        "custom_liquid_Rk9ryG",
         "rapi_rapi_bundle_KmgXWT",
         "pulsing_scarcity_AjEjV3",
         "buy_buttons",
@@ -911,7 +975,7 @@
         "image_icon_3_text_color": "#ffffff",
         "image_icon_3_border_color": "#000000",
         "image_icon_3_border_width": 0,
-        "mobile_padding_top": 8,
+        "mobile_padding_top": 12,
         "mobile_padding_bottom": 16,
         "desktop_padding_top": 36,
         "desktop_padding_bottom": 36
@@ -2974,6 +3038,7 @@
     }
   },
   "order": [
+    "announcement_bar_9kbFt4",
     "main",
     "before_after_slider_v2_zcFKNc",
     "customer_review_slider_8TMF8Q",

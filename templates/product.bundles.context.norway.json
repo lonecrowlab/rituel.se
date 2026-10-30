@@ -16,6 +16,11 @@
     "main": {
       "settings": {},
       "blocks": {
+        "custom_liquid_Rk9ryG": {
+          "settings": {
+            "custom_liquid": "<div class=\"rt-stock\" style=\"--sold: 89%\">\n  <div class=\"rt-stock__row\">\n    <span class=\"rt-stock__text\">Bare 210 igjen. Vi solgte 1 358 forrige uke.</span>\n    <span class=\"rt-stock__pct\">89 %</span>\n  </div>\n  <div class=\"rt-stock__track\"><span class=\"rt-stock__fill\"></span></div>\n</div>\n\n<style>\n  .rt-stock {\n    margin: 5px 0 15px;\n    padding: 0;\n    border: none;\n    background: none;\n    font-family: inherit;\n  }\n  .rt-stock__row {\n    display: flex;\n    align-items: baseline;\n    justify-content: space-between;\n    gap: 10px;\n    margin-bottom: 7px;\n  }\n  .rt-stock__text {\n    font-size: 14px;\n    font-weight: 600;\n    line-height: 1.3;\n    color: #1A1614;\n  }\n  .rt-stock__pct {\n    font-size: 14px;\n    font-weight: 600;\n    color: #B33A72;\n    white-space: nowrap;\n  }\n  .rt-stock__track {\n    height: 6px;\n    border-radius: 99px;\n    background: #F5E5EE;\n    overflow: hidden;\n  }\n  .rt-stock__fill {\n    display: block;\n    height: 100%;\n    width: var(--sold, 0%);\n    border-radius: 99px;\n    background: #B33A72;\n  }\n</style>"
+          }
+        },
         "product_flag_qn3MLq": {
           "disabled": false,
           "settings": {
