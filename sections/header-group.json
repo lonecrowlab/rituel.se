@@ -51,7 +51,6 @@
         "announcement_AdjtQA",
         "announcement_7wVMdc"
       ],
-      "custom_css": [],
       "name": "t:sections.announcement-bar.name",
       "settings": {
         "columns_desktop": 2,
@@ -85,6 +84,7 @@
     },
     "header": {
       "type": "header",
+      "custom_css": [],
       "settings": {
         "sticky_header_type": "always",
         "show_line_separator": false,
